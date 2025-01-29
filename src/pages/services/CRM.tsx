@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/crm/HeroSection";
 import PricingPlans from "@/components/crm/PricingPlans";
 import FinalCTA from "@/components/crm/FinalCTA";
+import Benefits from "@/components/Benefits";
 
 const features = [
   {
@@ -127,6 +128,7 @@ const CRM = () => {
           </div>
         </section>
 
+        <Benefits />
         <PricingPlans />
         <FinalCTA />
       </div>

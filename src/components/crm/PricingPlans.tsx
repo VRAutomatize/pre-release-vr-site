@@ -66,24 +66,39 @@ const PricingPlans = () => {
             className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${planIndex === 1 ? 'md:border-gold/50' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
-            {/* Header */}
-            <div className={`p-6 text-center border-b border-border ${planIndex === 1 ? 'bg-gold/5' : ''}`}>
-              <h3 className="text-2xl font-semibold mb-2">{plan.name}</h3>
-              <div className="space-y-1">
-                <p className="text-sm text-foreground/60">A partir de</p>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-3xl font-bold text-gold">R$ {plan.monthly}</span>
-                  <span className="text-foreground/60">/mês</span>
+            {/* Implementation Cost - Now at the top */}
+            <div className={`p-6 text-center ${planIndex === 1 ? 'bg-gold/5' : 'bg-secondary/50'}`}>
+              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
+              <div className="space-y-2">
+                <p className="text-sm text-foreground/60">Implementação</p>
+                <div className="flex items-center justify-center">
+                  <span className="text-4xl font-bold text-gold">
+                    R$ {plan.implementation.toLocaleString('pt-BR')}
+                  </span>
                 </div>
                 <p className="text-sm text-foreground/60">
-                  ou 12x de R$ {plan.installments.toFixed(2)}
+                  ou 3x de R$ {(plan.implementation / 3).toFixed(2)}
                 </p>
               </div>
               <Button 
-                className="w-full mt-4 bg-gold hover:bg-gold-light text-background"
+                className="w-full mt-6 bg-gold hover:bg-gold-light text-background"
               >
                 Agendar Demonstração
               </Button>
+            </div>
+
+            {/* Monthly Cost - Now less prominent */}
+            <div className="p-4 border-b border-border bg-secondary/20">
+              <div className="text-center">
+                <p className="text-sm text-foreground/60">Mensalidade</p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-xl font-semibold">R$ {plan.monthly}</span>
+                  <span className="text-sm text-foreground/60">/mês</span>
+                </div>
+                <p className="text-xs text-foreground/60">
+                  ou 12x de R$ {plan.installments.toFixed(2)}
+                </p>
+              </div>
             </div>
 
             {/* Features */}
@@ -110,13 +125,6 @@ const PricingPlans = () => {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Implementation Cost */}
-            <div className="p-6 bg-secondary/50 border-t border-border">
-              <p className="text-sm text-center text-foreground/80">
-                Implementação: <span className="font-semibold text-gold">R$ {plan.implementation.toLocaleString('pt-BR')}</span>
-              </p>
             </div>
           </div>
         ))}

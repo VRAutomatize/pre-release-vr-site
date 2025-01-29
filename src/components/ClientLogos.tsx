@@ -47,7 +47,7 @@ const ClientLogos = () => {
   );
 
   return (
-    <section className="relative -mt-12 z-10">
+    <section className="relative mt-24 z-10">
       <div className="container mx-auto px-4">
         <p className="text-center text-sm text-foreground/60 mb-8">
           Empresas que confiam em nossas soluções

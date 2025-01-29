@@ -19,6 +19,11 @@ const PlanCosts = ({
   isAnnual,
   highlighted
 }: PlanCostsProps) => {
+  const formatPrice = (price: number) => {
+    const [intPart, decPart] = price.toFixed(2).split('.');
+    return `${intPart},${decPart}`;
+  };
+
   return (
     <>
       <div className={`p-6 text-center ${highlighted ? 'bg-gold/5' : 'bg-secondary/50'}`}>
@@ -31,7 +36,7 @@ const PlanCosts = ({
           </div>
           {canInstallImplementation && (
             <p className="text-sm text-foreground/60">
-              ou {maxInstallments}x de R$ {(implementation / maxInstallments).toFixed(2)}
+              ou {maxInstallments}x de R$ {formatPrice(implementation / maxInstallments)}
             </p>
           )}
         </div>
@@ -47,13 +52,13 @@ const PlanCosts = ({
           <p className="text-sm text-foreground/60">Mensalidade</p>
           <div className="flex items-center justify-center gap-2">
             <span className="text-xl font-semibold">
-              R$ {isAnnual ? installments.toFixed(2) : monthly}
+              R$ {isAnnual ? formatPrice(installments) : monthly}
             </span>
             <span className="text-sm text-foreground/60">/mês</span>
           </div>
           {isAnnual && (
             <p className="text-xs text-foreground/60">
-              12x de R$ {installments.toFixed(2)}
+              12x de R$ {formatPrice(installments)}
             </p>
           )}
         </div>

@@ -38,9 +38,10 @@ const ClientLogos = () => {
   const plugin = React.useMemo(
     () =>
       Autoplay({
-        delay: 2000,
+        delay: 0,
         stopOnInteraction: false,
-        stopOnMouseEnter: true,
+        stopOnMouseEnter: false,
+        playOnInit: true,
       }),
     []
   );
@@ -57,6 +58,7 @@ const ClientLogos = () => {
             align: "start",
             loop: true,
             dragFree: true,
+            speed: 50,
           }}
           plugins={[plugin]}
           className="w-full"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Cog } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,11 +28,7 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2 relative">
-            <Cog 
-              className="text-gold w-8 h-8 animate-spin-slow absolute" 
-              style={{ animationDuration: '8s' }}
-            />
+          <div className="flex items-center gap-2">
             <div className={`flex items-center gap-2 transition-all duration-500 ${
               isLogoVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
             }`}>

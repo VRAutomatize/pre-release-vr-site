@@ -84,21 +84,30 @@ const CRM = () => {
         </section>
 
         {/* Features Grid */}
-        <section className="relative z-10">
+        <section className="relative z-10 space-y-24">
           <h2 className="text-3xl font-bold mb-12 text-center">Funcionalidades Principais</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-32">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
-                className="floating-card p-8 rounded-xl"
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               >
-                <feature.icon className="w-12 h-12 text-gold mb-4" />
-                <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-foreground/80 mb-6">{feature.description}</p>
-                <Button variant="outline" className="hover:bg-gold hover:text-background">
-                  {feature.cta}
-                </Button>
+                {/* Image Placeholder - Left side for even indexes, right side for odd */}
+                <div className={`order-${index % 2 === 0 ? 1 : 2} lg:order-none`}>
+                  <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center">
+                    <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
+                  </div>
+                </div>
+                
+                {/* Feature Content */}
+                <div className={`order-${index % 2 === 0 ? 2 : 1} lg:order-none floating-card p-8 rounded-xl`}>
+                  <feature.icon className="w-12 h-12 text-gold mb-4" />
+                  <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
+                  <p className="text-foreground/80 mb-6">{feature.description}</p>
+                  <Button variant="outline" className="hover:bg-gold hover:text-background">
+                    {feature.cta}
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
@@ -113,7 +122,6 @@ const CRM = () => {
                 <div 
                   key={benefit.title}
                   className="text-center p-6"
-                  style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <benefit.icon className="w-12 h-12 text-gold mb-4 mx-auto" />
                   <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Plan } from "@/types/pricing";
 import PlanFeatureList from "./pricing/PlanFeatureList";
 import PlanCosts from "./pricing/PlanCosts";
 import InfoCards from "./pricing/InfoCards";
+import { Switch } from "@/components/ui/switch";
 
 const plans: Plan[] = [
   {
@@ -20,10 +22,12 @@ const plans: Plan[] = [
       { name: "Conteúdo Complementar", included: true, value: "Sim" },
       { name: "Treinamento", included: true, value: "Sim" },
     ],
-    implementation: 1270,
-    monthly: 279,
-    installments: 147.90,
-    canInstallImplementation: false
+    costs: {
+      implementation: 1270,
+      monthly: 279,
+      installments: 147.90,
+      canInstallImplementation: false
+    }
   },
   {
     name: "Plano CRM + Automações",
@@ -41,14 +45,19 @@ const plans: Plan[] = [
       { name: "Conteúdo Complementar", included: true, value: "Sim" },
       { name: "Treinamento", included: true, value: "Sim" },
     ],
-    implementation: 1970,
-    monthly: 279,
-    installments: 147.90,
-    canInstallImplementation: true
+    costs: {
+      implementation: 1970,
+      monthly: 279,
+      installments: 147.90,
+      canInstallImplementation: true
+    },
+    highlighted: true
   }
 ];
 
 const PricingPlans = () => {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
     <section id="plans" className="relative z-10 py-20">
       <div className="text-center mb-16 animate-fade-up">
@@ -58,33 +67,44 @@ const PricingPlans = () => {
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Escolha o Plano Ideal para Seu Negócio
         </h2>
-        <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
+        <p className="text-lg text-foreground/80 max-w-2xl mx-auto mb-8">
           Soluções flexíveis que crescem junto com sua empresa
         </p>
+        
+        <div className="flex items-center justify-center gap-3">
+          <span className={`text-sm ${!isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Mensal</span>
+          <Switch
+            checked={isAnnual}
+            onCheckedChange={setIsAnnual}
+            className="data-[state=checked]:bg-gold"
+          />
+          <span className={`text-sm ${isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Anual</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4">
         {plans.map((plan, planIndex) => (
           <div 
             key={plan.name} 
-            className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${planIndex === 1 ? 'md:border-gold/50' : ''}`}
+            className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${plan.highlighted ? 'bg-gold/5 border-gold/50' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
-            <div className={`p-6 text-center ${planIndex === 1 ? 'bg-gold/5' : 'bg-secondary/50'}`}>
+            <div className={`p-6 text-center ${plan.highlighted ? 'bg-gold/5' : 'bg-secondary/50'}`}>
               <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
             </div>
             
             <PlanCosts
-              implementation={plan.implementation}
-              monthly={plan.monthly}
-              installments={plan.installments}
-              canInstallImplementation={plan.canInstallImplementation}
-              planIndex={planIndex}
+              implementation={plan.costs.implementation}
+              monthly={plan.costs.monthly}
+              installments={isAnnual ? plan.costs.installments : plan.costs.monthly}
+              canInstallImplementation={plan.costs.canInstallImplementation}
+              isAnnual={isAnnual}
+              highlighted={plan.highlighted}
             />
             
             <PlanFeatureList 
               features={plan.features} 
-              planIndex={planIndex}
+              highlighted={plan.highlighted}
             />
           </div>
         ))}

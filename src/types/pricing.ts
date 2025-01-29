@@ -4,11 +4,16 @@ export interface PlanFeature {
   value?: string;
 }
 
-export interface Plan {
-  name: string;
-  features: PlanFeature[];
+export interface PlanCosts {
   implementation: number;
   monthly: number;
   installments: number;
   canInstallImplementation: boolean;
+}
+
+export interface Plan {
+  name: string;
+  features: PlanFeature[];
+  costs: PlanCosts;
+  highlighted?: boolean;
 }

@@ -5,7 +5,8 @@ interface PlanCostsProps {
   monthly: number;
   installments: number;
   canInstallImplementation: boolean;
-  planIndex: number;
+  isAnnual: boolean;
+  highlighted?: boolean;
 }
 
 const PlanCosts = ({ 
@@ -13,11 +14,12 @@ const PlanCosts = ({
   monthly, 
   installments, 
   canInstallImplementation,
-  planIndex 
+  isAnnual,
+  highlighted
 }: PlanCostsProps) => {
   return (
     <>
-      <div className={`p-6 text-center ${planIndex === 1 ? 'bg-gold/5' : 'bg-secondary/50'}`}>
+      <div className={`p-6 text-center ${highlighted ? 'bg-gold/5' : 'bg-secondary/50'}`}>
         <div className="space-y-2">
           <p className="text-sm text-foreground/60">Implementação</p>
           <div className="flex items-center justify-center">
@@ -38,16 +40,20 @@ const PlanCosts = ({
         </Button>
       </div>
 
-      <div className="p-4 border-b border-border bg-secondary/20">
+      <div className={`p-4 border-b border-border ${highlighted ? 'bg-gold/5' : 'bg-secondary/20'}`}>
         <div className="text-center">
           <p className="text-sm text-foreground/60">Mensalidade</p>
           <div className="flex items-center justify-center gap-2">
-            <span className="text-xl font-semibold">R$ {monthly}</span>
+            <span className="text-xl font-semibold">
+              R$ {isAnnual ? installments.toFixed(2) : monthly}
+            </span>
             <span className="text-sm text-foreground/60">/mês</span>
           </div>
-          <p className="text-xs text-foreground/60">
-            ou 12x de R$ {installments.toFixed(2)}
-          </p>
+          {isAnnual && (
+            <p className="text-xs text-foreground/60">
+              12x de R$ {installments.toFixed(2)}
+            </p>
+          )}
         </div>
       </div>
     </>

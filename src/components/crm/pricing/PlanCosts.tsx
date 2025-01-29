@@ -5,6 +5,7 @@ interface PlanCostsProps {
   monthly: number;
   installments: number;
   canInstallImplementation: boolean;
+  maxInstallments: number;
   isAnnual: boolean;
   highlighted?: boolean;
 }
@@ -14,6 +15,7 @@ const PlanCosts = ({
   monthly, 
   installments, 
   canInstallImplementation,
+  maxInstallments,
   isAnnual,
   highlighted
 }: PlanCostsProps) => {
@@ -29,7 +31,7 @@ const PlanCosts = ({
           </div>
           {canInstallImplementation && (
             <p className="text-sm text-foreground/60">
-              ou 3x de R$ {(implementation / 3).toFixed(2)}
+              ou {maxInstallments}x de R$ {(implementation / maxInstallments).toFixed(2)}
             </p>
           )}
         </div>

@@ -11,8 +11,8 @@ const plans: Plan[] = [
     features: [
       { name: "Números de WhatsApp", included: true, value: "Ilimitado" },
       { name: "Número de Acessos", included: true, value: "Ilimitado" },
-      { name: "Funil de Vendas Personalizado", included: true, value: "Sim" },
       { name: "Sala de Espera", included: true, value: "Simples" },
+      { name: "Funil de Vendas Personalizado", included: true, value: "Sim" },
       { name: "Divisão Automática de Clientes", included: true, value: "Sim" },
       { name: "Conteúdo Complementar", included: true, value: "Sim" },
       { name: "Treinamento", included: true, value: "Sim" },
@@ -21,7 +21,8 @@ const plans: Plan[] = [
       implementation: 1270,
       monthly: 279,
       installments: 147.90,
-      canInstallImplementation: false
+      canInstallImplementation: true,
+      maxInstallments: 2
     }
   },
   {
@@ -29,8 +30,8 @@ const plans: Plan[] = [
     features: [
       { name: "Números de WhatsApp", included: true, value: "Ilimitado" },
       { name: "Número de Acessos", included: true, value: "Ilimitado" },
+      { name: "Sala de Espera", included: true, value: "Completa" },
       { name: "Funil de Vendas Personalizado", included: true, value: "Sim" },
-      { name: "Sala de Espera", included: true, value: "Simples" },
       { name: "Divisão Automática de Clientes", included: true, value: "Sim" },
       { name: "Recuperação Ativa dos 'Sem Resposta'", included: true, value: "Sim" },
       { name: "Remarketing Ativo", included: true, value: "Sim" },
@@ -44,7 +45,8 @@ const plans: Plan[] = [
       implementation: 1970,
       monthly: 279,
       installments: 147.90,
-      canInstallImplementation: true
+      canInstallImplementation: true,
+      maxInstallments: 3
     },
     highlighted: true
   }
@@ -77,11 +79,11 @@ const PricingPlans = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4 items-start">
         {plans.map((plan, planIndex) => (
           <div 
             key={plan.name} 
-            className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${plan.highlighted ? 'bg-gold/5' : ''}`}
+            className={`floating-card rounded-2xl overflow-hidden animate-fade-up h-fit ${plan.highlighted ? 'bg-gold/5' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
             <div className={`p-6 text-center ${plan.highlighted ? 'bg-gold/5' : 'bg-secondary/50'}`}>
@@ -93,6 +95,7 @@ const PricingPlans = () => {
               monthly={plan.costs.monthly}
               installments={isAnnual ? plan.costs.installments : plan.costs.monthly}
               canInstallImplementation={plan.costs.canInstallImplementation}
+              maxInstallments={plan.costs.maxInstallments}
               isAnnual={isAnnual}
               highlighted={plan.highlighted}
             />

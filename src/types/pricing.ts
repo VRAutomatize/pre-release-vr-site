@@ -9,6 +9,7 @@ export interface PlanCosts {
   monthly: number;
   installments: number;
   canInstallImplementation: boolean;
+  maxInstallments: number;
 }
 
 export interface Plan {

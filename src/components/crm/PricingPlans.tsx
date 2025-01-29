@@ -53,7 +53,7 @@ const plans: Plan[] = [
 ];
 
 const PricingPlans = () => {
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(true); // Changed default to true
 
   return (
     <section id="plans" className="relative z-10 py-20">
@@ -68,26 +68,27 @@ const PricingPlans = () => {
           Soluções flexíveis que crescem junto com sua empresa
         </p>
         
-        <div className="flex items-center justify-center gap-3">
-          <span className={`text-sm ${!isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Mensal</span>
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <span className={`text-base font-medium ${!isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Mensal</span>
           <Switch
             checked={isAnnual}
             onCheckedChange={setIsAnnual}
-            className="data-[state=checked]:bg-gold"
+            className="data-[state=checked]:bg-gold h-7 w-14"
           />
-          <span className={`text-sm ${isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Anual</span>
+          <span className={`text-base font-medium ${isAnnual ? 'text-gold' : 'text-foreground/60'}`}>Anual</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4 items-start">
         {plans.map((plan, planIndex) => (
           <div 
             key={plan.name} 
             className={`floating-card rounded-2xl overflow-hidden animate-fade-up h-fit ${plan.highlighted ? 'bg-gold/5' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
-            <div className={`p-6 text-center ${plan.highlighted ? 'bg-gold/5' : 'bg-secondary/50'}`}>
-              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
+            <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/50'}`}>
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gold">{plan.name}</h3>
+              <div className="w-16 h-1 bg-gold mx-auto rounded-full opacity-50" />
             </div>
             
             <PlanCosts

@@ -47,3 +47,8 @@
     @apply glass transition-all duration-300 ease-out;
   }
 }
+
+/* Custom switch styles */
+[data-state="checked"] > [data-state="checked"] {
+  transform: translateX(100%);
+}

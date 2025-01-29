@@ -59,16 +59,36 @@ const PricingPlans = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4">
         {plans.map((plan, planIndex) => (
           <div 
             key={plan.name} 
-            className="floating-card p-8 rounded-xl space-y-6 animate-fade-up hover:scale-105 transition-all duration-300"
+            className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${planIndex === 1 ? 'md:border-gold/50' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
-            <h3 className="text-2xl font-semibold text-center mb-8">{plan.name}</h3>
-            
-            <div className="space-y-4">
+            {/* Header */}
+            <div className={`p-6 text-center border-b border-border ${planIndex === 1 ? 'bg-gold/5' : ''}`}>
+              <h3 className="text-2xl font-semibold mb-2">{plan.name}</h3>
+              <div className="space-y-1">
+                <p className="text-sm text-foreground/60">A partir de</p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-3xl font-bold text-gold">R$ {plan.monthly}</span>
+                  <span className="text-foreground/60">/mês</span>
+                </div>
+                <p className="text-sm text-foreground/60">
+                  ou 12x de R$ {plan.installments.toFixed(2)}
+                </p>
+              </div>
+              <Button 
+                className="w-full mt-4 bg-gold hover:bg-gold-light text-background"
+              >
+                Agendar Demonstração
+              </Button>
+            </div>
+
+            {/* Features */}
+            <div className="p-6 space-y-4">
+              <p className="text-sm font-medium text-foreground/80 mb-4">O que está incluído:</p>
               {plan.features.map((feature, index) => (
                 <div 
                   key={feature.name} 
@@ -76,11 +96,11 @@ const PricingPlans = () => {
                   style={{ animationDelay: `${(index * 0.1) + (planIndex * 0.2)}s` }}
                 >
                   {feature.included ? (
-                    <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                   ) : (
-                    <X className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
+                    <X className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
                   )}
-                  <span className="text-sm">
+                  <span className="text-sm text-foreground/80">
                     {feature.name}
                     {feature.value && `: ${feature.value}`}
                   </span>
@@ -88,30 +108,17 @@ const PricingPlans = () => {
               ))}
             </div>
 
-            <div className="pt-8 space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="text-gold">💰</span>
-                <p>
-                  Implementação: <span className="font-semibold">R$ {plan.implementation.toLocaleString('pt-BR')}</span>
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-gold">💳</span>
-                <p>
-                  Mensalidade: <span className="font-semibold">R$ {plan.monthly}/mês</span> ou{' '}
-                  <span className="font-semibold">12x de R$ {plan.installments.toFixed(2)}</span>
-                </p>
-              </div>
+            {/* Implementation Cost */}
+            <div className="p-6 bg-secondary/50 border-t border-border">
+              <p className="text-sm text-center text-foreground/80">
+                Implementação: <span className="font-semibold text-gold">R$ {plan.implementation.toLocaleString('pt-BR')}</span>
+              </p>
             </div>
-
-            <Button className="w-full bg-gold hover:bg-gold-light text-background mt-6">
-              Agendar Demonstração
-            </Button>
           </div>
         ))}
       </div>
 
-      <div className="mt-12 space-y-4 text-sm text-foreground/80 max-w-3xl mx-auto">
+      <div className="mt-12 space-y-4 text-sm text-foreground/80 max-w-3xl mx-auto px-4">
         <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.6s" }}>
           <span className="text-gold">📌</span>
           O valor de implementação pode ser parcelado em até 3x sem juros no boleto.

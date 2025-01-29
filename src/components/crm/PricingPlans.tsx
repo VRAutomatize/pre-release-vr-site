@@ -7,18 +7,13 @@ import { Switch } from "@/components/ui/switch";
 
 const plans: Plan[] = [
   {
-    name: "Plano CRM",
+    name: "CRM",
     features: [
       { name: "Números de WhatsApp", included: true, value: "Ilimitado" },
       { name: "Número de Acessos", included: true, value: "Ilimitado" },
       { name: "Funil de Vendas Personalizado", included: true, value: "Sim" },
       { name: "Sala de Espera", included: true, value: "Simples" },
       { name: "Divisão Automática de Clientes", included: true, value: "Sim" },
-      { name: "Recuperação Ativa dos 'Sem Resposta'", included: false },
-      { name: "Remarketing Ativo", included: false },
-      { name: "Follow Up Automático", included: false },
-      { name: "Sistema de Disparos em Massa", included: false },
-      { name: "Automações e Conexão com Outros Sistemas", included: false },
       { name: "Conteúdo Complementar", included: true, value: "Sim" },
       { name: "Treinamento", included: true, value: "Sim" },
     ],
@@ -30,7 +25,7 @@ const plans: Plan[] = [
     }
   },
   {
-    name: "Plano CRM + Automações",
+    name: "CRM + Automações",
     features: [
       { name: "Números de WhatsApp", included: true, value: "Ilimitado" },
       { name: "Número de Acessos", included: true, value: "Ilimitado" },

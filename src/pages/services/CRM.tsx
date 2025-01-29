@@ -88,11 +88,10 @@ const CRM = () => {
           <h2 className="text-3xl font-bold mb-24 text-center">Funcionalidades Principais</h2>
           <div className="space-y-64">
             {features.map((feature, index) => {
-              const imageRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
-              const contentRotation = Math.random() * 4 - 2; // Random rotation between -2 and 2 degrees
-              const imageOffset = Math.random() * 80 - 40; // Random Y offset between -40px and 40px
-              const contentOffset = Math.random() * 60 - 30; // Random Y offset between -30px and 30px
-              const imageScale = 0.9 + Math.random() * 0.2; // Random scale between 0.9 and 1.1
+              const isEven = index % 2 === 0;
+              const imageOffset = isEven ? -40 : 40; // Alternating left/right offset
+              const contentOffset = isEven ? 40 : -40; // Opposite offset for content
+              const verticalOffset = index * 20; // Increasing vertical offset for each feature
 
               return (
                 <div 
@@ -101,21 +100,21 @@ const CRM = () => {
                 >
                   {/* Image Placeholder */}
                   <div 
-                    className={`order-${index % 2 === 0 ? 1 : 2} lg:order-none transform transition-all duration-500`}
+                    className={`order-${isEven ? 1 : 2} lg:order-none transform transition-all duration-500`}
                     style={{
-                      transform: `rotate(${imageRotation}deg) translateY(${imageOffset}px) scale(${imageScale})`,
+                      transform: `translateX(${imageOffset}px) translateY(${verticalOffset}px)`,
                     }}
                   >
-                    <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:rotate-0 hover:scale-105 transition-all duration-500">
+                    <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:scale-105 transition-all duration-500">
                       <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
                     </div>
                   </div>
                   
                   {/* Feature Content */}
                   <div 
-                    className={`order-${index % 2 === 0 ? 2 : 1} lg:order-none floating-card p-8 rounded-xl transform transition-all duration-500`}
+                    className={`order-${isEven ? 2 : 1} lg:order-none floating-card p-8 rounded-xl transform transition-all duration-500`}
                     style={{
-                      transform: `rotate(${contentRotation}deg) translateY(${contentOffset}px)`,
+                      transform: `translateX(${contentOffset}px) translateY(${verticalOffset + 40}px)`,
                     }}
                   >
                     <feature.icon className="w-12 h-12 text-gold mb-4" />

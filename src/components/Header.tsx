@@ -25,7 +25,7 @@ const Header = () => {
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
-              src="/lovable-uploads/8e420cb7-340c-4931-ba8e-dc5b9575e88e.png"
+              src="/lovable-uploads/62342ed0-cfb6-48e6-9064-63e2c615ec81.png"
               alt="VR Automatize"
               className="h-10 w-10"
             />

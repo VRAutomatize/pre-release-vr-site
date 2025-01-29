@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart, Users, Clock, Target, MessageSquare, Database, Settings, Zap } from "lucide-react";
+import { Home, MessageSquare, ArrowLeft, BarChart, Users, Clock, Target, Database, Settings, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import Header from "@/components/Header";
 
 const features = [
   {
@@ -55,13 +56,20 @@ const benefits = [
 const CRM = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Header>
+        <div className="hidden md:flex items-center gap-8">
+          <Link to="/" className="flex items-center gap-2 hover:text-gold transition-colors">
+            <Home className="h-4 w-4" />
+            Home
+          </Link>
+          <Button className="bg-gold hover:bg-gold-light text-background">
+            <MessageSquare className="h-4 w-4" />
+            Entre em contato
+          </Button>
+        </div>
+      </Header>
+
       <div className="container mx-auto px-4 pt-24 space-y-32">
-        {/* Header with Back Button */}
-        <Link to="/" className="inline-flex items-center gap-2 text-gold hover:text-gold-light transition-colors mb-8">
-          <ArrowLeft className="h-4 w-4" />
-          Voltar
-        </Link>
-        
         {/* Hero Section */}
         <section className="relative min-h-[80vh] flex items-center">
           <div className="absolute inset-0 z-0">

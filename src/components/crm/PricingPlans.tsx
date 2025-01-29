@@ -87,25 +87,29 @@ const PricingPlans = () => {
             </div>
 
             {/* Features */}
-            <div className="p-6 space-y-4">
-              <p className="text-sm font-medium text-foreground/80 mb-4">O que está incluído:</p>
-              {plan.features.map((feature, index) => (
-                <div 
-                  key={feature.name} 
-                  className="flex items-start gap-3 animate-fade-up"
-                  style={{ animationDelay: `${(index * 0.1) + (planIndex * 0.2)}s` }}
-                >
-                  {feature.included ? (
-                    <Check className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                  ) : (
-                    <X className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                  )}
-                  <span className="text-sm text-foreground/80">
-                    {feature.name}
-                    {feature.value && `: ${feature.value}`}
-                  </span>
-                </div>
-              ))}
+            <div className="p-6">
+              <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
+              <div className="grid gap-4">
+                {plan.features.map((feature, index) => (
+                  <div 
+                    key={feature.name} 
+                    className={`animate-fade-up ${feature.included ? 'opacity-100' : 'opacity-50'}`}
+                    style={{ animationDelay: `${(index * 0.1) + (planIndex * 0.2)}s` }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-1.5 h-1.5 rounded-full ${feature.included ? 'bg-gold' : 'bg-gray-500'}`} />
+                      <span className="text-sm text-foreground/80">
+                        {feature.name}
+                        {feature.value && (
+                          <span className="ml-1 text-gold">
+                            {feature.value}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Implementation Cost */}

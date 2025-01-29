@@ -4,6 +4,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay";
 
 const clients = [
   {
@@ -33,8 +34,18 @@ const clients = [
 ];
 
 const ClientLogos = () => {
+  const plugin = React.useMemo(
+    () =>
+      Autoplay({
+        delay: 2000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    []
+  );
+
   return (
-    <section className="relative -mt-20 z-10">
+    <section className="relative -mt-12 z-10">
       <div className="container mx-auto px-4">
         <p className="text-center text-sm text-foreground/60 mb-8">
           Empresas que confiam em nossas soluções
@@ -46,6 +57,7 @@ const ClientLogos = () => {
             loop: true,
             dragFree: true,
           }}
+          plugins={[plugin]}
           className="w-full"
         >
           <CarouselContent className="-ml-2 md:-ml-4">

@@ -58,7 +58,7 @@ const ClientLogos = () => {
             align: "start",
             loop: true,
             dragFree: true,
-            speed: 50,
+            duration: 50,
           }}
           plugins={[plugin]}
           className="w-full"

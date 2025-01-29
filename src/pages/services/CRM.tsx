@@ -97,6 +97,11 @@ const plans = [
 ];
 
 const CRM = () => {
+  const scrollToPlans = () => {
+    const plansSection = document.querySelector('#plans');
+    plansSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header>
@@ -113,6 +118,7 @@ const CRM = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
+        {/* Hero Section */}
         <section className="relative min-h-[80vh] flex items-center">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-96 h-96 bg-gold/20 rounded-full filter blur-3xl animate-float" />
@@ -131,7 +137,11 @@ const CRM = () => {
               <Button className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6">
                 Agende uma Demonstração
               </Button>
-              <Button variant="outline" className="text-lg px-8 py-6">
+              <Button 
+                variant="outline" 
+                className="text-lg px-8 py-6"
+                onClick={scrollToPlans}
+              >
                 Ver Planos
               </Button>
             </div>
@@ -147,15 +157,13 @@ const CRM = () => {
                 key={feature.title}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               >
-                {/* Image Placeholder - Left side for even indexes, right side for odd */}
-                <div className={`order-${index % 2 === 0 ? 1 : 2} lg:order-none`}>
+                <div className={`order-${index % 2 === 0 ? 1 : 2}`}>
                   <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center">
                     <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
                   </div>
                 </div>
                 
-                {/* Feature Content */}
-                <div className={`order-${index % 2 === 0 ? 2 : 1} lg:order-none floating-card p-8 rounded-xl`}>
+                <div className={`order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl`}>
                   <feature.icon className="w-12 h-12 text-gold mb-4" />
                   <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-foreground/80 mb-6">{feature.description}</p>
@@ -168,68 +176,26 @@ const CRM = () => {
           </div>
         </section>
 
-        {/* Plans Section */}
+        {/* Benefits Section */}
         <section className="relative z-10">
           <div className="glass p-12 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-12 text-center">Nossos Planos</h2>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {plans.map((plan) => (
-                <div key={plan.name} className="floating-card p-8 rounded-xl space-y-6">
-                  <h3 className="text-2xl font-semibold text-center mb-8">{plan.name}</h3>
-                  
-                  <div className="space-y-4">
-                    {plan.features.map((feature) => (
-                      <div key={feature.name} className="flex items-start gap-3">
-                        {feature.included ? (
-                          <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                        ) : (
-                          <X className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
-                        )}
-                        <span className="text-sm">
-                          {feature.name}
-                          {feature.value && `: ${feature.value}`}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-8 space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-gold">💰</span>
-                      <p>
-                        Implementação: <span className="font-semibold">R$ {plan.implementation.toLocaleString('pt-BR')}</span>
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gold">💳</span>
-                      <p>
-                        Mensalidade: <span className="font-semibold">R$ {plan.monthly}/mês</span> ou{' '}
-                        <span className="font-semibold">12x de R$ {plan.installments.toFixed(2)}</span>
-                      </p>
-                    </div>
-                  </div>
+            <h2 className="text-3xl font-bold mb-12 text-center">Benefícios</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {benefits.map((benefit, index) => (
+                <div 
+                  key={benefit.title}
+                  className="text-center p-6"
+                >
+                  <benefit.icon className="w-12 h-12 text-gold mb-4 mx-auto" />
+                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-foreground/80">{benefit.description}</p>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-12 space-y-4 text-sm text-foreground/80">
-              <p className="flex items-center gap-2">
-                <span className="text-gold">📌</span>
-                O valor de implementação pode ser parcelado em até 3x sem juros no boleto.
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="text-gold">📌</span>
-                O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="text-gold">📌</span>
-                A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
-              </p>
             </div>
           </div>
         </section>
 
+        {/* Why Choose Our CRM Section */}
         <section className="relative z-10">
           <div className="glass p-12 rounded-2xl">
             <h2 className="text-3xl font-bold mb-12 text-center">Por que Escolher Nosso CRM?</h2>
@@ -248,15 +214,90 @@ const CRM = () => {
           </div>
         </section>
 
+        {/* Plans Section */}
+        <section id="plans" className="relative z-10">
+          <div className="text-center mb-16">
+            <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6">
+              Nossos Planos
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Escolha o Plano Ideal para Seu Negócio
+            </h2>
+            <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
+              Soluções flexíveis que crescem junto com sua empresa
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {plans.map((plan) => (
+              <div key={plan.name} className="floating-card p-8 rounded-xl space-y-6">
+                <h3 className="text-2xl font-semibold text-center mb-8">{plan.name}</h3>
+                
+                <div className="space-y-4">
+                  {plan.features.map((feature) => (
+                    <div key={feature.name} className="flex items-start gap-3">
+                      {feature.included ? (
+                        <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                      ) : (
+                        <X className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
+                      )}
+                      <span className="text-sm">
+                        {feature.name}
+                        {feature.value && `: ${feature.value}`}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-8 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gold">💰</span>
+                    <p>
+                      Implementação: <span className="font-semibold">R$ {plan.implementation.toLocaleString('pt-BR')}</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gold">💳</span>
+                    <p>
+                      Mensalidade: <span className="font-semibold">R$ {plan.monthly}/mês</span> ou{' '}
+                      <span className="font-semibold">12x de R$ {plan.installments.toFixed(2)}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-gold hover:bg-gold-light text-background mt-6">
+                  Agendar Demonstração
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 space-y-4 text-sm text-foreground/80 max-w-3xl mx-auto">
+            <p className="flex items-center gap-2">
+              <span className="text-gold">📌</span>
+              O valor de implementação pode ser parcelado em até 3x sem juros no boleto.
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="text-gold">📌</span>
+              O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="text-gold">📌</span>
+              A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
+            </p>
+          </div>
+        </section>
+
+        {/* Final CTA */}
         <section className="relative z-10 text-center">
           <div className="glass p-12 rounded-2xl">
             <h2 className="text-3xl font-bold mb-4">Pronto para Transformar seu Negócio?</h2>
             <p className="text-xl text-foreground/80 mb-8">
-              Agende uma demonstração gratuita e descubra como nosso CRM pode 
-              impulsionar seus resultados.
+              Fale com nosso time comercial e descubra como podemos ajudar sua empresa a crescer
             </p>
             <Button className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6">
-              Começar Agora
+              <MessageSquare className="mr-2" />
+              Falar com Time Comercial
             </Button>
           </div>
         </section>

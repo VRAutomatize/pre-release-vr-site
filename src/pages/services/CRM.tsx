@@ -84,32 +84,50 @@ const CRM = () => {
         </section>
 
         {/* Features Grid */}
-        <section className="relative z-10 space-y-24">
-          <h2 className="text-3xl font-bold mb-12 text-center">Funcionalidades Principais</h2>
-          <div className="space-y-32">
-            {features.map((feature, index) => (
-              <div 
-                key={feature.title}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-              >
-                {/* Image Placeholder - Left side for even indexes, right side for odd */}
-                <div className={`order-${index % 2 === 0 ? 1 : 2} lg:order-none`}>
-                  <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center">
-                    <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
+        <section className="relative z-10 space-y-32">
+          <h2 className="text-3xl font-bold mb-24 text-center">Funcionalidades Principais</h2>
+          <div className="space-y-64">
+            {features.map((feature, index) => {
+              const imageRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+              const contentRotation = Math.random() * 4 - 2; // Random rotation between -2 and 2 degrees
+              const imageOffset = Math.random() * 80 - 40; // Random Y offset between -40px and 40px
+              const contentOffset = Math.random() * 60 - 30; // Random Y offset between -30px and 30px
+              const imageScale = 0.9 + Math.random() * 0.2; // Random scale between 0.9 and 1.1
+
+              return (
+                <div 
+                  key={feature.title}
+                  className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center relative"
+                >
+                  {/* Image Placeholder */}
+                  <div 
+                    className={`order-${index % 2 === 0 ? 1 : 2} lg:order-none transform transition-all duration-500`}
+                    style={{
+                      transform: `rotate(${imageRotation}deg) translateY(${imageOffset}px) scale(${imageScale})`,
+                    }}
+                  >
+                    <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:rotate-0 hover:scale-105 transition-all duration-500">
+                      <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Feature Content */}
+                  <div 
+                    className={`order-${index % 2 === 0 ? 2 : 1} lg:order-none floating-card p-8 rounded-xl transform transition-all duration-500`}
+                    style={{
+                      transform: `rotate(${contentRotation}deg) translateY(${contentOffset}px)`,
+                    }}
+                  >
+                    <feature.icon className="w-12 h-12 text-gold mb-4" />
+                    <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
+                    <p className="text-foreground/80 mb-6">{feature.description}</p>
+                    <Button variant="outline" className="hover:bg-gold hover:text-background">
+                      {feature.cta}
+                    </Button>
                   </div>
                 </div>
-                
-                {/* Feature Content */}
-                <div className={`order-${index % 2 === 0 ? 2 : 1} lg:order-none floating-card p-8 rounded-xl`}>
-                  <feature.icon className="w-12 h-12 text-gold mb-4" />
-                  <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
-                  <p className="text-foreground/80 mb-6">{feature.description}</p>
-                  <Button variant="outline" className="hover:bg-gold hover:text-background">
-                    {feature.cta}
-                  </Button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

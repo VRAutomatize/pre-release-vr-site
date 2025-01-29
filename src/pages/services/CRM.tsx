@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import HeroSection from "@/components/crm/HeroSection";
@@ -14,7 +14,7 @@ const features = [
     cta: "Comece a Organizar seus Leads"
   },
   {
-    icon: BarChart,
+    icon: BarChart2,
     title: "Análise de Performance",
     description: "Dashboards personalizados com métricas em tempo real. Tome decisões baseadas em dados concretos sobre seu funil de vendas.",
     cta: "Ver Demonstração de Dashboards"

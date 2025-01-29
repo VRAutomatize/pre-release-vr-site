@@ -86,12 +86,12 @@ const CRM = () => {
         {/* Features Grid */}
         <section className="relative z-10 space-y-32">
           <h2 className="text-3xl font-bold mb-24 text-center">Funcionalidades Principais</h2>
-          <div className="space-y-64">
+          <div className="space-y-96">
             {features.map((feature, index) => {
               const isEven = index % 2 === 0;
-              const imageOffset = isEven ? -40 : 40; // Alternating left/right offset
-              const contentOffset = isEven ? 40 : -40; // Opposite offset for content
-              const verticalOffset = index * 20; // Increasing vertical offset for each feature
+              const imageOffset = isEven ? -20 : 20; // Reduced horizontal offset
+              const contentOffset = isEven ? 20 : -20; // Reduced horizontal offset
+              const verticalOffset = index * 40 + Math.random() * 60; // Increased and randomized vertical offset
 
               return (
                 <div 
@@ -114,7 +114,7 @@ const CRM = () => {
                   <div 
                     className={`order-${isEven ? 2 : 1} lg:order-none floating-card p-8 rounded-xl transform transition-all duration-500`}
                     style={{
-                      transform: `translateX(${contentOffset}px) translateY(${verticalOffset + 40}px)`,
+                      transform: `translateX(${contentOffset}px) translateY(${verticalOffset + 80 + Math.random() * 40}px)`,
                     }}
                   >
                     <feature.icon className="w-12 h-12 text-gold mb-4" />

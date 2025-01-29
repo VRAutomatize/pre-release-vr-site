@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Check, X } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Plan } from "@/types/pricing";
+import PlanFeatureList from "./pricing/PlanFeatureList";
+import PlanCosts from "./pricing/PlanCosts";
+import InfoCards from "./pricing/InfoCards";
 
-const plans = [
+const plans: Plan[] = [
   {
     name: "Plano CRM",
     features: [
@@ -69,91 +70,27 @@ const PricingPlans = () => {
             className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${planIndex === 1 ? 'md:border-gold/50' : ''}`}
             style={{ animationDelay: `${planIndex * 0.2}s` }}
           >
-            {/* Implementation Cost - Now at the top */}
             <div className={`p-6 text-center ${planIndex === 1 ? 'bg-gold/5' : 'bg-secondary/50'}`}>
               <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
-              <div className="space-y-2">
-                <p className="text-sm text-foreground/60">Implementação</p>
-                <div className="flex items-center justify-center">
-                  <span className="text-4xl font-bold text-gold">
-                    R$ {plan.implementation.toLocaleString('pt-BR')}
-                  </span>
-                </div>
-                {plan.canInstallImplementation && (
-                  <p className="text-sm text-foreground/60">
-                    ou 3x de R$ {(plan.implementation / 3).toFixed(2)}
-                  </p>
-                )}
-              </div>
-              <Button 
-                className="w-full mt-6 bg-gold hover:bg-gold-light text-background"
-              >
-                Agendar Demonstração
-              </Button>
             </div>
-
-            {/* Monthly Cost - Now less prominent */}
-            <div className="p-4 border-b border-border bg-secondary/20">
-              <div className="text-center">
-                <p className="text-sm text-foreground/60">Mensalidade</p>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-xl font-semibold">R$ {plan.monthly}</span>
-                  <span className="text-sm text-foreground/60">/mês</span>
-                </div>
-                <p className="text-xs text-foreground/60">
-                  ou 12x de R$ {plan.installments.toFixed(2)}
-                </p>
-              </div>
-            </div>
-
-            {/* Features */}
-            <div className="p-6">
-              <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
-              <div className="grid gap-4">
-                {plan.features.map((feature, index) => (
-                  <div 
-                    key={feature.name} 
-                    className={`animate-fade-up ${feature.included ? 'opacity-100' : 'opacity-50'}`}
-                    style={{ animationDelay: `${(index * 0.1) + (planIndex * 0.2)}s` }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-1.5 h-1.5 rounded-full ${feature.included ? 'bg-gold' : 'bg-gray-500'}`} />
-                      <span className="text-sm text-foreground/80">
-                        {feature.name}
-                        {feature.value && (
-                          <span className="ml-1 text-gold">
-                            {feature.value}
-                          </span>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            
+            <PlanCosts
+              implementation={plan.implementation}
+              monthly={plan.monthly}
+              installments={plan.installments}
+              canInstallImplementation={plan.canInstallImplementation}
+              planIndex={planIndex}
+            />
+            
+            <PlanFeatureList 
+              features={plan.features} 
+              planIndex={planIndex}
+            />
           </div>
         ))}
       </div>
 
-      <div className="mt-12 space-y-4 max-w-3xl mx-auto px-4">
-        <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.7s" }}>
-          <div className="flex items-start gap-2">
-            <span className="text-gold mt-1">📌</span>
-            <p className="text-sm text-foreground/80">
-              O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
-            </p>
-          </div>
-        </Card>
-        
-        <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.8s" }}>
-          <div className="flex items-start gap-2">
-            <span className="text-gold mt-1">📌</span>
-            <p className="text-sm text-foreground/80">
-              A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
-            </p>
-          </div>
-        </Card>
-      </div>
+      <InfoCards />
     </section>
   );
 };

@@ -21,8 +21,8 @@ const Hero = () => {
             Automação Inteligente para Empresas
           </span>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            Impulsione seu negócio com{" "}
-            <span className="text-gold">automação inteligente</span>
+            Automatize seu atendimento.{" "}
+            <span className="text-gold">Escale seu faturamento.</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground/80 mb-8 animate-fade-up" style={{ animationDelay: "0.4s" }}>
             Transforme sua empresa com CRMs personalizados, atendentes de IA e

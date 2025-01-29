@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -10,6 +11,8 @@ const Header = ({ children }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +27,21 @@ const Header = ({ children }: HeaderProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      // If already on home page, scroll to hero
+      const heroSection = document.querySelector('section');
+      heroSection?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If on another page, navigate to home and then scroll to hero
+      navigate('/');
+      setTimeout(() => {
+        const heroSection = document.querySelector('section');
+        heroSection?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
+
   return (
     <header
       className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
@@ -33,9 +51,12 @@ const Header = ({ children }: HeaderProps) => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <div className={`flex items-center gap-2 transition-all duration-500 ${
-              isLogoVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
-            }`}>
+            <div 
+              className={`flex items-center gap-2 transition-all duration-500 ${
+                isLogoVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
+              } cursor-pointer`}
+              onClick={handleLogoClick}
+            >
               <img
                 src="/lovable-uploads/62342ed0-cfb6-48e6-9064-63e2c615ec81.png"
                 alt="VR Automatize"

@@ -49,6 +49,10 @@
 }
 
 /* Custom switch styles */
-[data-state="checked"] > [data-state="checked"] {
-  transform: translateX(100%);
+[data-state="checked"] > span[data-state="checked"] {
+  transform: translateX(20px);
+}
+
+[data-state="unchecked"] > span[data-state="unchecked"] {
+  transform: translateX(0);
 }

@@ -25,7 +25,7 @@ const PricingHeader = ({ isAnnual, setIsAnnual }: PricingHeaderProps) => {
         <Switch
           checked={isAnnual}
           onCheckedChange={setIsAnnual}
-          className="data-[state=checked]:bg-gold h-7 w-14 [&>span]:h-6 [&>span]:w-6"
+          className="data-[state=checked]:bg-gold data-[state=unchecked]:bg-input h-[24px] w-[44px]"
         />
         <span className={`text-base font-medium ${isAnnual ? 'text-gold' : 'text-foreground/60'}`}>
           Anual

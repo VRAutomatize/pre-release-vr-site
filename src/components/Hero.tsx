@@ -30,8 +30,8 @@ const Hero = () => {
           </p>
           <div className="max-w-2xl mx-auto">
             <p className="text-foreground/90 mb-8 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-              Quer aumentar seu faturamento e reduzir seus custos? Agende uma reunião de 
-              assessoria gratuita com profissionais da área que poderão traçar o plano 
+              Quer aumentar seu faturamento e reduzir seus custos? Agende uma{" "}
+              <span className="font-bold text-gold">assessoria gratuita</span> com profissionais da área que poderão traçar o plano 
               ideal para impulsionar o crescimento da sua empresa.
             </p>
           </div>

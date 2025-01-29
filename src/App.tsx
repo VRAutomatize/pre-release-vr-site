@@ -21,6 +21,7 @@ const App = () => (
           <Route path="/services/chatbots" element={<NotFound />} />
           <Route path="/services/lead-capture" element={<NotFound />} />
           <Route path="/services/automation" element={<NotFound />} />
+          <Route path="/services/consulting" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

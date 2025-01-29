@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquare, Database, Bot, ArrowDownToLine, Cog } from "lucide-react";
+import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "lucide-react";
 
 const services = [
   {
@@ -32,6 +32,12 @@ const services = [
     description: "Automatize processos repetitivos e aumente a eficiência operacional do seu negócio.",
     icon: Cog,
     route: "/services/automation"
+  },
+  {
+    title: "Assessoria Especializada",
+    description: "Receba orientação profissional gratuita para identificar as melhores soluções de automação para seu negócio.",
+    icon: Briefcase,
+    route: "/services/consulting"
   }
 ];
 

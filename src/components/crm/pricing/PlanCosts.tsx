@@ -19,8 +19,11 @@ const PlanCosts = ({
   isAnnual,
   highlighted
 }: PlanCostsProps) => {
-  const formatPrice = (price: number) => {
-    return price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const formatPrice = (price: number, showDecimals: boolean = true) => {
+    return price.toLocaleString('pt-BR', { 
+      minimumFractionDigits: showDecimals ? 2 : 0, 
+      maximumFractionDigits: showDecimals ? 2 : 0 
+    });
   };
 
   return (
@@ -30,7 +33,7 @@ const PlanCosts = ({
           <p className="text-sm text-foreground/60">Implementação</p>
           <div className="flex items-center justify-center">
             <span className="text-4xl font-bold text-gold">
-              R$ {formatPrice(implementation)}
+              R$ {formatPrice(implementation, false)}
             </span>
           </div>
           {canInstallImplementation && (

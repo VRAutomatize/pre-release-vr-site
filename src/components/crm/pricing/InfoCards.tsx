@@ -1,25 +1,27 @@
-import { Card } from "@/components/ui/card";
-
 const InfoCards = () => {
   return (
-    <div className="mt-12 space-y-4 max-w-3xl mx-auto px-4">
-      <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.7s" }}>
-        <div className="flex items-start gap-2">
-          <span className="text-gold mt-1">📌</span>
-          <p className="text-sm text-foreground/80">
-            O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
-          </p>
-        </div>
-      </Card>
-      
-      <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.8s" }}>
-        <div className="flex items-start gap-2">
-          <span className="text-gold mt-1">📌</span>
-          <p className="text-sm text-foreground/80">
-            A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
-          </p>
-        </div>
-      </Card>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4 mt-16">
+      <div className="floating-card p-6 rounded-xl animate-fade-up">
+        <h3 className="text-xl font-semibold mb-4 text-gold">Sobre a Implementação</h3>
+        <p className="text-foreground/80">
+          A <span className="text-gold font-medium">implementação</span> é um valor{" "}
+          <span className="text-gold font-medium">único</span> que inclui toda a{" "}
+          <span className="text-gold font-medium">configuração inicial</span> do sistema,{" "}
+          <span className="text-gold font-medium">treinamento</span> da equipe e{" "}
+          <span className="text-gold font-medium">personalização</span> do CRM para seu negócio.
+        </p>
+      </div>
+
+      <div className="floating-card p-6 rounded-xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
+        <h3 className="text-xl font-semibold mb-4 text-gold">Sobre a Mensalidade</h3>
+        <p className="text-foreground/80">
+          A <span className="text-gold font-medium">mensalidade</span> é cobrada{" "}
+          <span className="text-gold font-medium">mensalmente</span> e inclui{" "}
+          <span className="text-gold font-medium">suporte ilimitado</span>,{" "}
+          <span className="text-gold font-medium">atualizações</span> do sistema e{" "}
+          <span className="text-gold font-medium">todas as funcionalidades</span> do plano escolhido.
+        </p>
+      </div>
     </div>
   );
 };

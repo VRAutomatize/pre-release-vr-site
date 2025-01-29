@@ -36,7 +36,7 @@ const plans: Plan[] = [
       { name: "Remarketing Ativo", included: true, value: "Sim" },
       { name: "Follow Up Automático", included: true, value: "Sim" },
       { name: "Sistema de Disparos em Massa", included: true, value: "Sim" },
-      { name: "Automações e Conexão com Outros Sistemas", included: true, value: "Sim" },
+      { name: "Automações e Integrações", included: true, value: "Sim" },
       { name: "Conteúdo Complementar", included: true, value: "Sim" },
       { name: "Treinamento", included: true, value: "Sim" },
     ],

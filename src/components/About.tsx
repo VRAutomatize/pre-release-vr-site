@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
+    <section className="py-20 px-4 bg-secondary/50 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 -left-20 w-72 h-72 bg-gold/10 rounded-full filter blur-3xl animate-float" />
@@ -12,7 +12,7 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
             Quem Somos
           </h2>
-          <div className="space-y-8 text-lg text-foreground/80 glass p-8 rounded-2xl">
+          <div className="space-y-8 text-lg text-foreground/80 backdrop-blur-sm bg-background/30 p-8 rounded-2xl shadow-xl">
             <p className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
               A VR Automatize tem como seu objetivo facilitar o crescimento de outras empresas 
               compartilhando do conhecimento adquirido por inúmeras empresas de ramos e nichos diferentes.

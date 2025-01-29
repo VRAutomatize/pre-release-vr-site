@@ -13,20 +13,23 @@ const PlanFeatureList = ({ features, highlighted }: PlanFeatureListProps) => {
         {features.map((feature, index) => (
           <div 
             key={feature.name} 
-            className={`animate-fade-up ${feature.included ? 'opacity-100' : 'opacity-50'}`}
+            className={`animate-fade-up flex items-center justify-between`}
             style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <div className="flex items-center gap-3">
-              <div className={`w-1.5 h-1.5 rounded-full ${feature.included ? 'bg-gold' : 'bg-gray-500'}`} />
+            <div className="flex items-center gap-3 flex-1">
+              <div className={`w-1.5 h-1.5 rounded-full ${highlighted ? 'bg-gold' : 'bg-gray-500'}`} />
               <span className="text-sm text-foreground/80">
                 {feature.name}
-                {feature.value && (
-                  <span className="ml-1 text-gold">
-                    {feature.value}
-                  </span>
-                )}
               </span>
             </div>
+            {feature.value && (
+              <>
+                <div className="mx-4 border-t border-dashed border-foreground/20 flex-1" />
+                <span className="text-sm text-gold">
+                  {feature.value}
+                </span>
+              </>
+            )}
           </div>
         ))}
       </div>

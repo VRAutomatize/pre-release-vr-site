@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const plans = [
   {
@@ -20,7 +21,8 @@ const plans = [
     ],
     implementation: 1270,
     monthly: 279,
-    installments: 147.90
+    installments: 147.90,
+    canInstallImplementation: false
   },
   {
     name: "Plano CRM + Automações",
@@ -40,7 +42,8 @@ const plans = [
     ],
     implementation: 1970,
     monthly: 279,
-    installments: 147.90
+    installments: 147.90,
+    canInstallImplementation: true
   }
 ];
 
@@ -76,9 +79,11 @@ const PricingPlans = () => {
                     R$ {plan.implementation.toLocaleString('pt-BR')}
                   </span>
                 </div>
-                <p className="text-sm text-foreground/60">
-                  ou 3x de R$ {(plan.implementation / 3).toFixed(2)}
-                </p>
+                {plan.canInstallImplementation && (
+                  <p className="text-sm text-foreground/60">
+                    ou 3x de R$ {(plan.implementation / 3).toFixed(2)}
+                  </p>
+                )}
               </div>
               <Button 
                 className="w-full mt-6 bg-gold hover:bg-gold-light text-background"
@@ -130,19 +135,24 @@ const PricingPlans = () => {
         ))}
       </div>
 
-      <div className="mt-12 space-y-4 text-sm text-foreground/80 max-w-3xl mx-auto px-4">
-        <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.6s" }}>
-          <span className="text-gold">📌</span>
-          O valor de implementação pode ser parcelado em até 3x sem juros no boleto.
-        </p>
-        <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.7s" }}>
-          <span className="text-gold">📌</span>
-          O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
-        </p>
-        <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.8s" }}>
-          <span className="text-gold">📌</span>
-          A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
-        </p>
+      <div className="mt-12 space-y-4 max-w-3xl mx-auto px-4">
+        <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.7s" }}>
+          <div className="flex items-start gap-2">
+            <span className="text-gold mt-1">📌</span>
+            <p className="text-sm text-foreground/80">
+              O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
+            </p>
+          </div>
+        </Card>
+        
+        <Card className="p-6 animate-fade-up bg-secondary/5" style={{ animationDelay: "0.8s" }}>
+          <div className="flex items-start gap-2">
+            <span className="text-gold mt-1">📌</span>
+            <p className="text-sm text-foreground/80">
+              A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
+            </p>
+          </div>
+        </Card>
       </div>
     </section>
   );

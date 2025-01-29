@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
-const Header = () => {
+interface HeaderProps {
+  children?: React.ReactNode;
+}
+
+const Header = ({ children }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(false);
@@ -42,20 +46,22 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#services" className="hover:text-gold transition-colors">
-              Serviços
-            </a>
-            <a href="#benefits" className="hover:text-gold transition-colors">
-              Benefícios
-            </a>
-            <a href="#contact" className="hover:text-gold transition-colors">
-              Contato
-            </a>
-            <Button className="bg-gold hover:bg-gold-light text-background">
-              Entre em contato
-            </Button>
-          </div>
+          {children || (
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#services" className="hover:text-gold transition-colors">
+                Serviços
+              </a>
+              <a href="#benefits" className="hover:text-gold transition-colors">
+                Benefícios
+              </a>
+              <a href="#contact" className="hover:text-gold transition-colors">
+                Contato
+              </a>
+              <Button className="bg-gold hover:bg-gold-light text-background">
+                Entre em contato
+              </Button>
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <button

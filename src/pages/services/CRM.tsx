@@ -111,7 +111,7 @@ const CRM = () => {
             Home
           </Link>
           <Button className="bg-gold hover:bg-gold-light text-background">
-            <MessageSquare className="h-4 w-4" />
+            <MessageSquare className="h-4 w-4 mr-2" />
             Entre em contato
           </Button>
         </div>
@@ -125,22 +125,26 @@ const CRM = () => {
             <div className="absolute bottom-20 right-20 w-[32rem] h-[32rem] bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
           </div>
           
-          <div className="glass p-16 rounded-2xl relative z-10 max-w-5xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight">
+          <div className="glass p-8 md:p-16 rounded-2xl relative z-10 max-w-5xl mx-auto animate-fade-up">
+            <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight">
               Impulsione suas vendas com um CRM eficiente 🚀
             </h1>
-            <p className="text-xl md:text-2xl text-foreground/80 mb-12 max-w-3xl">
+            <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl">
               Aumente seu faturamento, converta mais leads e feche mais negócios com nossa plataforma 
               inteligente que automatiza seu processo comercial do início ao fim.
             </p>
-            <div className="flex gap-4">
-              <Button className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6 animate-fade-up"
+                style={{ animationDelay: "0.2s" }}
+              >
                 Agende uma Demonstração
               </Button>
               <Button 
                 variant="outline" 
-                className="text-lg px-8 py-6"
+                className="text-lg px-8 py-6 animate-fade-up"
                 onClick={scrollToPlans}
+                style={{ animationDelay: "0.4s" }}
               >
                 Ver Planos
               </Button>
@@ -150,20 +154,26 @@ const CRM = () => {
 
         {/* Features Grid */}
         <section className="relative z-10 space-y-24">
-          <h2 className="text-3xl font-bold mb-12 text-center">Funcionalidades Principais</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Funcionalidades Principais</h2>
           <div className="space-y-32">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               >
-                <div className={`order-${index % 2 === 0 ? 1 : 2}`}>
-                  <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center">
+                <div 
+                  className={`order-${index % 2 === 0 ? 1 : 2} animate-fade-up`}
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300">
                     <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
                   </div>
                 </div>
                 
-                <div className={`order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl`}>
+                <div 
+                  className={`order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl animate-fade-up`}
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
                   <feature.icon className="w-12 h-12 text-gold mb-4" />
                   <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-foreground/80 mb-6">{feature.description}</p>
@@ -176,47 +186,9 @@ const CRM = () => {
           </div>
         </section>
 
-        {/* Benefits Section */}
-        <section className="relative z-10">
-          <div className="glass p-12 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-12 text-center">Benefícios</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {benefits.map((benefit, index) => (
-                <div 
-                  key={benefit.title}
-                  className="text-center p-6"
-                >
-                  <benefit.icon className="w-12 h-12 text-gold mb-4 mx-auto" />
-                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-foreground/80">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Our CRM Section */}
-        <section className="relative z-10">
-          <div className="glass p-12 rounded-2xl">
-            <h2 className="text-3xl font-bold mb-12 text-center">Por que Escolher Nosso CRM?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {benefits.map((benefit, index) => (
-                <div 
-                  key={benefit.title}
-                  className="text-center p-6"
-                >
-                  <benefit.icon className="w-12 h-12 text-gold mb-4 mx-auto" />
-                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-foreground/80">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Plans Section */}
         <section id="plans" className="relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-up">
             <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6">
               Nossos Planos
             </span>
@@ -229,13 +201,21 @@ const CRM = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {plans.map((plan) => (
-              <div key={plan.name} className="floating-card p-8 rounded-xl space-y-6">
+            {plans.map((plan, planIndex) => (
+              <div 
+                key={plan.name} 
+                className="floating-card p-8 rounded-xl space-y-6 animate-fade-up hover:scale-105 transition-all duration-300"
+                style={{ animationDelay: `${planIndex * 0.2}s` }}
+              >
                 <h3 className="text-2xl font-semibold text-center mb-8">{plan.name}</h3>
                 
                 <div className="space-y-4">
-                  {plan.features.map((feature) => (
-                    <div key={feature.name} className="flex items-start gap-3">
+                  {plan.features.map((feature, index) => (
+                    <div 
+                      key={feature.name} 
+                      className="flex items-start gap-3 animate-fade-up"
+                      style={{ animationDelay: `${(index * 0.1) + (planIndex * 0.2)}s` }}
+                    >
                       {feature.included ? (
                         <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                       ) : (
@@ -273,15 +253,15 @@ const CRM = () => {
           </div>
 
           <div className="mt-12 space-y-4 text-sm text-foreground/80 max-w-3xl mx-auto">
-            <p className="flex items-center gap-2">
+            <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.6s" }}>
               <span className="text-gold">📌</span>
               O valor de implementação pode ser parcelado em até 3x sem juros no boleto.
             </p>
-            <p className="flex items-center gap-2">
+            <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.7s" }}>
               <span className="text-gold">📌</span>
               O valor de implementação cobre toda a configuração e personalização do sistema, incluindo funis, automações e integração com sistemas complementares.
             </p>
-            <p className="flex items-center gap-2">
+            <p className="flex items-center gap-2 animate-fade-up" style={{ animationDelay: "0.8s" }}>
               <span className="text-gold">📌</span>
               A mensalidade refere-se ao plano de assinatura do sistema de CRM (Kommo CRM), necessário para permanecer online. Também inclui suporte técnico via VR Automatize e reuniões de acompanhamento.
             </p>
@@ -289,8 +269,8 @@ const CRM = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="relative z-10 text-center">
-          <div className="glass p-12 rounded-2xl">
+        <section className="relative z-10 text-center pb-32">
+          <div className="glass p-12 rounded-2xl animate-fade-up">
             <h2 className="text-3xl font-bold mb-4">Pronto para Transformar seu Negócio?</h2>
             <p className="text-xl text-foreground/80 mb-8">
               Fale com nosso time comercial e descubra como podemos ajudar sua empresa a crescer

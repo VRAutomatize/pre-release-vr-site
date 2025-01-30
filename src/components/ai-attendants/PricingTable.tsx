@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, X } from "lucide-react";
+import { Check, X, MessageSquare } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,18 +36,18 @@ const features: PricingFeature[] = [
 const plans = [
   {
     name: "Básico",
-    monthlyPrice: 297,
+    monthlyPrice: 690,
     description: "Ideal para pequenas empresas iniciando com IA"
   },
   {
     name: "Pro",
-    monthlyPrice: 497,
+    monthlyPrice: 1270,
     description: "Para empresas que precisam de recursos avançados",
     highlighted: true
   },
   {
     name: "Premium",
-    monthlyPrice: 997,
+    monthlyPrice: 1970,
     description: "Solução completa com IA especializada"
   }
 ];
@@ -74,9 +74,16 @@ const PricingTable = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Escolha o Plano Ideal para Seu Negócio
           </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-foreground/80 max-w-2xl mx-auto mb-4">
             Soluções flexíveis que crescem junto com sua empresa
           </p>
+          
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <MessageSquare className="h-5 w-5 text-gold" />
+            <p className="text-lg font-semibold text-gold">
+              Mensagens ilimitadas. Não pague por conversa!
+            </p>
+          </div>
           
           <div className="flex items-center justify-center gap-4 mb-12">
             <span className={`text-base font-medium ${!isAnnual ? "text-gold" : "text-foreground/60"}`}>

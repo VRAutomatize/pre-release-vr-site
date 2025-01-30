@@ -26,16 +26,12 @@ export const PricingCard = ({
 }: PricingCardProps) => {
   return (
     <div
-      className={`floating-card rounded-2xl overflow-hidden animate-fade-up h-auto ${
+      className={`floating-card rounded-2xl overflow-hidden animate-fade-up h-full ${
         plan.highlighted
-          ? 'scale-[1.15] bg-gold/10 shadow-xl shadow-gold/20'
+          ? 'scale-110 bg-gold/10 shadow-xl shadow-gold/20'
           : 'bg-secondary/20'
       }`}
-      style={{ 
-        animationDelay: `${index * 0.2}s`,
-        marginTop: plan.highlighted ? '2rem' : '4rem',
-        marginBottom: plan.highlighted ? '2rem' : '0'
-      }}
+      style={{ animationDelay: `${index * 0.2}s` }}
     >
       <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/10' : ''}`}>
         <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>

@@ -62,12 +62,22 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
     return monthlyPrice.toFixed(2);
   };
 
-  const getIncludedFeatures = (planName: string) => {
-    const planKey = planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>;
-    return features.map(feature => ({
-      ...feature,
-      included: feature[planKey]
-    }));
+  const getBasicFeatures = () => {
+    return features.filter(feature => 
+      feature.basic === true
+    ).map(feature => feature.name);
+  };
+
+  const getProFeatures = () => {
+    return features.filter(feature => 
+      feature.pro === true && feature.basic === false
+    ).map(feature => feature.name);
+  };
+
+  const getPremiumFeatures = () => {
+    return features.filter(feature => 
+      feature.premium === true && feature.pro === false && feature.basic === false
+    ).map(feature => feature.name);
   };
 
   // Reorder plans to ensure Pro is in the middle
@@ -76,6 +86,19 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
     plans[1], // Pro
     plans[2], // Premium
   ];
+
+  const getFeaturesList = (planName: string) => {
+    switch(planName.toLowerCase()) {
+      case 'básico':
+        return getBasicFeatures();
+      case 'pro':
+        return getProFeatures();
+      case 'premium':
+        return getPremiumFeatures();
+      default:
+        return [];
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -111,25 +134,47 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
               Contratar Agora
             </Button>
           </div>
-          <div className="p-8">
+          <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : ''}`}>
             <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
             <ul className="space-y-4">
-              {getIncludedFeatures(plan.name).map((feature) => {
-                if (feature.included === false) return null;
-                return (
-                  <li key={feature.name} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-gold flex-shrink-0" />
-                    <span className="text-sm">
-                      {feature.name}
-                      {typeof feature.included === 'string' && (
-                        <span className="ml-1 text-gold">
-                          ({feature.included})
-                        </span>
-                      )}
-                    </span>
-                  </li>
-                );
-              })}
+              {plan.name !== 'Básico' && (
+                <li className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                  <span className="text-sm font-medium">
+                    {plan.name === 'Pro' ? 'Tudo do Básico +' : 'Tudo do Pro +'}
+                  </span>
+                </li>
+              )}
+              {getFeaturesList(plan.name).map((featureName) => (
+                <li key={featureName} className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                  <span className="text-sm">{featureName}</span>
+                </li>
+              ))}
+              {plan.name === 'Básico' && (
+                <li className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                  <span className="text-sm">
+                    Coleta de Dados <span className="text-gold">(Simples)</span>
+                  </span>
+                </li>
+              )}
+              {plan.name === 'Pro' && (
+                <li className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                  <span className="text-sm">
+                    Coleta de Dados <span className="text-gold">(Completa)</span>
+                  </span>
+                </li>
+              )}
+              {plan.name === 'Premium' && (
+                <li className="flex items-center gap-3">
+                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                  <span className="text-sm">
+                    Coleta de Dados <span className="text-gold">(Avançada)</span>
+                  </span>
+                </li>
+              )}
             </ul>
           </div>
         </div>

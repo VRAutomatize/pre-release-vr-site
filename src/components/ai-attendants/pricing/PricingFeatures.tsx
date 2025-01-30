@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { features, plans } from "./pricingData";
-import { formatCurrency } from "@/utils/pricing";
+import { formatCurrency, calculateInstallments } from "@/utils/pricing";
 import { Button } from "@/components/ui/button";
 
 interface PricingFeaturesProps {
@@ -24,46 +24,49 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead className="w-[300px] rounded-tl-2xl">Recursos</TableHead>
-              {plans.map((plan, index) => (
-                <TableHead 
-                  key={plan.name}
-                  className={`text-center min-w-[200px] ${plan.highlighted ? "bg-gold/5" : ""} ${
-                    index === plans.length - 1 ? "rounded-tr-2xl" : ""
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-gold">{plan.name}</h3>
-                    <p className="text-sm text-foreground/60">{plan.description}</p>
-                    <div className="text-2xl font-bold">
-                      {isAnnual ? (
-                        <>
-                          {plan.annualTotal >= 10000 
-                            ? `R$ ${plan.annualTotal/1000}k/ano`
-                            : `R$ ${formatCurrency(plan.annualTotal)}/ano`}
-                        </>
-                      ) : (
-                        <>
-                          R$ {formatCurrency(plan.monthlyPrice)}/mês
-                        </>
+              {plans.map((plan, index) => {
+                const installmentAmount = calculateInstallments(plan.annualTotal);
+                return (
+                  <TableHead 
+                    key={plan.name}
+                    className={`text-center min-w-[200px] ${plan.highlighted ? "bg-gold/5" : ""} ${
+                      index === plans.length - 1 ? "rounded-tr-2xl" : ""
+                    }`}
+                  >
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-gold">{plan.name}</h3>
+                      <p className="text-sm text-foreground/60">{plan.description}</p>
+                      <div className="text-2xl font-bold">
+                        {isAnnual ? (
+                          <>
+                            {plan.annualTotal >= 10000 
+                              ? `R$ ${plan.annualTotal/1000}k/ano`
+                              : `R$ ${formatCurrency(plan.annualTotal)}/ano`}
+                          </>
+                        ) : (
+                          <>
+                            R$ {formatCurrency(plan.monthlyPrice)}/mês
+                          </>
+                        )}
+                      </div>
+                      {isAnnual && (
+                        <p className="text-sm text-foreground/60">
+                          12x de R$ {formatCurrency(installmentAmount)}
+                        </p>
                       )}
+                      <Button 
+                        className={`w-full ${
+                          plan.highlighted 
+                            ? "bg-gold hover:bg-gold/90 text-background" 
+                            : "bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90"
+                        }`}
+                      >
+                        Contratar Agora
+                      </Button>
                     </div>
-                    {isAnnual && (
-                      <p className="text-sm text-foreground/60">
-                        12x de R$ {formatCurrency(plan.monthlyPrice)}
-                      </p>
-                    )}
-                    <Button 
-                      className={`w-full ${
-                        plan.highlighted 
-                          ? "bg-gold hover:bg-gold/90 text-background" 
-                          : "bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90"
-                      }`}
-                    >
-                      Contratar Agora
-                    </Button>
-                  </div>
-                </TableHead>
-              ))}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           </TableHeader>
           <TableBody>

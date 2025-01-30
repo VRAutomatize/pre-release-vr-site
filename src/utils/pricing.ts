@@ -9,10 +9,10 @@ export const calculateAnnualTotal = (monthlyPrice: number) => {
   return (monthlyPrice * 12).toFixed(2);
 };
 
-export const calculateInstallments = (monthlyPrice: number) => {
-  const annualPrice = monthlyPrice * 12;
-  const totalWithInterest = annualPrice * 1.15; // 15% interest
-  return (totalWithInterest / 12).toFixed(2);
+export const calculateInstallments = (annualTotal: number) => {
+  const installmentWithInterest = (annualTotal / 12) * 1.15;
+  // Round down to nearest 10 cents for more commercial pricing
+  return Math.floor(installmentWithInterest * 10) / 10;
 };
 
 export const formatCurrency = (value: number) => {

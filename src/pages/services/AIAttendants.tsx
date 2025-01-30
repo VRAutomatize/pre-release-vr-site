@@ -3,7 +3,7 @@ import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lu
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Benefits from "@/components/Benefits";
-import PricingPlans from "@/components/crm/PricingPlans";
+import PricingTable from "@/components/ai-attendants/PricingTable";
 import FinalCTA from "@/components/crm/FinalCTA";
 
 const features = [
@@ -161,8 +161,8 @@ const AIAttendants = () => {
           </div>
         </section>
 
+        <PricingTable />
         <Benefits />
-        <PricingPlans />
         <FinalCTA />
       </div>
     </div>

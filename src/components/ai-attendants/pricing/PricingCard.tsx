@@ -1,11 +1,12 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calculatePrice, calculateAnnualTotal, calculateInstallments } from "@/utils/pricing";
+import { calculatePrice, calculateAnnualTotal, calculateInstallments, formatCurrency } from "@/utils/pricing";
 
 interface PricingCardProps {
   plan: {
     name: string;
     monthlyPrice: number;
+    annualTotal: number;
     description: string;
     highlighted?: boolean;
   };
@@ -24,9 +25,8 @@ export const PricingCard = ({
   showBasicPrefix,
   showProPrefix
 }: PricingCardProps) => {
-  const annualTotal = calculateAnnualTotal(plan.monthlyPrice);
   const monthlyTotal = plan.monthlyPrice * 12;
-  const savedAmount = monthlyTotal - Number(annualTotal);
+  const savedAmount = monthlyTotal - plan.annualTotal;
 
   return (
     <div
@@ -48,18 +48,20 @@ export const PricingCard = ({
         {isAnnual ? (
           <div className="space-y-2">
             <div className="text-3xl font-bold text-gold mb-2">
-              R$ {annualTotal}
+              {plan.annualTotal >= 10000 
+                ? `R$ ${plan.annualTotal/1000}k`
+                : `R$ ${formatCurrency(plan.annualTotal)}`}
             </div>
             <p className="text-sm text-foreground/60">
-              ou 12x de R$ {calculateInstallments(plan.monthlyPrice)} com juros
+              ou 12x de R$ {calculateInstallments(plan.monthlyPrice)}
             </p>
             <p className="text-sm text-gold">
-              Economia de R$ {savedAmount.toFixed(2)}
+              Economia de R$ {formatCurrency(savedAmount)}
             </p>
           </div>
         ) : (
           <div className="text-3xl font-bold text-gold mb-2">
-            R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
+            R$ {formatCurrency(plan.monthlyPrice)}
             <span className="text-sm font-normal text-foreground/60">/mês</span>
           </div>
         )}

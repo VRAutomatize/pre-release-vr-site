@@ -15,6 +15,13 @@ export const calculateInstallments = (monthlyPrice: number) => {
   return (totalWithInterest / 12).toFixed(2);
 };
 
+export const formatCurrency = (value: number) => {
+  return value.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+};
+
 export const getBasicFeatures = (features: any[]) => {
   return features.filter(feature => 
     feature.basic === true

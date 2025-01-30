@@ -161,8 +161,9 @@ const AIAttendants = () => {
           </div>
         </section>
 
-        <PricingTable />
         <Benefits />
+        
+        <PricingTable />
         <FinalCTA />
       </div>
     </div>

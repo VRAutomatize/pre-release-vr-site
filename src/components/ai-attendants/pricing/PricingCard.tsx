@@ -24,6 +24,10 @@ export const PricingCard = ({
   showBasicPrefix,
   showProPrefix
 }: PricingCardProps) => {
+  const annualTotal = calculateAnnualTotal(plan.monthlyPrice);
+  const monthlyTotal = plan.monthlyPrice * 12;
+  const savedAmount = monthlyTotal - Number(annualTotal);
+
   return (
     <div
       className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
@@ -44,13 +48,13 @@ export const PricingCard = ({
         {isAnnual ? (
           <div className="space-y-2">
             <div className="text-3xl font-bold text-gold mb-2">
-              R$ {calculateAnnualTotal(plan.monthlyPrice)}
+              R$ {annualTotal}
             </div>
             <p className="text-sm text-foreground/60">
               ou 12x de R$ {calculateInstallments(plan.monthlyPrice)} com juros
             </p>
-            <p className="text-sm text-foreground/60">
-              R$ {calculatePrice(plan.monthlyPrice, isAnnual)}/mês
+            <p className="text-sm text-gold">
+              Economia de R$ {savedAmount.toFixed(2)}
             </p>
           </div>
         ) : (

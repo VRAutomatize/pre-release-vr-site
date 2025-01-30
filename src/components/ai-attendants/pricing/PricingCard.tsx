@@ -49,8 +49,8 @@ export const PricingCard = ({
           <div className="space-y-2">
             <div className="text-3xl font-bold text-gold mb-2">
               {plan.annualTotal >= 10000 
-                ? `R$ ${plan.annualTotal/1000}k`
-                : `R$ ${formatCurrency(plan.annualTotal)}`}
+                ? `R$ ${plan.annualTotal/1000}k/ano`
+                : `R$ ${formatCurrency(plan.annualTotal)}/ano`}
             </div>
             <p className="text-sm text-foreground/60">
               ou 12x de R$ {formatCurrency(plan.monthlyPrice)}

@@ -36,14 +36,12 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
                       {isAnnual ? (
                         <>
                           {plan.annualTotal >= 10000 
-                            ? `R$ ${plan.annualTotal/1000}k`
-                            : `R$ ${formatCurrency(plan.annualTotal)}`}
-                          <span className="text-sm font-normal text-foreground/60">/ano</span>
+                            ? `R$ ${plan.annualTotal/1000}k/ano`
+                            : `R$ ${formatCurrency(plan.annualTotal)}/ano`}
                         </>
                       ) : (
                         <>
-                          R$ {formatCurrency(plan.monthlyPrice)}
-                          <span className="text-sm font-normal text-foreground/60">/mês</span>
+                          R$ {formatCurrency(plan.monthlyPrice)}/mês
                         </>
                       )}
                     </div>

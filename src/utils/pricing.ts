@@ -16,9 +16,10 @@ export const calculateInstallments = (monthlyPrice: number) => {
 };
 
 export const formatCurrency = (value: number) => {
+  const hasDecimals = value % 1 !== 0;
   return value.toLocaleString('pt-BR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: hasDecimals ? 2 : 0,
+    maximumFractionDigits: hasDecimals ? 2 : 0
   });
 };
 

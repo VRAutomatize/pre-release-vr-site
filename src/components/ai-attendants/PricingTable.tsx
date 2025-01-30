@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, X, MessageSquare, Table as TableIcon, CreditCard } from "lucide-react";
+import { Check, X, MessageSquare } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,7 +54,6 @@ const plans = [
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(true);
-  const [viewMode, setViewMode] = useState<'table' | 'cards'>('cards');
 
   const calculatePrice = (monthlyPrice: number) => {
     if (isAnnual) {
@@ -86,7 +85,7 @@ const PricingTable = () => {
             </p>
           </div>
           
-          <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="flex items-center justify-center gap-4 mb-12">
             <span className={`text-base font-medium ${!isAnnual ? "text-gold" : "text-foreground/60"}`}>
               Mensal
             </span>
@@ -100,166 +99,77 @@ const PricingTable = () => {
               <span className="ml-2 text-sm text-gold">(-25%)</span>
             </span>
           </div>
-
-          <div className="flex items-center justify-center gap-4 mb-12">
-            <Button
-              variant="outline"
-              onClick={() => setViewMode('cards')}
-              className={viewMode === 'cards' ? 'bg-gold text-background' : ''}
-            >
-              <CreditCard className="mr-2 h-4 w-4" />
-              Cards
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => setViewMode('table')}
-              className={viewMode === 'table' ? 'bg-gold text-background' : ''}
-            >
-              <TableIcon className="mr-2 h-4 w-4" />
-              Tabela
-            </Button>
-          </div>
         </div>
 
-        {viewMode === 'cards' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`
-                  floating-card rounded-2xl overflow-hidden transition-all duration-300
-                  ${plan.highlighted 
-                    ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
-                    : 'bg-secondary/5'
-                  }
-                `}
-              >
-                <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
-                  <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
-                    {plan.name}
-                  </h3>
-                  <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
-                  <div className="space-y-2">
-                    <p className="text-3xl font-bold text-gold">
-                      R$ {calculatePrice(plan.monthlyPrice)}
-                      <span className="text-sm font-normal text-foreground/60">/mês</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
+          {plans.map((plan, index) => (
+            <div
+              key={plan.name}
+              className={`
+                floating-card rounded-2xl overflow-hidden transition-all duration-300
+                ${plan.highlighted 
+                  ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
+                  : 'bg-secondary/5'
+                }
+              `}
+            >
+              <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
+                <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
+                  {plan.name}
+                </h3>
+                <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
+                <div className="space-y-2">
+                  <p className="text-3xl font-bold text-gold">
+                    R$ {calculatePrice(plan.monthlyPrice)}
+                    <span className="text-sm font-normal text-foreground/60">/mês</span>
+                  </p>
+                  {isAnnual && (
+                    <p className="text-sm text-foreground/60">
+                      12x de R$ {calculatePrice(plan.monthlyPrice)}
                     </p>
-                    {isAnnual && (
-                      <p className="text-sm text-foreground/60">
-                        12x de R$ {calculatePrice(plan.monthlyPrice)}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="p-8 space-y-6">
-                  <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
-                  <ul className="space-y-4">
-                    {features.map((feature) => {
-                      const included = feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-                      return (
-                        <li key={feature.name} className="flex items-start gap-3">
-                          {typeof included === 'boolean' ? (
-                            included ? (
-                              <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                            ) : (
-                              <X className="h-5 w-5 text-foreground/40 shrink-0 mt-0.5" />
-                            )
-                          ) : (
-                            <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                          )}
-                          <span className="text-sm text-foreground/80">
-                            {feature.name}
-                            {typeof included === 'string' && (
-                              <span className="ml-1 text-gold">({included})</span>
-                            )}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <Button 
-                    className={`w-full ${
-                      plan.highlighted 
-                        ? 'bg-gold hover:bg-gold/90 text-background' 
-                        : 'bg-secondary hover:bg-secondary/80'
-                    }`}
-                  >
-                    Contratar Agora
-                  </Button>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        {viewMode === 'table' && (
-          <div className="overflow-x-auto">
-            <Table className="w-full">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[300px]">Recursos</TableHead>
-                  {plans.map((plan) => (
-                    <TableHead 
-                      key={plan.name}
-                      className={`text-center ${plan.highlighted ? 'bg-gold/10' : ''}`}
-                    >
-                      <div className="space-y-2">
-                        <h3 className={`text-xl font-bold ${plan.highlighted ? 'text-gold' : ''}`}>
-                          {plan.name}
-                        </h3>
-                        <p className="text-2xl font-bold text-gold">
-                          R$ {calculatePrice(plan.monthlyPrice)}
-                          <span className="text-sm font-normal text-foreground/60">/mês</span>
-                        </p>
-                        {isAnnual && (
-                          <p className="text-sm text-foreground/60">
-                            12x de R$ {calculatePrice(plan.monthlyPrice)}
-                          </p>
-                        )}
-                        <Button 
-                          className={`w-full ${
-                            plan.highlighted 
-                              ? 'bg-gold hover:bg-gold/90 text-background' 
-                              : 'bg-secondary hover:bg-secondary/80'
-                          }`}
-                        >
-                          Contratar Agora
-                        </Button>
-                      </div>
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {features.map((feature) => (
-                  <TableRow key={feature.name}>
-                    <TableCell className="font-medium">{feature.name}</TableCell>
-                    {plans.map((plan) => {
-                      const included = feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-                      return (
-                        <TableCell 
-                          key={plan.name} 
-                          className={`text-center ${plan.highlighted ? 'bg-gold/5' : ''}`}
-                        >
-                          {typeof included === 'boolean' ? (
-                            included ? (
-                              <Check className="h-5 w-5 text-gold mx-auto" />
-                            ) : (
-                              <X className="h-5 w-5 text-foreground/40 mx-auto" />
-                            )
+              <div className="p-8 space-y-6">
+                <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
+                <ul className="space-y-4">
+                  {features.map((feature) => {
+                    const included = feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
+                    return (
+                      <li key={feature.name} className="flex items-start gap-3">
+                        {typeof included === 'boolean' ? (
+                          included ? (
+                            <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
                           ) : (
-                            <span className="text-gold font-medium">{included}</span>
+                            <X className="h-5 w-5 text-foreground/40 shrink-0 mt-0.5" />
+                          )
+                        ) : (
+                          <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                        )}
+                        <span className="text-sm text-foreground/80">
+                          {feature.name}
+                          {typeof included === 'string' && (
+                            <span className="ml-1 text-gold">({included})</span>
                           )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <Button 
+                  className={`w-full ${
+                    plan.highlighted 
+                      ? 'bg-gold hover:bg-gold/90 text-background' 
+                      : 'bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90'
+                  }`}
+                >
+                  Contratar Agora
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

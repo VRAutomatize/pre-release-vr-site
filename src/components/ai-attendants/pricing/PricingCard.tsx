@@ -31,54 +31,54 @@ export const PricingCard = ({
 
   return (
     <div
-      className={`rounded-2xl overflow-hidden animate-fade-up ${
+      className={`rounded-2xl overflow-hidden animate-fade-up transform transition-all duration-300 hover:scale-105 ${
         plan.highlighted
-          ? 'bg-[#FEC6A1]/10 border border-[#FEC6A1]/20 relative'
+          ? 'bg-gold/5 border border-gold/20 relative'
           : 'bg-secondary/20'
       }`}
       style={{ 
         animationDelay: `${index * 0.2}s`,
-        marginTop: plan.highlighted ? '2rem' : '4rem',
-        marginBottom: plan.highlighted ? '2rem' : '0',
+        marginTop: plan.highlighted ? '0' : '2rem',
+        marginBottom: plan.highlighted ? '0' : '0',
         height: 'fit-content'
       }}
     >
       {plan.highlighted && (
-        <div className="absolute -inset-12 bg-[#F97316]/20 blur-[60px] -z-10" />
+        <div className="absolute -inset-12 bg-gold/20 blur-[60px] -z-10" />
       )}
-      <div className={`p-8 text-center ${plan.highlighted ? 'bg-[#FEC6A1]/5' : ''}`}>
-        <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>
+      <div className={`p-6 md:p-8 text-center ${plan.highlighted ? 'bg-gold/5' : ''}`}>
+        <h3 className="text-xl md:text-2xl font-bold mb-2 text-gold">{plan.name}</h3>
         <p className="text-sm text-foreground/60 mb-4">{plan.description}</p>
         {isAnnual ? (
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-gold mb-2">
+            <div className="text-2xl md:text-3xl font-bold text-gold mb-2">
               {plan.annualTotal >= 10000 
                 ? `R$ ${plan.annualTotal/1000}k/ano`
                 : `R$ ${formatCurrency(plan.annualTotal)}/ano`}
             </div>
             <p className="text-sm text-foreground/60">
-              ou 12x de R$ {formatCurrency(installmentAmount)}
+              12x de R$ {formatCurrency(installmentAmount)}
             </p>
             <p className="text-sm text-gold">
               Economia de R$ {formatCurrency(savedAmount)}
             </p>
           </div>
         ) : (
-          <div className="text-3xl font-bold text-gold mb-2">
+          <div className="text-2xl md:text-3xl font-bold text-gold mb-2">
             R$ {formatCurrency(plan.monthlyPrice)}/mês
           </div>
         )}
         <Button
           className={`w-full mt-4 ${
-            plan.highlighted
-              ? 'bg-gold hover:bg-gold/90 text-background'
+            plan.highlighted 
+              ? 'bg-gold hover:bg-gold-light text-background transition-colors duration-300' 
               : 'bg-secondary hover:bg-secondary/80'
           }`}
         >
           Contratar Agora
         </Button>
       </div>
-      <div className={`p-8 ${plan.highlighted ? 'bg-[#FEC6A1]/5' : ''}`}>
+      <div className={`p-6 md:p-8 ${plan.highlighted ? 'bg-gold/5' : ''}`}>
         <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
         <ul className="space-y-4">
           {showBasicPrefix && (

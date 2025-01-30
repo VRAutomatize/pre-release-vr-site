@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }: ConfigEnv) => ({
   server: {
     host: "0.0.0.0",
-    port: 3000,
+    port: 8080,
     strictPort: true
   },
   build: {
@@ -16,7 +16,6 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
     rollupOptions: {
       output: {
         manualChunks: (id: string) => {
-          // Configuração corrigida usando função
           if (id.includes('@radix-ui')) return 'radix-ui';
           if (id.includes('node_modules')) {
             if (id.includes('react')) return 'react-vendor';
@@ -39,7 +38,7 @@ export default defineConfig(({ mode }: ConfigEnv) => ({
   },
   preview: {
     host: "0.0.0.0",
-    port: 3000,
+    port: 8080,
     strictPort: true
   }
 }));

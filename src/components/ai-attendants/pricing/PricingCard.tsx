@@ -43,15 +43,15 @@ export const PricingCard = ({
         height: 'fit-content'
       }}
     >
-      {/* Glow effect for Pro card */}
+      {/* Subtle glow effect for Pro card */}
       {plan.highlighted && (
-        <div className="absolute -inset-1 bg-gold/30 blur-2xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gold/20 via-gold/10 to-transparent opacity-75 blur-xl" />
       )}
       
       <div className={`relative h-full ${
         plan.highlighted 
-          ? 'bg-gradient-to-b from-secondary/80 to-secondary/95 backdrop-blur-xl border border-gold/20'
-          : 'bg-secondary/50 hover:bg-secondary/60 border border-border/10'
+          ? 'glass border border-gold/30'
+          : 'glass border border-border/10'
       }`}>
         {/* Header */}
         <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/5' : ''}`}>

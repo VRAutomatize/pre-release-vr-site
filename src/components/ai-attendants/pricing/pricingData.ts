@@ -16,20 +16,20 @@ export const features = [
 export const plans = [
   {
     name: "Básico",
-    monthlyPrice: 482.50, // 5790/12
+    monthlyPrice: 790,
     annualTotal: 5790,
     description: "Ideal para pequenas empresas iniciando com IA"
   },
   {
     name: "Pro",
-    monthlyPrice: 833.33, // 10k/12
+    monthlyPrice: 1270,
     annualTotal: 10000,
     description: "Para empresas que precisam de recursos avançados",
     highlighted: true
   },
   {
     name: "Premium",
-    monthlyPrice: 1333.33, // 16k/12
+    monthlyPrice: 1970,
     annualTotal: 16000,
     description: "Solução completa com IA especializada"
   }

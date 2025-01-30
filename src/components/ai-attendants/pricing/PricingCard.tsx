@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calculatePrice, calculateAnnualTotal, calculateInstallments, formatCurrency } from "@/utils/pricing";
+import { formatCurrency } from "@/utils/pricing";
 
 interface PricingCardProps {
   plan: {
@@ -53,7 +53,7 @@ export const PricingCard = ({
                 : `R$ ${formatCurrency(plan.annualTotal)}`}
             </div>
             <p className="text-sm text-foreground/60">
-              ou 12x de R$ {calculateInstallments(plan.monthlyPrice)}
+              ou 12x de R$ {formatCurrency(plan.monthlyPrice)}
             </p>
             <p className="text-sm text-gold">
               Economia de R$ {formatCurrency(savedAmount)}

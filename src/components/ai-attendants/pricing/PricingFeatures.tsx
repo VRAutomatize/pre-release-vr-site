@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { features, plans } from "./pricingData";
-import { calculatePrice } from "@/utils/pricing";
+import { formatCurrency } from "@/utils/pricing";
 import { Button } from "@/components/ui/button";
 
 interface PricingFeaturesProps {
@@ -33,12 +33,23 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
                     <h3 className="text-xl font-bold text-gold">{plan.name}</h3>
                     <p className="text-sm text-foreground/60">{plan.description}</p>
                     <div className="text-2xl font-bold">
-                      R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
-                      <span className="text-sm font-normal text-foreground/60">/mês</span>
+                      {isAnnual ? (
+                        <>
+                          {plan.annualTotal >= 10000 
+                            ? `R$ ${plan.annualTotal/1000}k`
+                            : `R$ ${formatCurrency(plan.annualTotal)}`}
+                          <span className="text-sm font-normal text-foreground/60">/ano</span>
+                        </>
+                      ) : (
+                        <>
+                          R$ {formatCurrency(plan.monthlyPrice)}
+                          <span className="text-sm font-normal text-foreground/60">/mês</span>
+                        </>
+                      )}
                     </div>
                     {isAnnual && (
                       <p className="text-sm text-foreground/60">
-                        12x de R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
+                        12x de R$ {formatCurrency(plan.monthlyPrice)}
                       </p>
                     )}
                     <Button 

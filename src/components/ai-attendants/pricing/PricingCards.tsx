@@ -11,9 +11,10 @@ interface PricingCardsProps {
 
 const PricingCards = ({ plans, features, calculatePrice, isAnnual }: PricingCardsProps) => {
   const getIncludedFeatures = (planName: string) => {
+    const planKey = planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>;
     return features.filter(feature => {
-      const value = feature[planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-      return value === true || (typeof value === 'string' && value !== '');
+      const value = feature[planKey];
+      return value === true || (typeof value === 'string' && value.length > 0);
     });
   };
 

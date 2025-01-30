@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, X, MessageSquare } from "lucide-react";
+import { Check, X, MessageSquare, Table as TableIcon, CreditCard } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,6 +54,7 @@ const plans = [
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(true);
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('cards');
 
   const calculatePrice = (monthlyPrice: number) => {
     if (isAnnual) {
@@ -62,13 +63,6 @@ const PricingTable = () => {
       return ((annualPrice - discount) / 12).toFixed(2);
     }
     return monthlyPrice.toFixed(2);
-  };
-
-  const getIncludedFeatures = (planName: string) => {
-    return features.filter(feature => {
-      const value = feature[planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-      return value === true || typeof value === 'string';
-    });
   };
 
   return (
@@ -92,7 +86,7 @@ const PricingTable = () => {
             </p>
           </div>
           
-          <div className="flex items-center justify-center gap-4 mb-12">
+          <div className="flex items-center justify-center gap-4 mb-6">
             <span className={`text-base font-medium ${!isAnnual ? "text-gold" : "text-foreground/60"}`}>
               Mensal
             </span>
@@ -106,73 +100,100 @@ const PricingTable = () => {
               <span className="ml-2 text-sm text-gold">(-25%)</span>
             </span>
           </div>
+
+          <div className="flex items-center justify-center gap-4 mb-12">
+            <Button
+              variant="outline"
+              onClick={() => setViewMode('cards')}
+              className={viewMode === 'cards' ? 'bg-gold text-background' : ''}
+            >
+              <CreditCard className="mr-2 h-4 w-4" />
+              Cards
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setViewMode('table')}
+              className={viewMode === 'table' ? 'bg-gold text-background' : ''}
+            >
+              <TableIcon className="mr-2 h-4 w-4" />
+              Tabela
+            </Button>
+          </div>
         </div>
 
-        {/* Cards View */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative mb-32">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`
-                floating-card rounded-2xl overflow-hidden transition-all duration-300
-                ${plan.highlighted 
-                  ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
-                  : 'bg-secondary/5'
-                }
-              `}
-            >
-              <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
-                <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
-                  {plan.name}
-                </h3>
-                <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
-                <div className="space-y-2">
-                  <p className="text-3xl font-bold text-gold">
-                    R$ {calculatePrice(plan.monthlyPrice)}
-                    <span className="text-sm font-normal text-foreground/60">/mês</span>
-                  </p>
-                  {isAnnual && (
-                    <p className="text-sm text-foreground/60">
-                      12x de R$ {calculatePrice(plan.monthlyPrice)}
+        {viewMode === 'cards' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
+            {plans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`
+                  floating-card rounded-2xl overflow-hidden transition-all duration-300
+                  ${plan.highlighted 
+                    ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
+                    : 'bg-secondary/5'
+                  }
+                `}
+              >
+                <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
+                  <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
+                  <div className="space-y-2">
+                    <p className="text-3xl font-bold text-gold">
+                      R$ {calculatePrice(plan.monthlyPrice)}
+                      <span className="text-sm font-normal text-foreground/60">/mês</span>
                     </p>
-                  )}
+                    {isAnnual && (
+                      <p className="text-sm text-foreground/60">
+                        12x de R$ {calculatePrice(plan.monthlyPrice)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="p-8 space-y-6">
+                  <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
+                  <ul className="space-y-4">
+                    {features.map((feature) => {
+                      const included = feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
+                      return (
+                        <li key={feature.name} className="flex items-start gap-3">
+                          {typeof included === 'boolean' ? (
+                            included ? (
+                              <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                            ) : (
+                              <X className="h-5 w-5 text-foreground/40 shrink-0 mt-0.5" />
+                            )
+                          ) : (
+                            <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                          )}
+                          <span className="text-sm text-foreground/80">
+                            {feature.name}
+                            {typeof included === 'string' && (
+                              <span className="ml-1 text-gold">({included})</span>
+                            )}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <Button 
+                    className={`w-full ${
+                      plan.highlighted 
+                        ? 'bg-gold hover:bg-gold/90 text-background' 
+                        : 'bg-secondary hover:bg-secondary/80'
+                    }`}
+                  >
+                    Contratar Agora
+                  </Button>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
 
-              <div className="p-8 space-y-6">
-                <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
-                <ul className="space-y-4">
-                  {getIncludedFeatures(plan.name).map((feature) => (
-                    <li key={feature.name} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                      <span className="text-sm text-foreground/80">
-                        {feature.name}
-                        {typeof feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>] === 'string' && (
-                          <span className="ml-1 text-gold">
-                            ({feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>]})
-                          </span>
-                        )}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Button 
-                  className={`w-full ${
-                    plan.highlighted 
-                      ? 'bg-gold hover:bg-gold/90 text-background' 
-                      : 'bg-secondary hover:bg-secondary/80'
-                  }`}
-                >
-                  Contratar Agora
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Table View */}
-        <div className="mt-32">
-          <h2 className="text-3xl font-bold text-center mb-12">Compare:</h2>
+        {viewMode === 'table' && (
           <div className="overflow-x-auto">
             <Table className="w-full">
               <TableHeader>
@@ -238,7 +259,7 @@ const PricingTable = () => {
               </TableBody>
             </Table>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

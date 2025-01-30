@@ -19,17 +19,17 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
   return (
     <div className="mt-20">
       <h3 className="text-2xl font-bold text-center mb-12">Compare:</h3>
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden rounded-2xl border border-border">
         <Table className="w-full">
           <TableHeader>
-            <TableRow className="hover:bg-transparent">
-              <TableHead className="w-[300px] rounded-tl-2xl">Recursos</TableHead>
+            <TableRow className="hover:bg-transparent border-b border-border">
+              <TableHead className="w-[300px] rounded-tl-2xl bg-background">Recursos</TableHead>
               {plans.map((plan, index) => {
                 const installmentAmount = calculateInstallments(plan.annualTotal);
                 return (
                   <TableHead 
                     key={plan.name}
-                    className={`text-center min-w-[200px] ${plan.highlighted ? "bg-gold/5" : ""} ${
+                    className={`text-center min-w-[200px] bg-background ${plan.highlighted ? "bg-gold/5" : ""} ${
                       index === plans.length - 1 ? "rounded-tr-2xl" : ""
                     }`}
                   >
@@ -71,17 +71,28 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
           </TableHeader>
           <TableBody>
             {features.map((feature, featureIndex) => (
-              <TableRow key={feature.name} className={`hover:bg-secondary/20 ${
-                featureIndex === features.length - 1 ? "last-row" : ""
-              }`}>
-                <TableCell className={`font-medium ${
-                  featureIndex === features.length - 1 ? "rounded-bl-2xl" : ""
-                }`}>{feature.name}</TableCell>
+              <TableRow 
+                key={feature.name} 
+                className={`hover:bg-secondary/20 ${
+                  featureIndex === features.length - 1 ? "border-0" : ""
+                }`}
+              >
+                <TableCell 
+                  className={`font-medium ${
+                    featureIndex === features.length - 1 ? "rounded-bl-2xl" : ""
+                  }`}
+                >
+                  {feature.name}
+                </TableCell>
                 {["basic", "pro", "premium"].map((plan, planIndex) => (
                   <TableCell 
                     key={plan} 
-                    className={`text-center ${plan === "pro" ? "bg-gold/5" : ""} ${
-                      featureIndex === features.length - 1 && planIndex === 2 ? "rounded-br-2xl" : ""
+                    className={`text-center ${
+                      plan === "pro" ? "bg-gold/5" : ""
+                    } ${
+                      featureIndex === features.length - 1 && planIndex === 2 
+                        ? "rounded-br-2xl" 
+                        : ""
                     }`}
                   >
                     {typeof feature[plan as keyof Omit<typeof feature, "name">] === "boolean" ? (

@@ -17,9 +17,9 @@ const plans: Plan[] = [
       { name: "Treinamento", included: true, value: "Sim" },
     ],
     costs: {
-      implementation: 1270,
+      implementation: 1319.80,
       monthly: 279,
-      installments: 147.90,
+      installments: 659.90,
       canInstallImplementation: true,
       maxInstallments: 2
     }
@@ -41,9 +41,9 @@ const plans: Plan[] = [
       { name: "Treinamento", included: true, value: "Sim" },
     ],
     costs: {
-      implementation: 1970,
+      implementation: 1979.70,
       monthly: 279,
-      installments: 147.90,
+      installments: 659.90,
       canInstallImplementation: true,
       maxInstallments: 3
     },

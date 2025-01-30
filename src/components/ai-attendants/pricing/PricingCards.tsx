@@ -25,18 +25,18 @@ const PricingCards = ({ plans, features, calculatePrice, isAnnual }: PricingCard
           className={`
             floating-card rounded-2xl overflow-hidden transition-all duration-300
             ${plan.highlighted 
-              ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
+              ? 'bg-gold/10 md:-mt-8 md:mb-8 md:scale-110 z-10' 
               : 'bg-secondary/5'
             }
           `}
         >
-          <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
+          <div className={`p-8 ${plan.highlighted ? 'bg-gold/20' : 'bg-secondary/20'}`}>
             <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
               {plan.name}
             </h3>
             <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
             <div className="space-y-2">
-              <p className="text-3xl font-bold text-gold">
+              <p className={`text-3xl font-bold ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
                 R$ {calculatePrice(plan.monthlyPrice)}
                 <span className="text-sm font-normal text-foreground/60">/mês</span>
               </p>
@@ -48,13 +48,15 @@ const PricingCards = ({ plans, features, calculatePrice, isAnnual }: PricingCard
             </div>
           </div>
 
-          <div className="p-8 space-y-6">
-            <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
+          <div className={`p-8 space-y-6 ${plan.highlighted ? 'bg-gold/10' : ''}`}>
+            <p className={`text-sm font-medium ${plan.highlighted ? 'text-gold' : 'text-foreground/80'}`}>
+              O que está incluído:
+            </p>
             <ul className="space-y-4">
               {getIncludedFeatures(plan.name).map((feature) => (
                 <li key={feature.name} className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                  <span className="text-sm text-foreground/80">
+                  <Check className={`h-5 w-5 ${plan.highlighted ? 'text-gold' : 'text-foreground/60'} shrink-0 mt-0.5`} />
+                  <span className={`text-sm ${plan.highlighted ? 'text-gold' : 'text-foreground/80'}`}>
                     {feature.name}
                     {typeof feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>] === 'string' && (
                       <span className="ml-1 text-gold">

@@ -58,7 +58,7 @@ const PricingTable = () => {
   const calculatePrice = (monthlyPrice: number) => {
     if (isAnnual) {
       const annualPrice = monthlyPrice * 12;
-      const discount = annualPrice * 0.2; // 20% discount
+      const discount = annualPrice * 0.25; // 25% discount
       return ((annualPrice - discount) / 12).toFixed(2);
     }
     return monthlyPrice.toFixed(2);
@@ -96,7 +96,7 @@ const PricingTable = () => {
             />
             <span className={`text-base font-medium ${isAnnual ? "text-gold" : "text-foreground/60"}`}>
               Anual
-              <span className="ml-2 text-sm text-gold">(-20%)</span>
+              <span className="ml-2 text-sm text-gold">(-25%)</span>
             </span>
           </div>
         </div>
@@ -124,7 +124,11 @@ const PricingTable = () => {
                         </p>
                       )}
                       <Button 
-                        className={`w-full ${plan.highlighted ? "bg-gold hover:bg-gold/90" : "bg-secondary hover:bg-secondary/80"} text-background`}
+                        className={`w-full ${
+                          plan.highlighted 
+                            ? "bg-gold hover:bg-gold/90 text-background" 
+                            : "bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90"
+                        }`}
                       >
                         Contratar Agora
                       </Button>

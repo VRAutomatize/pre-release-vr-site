@@ -19,17 +19,17 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
   return (
     <div className="mt-20">
       <h3 className="text-2xl font-bold text-center mb-12">Compare:</h3>
-      <div className="overflow-hidden rounded-2xl border border-border">
+      <div className="overflow-hidden rounded-2xl border border-border -mx-4 md:mx-0">
         <Table className="w-full">
           <TableHeader>
             <TableRow className="hover:bg-transparent border-b border-border">
-              <TableHead className="w-[300px] rounded-tl-2xl bg-background">Recursos</TableHead>
+              <TableHead className="w-[200px] md:w-[300px] rounded-tl-2xl bg-background">Recursos</TableHead>
               {plans.map((plan, index) => {
                 const installmentAmount = calculateInstallments(plan.annualTotal);
                 return (
                   <TableHead 
                     key={plan.name}
-                    className={`text-center min-w-[200px] bg-background ${plan.highlighted ? "bg-gold/5" : ""} ${
+                    className={`text-center min-w-[140px] md:min-w-[200px] bg-background ${plan.highlighted ? "bg-gold/5" : ""} ${
                       index === plans.length - 1 ? "rounded-tr-2xl" : ""
                     }`}
                   >

@@ -13,7 +13,7 @@ const PricingCards = ({ plans, features, calculatePrice, isAnnual }: PricingCard
   const getIncludedFeatures = (planName: string) => {
     return features.filter(feature => {
       const value = feature[planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-      return value === true || typeof value === 'string';
+      return value === true || (typeof value === 'string' && value !== '');
     });
   };
 

@@ -101,65 +101,74 @@ const PricingTable = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[300px]">Recursos</TableHead>
-                {plans.map((plan) => (
-                  <TableHead 
-                    key={plan.name}
-                    className={`text-center min-w-[200px] ${plan.highlighted ? "bg-gold/5" : ""}`}
-                  >
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-gold">{plan.name}</h3>
-                      <p className="text-sm text-foreground/60">{plan.description}</p>
-                      <div className="text-2xl font-bold">
-                        R$ {calculatePrice(plan.monthlyPrice)}
-                        <span className="text-sm font-normal text-foreground/60">/mês</span>
-                      </div>
-                      {isAnnual && (
-                        <p className="text-sm text-foreground/60">
-                          12x de R$ {calculatePrice(plan.monthlyPrice)}
-                        </p>
-                      )}
-                      <Button 
-                        className={`w-full ${
-                          plan.highlighted 
-                            ? "bg-gold hover:bg-gold/90 text-background" 
-                            : "bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90"
-                        }`}
-                      >
-                        Contratar Agora
-                      </Button>
-                    </div>
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {features.map((feature) => (
-                <TableRow key={feature.name} className="hover:bg-secondary/20">
-                  <TableCell className="font-medium">{feature.name}</TableCell>
-                  {["basic", "pro", "premium"].map((plan) => (
-                    <TableCell key={plan} className="text-center">
-                      {typeof feature[plan as keyof Omit<PricingFeature, "name">] === "boolean" ? (
-                        feature[plan as keyof Omit<PricingFeature, "name">] ? (
-                          <Check className="h-5 w-5 text-gold mx-auto" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
+          {plans.map((plan, index) => (
+            <div
+              key={plan.name}
+              className={`
+                floating-card rounded-2xl overflow-hidden transition-all duration-300
+                ${plan.highlighted 
+                  ? 'md:-mt-8 md:mb-8 bg-gold/5 md:scale-110 z-10' 
+                  : 'bg-secondary/5'
+                }
+              `}
+            >
+              <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : 'bg-secondary/20'}`}>
+                <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-gold' : 'text-foreground'}`}>
+                  {plan.name}
+                </h3>
+                <p className="text-sm text-foreground/60 mb-6">{plan.description}</p>
+                <div className="space-y-2">
+                  <p className="text-3xl font-bold text-gold">
+                    R$ {calculatePrice(plan.monthlyPrice)}
+                    <span className="text-sm font-normal text-foreground/60">/mês</span>
+                  </p>
+                  {isAnnual && (
+                    <p className="text-sm text-foreground/60">
+                      12x de R$ {calculatePrice(plan.monthlyPrice)}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="p-8 space-y-6">
+                <p className="text-sm font-medium text-foreground/80">O que está incluído:</p>
+                <ul className="space-y-4">
+                  {features.map((feature) => {
+                    const included = feature[plan.name.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
+                    return (
+                      <li key={feature.name} className="flex items-start gap-3">
+                        {typeof included === 'boolean' ? (
+                          included ? (
+                            <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                          ) : (
+                            <X className="h-5 w-5 text-foreground/40 shrink-0 mt-0.5" />
+                          )
                         ) : (
-                          <X className="h-5 w-5 text-foreground/40 mx-auto" />
-                        )
-                      ) : (
-                        <span className="text-gold">
-                          {feature[plan as keyof Omit<PricingFeature, "name">]}
+                          <Check className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                        )}
+                        <span className="text-sm text-foreground/80">
+                          {feature.name}
+                          {typeof included === 'string' && (
+                            <span className="ml-1 text-gold">({included})</span>
+                          )}
                         </span>
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <Button 
+                  className={`w-full ${
+                    plan.highlighted 
+                      ? 'bg-gold hover:bg-gold/90 text-background' 
+                      : 'bg-secondary/80 hover:bg-secondary text-foreground hover:text-foreground/90'
+                  }`}
+                >
+                  Contratar Agora
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

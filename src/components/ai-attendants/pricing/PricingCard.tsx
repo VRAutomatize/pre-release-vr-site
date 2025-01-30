@@ -32,7 +32,7 @@ export const PricingCard = ({
     <div
       className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
         plan.highlighted
-          ? 'scale-[1.15] bg-gold/10 shadow-xl shadow-gold/20'
+          ? 'scale-[1.15] bg-gold/5 backdrop-blur-lg border border-gold/20'
           : 'bg-secondary/20'
       }`}
       style={{ 
@@ -42,7 +42,7 @@ export const PricingCard = ({
         height: 'fit-content'
       }}
     >
-      <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/10' : ''}`}>
+      <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/5 backdrop-blur-lg' : ''}`}>
         <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>
         <p className="text-sm text-foreground/60 mb-4">{plan.description}</p>
         {isAnnual ? (
@@ -61,8 +61,7 @@ export const PricingCard = ({
           </div>
         ) : (
           <div className="text-3xl font-bold text-gold mb-2">
-            R$ {formatCurrency(plan.monthlyPrice)}
-            <span className="text-sm font-normal text-foreground/60">/mês</span>
+            R$ {formatCurrency(plan.monthlyPrice)}/mês
           </div>
         )}
         <Button
@@ -75,7 +74,7 @@ export const PricingCard = ({
           Contratar Agora
         </Button>
       </div>
-      <div className={`p-8 ${plan.highlighted ? 'bg-gold/10' : ''}`}>
+      <div className={`p-8 ${plan.highlighted ? 'bg-gold/5 backdrop-blur-lg' : ''}`}>
         <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
         <ul className="space-y-4">
           {showBasicPrefix && (

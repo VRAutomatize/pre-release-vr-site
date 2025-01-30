@@ -10,7 +10,7 @@ const features = [
   {
     icon: Database,
     title: "Automação de Processos",
-    description: "Automatize tarefas repetitivas e fluxos de trabalho complexos com nossa plataforma RPA.",
+    description: "Automatize tarefas repetitivas e fluxos de trabalho complexos.",
     cta: "Ver Demonstração"
   },
   {

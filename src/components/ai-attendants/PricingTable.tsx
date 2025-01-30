@@ -63,10 +63,11 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
   };
 
   const getIncludedFeatures = (planName: string) => {
-    return features.filter(feature => {
-      const value = feature[planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>];
-      return value === true || (typeof value === 'string' && value.length > 0);
-    });
+    const planKey = planName.toLowerCase() as keyof Omit<PricingFeature, 'name'>;
+    return features.map(feature => ({
+      ...feature,
+      included: feature[planKey]
+    }));
   };
 
   // Reorder plans to ensure Pro is in the middle
@@ -83,7 +84,7 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
           key={plan.name}
           className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
             plan.highlighted
-              ? 'bg-gold/10 transform md:scale-105 md:-translate-y-2'
+              ? 'bg-gold/10'
               : 'bg-secondary/20'
           }`}
           style={{ animationDelay: `${index * 0.2}s` }}
@@ -113,12 +114,22 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
           <div className="p-8">
             <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
             <ul className="space-y-4">
-              {getIncludedFeatures(plan.name).map((feature) => (
-                <li key={feature.name} className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-gold flex-shrink-0" />
-                  <span className="text-sm">{feature.name}</span>
-                </li>
-              ))}
+              {getIncludedFeatures(plan.name).map((feature) => {
+                if (feature.included === false) return null;
+                return (
+                  <li key={feature.name} className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-gold flex-shrink-0" />
+                    <span className="text-sm">
+                      {feature.name}
+                      {typeof feature.included === 'string' && (
+                        <span className="ml-1 text-gold">
+                          ({feature.included})
+                        </span>
+                      )}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

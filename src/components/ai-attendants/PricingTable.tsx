@@ -72,7 +72,6 @@ const PricingTable = () => {
             />
             <span className={`text-base font-medium ${isAnnual ? "text-gold" : "text-foreground/60"}`}>
               Anual
-              <span className="ml-2 text-sm text-gold">(-30%)</span>
             </span>
           </div>
         </div>

@@ -41,18 +41,22 @@ export const PricingCard = ({
       <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/10' : ''}`}>
         <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>
         <p className="text-sm text-foreground/60 mb-4">{plan.description}</p>
-        <div className="text-3xl font-bold text-gold mb-2">
-          R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
-          <span className="text-sm font-normal text-foreground/60">/mês</span>
-        </div>
-        {isAnnual && (
+        {isAnnual ? (
           <div className="space-y-2">
-            <p className="text-sm text-foreground/60">
-              Total: R$ {calculateAnnualTotal(plan.monthlyPrice)}
-            </p>
+            <div className="text-3xl font-bold text-gold mb-2">
+              R$ {calculateAnnualTotal(plan.monthlyPrice)}
+            </div>
             <p className="text-sm text-foreground/60">
               ou 12x de R$ {calculateInstallments(plan.monthlyPrice)} com juros
             </p>
+            <p className="text-sm text-foreground/60">
+              R$ {calculatePrice(plan.monthlyPrice, isAnnual)}/mês
+            </p>
+          </div>
+        ) : (
+          <div className="text-3xl font-bold text-gold mb-2">
+            R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
+            <span className="text-sm font-normal text-foreground/60">/mês</span>
           </div>
         )}
         <Button

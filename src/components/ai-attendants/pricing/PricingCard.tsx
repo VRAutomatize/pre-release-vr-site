@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calculatePrice } from "@/utils/pricing";
+import { calculatePrice, calculateAnnualTotal, calculateInstallments } from "@/utils/pricing";
 
 interface PricingCardProps {
   plan: {
@@ -46,12 +46,17 @@ export const PricingCard = ({
           <span className="text-sm font-normal text-foreground/60">/mês</span>
         </div>
         {isAnnual && (
-          <p className="text-sm text-foreground/60 mb-4">
-            12x de R$ {calculatePrice(plan.monthlyPrice, isAnnual)}
-          </p>
+          <div className="space-y-2">
+            <p className="text-sm text-foreground/60">
+              Total: R$ {calculateAnnualTotal(plan.monthlyPrice)}
+            </p>
+            <p className="text-sm text-foreground/60">
+              ou 12x de R$ {calculateInstallments(plan.monthlyPrice)} com juros
+            </p>
+          </div>
         )}
         <Button
-          className={`w-full ${
+          className={`w-full mt-4 ${
             plan.highlighted
               ? 'bg-gold hover:bg-gold/90 text-background'
               : 'bg-secondary hover:bg-secondary/80'

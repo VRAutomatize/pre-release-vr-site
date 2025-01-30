@@ -31,9 +31,9 @@ export const PricingCard = ({
 
   return (
     <div
-      className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
+      className={`rounded-2xl overflow-hidden animate-fade-up ${
         plan.highlighted
-          ? 'bg-gold/5 backdrop-blur-lg border border-gold/20 relative'
+          ? 'bg-[#FEC6A1]/10 border border-[#FEC6A1]/20 relative'
           : 'bg-secondary/20'
       }`}
       style={{ 
@@ -44,9 +44,9 @@ export const PricingCard = ({
       }}
     >
       {plan.highlighted && (
-        <div className="absolute -inset-1 bg-gold/10 blur-2xl -z-10" />
+        <div className="absolute -inset-12 bg-[#F97316]/20 blur-[60px] -z-10" />
       )}
-      <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/5 backdrop-blur-lg' : ''}`}>
+      <div className={`p-8 text-center ${plan.highlighted ? 'bg-[#FEC6A1]/5' : ''}`}>
         <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>
         <p className="text-sm text-foreground/60 mb-4">{plan.description}</p>
         {isAnnual ? (
@@ -78,7 +78,7 @@ export const PricingCard = ({
           Contratar Agora
         </Button>
       </div>
-      <div className={`p-8 ${plan.highlighted ? 'bg-gold/5 backdrop-blur-lg' : ''}`}>
+      <div className={`p-8 ${plan.highlighted ? 'bg-[#FEC6A1]/5' : ''}`}>
         <p className="text-sm font-medium text-foreground/80 mb-6">O que está incluído:</p>
         <ul className="space-y-4">
           {showBasicPrefix && (

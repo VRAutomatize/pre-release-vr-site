@@ -44,7 +44,7 @@ export const PricingCard = ({
       }}
     >
       {plan.highlighted && (
-        <div className="absolute -inset-12 bg-gold/10 blur-[60px] -z-10" />
+        <div className="absolute -inset-12 bg-gold/5 blur-[60px] -z-10" />
       )}
       <div className={`p-6 md:p-8 text-center ${plan.highlighted ? 'bg-gold/[0.02]' : ''}`}>
         <h3 className="text-xl md:text-2xl font-bold mb-2 text-gold/90">{plan.name}</h3>

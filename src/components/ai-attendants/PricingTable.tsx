@@ -56,7 +56,7 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
   const calculatePrice = (monthlyPrice: number) => {
     if (isAnnual) {
       const annualPrice = monthlyPrice * 12;
-      const discount = annualPrice * 0.25;
+      const discount = annualPrice * 0.30; // Changed from 0.25 to 0.30
       return ((annualPrice - discount) / 12).toFixed(2);
     }
     return monthlyPrice.toFixed(2);
@@ -189,7 +189,7 @@ const PricingTable = () => {
   const calculatePrice = (monthlyPrice: number) => {
     if (isAnnual) {
       const annualPrice = monthlyPrice * 12;
-      const discount = annualPrice * 0.25;
+      const discount = annualPrice * 0.30; // Changed from 0.25 to 0.30
       return ((annualPrice - discount) / 12).toFixed(2);
     }
     return monthlyPrice.toFixed(2);
@@ -227,7 +227,7 @@ const PricingTable = () => {
             />
             <span className={`text-base font-medium ${isAnnual ? "text-gold" : "text-foreground/60"}`}>
               Anual
-              <span className="ml-2 text-sm text-gold">(-25%)</span>
+              <span className="ml-2 text-sm text-gold">(-30%)</span>
             </span>
           </div>
         </div>

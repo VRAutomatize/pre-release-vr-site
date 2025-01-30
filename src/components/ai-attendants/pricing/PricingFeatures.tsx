@@ -60,7 +60,10 @@ export const PricingFeatures = ({ isAnnual }: PricingFeaturesProps) => {
               <TableRow key={feature.name} className="hover:bg-secondary/20">
                 <TableCell className="font-medium">{feature.name}</TableCell>
                 {["basic", "pro", "premium"].map((plan) => (
-                  <TableCell key={plan} className="text-center">
+                  <TableCell 
+                    key={plan} 
+                    className={`text-center ${plan === "pro" ? "bg-gold/5" : ""}`}
+                  >
                     {typeof feature[plan as keyof Omit<typeof feature, "name">] === "boolean" ? (
                       feature[plan as keyof Omit<typeof feature, "name">] ? (
                         <Check className="h-5 w-5 text-gold mx-auto" />

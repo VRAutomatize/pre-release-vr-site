@@ -26,7 +26,7 @@ export const PricingCard = ({
 }: PricingCardProps) => {
   return (
     <div
-      className={`floating-card rounded-2xl overflow-hidden animate-fade-up h-auto ${
+      className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
         plan.highlighted
           ? 'scale-[1.15] bg-gold/10 shadow-xl shadow-gold/20'
           : 'bg-secondary/20'
@@ -34,7 +34,8 @@ export const PricingCard = ({
       style={{ 
         animationDelay: `${index * 0.2}s`,
         marginTop: plan.highlighted ? '2rem' : '4rem',
-        marginBottom: plan.highlighted ? '2rem' : '0'
+        marginBottom: plan.highlighted ? '2rem' : '0',
+        height: 'fit-content'
       }}
     >
       <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/10' : ''}`}>

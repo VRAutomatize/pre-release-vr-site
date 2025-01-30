@@ -33,7 +33,7 @@ export const PricingCard = ({
     <div
       className={`floating-card rounded-2xl overflow-hidden animate-fade-up ${
         plan.highlighted
-          ? 'scale-[1.15] bg-gold/5 backdrop-blur-lg border border-gold/20 relative'
+          ? 'bg-gold/5 backdrop-blur-lg border border-gold/20 relative'
           : 'bg-secondary/20'
       }`}
       style={{ 
@@ -44,7 +44,7 @@ export const PricingCard = ({
       }}
     >
       {plan.highlighted && (
-        <div className="absolute -inset-1 bg-gold/20 blur-2xl -z-10" />
+        <div className="absolute -inset-1 bg-gold/10 blur-2xl -z-10" />
       )}
       <div className={`p-8 text-center ${plan.highlighted ? 'bg-gold/5 backdrop-blur-lg' : ''}`}>
         <h3 className="text-2xl font-bold mb-2 text-gold">{plan.name}</h3>

@@ -170,7 +170,7 @@ const Consulting = () => {
 
         <Benefits />
         <PricingPlans />
-        <FinalCTA />
+        <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>
   );

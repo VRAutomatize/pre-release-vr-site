@@ -181,7 +181,7 @@ const AIAttendants = () => {
         <Benefits />
         
         <PricingTable />
-        <FinalCTA />
+        <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>
   );

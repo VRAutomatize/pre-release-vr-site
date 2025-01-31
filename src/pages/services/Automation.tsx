@@ -178,7 +178,7 @@ const Automation = () => {
 
         <Benefits />
         <PricingPlans />
-        <FinalCTA />
+        <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>
   );

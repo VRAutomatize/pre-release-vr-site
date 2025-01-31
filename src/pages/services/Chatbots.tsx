@@ -170,7 +170,7 @@ const Chatbots = () => {
 
         <Benefits />
         <PricingPlans />
-        <FinalCTA />
+        <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>
   );

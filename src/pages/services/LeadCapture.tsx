@@ -170,7 +170,7 @@ const LeadCapture = () => {
 
         <Benefits />
         <PricingPlans />
-        <FinalCTA />
+        <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>
   );

@@ -141,7 +141,7 @@ const CRM = () => {
         </section>
 
         <Benefits />
-        <PricingPlans whatsappLink={whatsappLink} />
+        <PricingPlans />
         <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>

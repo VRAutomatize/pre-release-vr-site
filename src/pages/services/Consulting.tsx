@@ -57,6 +57,8 @@ const benefits = [
 ];
 
 const Consulting = () => {
+  const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Assessoria%20Especializada%20de%20voc%C3%AAs!";
+
   return (
     <div className="min-h-screen bg-background">
       <Header>
@@ -65,10 +67,15 @@ const Consulting = () => {
             <ArrowLeft className="h-4 w-4" />
             Home
           </Link>
-          <Button className="bg-gold hover:bg-gold-light text-background">
+          <a 
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
+          >
             <MessageSquare className="h-4 w-4 mr-2" />
             Entre em contato
-          </Button>
+          </a>
         </div>
       </Header>
 

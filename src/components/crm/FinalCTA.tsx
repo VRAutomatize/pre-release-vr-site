@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { MessageSquare } from "lucide-react";
 
-const FinalCTA = () => {
+interface FinalCTAProps {
+  whatsappLink: string;
+}
+
+const FinalCTA = ({ whatsappLink }: FinalCTAProps) => {
   return (
     <section className="relative z-10 text-center pb-32">
       <div className="glass p-12 rounded-2xl animate-fade-up">
@@ -9,10 +13,15 @@ const FinalCTA = () => {
         <p className="text-xl text-foreground/80 mb-8">
           Fale com nosso time comercial e descubra como podemos ajudar sua empresa a crescer
         </p>
-        <Button className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6">
+        <a 
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
+        >
           <MessageSquare className="mr-2" />
           Falar com Time Comercial
-        </Button>
+        </a>
       </div>
     </section>
   );

@@ -57,6 +57,8 @@ const benefits = [
 ];
 
 const Automation = () => {
+  const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20Automa%C3%A7%C3%B5es%20Empresariais!";
+
   return (
     <div className="min-h-screen bg-background">
       <Header>
@@ -65,10 +67,15 @@ const Automation = () => {
             <ArrowLeft className="h-4 w-4" />
             Home
           </Link>
-          <Button className="bg-gold hover:bg-gold-light text-background">
+          <a 
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
+          >
             <MessageSquare className="h-4 w-4 mr-2" />
             Entre em contato
-          </Button>
+          </a>
         </div>
       </Header>
 
@@ -93,11 +100,14 @@ const Automation = () => {
                 reduzindo custos e aumentando a eficiência operacional.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                <Button 
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
                 >
                   Agende uma Demonstração
-                </Button>
+                </a>
                 <Button 
                   variant="outline" 
                   className="text-lg px-8 py-6"
@@ -134,9 +144,14 @@ const Automation = () => {
                   <feature.icon className="w-12 h-12 text-gold mb-4" />
                   <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-foreground/80 mb-6">{feature.description}</p>
-                  <Button variant="outline" className="hover:bg-gold hover:text-background">
+                  <a 
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 hover:bg-gold hover:text-background"
+                  >
                     {feature.cta}
-                  </Button>
+                  </a>
                 </div>
               </div>
             ))}

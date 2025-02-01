@@ -48,10 +48,14 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   };
 
   const AnimatedValue = ({ value }: { value: string }) => {
-    const prevValueRef = useRef(value);
+    const prevValueRef = useRef<string>(value);
+    const [key, setKey] = useState(0);
     
     useEffect(() => {
-      prevValueRef.current = value;
+      if (prevValueRef.current !== value) {
+        setKey(prev => prev + 1);
+        prevValueRef.current = value;
+      }
     }, [value]);
 
     return (
@@ -62,7 +66,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           
           return (
             <span
-              key={`${index}-${char}`}
+              key={`${key}-${index}-${char}`}
               className={`relative inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
               style={{
                 perspective: '1000px',

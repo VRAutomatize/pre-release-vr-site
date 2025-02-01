@@ -55,7 +55,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
     }, [value]);
 
     return (
-      <span className="inline-flex">
+      <span className="inline-flex text-2xl">
         {value.split('').map((char, index) => {
           const prevChar = prevValueRef.current[index];
           const shouldAnimate = prevChar !== char;
@@ -63,15 +63,11 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           return (
             <span
               key={`${index}-${char}`}
-              className={`relative inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
-              style={{ 
-                perspective: '1000px',
-                transformStyle: 'preserve-3d',
-                transformOrigin: 'center center',
-                backfaceVisibility: 'hidden',
-                height: '1.2em',
-                width: char === ' ' ? '0.3em' : 'auto',
-                minWidth: '0.6em',
+              className={`${shouldAnimate ? 'animate-slot-spin' : ''}`}
+              style={{
+                display: 'inline-block',
+                minWidth: char === ' ' ? '0.5em' : '0.7em',
+                textAlign: 'center'
               }}
             >
               {char}
@@ -92,11 +88,9 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-gold/10 text-gold animate-fade-up">
-              <span className="font-medium">Vendas recuperadas:</span>
-              <span className="font-bold text-lg">
-                <AnimatedValue value={formatCurrency(salesValue)} />
-              </span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up">
+              <span className="text-lg">Vendas recuperadas:</span>
+              <AnimatedValue value={formatCurrency(salesValue)} />
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>

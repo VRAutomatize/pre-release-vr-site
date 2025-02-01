@@ -85,27 +85,11 @@ export default {
         },
         "slot-spin": {
           "0%": { 
-            transform: "rotateX(0deg)",
-            opacity: "1"
-          },
-          "20%": {
-            transform: "rotateX(-180deg)",
-            opacity: "0"
-          },
-          "40%": {
-            transform: "rotateX(-360deg)",
-            opacity: "0"
-          },
-          "60%": {
-            transform: "rotateX(-540deg)",
-            opacity: "0"
-          },
-          "80%": {
-            transform: "rotateX(-720deg)",
+            transform: "translateY(-100%)",
             opacity: "0"
           },
           "100%": { 
-            transform: "rotateX(-900deg)",
+            transform: "translateY(0)",
             opacity: "1"
           }
         },
@@ -119,7 +103,7 @@ export default {
         "slide-in": "slide-in 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s linear infinite",
-        "slot-spin": "slot-spin 1s cubic-bezier(0.4, 0, 0.2, 1)",
+        "slot-spin": "slot-spin 0.3s ease-out",
       },
     },
   },

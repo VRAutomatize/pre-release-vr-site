@@ -81,18 +81,18 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up relative">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up">
               <span className="text-base">Vendas recuperadas:</span>
-              <span className="text-lg relative">
-                {formatCurrency(salesValue)}
+              <div className="relative inline-block">
+                <span className="text-lg">{formatCurrency(salesValue)}</span>
                 {showFloatingValue && difference > 0 && (
                   <span 
-                    className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-green-500 font-medium animate-float-fade whitespace-nowrap"
+                    className="absolute left-0 -top-6 w-full text-center text-green-500 font-medium animate-float-fade whitespace-nowrap"
                   >
                     +{formatCurrency(difference)}
                   </span>
                 )}
-              </span>
+              </div>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>

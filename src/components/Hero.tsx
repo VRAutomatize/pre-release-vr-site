@@ -22,15 +22,6 @@ const Hero = () => {
 
   return (
     <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 z-0 bg-contain bg-right bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop)',
-          opacity: 0.1
-        }}
-      />
-
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
@@ -85,8 +76,8 @@ const Hero = () => {
           {/* Right side image */}
           <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <img 
-              src="/lovable-uploads/bd0ef977-6418-4a3e-ae70-f6140fbcbc66.png"
-              alt="Profissional usando tablet"
+              src="/lovable-uploads/f08df4dd-f074-45db-961b-4b259e6d910e.png"
+              alt="Profissional com laptop"
               className="w-full h-auto object-contain"
             />
           </div>

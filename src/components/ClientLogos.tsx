@@ -101,7 +101,7 @@ const ClientLogos = () => {
                   <img 
                     src={client.logo} 
                     alt={client.name}
-                    className="h-12 w-auto object-contain invert opacity-50 hover:opacity-80 transition-opacity duration-300"
+                    className="h-12 w-auto object-contain opacity-50 hover:opacity-80 transition-opacity duration-300"
                   />
                 </Card>
               </CarouselItem>

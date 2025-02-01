@@ -24,9 +24,9 @@ const Hero = () => {
     <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 z-0 bg-contain bg-right bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=2000)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop)',
           opacity: 0.1
         }}
       />
@@ -38,17 +38,17 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl">
+        <div className="max-w-xl"> {/* Reduced from max-w-3xl to max-w-xl */}
           <HeroTag>Automação Inteligente para Empresas</HeroTag>
           <HeroTitle>
-            <span>Automatize processos.</span>{" "}
-            <span className="text-gold">Fature mais!</span>
+            <span>Automatize seus processos.</span>{" "}
+            <span className="text-gold">Aumente o faturamento!</span>
           </HeroTitle>
           <HeroDescription>
             Simplifique processos, aumente faturamento e reduza custos com CRMs personalizados, 
             IA e automações estratégicas
           </HeroDescription>
-          <div className="max-w-2xl">
+          <div className="max-w-lg"> {/* Reduced from max-w-2xl to max-w-lg */}
             <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
               Agende uma{" "}
               <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">

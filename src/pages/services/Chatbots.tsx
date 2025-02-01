@@ -81,7 +81,7 @@ const Chatbots = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+        <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
           {/* Background Image */}
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -98,8 +98,8 @@ const Chatbots = () => {
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
+            <div className="max-w-3xl">
+              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up hover:bg-gold/20 transition-colors duration-300">
                 Chatbots Inteligentes
               </span>
               
@@ -107,12 +107,12 @@ const Chatbots = () => {
                 Automatize suas conversas com IA
               </h1>
               
-              <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
+              <p className="text-lg md:text-2xl text-foreground/80 mb-12 animate-fade-up" style={{ animationDelay: "0.4s" }}>
                 Chatbots inteligentes que entendem seus clientes e fornecem respostas precisas, 
                 melhorando a experiência e reduzindo custos.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
+              <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
                 <Button 
                   className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
                 >

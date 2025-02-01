@@ -27,7 +27,7 @@ const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroP
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
           {tag && (
-            <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
+            <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up hover:bg-gold/20 transition-colors duration-300">
               {tag}
             </span>
           )}

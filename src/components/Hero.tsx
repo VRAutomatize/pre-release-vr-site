@@ -21,7 +21,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-8">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-12">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
@@ -53,9 +53,10 @@ const Hero = () => {
               <Button 
                 className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300"
                 onClick={() => {
+                  window.open('https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20na%20Assessoria%20Gratuita%20de%20vocês!', '_blank');
                   toast({
-                    title: "Agendamento",
-                    description: "Em breve você será redirecionado para o formulário de agendamento",
+                    title: "Redirecionando para WhatsApp",
+                    description: "Você será redirecionado para iniciar uma conversa no WhatsApp",
                     duration: 3000,
                   });
                 }}

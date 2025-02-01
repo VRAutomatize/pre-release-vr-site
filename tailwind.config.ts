@@ -83,6 +83,16 @@ export default {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        "slide-up": {
+          "0%": { 
+            transform: "translateY(10px) scale(0.95)",
+            opacity: "0"
+          },
+          "100%": { 
+            transform: "translateY(0) scale(1)",
+            opacity: "1"
+          }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

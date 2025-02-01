@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import Benefits from "@/components/Benefits";
-import PricingPlans from "@/components/crm/PricingPlans";
+import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
+import PricingTable from "@/components/ai-attendants/PricingTable";
 import FinalCTA from "@/components/crm/FinalCTA";
-import PageHero from "@/components/shared/PageHero";
-import HeroActions from "@/components/shared/HeroActions";
+import Benefits from "@/components/Benefits";
 
 const features = [
   {
@@ -66,7 +65,7 @@ const AIAttendants = () => {
       <Header>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2 hover:text-gold transition-colors">
-            <ArrowLeft className="h-4 w-4" />
+            <Home className="h-4 w-4" />
             Home
           </Link>
           <a 
@@ -75,39 +74,64 @@ const AIAttendants = () => {
             rel="noopener noreferrer"
             className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
           >
-            <MessageSquare className="h-4 w-4 mr-2" />
+            <MessageSquare className="h-4 w-4" />
             Entre em contato
           </a>
         </div>
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
-        <PageHero
-          title="Automatize suas conversas com IA."
-          subtitle="Chatbots inteligentes que entendem seus clientes e fornecem respostas precisas, melhorando a experiência e reduzindo custos."
-          tag="Chatbots Inteligentes"
-          backgroundImage="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=2000"
-        >
-          <HeroActions>
-            <a 
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background h-12 px-8"
-            >
-              Instalar CRM!
-            </a>
-            <a 
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 hover:bg-gold hover:text-background"
-            >
-              Saiba Mais
-            </a>
-          </HeroActions>
-        </PageHero>
+        {/* Hero Section */}
+        <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=2000)',
+              opacity: 0.1
+            }}
+          />
 
+          {/* Background Effects */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <MessagesCounter className="mb-6 animate-fade-up" />
+              
+              <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
+                Revolucione seu atendimento com IA
+              </h1>
+              
+              <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
+                Automatize seu atendimento com assistentes virtuais inteligentes que trabalham 24/7, 
+                reduzindo custos e aumentando a satisfação dos clientes.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6 rounded-md"
+                >
+                  Agende uma Demonstração
+                </a>
+                <Button 
+                  variant="outline" 
+                  className="text-lg px-8 py-6"
+                >
+                  Ver Planos
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Features Section */}
         <section className="relative z-10 space-y-24">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Funcionalidades Principais</h2>
           <div className="space-y-32">
@@ -146,6 +170,7 @@ const AIAttendants = () => {
           </div>
         </section>
 
+        {/* Benefits Section */}
         <section className="relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios dos Atendentes IA</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -165,7 +190,7 @@ const AIAttendants = () => {
 
         <Benefits />
         
-        <PricingPlans />
+        <PricingTable />
         <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>

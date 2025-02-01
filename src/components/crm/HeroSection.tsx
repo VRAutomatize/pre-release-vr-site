@@ -7,6 +7,9 @@ interface HeroSectionProps {
 
 const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   const [salesValue, setSalesValue] = useState(0);
+  const prevValueRef = useRef(0);
+  const [difference, setDifference] = useState(0);
+  const [showFloatingValue, setShowFloatingValue] = useState(false);
   const targetValue = 574930;
   const initialAnimationDuration = 2000;
   const incrementInterval = 5000;
@@ -38,6 +41,23 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (prevValueRef.current !== salesValue) {
+      const diff = salesValue - prevValueRef.current;
+      setDifference(diff);
+      setShowFloatingValue(true);
+      
+      // Reset floating value after animation
+      const timer = setTimeout(() => {
+        setShowFloatingValue(false);
+      }, 1500); // Match animation duration
+      
+      prevValueRef.current = salesValue;
+      
+      return () => clearTimeout(timer);
+    }
+  }, [salesValue]);
+
   const formatCurrency = (value: number) => {
     return value.toLocaleString('pt-BR', {
       style: 'currency',
@@ -47,32 +67,9 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
     });
   };
 
-  const AnimatedValue = ({ value }: { value: string }) => {
-    return (
-      <span key={value} className="inline-flex text-lg">
-        {value.split('').map((char, index) => (
-          <span
-            key={`${value}-${index}-${char}`}
-            className="animate-slot-spin relative inline-block"
-            style={{
-              perspective: '1000px',
-              transformStyle: 'preserve-3d',
-              height: '1.2em',
-              width: char === ' ' ? '0.3em' : '0.6em',
-              textAlign: 'center',
-              display: 'inline-block',
-              backfaceVisibility: 'hidden',
-            }}
-          >
-            {char}
-          </span>
-        ))}
-      </span>
-    );
-  };
-
   return (
     <section className="min-h-[90vh] flex items-center relative overflow-hidden pt-20">
+      {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
@@ -81,9 +78,16 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up relative">
               <span className="text-base">Vendas recuperadas:</span>
-              <AnimatedValue value={formatCurrency(salesValue)} />
+              <span className="text-lg">{formatCurrency(salesValue)}</span>
+              {showFloatingValue && difference > 0 && (
+                <span 
+                  className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-green-500 font-medium animate-float-fade"
+                >
+                  +{formatCurrency(difference)}
+                </span>
+              )}
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>

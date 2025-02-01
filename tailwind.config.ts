@@ -83,18 +83,22 @@ export default {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
-        "slot-spin": {
+        "float-fade": {
           "0%": { 
-            transform: "rotateX(0deg)",
-            opacity: "1"
+            opacity: "0",
+            transform: "translateY(0)"
           },
-          "50%": {
-            transform: "rotateX(-540deg)",
-            opacity: "0.5"
+          "20%": {
+            opacity: "1",
+            transform: "translateY(-10px)"
+          },
+          "80%": {
+            opacity: "1",
+            transform: "translateY(-20px)"
           },
           "100%": { 
-            transform: "rotateX(-720deg)",
-            opacity: "1"
+            opacity: "0",
+            transform: "translateY(-30px)"
           }
         },
       },
@@ -107,7 +111,7 @@ export default {
         "slide-in": "slide-in 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s linear infinite",
-        "slot-spin": "slot-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+        "float-fade": "float-fade 1.5s ease-out forwards",
       },
     },
   },

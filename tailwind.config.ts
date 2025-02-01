@@ -83,13 +83,16 @@ export default {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
-        "slide-up": {
+        "slot-spin": {
           "0%": { 
-            transform: "translateY(10px) scale(0.95)",
+            transform: "rotateX(0deg)",
+            opacity: "1"
+          },
+          "50%": {
             opacity: "0"
           },
           "100%": { 
-            transform: "translateY(0) scale(1)",
+            transform: "rotateX(360deg)",
             opacity: "1"
           }
         },
@@ -103,6 +106,7 @@ export default {
         "slide-in": "slide-in 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s linear infinite",
+        "slot-spin": "slot-spin 0.5s ease-out",
       },
     },
   },

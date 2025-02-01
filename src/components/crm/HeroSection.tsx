@@ -8,9 +8,27 @@ interface HeroSectionProps {
 const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   const [salesValue, setSalesValue] = useState(0);
   const targetValue = 574930;
-  const initialAnimationDuration = 2000; // 2 seconds for initial animation
-  const incrementInterval = 5000; // 5 seconds between each small increment
-  const smallIncrementValue = 1500; // Amount to increment by
+  const initialAnimationDuration = 2000;
+  const incrementInterval = 5000;
+
+  const generateRandomIncrement = () => {
+    // Generate a random number between 0 and 1
+    const rand = Math.random();
+    
+    // Use exponential distribution to favor lower values
+    // Values between 23.30 and 22000.00
+    const minValue = 23.3;
+    const maxValue = 22000;
+    
+    // Exponential distribution parameter (lower lambda = more spread)
+    const lambda = 0.0003;
+    
+    // Calculate value using inverse exponential distribution
+    const value = minValue + (-Math.log(1 - rand * (1 - Math.exp(-lambda * (maxValue - minValue)))) / lambda);
+    
+    // Round to 2 decimal places
+    return Math.min(Math.round(value * 100) / 100, maxValue);
+  };
 
   useEffect(() => {
     // Initial rapid animation from 0 to target
@@ -24,9 +42,9 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       }, stepDuration * i);
     }
 
-    // Continuous small increments after initial animation
+    // Continuous random increments after initial animation
     const interval = setInterval(() => {
-      setSalesValue(prev => prev + smallIncrementValue);
+      setSalesValue(prev => prev + generateRandomIncrement());
     }, incrementInterval);
 
     return () => clearInterval(interval);
@@ -36,7 +54,40 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
     return value.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
+  };
+
+  // Split the formatted value into individual characters for animation
+  const AnimatedValue = ({ value }: { value: string }) => {
+    const prevValueRef = React.useRef(value);
+    
+    useEffect(() => {
+      prevValueRef.current = value;
+    }, [value]);
+
+    return (
+      <span className="inline-flex">
+        {value.split('').map((char, index) => {
+          const prevChar = prevValueRef.current[index];
+          const shouldAnimate = prevChar !== char;
+          
+          return (
+            <span
+              key={`${index}-${char}`}
+              className={`inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
+              style={{ 
+                perspective: '1000px',
+                backfaceVisibility: 'hidden'
+              }}
+            >
+              {char}
+            </span>
+          );
+        })}
+      </span>
+    );
   };
 
   return (
@@ -51,11 +102,8 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-gold/10 text-gold animate-fade-up">
               <span className="font-medium">Vendas recuperadas:</span>
-              <span 
-                key={salesValue} 
-                className="font-bold animate-[slide-up_0.3s_ease-out] transform transition-transform hover:scale-105"
-              >
-                {formatCurrency(salesValue)}
+              <span className="font-bold">
+                <AnimatedValue value={formatCurrency(salesValue)} />
               </span>
             </div>
             

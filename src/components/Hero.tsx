@@ -76,7 +76,7 @@ const Hero = () => {
           {/* Right side image */}
           <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <img 
-              src="/lovable-uploads/4caedca9-e579-40fa-8913-012017fea849.png"
+              src="/lovable-uploads/85ee719e-f32d-4a3c-a45e-f36c1aa2d9a3.png"
               alt="Profissional com laptop"
               className="w-full h-auto object-contain"
             />

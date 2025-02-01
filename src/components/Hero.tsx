@@ -21,7 +21,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-12">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
@@ -29,8 +29,8 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex items-center justify-between">
-          <div className="max-w-xl"> {/* Left content */}
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="max-w-xl text-center md:text-left"> {/* Added text-center for mobile */}
             <HeroTag>Automação Inteligente para Empresas</HeroTag>
             <HeroTitle>
               <span>Automatize seus processos.</span>{" "}
@@ -40,7 +40,7 @@ const Hero = () => {
               Simplifique processos, aumente faturamento e reduza custos com CRMs personalizados, 
               IA e automações estratégicas
             </HeroDescription>
-            <div className="max-w-lg">
+            <div className="max-w-lg mx-auto md:mx-0"> {/* Added mx-auto for mobile */}
               <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
                 Agende uma{" "}
                 <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">

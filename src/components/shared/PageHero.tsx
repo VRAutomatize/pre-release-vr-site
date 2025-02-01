@@ -25,7 +25,7 @@ const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroP
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl">
           {tag && (
             <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
               {tag}
@@ -36,7 +36,7 @@ const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroP
             {title}
           </h1>
           
-          <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
+          <p className="text-lg md:text-2xl text-foreground/80 mb-12 animate-fade-up" style={{ animationDelay: "0.4s" }}>
             {subtitle}
           </p>
 

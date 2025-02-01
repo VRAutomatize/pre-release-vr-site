@@ -17,7 +17,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+    <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -34,7 +34,7 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl">
           <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up hover:bg-gold/20 transition-colors duration-300">
             Automação Inteligente para Empresas
           </span>
@@ -46,14 +46,14 @@ const Hero = () => {
             Transforme sua empresa com CRMs personalizados, atendentes de IA e
             automações que otimizam processos e maximizam resultados
           </p>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl">
             <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
               Quer aumentar seu faturamento e reduzir seus custos? Agende uma{" "}
               <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">assessoria gratuita</span> com profissionais da área que poderão traçar o plano 
               ideal para impulsionar o crescimento da sua empresa.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
             <Button 
               className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300"
               onClick={() => {

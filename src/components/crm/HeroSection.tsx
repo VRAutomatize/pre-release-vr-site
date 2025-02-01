@@ -15,10 +15,13 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   const incrementInterval = 5000;
 
   const generateRandomIncrement = () => {
+    // Using exponential distribution to favor smaller values
     const rand = Math.random();
-    const minValue = 23.3;
-    const maxValue = 22000;
-    const lambda = 0.0003;
+    const minValue = 23.3;  // Minimum value
+    const lambda = 0.0003;  // Parameter to control the distribution shape
+    const maxValue = 22000; // Maximum value
+    
+    // Exponential distribution formula adjusted to favor small values
     const value = minValue + (-Math.log(1 - rand * (1 - Math.exp(-lambda * (maxValue - minValue)))) / lambda);
     return Math.min(Math.round(value * 100) / 100, maxValue);
   };
@@ -80,14 +83,16 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold animate-fade-up relative">
               <span className="text-base">Vendas recuperadas:</span>
-              <span className="text-lg">{formatCurrency(salesValue)}</span>
-              {showFloatingValue && difference > 0 && (
-                <span 
-                  className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-green-500 font-medium animate-float-fade"
-                >
-                  +{formatCurrency(difference)}
-                </span>
-              )}
+              <span className="text-lg relative">
+                {formatCurrency(salesValue)}
+                {showFloatingValue && difference > 0 && (
+                  <span 
+                    className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-green-500 font-medium animate-float-fade whitespace-nowrap"
+                  >
+                    +{formatCurrency(difference)}
+                  </span>
+                )}
+              </span>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>

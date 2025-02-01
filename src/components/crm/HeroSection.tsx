@@ -63,11 +63,15 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           return (
             <span
               key={`${index}-${char}`}
-              className={`inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
+              className={`relative inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
               style={{ 
                 perspective: '1000px',
                 transformStyle: 'preserve-3d',
-                backfaceVisibility: 'hidden'
+                transformOrigin: 'center center',
+                backfaceVisibility: 'hidden',
+                height: '1.2em',
+                width: char === ' ' ? '0.3em' : 'auto',
+                minWidth: '0.6em',
               }}
             >
               {char}
@@ -90,7 +94,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-gold/10 text-gold animate-fade-up">
               <span className="font-medium">Vendas recuperadas:</span>
-              <span className="font-bold">
+              <span className="font-bold text-lg">
                 <AnimatedValue value={formatCurrency(salesValue)} />
               </span>
             </div>

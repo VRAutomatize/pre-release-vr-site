@@ -38,47 +38,58 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-xl"> {/* Reduced from max-w-3xl to max-w-xl */}
-          <HeroTag>Automação Inteligente para Empresas</HeroTag>
-          <HeroTitle>
-            <span>Automatize seus processos.</span>{" "}
-            <span className="text-gold">Aumente o faturamento!</span>
-          </HeroTitle>
-          <HeroDescription>
-            Simplifique processos, aumente faturamento e reduza custos com CRMs personalizados, 
-            IA e automações estratégicas
-          </HeroDescription>
-          <div className="max-w-lg"> {/* Reduced from max-w-2xl to max-w-lg */}
-            <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
-              Agende uma{" "}
-              <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">
-                assessoria gratuita
-              </span>{" "}
-              e descubra como impulsionar sua empresa!
-            </p>
+        <div className="flex items-center justify-between">
+          <div className="max-w-xl"> {/* Left content */}
+            <HeroTag>Automação Inteligente para Empresas</HeroTag>
+            <HeroTitle>
+              <span>Automatize seus processos.</span>{" "}
+              <span className="text-gold">Aumente o faturamento!</span>
+            </HeroTitle>
+            <HeroDescription>
+              Simplifique processos, aumente faturamento e reduza custos com CRMs personalizados, 
+              IA e automações estratégicas
+            </HeroDescription>
+            <div className="max-w-lg">
+              <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
+                Agende uma{" "}
+                <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">
+                  assessoria gratuita
+                </span>{" "}
+                e descubra como impulsionar sua empresa!
+              </p>
+            </div>
+            <HeroActions>
+              <Button 
+                className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300"
+                onClick={() => {
+                  toast({
+                    title: "Agendamento",
+                    description: "Em breve você será redirecionado para o formulário de agendamento",
+                    duration: 3000,
+                  });
+                }}
+              >
+                Assessoria Gratuita
+                <ArrowRight className="ml-2 animate-pulse" size={20} />
+              </Button>
+              <Button 
+                variant="outline" 
+                className="px-8 py-6 text-lg hover:bg-gold/10 transition-all duration-300"
+                onClick={scrollToServices}
+              >
+                Saiba Mais
+              </Button>
+            </HeroActions>
           </div>
-          <HeroActions>
-            <Button 
-              className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300"
-              onClick={() => {
-                toast({
-                  title: "Agendamento",
-                  description: "Em breve você será redirecionado para o formulário de agendamento",
-                  duration: 3000,
-                });
-              }}
-            >
-              Assessoria Gratuita
-              <ArrowRight className="ml-2 animate-pulse" size={20} />
-            </Button>
-            <Button 
-              variant="outline" 
-              className="px-8 py-6 text-lg hover:bg-gold/10 transition-all duration-300"
-              onClick={scrollToServices}
-            >
-              Saiba Mais
-            </Button>
-          </HeroActions>
+
+          {/* Right side image */}
+          <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+            <img 
+              src="/lovable-uploads/bd0ef977-6418-4a3e-ae70-f6140fbcbc66.png"
+              alt="Profissional usando tablet"
+              className="w-full h-auto object-contain"
+            />
+          </div>
         </div>
       </div>
     </section>

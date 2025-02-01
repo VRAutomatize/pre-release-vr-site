@@ -51,7 +51,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-gold/10 text-gold animate-fade-up">
               <span className="font-medium">Vendas recuperadas:</span>
-              <span className="font-bold transition-all duration-300 transform hover:scale-105 animate-pulse">
+              <span className="font-bold transition-all duration-300 transform translate-y-0 scale-100 hover:scale-105">
                 {formatCurrency(salesValue)}
               </span>
             </div>

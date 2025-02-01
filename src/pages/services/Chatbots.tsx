@@ -81,7 +81,17 @@ const Chatbots = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=2000)',
+              opacity: 0.1
+            }}
+          />
+
+          {/* Background Effects */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
@@ -92,13 +102,16 @@ const Chatbots = () => {
               <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
                 Chatbots Inteligentes
               </span>
+              
               <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
                 Automatize suas conversas com IA
               </h1>
+              
               <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
                 Chatbots inteligentes que entendem seus clientes e fornecem respostas precisas, 
                 melhorando a experiência e reduzindo custos.
               </p>
+              
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
                 <Button 
                   className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"

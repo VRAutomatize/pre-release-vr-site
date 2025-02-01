@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import Benefits from "@/components/Benefits";
+import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
 import PricingTable from "@/components/ai-attendants/PricingTable";
 import FinalCTA from "@/components/crm/FinalCTA";
+import Benefits from "@/components/Benefits";
 
 const features = [
   {
@@ -64,7 +65,7 @@ const AIAttendants = () => {
       <Header>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2 hover:text-gold transition-colors">
-            <ArrowLeft className="h-4 w-4" />
+            <Home className="h-4 w-4" />
             Home
           </Link>
           <a 
@@ -73,7 +74,7 @@ const AIAttendants = () => {
             rel="noopener noreferrer"
             className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
           >
-            <MessageSquare className="h-4 w-4 mr-2" />
+            <MessageSquare className="h-4 w-4" />
             Entre em contato
           </a>
         </div>
@@ -81,7 +82,17 @@ const AIAttendants = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=2000)',
+              opacity: 0.1
+            }}
+          />
+
+          {/* Background Effects */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
@@ -89,33 +100,32 @@ const AIAttendants = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
-                Atendentes IA para Empresas
-              </span>
+              <MessagesCounter className="mb-6 animate-fade-up" />
+              
               <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
                 Revolucione seu atendimento com IA
               </h1>
+              
               <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
                 Automatize seu atendimento com assistentes virtuais inteligentes que trabalham 24/7, 
                 reduzindo custos e aumentando a satisfação dos clientes.
               </p>
+              
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
                 <a 
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
+                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6 rounded-md"
                 >
                   Agende uma Demonstração
                 </a>
-                <a 
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg px-8 py-6 border border-input bg-background hover:bg-accent hover:text-accent-foreground"
+                <Button 
+                  variant="outline" 
+                  className="text-lg px-8 py-6"
                 >
                   Ver Planos
-                </a>
+                </Button>
               </div>
             </div>
           </div>

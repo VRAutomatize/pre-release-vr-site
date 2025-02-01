@@ -41,18 +41,20 @@ const Hero = () => {
         <div className="max-w-3xl">
           <HeroTag>Automação Inteligente para Empresas</HeroTag>
           <HeroTitle>
-            Automatize seus processos.{" "}
-            <span className="text-gold">Escale seu faturamento.</span>
+            <span>Automatize processos.</span>{" "}
+            <span className="text-gold">Fature mais!</span>
           </HeroTitle>
           <HeroDescription>
-            Transforme sua empresa com CRMs personalizados, atendentes de IA e
-            automações que otimizam processos e maximizam resultados
+            Simplifique processos, aumente faturamento e reduza custos com CRMs personalizados, 
+            IA e automações estratégicas
           </HeroDescription>
           <div className="max-w-2xl">
             <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
-              Quer aumentar seu faturamento e reduzir seus custos? Agende uma{" "}
-              <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">assessoria gratuita</span> com profissionais da área que poderão traçar o plano 
-              ideal para impulsionar o crescimento da sua empresa.
+              Agende uma{" "}
+              <span className="font-bold text-gold hover:text-gold-light transition-colors duration-300">
+                assessoria gratuita
+              </span>{" "}
+              e descubra como impulsionar sua empresa!
             </p>
           </div>
           <HeroActions>
@@ -66,7 +68,7 @@ const Hero = () => {
                 });
               }}
             >
-              Agende uma Reunião
+              Assessoria Gratuita
               <ArrowRight className="ml-2 animate-pulse" size={20} />
             </Button>
             <Button 

@@ -79,7 +79,7 @@ const Hero = () => {
             <img 
               src="/lovable-uploads/feb0a32a-fd43-4f11-a6eb-b9c493b7e77e.png"
               alt="Profissional com laptop"
-              className="w-[90%] h-auto object-contain mx-auto"
+              className="w-[70%] h-auto object-contain mx-auto"
             />
           </div>
         </div>

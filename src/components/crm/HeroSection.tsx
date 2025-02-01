@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
 interface HeroSectionProps {
@@ -61,7 +61,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
 
   // Split the formatted value into individual characters for animation
   const AnimatedValue = ({ value }: { value: string }) => {
-    const prevValueRef = React.useRef(value);
+    const prevValueRef = useRef(value);
     
     useEffect(() => {
       prevValueRef.current = value;

@@ -51,7 +51,9 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-gold/10 text-gold animate-fade-up">
               <span className="font-medium">Vendas recuperadas:</span>
-              <span className="font-bold">{formatCurrency(salesValue)}</span>
+              <span className="font-bold transition-all duration-300 transform hover:scale-105 animate-pulse">
+                {formatCurrency(salesValue)}
+              </span>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>

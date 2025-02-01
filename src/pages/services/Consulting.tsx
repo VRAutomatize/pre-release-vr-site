@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Benefits from "@/components/Benefits";
 import PricingPlans from "@/components/crm/PricingPlans";
 import FinalCTA from "@/components/crm/FinalCTA";
+import PageHero from "@/components/shared/PageHero";
+import HeroActions from "@/components/shared/HeroActions";
 
 const features = [
   {
@@ -80,42 +82,32 @@ const Consulting = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
-        {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-          </div>
+        <PageHero
+          title="Transforme seu negócio."
+          subtitle="Receba orientação especializada para identificar e implementar as melhores soluções de automação para seu negócio."
+          tag="Consultoria Especializada"
+          backgroundImage="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=2000"
+        >
+          <HeroActions>
+            <a 
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background h-12 px-8"
+            >
+              Agendar Consultoria!
+            </a>
+            <a 
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 hover:bg-gold hover:text-background"
+            >
+              Saiba Mais
+            </a>
+          </HeroActions>
+        </PageHero>
 
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
-                Consultoria Especializada
-              </span>
-              <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Transforme seu negócio
-              </h1>
-              <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                Receba orientação especializada para identificar e implementar 
-                as melhores soluções de automação para seu negócio.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                <Button 
-                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
-                >
-                  Agende uma Consultoria Gratuita
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-6"
-                >
-                  Ver Planos
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-        
         {/* Features Section */}
         <section className="relative z-10 space-y-24">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Nossa Metodologia</h2>

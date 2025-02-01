@@ -88,8 +88,13 @@ export default {
             transform: "rotateX(0deg)",
             opacity: "1"
           },
-          "50%": {
-            opacity: "0"
+          "25%": {
+            transform: "rotateX(90deg)",
+            opacity: "0.5"
+          },
+          "75%": {
+            transform: "rotateX(270deg)",
+            opacity: "0.5"
           },
           "100%": { 
             transform: "rotateX(360deg)",
@@ -106,7 +111,7 @@ export default {
         "slide-in": "slide-in 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s linear infinite",
-        "slot-spin": "slot-spin 0.5s ease-out",
+        "slot-spin": "slot-spin 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
       },
     },
   },

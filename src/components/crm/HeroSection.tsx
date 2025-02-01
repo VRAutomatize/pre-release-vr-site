@@ -12,26 +12,15 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   const incrementInterval = 5000;
 
   const generateRandomIncrement = () => {
-    // Generate a random number between 0 and 1
     const rand = Math.random();
-    
-    // Use exponential distribution to favor lower values
-    // Values between 23.30 and 22000.00
     const minValue = 23.3;
     const maxValue = 22000;
-    
-    // Exponential distribution parameter (lower lambda = more spread)
     const lambda = 0.0003;
-    
-    // Calculate value using inverse exponential distribution
     const value = minValue + (-Math.log(1 - rand * (1 - Math.exp(-lambda * (maxValue - minValue)))) / lambda);
-    
-    // Round to 2 decimal places
     return Math.min(Math.round(value * 100) / 100, maxValue);
   };
 
   useEffect(() => {
-    // Initial rapid animation from 0 to target
     const steps = 50;
     const stepDuration = initialAnimationDuration / steps;
     const stepValue = targetValue / steps;
@@ -42,7 +31,6 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       }, stepDuration * i);
     }
 
-    // Continuous random increments after initial animation
     const interval = setInterval(() => {
       setSalesValue(prev => prev + generateRandomIncrement());
     }, incrementInterval);
@@ -59,7 +47,6 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
     });
   };
 
-  // Split the formatted value into individual characters for animation
   const AnimatedValue = ({ value }: { value: string }) => {
     const prevValueRef = useRef(value);
     
@@ -79,6 +66,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
               className={`inline-block ${shouldAnimate ? 'animate-slot-spin' : ''}`}
               style={{ 
                 perspective: '1000px',
+                transformStyle: 'preserve-3d',
                 backfaceVisibility: 'hidden'
               }}
             >

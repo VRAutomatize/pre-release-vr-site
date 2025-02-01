@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import HeroTag from "./shared/HeroTag";
+import HeroTitle from "./shared/HeroTitle";
+import HeroDescription from "./shared/HeroDescription";
+import HeroActions from "./shared/HeroActions";
 
 const Hero = () => {
   const { toast } = useToast();
@@ -35,17 +39,15 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up hover:bg-gold/20 transition-colors duration-300">
-            Automação Inteligente para Empresas
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-up hover:scale-[1.02] transition-transform duration-300" style={{ animationDelay: "0.2s" }}>
+          <HeroTag>Automação Inteligente para Empresas</HeroTag>
+          <HeroTitle>
             Automatize seus processos.{" "}
             <span className="text-gold">Escale seu faturamento.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-foreground/80 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.4s" }}>
+          </HeroTitle>
+          <HeroDescription>
             Transforme sua empresa com CRMs personalizados, atendentes de IA e
             automações que otimizam processos e maximizam resultados
-          </p>
+          </HeroDescription>
           <div className="max-w-2xl">
             <p className="text-foreground/90 mb-8 animate-fade-up hover:text-foreground transition-colors duration-300" style={{ animationDelay: "0.5s" }}>
               Quer aumentar seu faturamento e reduzir seus custos? Agende uma{" "}
@@ -53,7 +55,7 @@ const Hero = () => {
               ideal para impulsionar o crescimento da sua empresa.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
+          <HeroActions>
             <Button 
               className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300"
               onClick={() => {
@@ -74,7 +76,7 @@ const Hero = () => {
             >
               Saiba Mais
             </Button>
-          </div>
+          </HeroActions>
         </div>
       </div>
     </section>

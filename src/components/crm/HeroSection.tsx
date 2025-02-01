@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import HeroTag from "../shared/HeroTag";
+import HeroTitle from "../shared/HeroTitle";
+import HeroDescription from "../shared/HeroDescription";
+import HeroActions from "../shared/HeroActions";
 
 interface HeroSectionProps {
   whatsappLink: string;
@@ -101,20 +105,20 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
               </div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
+            <HeroTitle>
               Chega de Queimar Dinheiro: 
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light block mt-2">
                 CRM que Transforma Tráfego em Vendas!
               </span>
-            </h1>
+            </HeroTitle>
 
-            <p className="text-lg md:text-xl text-foreground/80 max-w-2xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
+            <HeroDescription>
               Transforme seu tráfego pago em vendas reais: recuperamos clientes sem resposta, 
               automatizamos processos e ajudamos seus vendedores a focar no que importa, 
               enquanto sua empresa fatura mais.
-            </p>
+            </HeroDescription>
 
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
+            <HeroActions>
               <a 
                 href={whatsappLink}
                 target="_blank"
@@ -131,7 +135,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
               >
                 Saiba Mais
               </a>
-            </div>
+            </HeroActions>
           </div>
         </div>
       </div>

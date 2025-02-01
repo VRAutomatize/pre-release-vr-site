@@ -1,3 +1,7 @@
+import HeroTag from "./HeroTag";
+import HeroTitle from "./HeroTitle";
+import HeroDescription from "./HeroDescription";
+
 interface PageHeroProps {
   title: string;
   subtitle: string;
@@ -26,23 +30,10 @@ const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroP
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          {tag && (
-            <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up hover:bg-gold/20 transition-colors duration-300">
-              {tag}
-            </span>
-          )}
-          
-          <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            {title}
-          </h1>
-          
-          <p className="text-lg md:text-2xl text-foreground/80 mb-12 animate-fade-up" style={{ animationDelay: "0.4s" }}>
-            {subtitle}
-          </p>
-
-          <div className="animate-fade-up" style={{ animationDelay: "0.6s" }}>
-            {children}
-          </div>
+          {tag && <HeroTag>{tag}</HeroTag>}
+          <HeroTitle>{title}</HeroTitle>
+          <HeroDescription>{subtitle}</HeroDescription>
+          {children}
         </div>
       </div>
     </section>

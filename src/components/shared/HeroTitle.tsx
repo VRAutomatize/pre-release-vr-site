@@ -4,15 +4,27 @@ interface HeroTitleProps {
 }
 
 const HeroTitle = ({ children, delay = "0.2s" }: HeroTitleProps) => {
-  // Replace periods with period + line break in the text
-  const formattedText = children?.toString().replace(/\./g, '.\n');
+  const renderContent = () => {
+    if (typeof children === 'string') {
+      return children;
+    }
+    if (Array.isArray(children)) {
+      return children.map((child, index) => {
+        if (typeof child === 'string') {
+          return child;
+        }
+        return child;
+      });
+    }
+    return children;
+  };
 
   return (
     <h1 
-      className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up whitespace-pre-line" 
+      className="text-4xl md:text-7xl font-bold mb-8 leading-tight animate-fade-up whitespace-pre-line" 
       style={{ animationDelay: delay }}
     >
-      {formattedText}
+      {renderContent()}
     </h1>
   );
 };

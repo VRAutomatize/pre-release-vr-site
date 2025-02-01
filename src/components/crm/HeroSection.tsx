@@ -15,13 +15,11 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   const incrementInterval = 5000;
 
   const generateRandomIncrement = () => {
-    // Using exponential distribution to favor smaller values
     const rand = Math.random();
-    const minValue = 23.3;  // Minimum value
-    const lambda = 0.0003;  // Parameter to control the distribution shape
-    const maxValue = 22000; // Maximum value
+    const minValue = 23.3;
+    const lambda = 0.0003;
+    const maxValue = 22000;
     
-    // Exponential distribution formula adjusted to favor small values
     const value = minValue + (-Math.log(1 - rand * (1 - Math.exp(-lambda * (maxValue - minValue)))) / lambda);
     return Math.min(Math.round(value * 100) / 100, maxValue);
   };
@@ -50,10 +48,9 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
       setDifference(diff);
       setShowFloatingValue(true);
       
-      // Reset floating value after animation
       const timer = setTimeout(() => {
         setShowFloatingValue(false);
-      }, 1500); // Match animation duration
+      }, 1500);
       
       prevValueRef.current = salesValue;
       
@@ -71,7 +68,16 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   };
 
   return (
-    <section className="min-h-[90vh] flex items-center relative overflow-hidden pt-20">
+    <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=2000)',
+          opacity: 0.1
+        }}
+      />
+
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

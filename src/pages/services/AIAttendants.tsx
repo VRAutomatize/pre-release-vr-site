@@ -6,6 +6,10 @@ import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
 import PricingTable from "@/components/ai-attendants/PricingTable";
 import FinalCTA from "@/components/crm/FinalCTA";
 import Benefits from "@/components/Benefits";
+import HeroTag from "@/components/shared/HeroTag";
+import HeroTitle from "@/components/shared/HeroTitle";
+import HeroDescription from "@/components/shared/HeroDescription";
+import HeroActions from "@/components/shared/HeroActions";
 
 const features = [
   {
@@ -82,7 +86,7 @@ const AIAttendants = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden mt-16">
+        <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
           {/* Background Image */}
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -99,34 +103,36 @@ const AIAttendants = () => {
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
+            <div className="max-w-3xl">
               <MessagesCounter className="mb-6 animate-fade-up" />
               
-              <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
+              <HeroTitle>
                 Revolucione seu atendimento com IA
-              </h1>
+              </HeroTitle>
               
-              <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
+              <HeroDescription>
                 Automatize seu atendimento com assistentes virtuais inteligentes que trabalham 24/7, 
                 reduzindo custos e aumentando a satisfação dos clientes.
-              </p>
+              </HeroDescription>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
+              <HeroActions>
                 <a 
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6 rounded-md"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background h-12 px-8"
                 >
-                  Agende uma Demonstração
+                  Instalar Atendente IA!
                 </a>
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-6"
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 hover:bg-gold hover:text-background"
                 >
-                  Ver Planos
-                </Button>
-              </div>
+                  Saiba Mais
+                </a>
+              </HeroActions>
             </div>
           </div>
         </section>
@@ -156,14 +162,9 @@ const AIAttendants = () => {
                   <feature.icon className="w-12 h-12 text-gold mb-4" />
                   <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-foreground/80 mb-6">{feature.description}</p>
-                  <a 
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 hover:bg-gold hover:text-background"
-                  >
+                  <Button variant="outline" className="hover:bg-gold hover:text-background">
                     {feature.cta}
-                  </a>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -189,7 +190,6 @@ const AIAttendants = () => {
         </section>
 
         <Benefits />
-        
         <PricingTable />
         <FinalCTA whatsappLink={whatsappLink} />
       </div>

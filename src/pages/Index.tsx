@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BackToTop from "@/components/BackToTop";
+import ConsultationCard from "@/components/ConsultationCard";
 
 // Lazy load components that are not immediately visible
 const ClientLogos = lazy(() => import("@/components/ClientLogos"));
@@ -31,6 +32,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<LoadingComponent />}>
         <About />
+      </Suspense>
+      <Suspense fallback={<LoadingComponent />}>
+        <ConsultationCard />
       </Suspense>
       <Suspense fallback={<LoadingComponent />}>
         <Footer />

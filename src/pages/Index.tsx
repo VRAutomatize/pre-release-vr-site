@@ -1,17 +1,18 @@
+
 import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BackToTop from "@/components/BackToTop";
-import ConsultationCard from "@/components/ConsultationCard";
 
 // Lazy load components that are not immediately visible
 const ClientLogos = lazy(() => import("@/components/ClientLogos"));
 const Services = lazy(() => import("@/components/Services"));
 const Benefits = lazy(() => import("@/components/Benefits"));
 const About = lazy(() => import("@/components/About"));
+const ConsultationCard = lazy(() => import("@/components/ConsultationCard"));
 const Footer = lazy(() => import("@/components/Footer"));
 
-// Loading component
+// Loading component with skeleton animation
 const LoadingComponent = () => (
   <div className="w-full h-48 animate-pulse bg-secondary/20 rounded-lg" />
 );

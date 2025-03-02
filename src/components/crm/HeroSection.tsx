@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import HeroTag from "../shared/HeroTag";
@@ -72,7 +73,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   };
 
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden pt-16">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

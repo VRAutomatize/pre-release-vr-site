@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
@@ -38,7 +39,7 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
 };
 
 const PricingTable = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
+  const [isAnnual, setIsAnnual] = useState(false);
 
   return (
     <section className="py-20 px-4">

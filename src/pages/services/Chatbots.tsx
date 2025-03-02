@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -83,15 +82,6 @@ const Chatbots = () => {
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
         <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=2000)',
-              opacity: 0.1
-            }}
-          />
-
           {/* Background Effects */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

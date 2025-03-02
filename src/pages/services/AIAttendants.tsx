@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";

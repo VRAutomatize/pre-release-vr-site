@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -81,7 +82,7 @@ const Chatbots = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
+        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
           {/* Background Image */}
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"

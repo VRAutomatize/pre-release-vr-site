@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Check, CreditCard } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -86,7 +86,7 @@ const AIAttendants = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
+        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
           {/* Background Image */}
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"

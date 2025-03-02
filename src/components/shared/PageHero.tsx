@@ -14,7 +14,7 @@ interface PageHeroProps {
 
 const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroProps) => {
   return (
-    <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
       {/* Background Image with lazy loading */}
       <Suspense fallback={<div className="absolute inset-0 z-0 bg-gray-800/20 animate-pulse" />}>
         <div 

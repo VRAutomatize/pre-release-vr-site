@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import HeroTag from "../shared/HeroTag";
@@ -72,7 +73,7 @@ const HeroSection = ({ whatsappLink }: HeroSectionProps) => {
   };
 
   return (
-    <section className="min-h-[90vh] flex items-center relative overflow-hidden mt-16">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"

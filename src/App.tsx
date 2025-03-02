@@ -1,8 +1,10 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AIAttendants from "./pages/services/AIAttendants";
@@ -11,16 +13,23 @@ import Chatbots from "./pages/services/Chatbots";
 import LeadCapture from "./pages/services/LeadCapture";
 import Automation from "./pages/services/Automation";
 import Consulting from "./pages/services/Consulting";
+import PageTransition from "./components/PageTransition";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
+// AnimationLayout component handles route transitions
+const AnimationLayout = () => {
+  const location = useLocation();
+  
+  // Scroll to top when route changes
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  return (
+    <AnimatePresence mode="wait">
+      <PageTransition key={location.pathname}>
+        <Routes location={location}>
           <Route path="/" element={<Index />} />
           <Route path="/services/ai-attendants" element={<AIAttendants />} />
           <Route path="/services/crm" element={<CRM />} />
@@ -30,6 +39,18 @@ const App = () => (
           <Route path="/services/consulting" element={<Consulting />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </PageTransition>
+    </AnimatePresence>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <AnimationLayout />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

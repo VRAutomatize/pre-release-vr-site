@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "lucide-react";
 
@@ -42,6 +43,21 @@ const services = [
 ];
 
 const Services = () => {
+  const navigate = useNavigate();
+  
+  const handleServiceClick = (route: string) => {
+    // Navigate to the service page
+    navigate(route);
+    
+    // After navigation, scroll to the top smoothly (for cases where animation is too fast)
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }, 100);
+  };
+  
   return (
     <section id="services" className="py-20 px-4">
       <div className="container mx-auto">
@@ -54,10 +70,10 @@ const Services = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service) => (
-            <Link 
-              key={service.title} 
-              to={service.route}
-              className="transition-transform hover:-translate-y-2 duration-300"
+            <div 
+              key={service.title}
+              onClick={() => handleServiceClick(service.route)}
+              className="transition-transform hover:-translate-y-2 duration-300 cursor-pointer"
             >
               <Card className="h-full floating-card">
                 <CardHeader>
@@ -70,7 +86,7 @@ const Services = () => {
                   <p className="text-foreground/80">{service.description}</p>
                 </CardContent>
               </Card>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

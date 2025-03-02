@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -80,7 +81,7 @@ const CRM = () => {
         </div>
       </Header>
 
-      <div className="container mx-auto px-4 pt-24 space-y-32">
+      <div className="container mx-auto px-4 pt-0 space-y-32">
         <HeroSection whatsappLink={whatsappLink} />
         
         {/* Features Section */}

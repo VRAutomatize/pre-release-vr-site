@@ -80,9 +80,9 @@ const Consulting = () => {
         </div>
       </Header>
 
-      <div className="container mx-auto px-4 pt-24 space-y-32">
+      <div className="container mx-auto px-4 pt-0 space-y-32">
         {/* Hero Section */}
-        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
+        <section className="min-h-[85vh] flex items-center relative overflow-hidden">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />

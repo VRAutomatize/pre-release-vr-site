@@ -23,7 +23,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
+    <section className="min-h-[85vh] flex items-center relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

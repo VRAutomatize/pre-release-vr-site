@@ -27,7 +27,7 @@ export const FeatureItem = ({ feature }: FeatureItemProps) => (
           <TooltipContent 
             side="right"
             align="start"
-            className="max-w-[250px] bg-black/90 border-gold/20 text-white z-50"
+            className="max-w-[250px] bg-black/90 border-gold/20 text-white z-[100]"
             sideOffset={16}
           >
             <p>{featureBenefits[feature]}</p>

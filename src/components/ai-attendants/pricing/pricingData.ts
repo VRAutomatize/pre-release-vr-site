@@ -39,7 +39,7 @@ export const plans = [
     name: "Pro",
     monthlyPrice: 1270,
     annualTotal: 10000,
-    description: "Para empresas que precisam de recursos avançados",
+    description: "O plano essencial para a sua operação",
     implementation: 0,
     highlighted: true,
     buttonText: "Experimente Grátis"

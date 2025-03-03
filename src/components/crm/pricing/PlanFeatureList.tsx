@@ -77,7 +77,7 @@ const PlanFeatureList = ({ features, highlighted }: PlanFeatureListProps) => {
                       </TooltipTrigger>
                       <TooltipContent 
                         side="right"
-                        className="max-w-[250px] bg-black/90 border-gold/20 text-white z-[100]"
+                        className="max-w-[250px] bg-black/90 border-gold/20 text-white z-[150]"
                       >
                         <p>{featureBenefits[feature.name]}</p>
                       </TooltipContent>

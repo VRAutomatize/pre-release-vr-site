@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 
 interface MessagesCounterProps {
@@ -12,7 +11,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
   const [showFloatingValue, setShowFloatingValue] = useState(false);
   const targetValue = 742934.90;  // Base value for savings in BRL
   const initialAnimationDuration = 2000;
-  const incrementInterval = 3000; // Changed to 3 seconds as requested
+  const incrementInterval = 15000; // Changed to 15 seconds as requested
 
   const generateRandomIncrement = () => {
     // Random value between 1400 and 3200

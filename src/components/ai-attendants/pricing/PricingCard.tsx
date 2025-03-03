@@ -125,6 +125,24 @@ export const PricingCard = ({
         
         <p className="text-sm font-medium text-foreground/80 mb-4">Recursos incluídos:</p>
         <ul className="space-y-3">
+          {/* Add basic plan features for all plans */}
+          {plan.name === "Básico" && (
+            <>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Atendimento via texto</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Agendamentos</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Suporte a múltiplos idiomas (PT, EN, ES)</span>
+              </li>
+            </>
+          )}
+          
           {showBasicPrefix && plan.name !== "Básico" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
@@ -144,15 +162,12 @@ export const PricingCard = ({
             </li>
           )}
           
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <li key={feature.name} className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
-                <span className="text-sm">{feature.name}</span>
-              </li>
-            );
-          })}
+          {features.map((feature, index) => (
+            <li key={feature.name} className="flex items-start gap-3">
+              <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+              <span className="text-sm">{feature.name}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

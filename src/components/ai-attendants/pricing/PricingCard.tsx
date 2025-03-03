@@ -1,4 +1,3 @@
-
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatCurrency, calculateInstallments } from "@/utils/pricing";
@@ -211,27 +210,73 @@ export const PricingCard = ({
             </>
           )}
           
-          {showBasicPrefix && plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && (
+          {/* Premium plan specific features */}
+          {plan.name === "Premium" && (
+            <>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">Todos os recursos dos outros planos</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Desenvolvimento sob medida</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Integrações personalizadas</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Treinamento especializado (medicina, etc.)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Suporte a 26 idiomas</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Interação assíncrona</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Memória e contexto avançados</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">RAG avançado</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Análises de dados personalizadas</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Gerenciamento completo</span>
+              </li>
+            </>
+          )}
+          
+          {showBasicPrefix && plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && plan.name !== "Premium" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Básico</span>
             </li>
           )}
-          {showProPrefix && plan.name !== "Pro" && plan.name !== "Básico" && plan.name !== "Avançado" && (
+          {showProPrefix && plan.name !== "Pro" && plan.name !== "Básico" && plan.name !== "Avançado" && plan.name !== "Premium" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Pro</span>
             </li>
           )}
-          {showAdvancedPrefix && plan.name !== "Pro" && plan.name !== "Básico" && plan.name !== "Avançado" && (
+          {showAdvancedPrefix && plan.name !== "Pro" && plan.name !== "Básico" && plan.name !== "Avançado" && plan.name !== "Premium" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Avançado</span>
             </li>
           )}
           
-          {/* Only show features for plans other than Basic, Pro and Advanced */}
-          {plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && features.map((feature, index) => (
+          {/* Only show features for plans other than Basic, Pro, Advanced and Premium */}
+          {plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && plan.name !== "Premium" && features.map((feature, index) => (
             <li key={feature.name} className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm">{feature.name}</span>

@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -84,9 +85,9 @@ const AIAttendants = () => {
         </div>
       </Header>
 
-      <div className="container mx-auto px-4 pt-24 space-y-32">
-        {/* Hero Section */}
-        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
+      <div className="container mx-auto px-4 pt-12 space-y-32">
+        {/* Hero Section - Reduced spacing from pt-24 to pt-12 */}
+        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-12">
           {/* Background Effects */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

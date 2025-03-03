@@ -38,6 +38,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
     const interval = setInterval(() => {
       setMessagesCount(prev => {
         const newValue = prev + generateRandomIncrement();
+        prevValueRef.current = prev; // Store the previous value before updating
         return newValue;
       });
     }, incrementInterval);
@@ -46,7 +47,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
   }, []);
 
   useEffect(() => {
-    if (prevValueRef.current !== messagesCount && messagesCount > prevValueRef.current) {
+    if (prevValueRef.current !== 0 && messagesCount > prevValueRef.current) {
       const diff = messagesCount - prevValueRef.current;
       setDifference(diff);
       setShowFloatingValue(true);
@@ -54,8 +55,6 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
       const timer = setTimeout(() => {
         setShowFloatingValue(false);
       }, 1500);
-      
-      prevValueRef.current = messagesCount;
       
       return () => clearTimeout(timer);
     }

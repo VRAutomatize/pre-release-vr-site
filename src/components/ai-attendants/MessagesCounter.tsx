@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 
 interface MessagesCounterProps {
@@ -9,7 +10,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
   const prevValueRef = useRef(0);
   const [difference, setDifference] = useState(0);
   const [showFloatingValue, setShowFloatingValue] = useState(false);
-  const targetValue = 234567;
+  const targetValue = 128765;  // Changed to a more realistic number for completed service interactions
   const initialAnimationDuration = 2000;
   const incrementInterval = 3000;
 
@@ -63,7 +64,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
 
   return (
     <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 text-gold ${className}`}>
-      <span className="text-base">Mensagens trocadas:</span>
+      <span className="text-base">Atendimentos realizados:</span>
       <div className="relative inline-block">
         <span className="text-lg">{formatNumber(messagesCount)}</span>
         {showFloatingValue && difference > 0 && (

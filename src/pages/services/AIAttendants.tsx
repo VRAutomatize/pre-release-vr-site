@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -98,12 +99,16 @@ const AIAttendants = () => {
               <MessagesCounter className="mb-6 animate-fade-up" />
               
               <HeroTitle>
-                Revolucione seu atendimento com IA
+                Funcionários Digitais que Nunca Tiram Férias, 
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light block mt-2">
+                  Trabalham 24/7 e Não Pedem Aumento!
+                </span>
               </HeroTitle>
               
               <HeroDescription>
-                Automatize seu atendimento com assistentes virtuais inteligentes que trabalham 24/7, 
-                reduzindo custos e aumentando a satisfação dos clientes.
+                Economize até 73% com folha de pagamento enquanto multiplica a produtividade. Sem processos seletivos, 
+                sem treinamentos demorados, sem burocracias trabalhistas. Contrate funcionários digitais 
+                que nunca adoecem e estão sempre prontos para atender seus clientes com excelência.
               </HeroDescription>
               
               <HeroActions>
@@ -113,7 +118,7 @@ const AIAttendants = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background h-12 px-8"
                 >
-                  Instalar Atendente IA!
+                  Contratar!
                 </a>
                 <a 
                   href={whatsappLink}
@@ -164,7 +169,7 @@ const AIAttendants = () => {
 
         {/* Benefits Section */}
         <section className="relative z-10">
-          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios dos Atendentes IA</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios dos Funcionários Digitais</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <div 

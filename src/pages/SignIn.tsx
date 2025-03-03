@@ -12,7 +12,7 @@ const SignIn = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex-grow container mx-auto px-4 py-16">
+      <div className="flex-grow container mx-auto px-4 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -24,8 +24,8 @@ const SignIn = () => {
           <div className="bg-card p-6 rounded-lg shadow-lg">
             <ClerkSignIn
               routing="path"
-              path="/signin"
-              signUpUrl="/signin"
+              path="/sign-in"
+              signUpUrl="/sign-in"
               afterSignInUrl="/profile"
               appearance={{
                 elements: {

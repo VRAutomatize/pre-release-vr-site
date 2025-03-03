@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useClerk, useAuth } from "@clerk/clerk-react";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -14,6 +15,7 @@ const Header = ({ children }: HeaderProps) => {
   const [isLogoVisible, setIsLogoVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isSignedIn } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,6 +75,14 @@ const Header = ({ children }: HeaderProps) => {
     }
   };
 
+  const handleAuthAction = () => {
+    if (isSignedIn) {
+      navigate('/profile');
+    } else {
+      navigate('/sign-in');
+    }
+  };
+
   return (
     <header
       className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
@@ -115,8 +125,12 @@ const Header = ({ children }: HeaderProps) => {
               <a href="#contact" className="hover:text-gold transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-gold after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
                 Contato
               </a>
-              <Button className="bg-gold hover:bg-gold-light text-background transition-all duration-300 transform hover:scale-105">
-                Entre em contato
+              <Button
+                onClick={() => handleAuthAction()}
+                className="bg-gold hover:bg-gold-light text-background transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+              >
+                <User size={18} />
+                {isSignedIn ? 'Meu Perfil' : 'Entrar'}
               </Button>
             </div>
           )}
@@ -152,8 +166,15 @@ const Header = ({ children }: HeaderProps) => {
             >
               Contato
             </a>
-            <Button className="bg-gold hover:bg-gold-light text-background w-full transition-all duration-300 transform hover:scale-105">
-              Entre em contato
+            <Button 
+              onClick={() => {
+                handleAuthAction();
+                setIsMenuOpen(false);
+              }}
+              className="bg-gold hover:bg-gold-light text-background w-full transition-all duration-300 transform hover:scale-105 flex items-center gap-2 justify-center"
+            >
+              <User size={18} />
+              {isSignedIn ? 'Meu Perfil' : 'Entrar'}
             </Button>
           </div>
         )}

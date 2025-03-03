@@ -1,153 +1,93 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser, useAuth, SignOutButton } from '@clerk/clerk-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { useUser, useClerk, SignOutButton } from '@clerk/clerk-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { UserIcon, LogOut, Camera, Save } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 
 const Profile = () => {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const { signOut } = useAuth();
+  const { user } = useUser();
   const navigate = useNavigate();
-  
-  const [name, setName] = useState(user?.fullName || '');
-  const [email, setEmail] = useState(user?.primaryEmailAddress?.emailAddress || '');
-  const [phone, setPhone] = useState(user?.phoneNumbers?.[0]?.phoneNumber || '');
-  const [saving, setSaving] = useState(false);
-  
-  // Redirect to sign in if not signed in
-  React.useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      navigate('/signin');
-    }
-  }, [isLoaded, isSignedIn, navigate]);
-  
-  if (!isLoaded || !isSignedIn) {
-    return <div className="flex justify-center items-center h-screen">Carregando...</div>;
+  const { signOut } = useClerk();
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold"></div>
+      </div>
+    );
   }
-  
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      // In a real app, we would save the updated data to Clerk and/or our backend
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      toast({
-        title: "Perfil atualizado",
-        description: "Suas informações foram atualizadas com sucesso.",
-      });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erro ao atualizar",
-        description: "Ocorreu um erro ao atualizar seu perfil.",
-      });
-    } finally {
-      setSaving(false);
-    }
-  };
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex-grow container mx-auto px-4 py-16">
+      <main className="flex-grow container mx-auto px-4 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto"
+          className="max-w-4xl mx-auto"
         >
-          <h1 className="text-3xl font-bold mb-8 text-center">Seu Perfil</h1>
-          
-          <div className="grid gap-8 md:grid-cols-[300px_1fr]">
-            {/* Profile sidebar */}
-            <div className="space-y-6">
-              <Card>
-                <CardContent className="pt-6 flex flex-col items-center">
-                  <div className="relative mb-4">
-                    <Avatar className="w-32 h-32">
-                      <AvatarImage src={user.imageUrl} alt={user.fullName || 'Avatar'} />
-                      <AvatarFallback className="text-2xl bg-gold/20">
-                        {user.fullName?.charAt(0) || <UserIcon className="w-8 h-8" />}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="absolute -right-2 bottom-0 bg-gold text-background p-1.5 rounded-full cursor-pointer hover:bg-gold-light transition-colors">
-                      <Camera size={16} />
-                    </div>
-                  </div>
-                  <h2 className="text-xl font-semibold">{user.fullName}</h2>
-                  <p className="text-sm text-muted-foreground">{user.primaryEmailAddress?.emailAddress}</p>
-                  
-                  <div className="w-full mt-6">
-                    <SignOutButton>
-                      <Button variant="outline" className="w-full gap-2" onClick={() => navigate('/')}>
-                        <LogOut size={16} />
-                        Sair da conta
-                      </Button>
-                    </SignOutButton>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="bg-card rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-gold/60 to-gold p-6 flex flex-col sm:flex-row items-center gap-6">
+              <div className="h-24 w-24 rounded-full bg-white/20 flex items-center justify-center text-white overflow-hidden">
+                {user.imageUrl ? (
+                  <img 
+                    src={user.imageUrl} 
+                    alt={user.fullName || 'Usuário'} 
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <User size={48} />
+                )}
+              </div>
+              <div className="text-center sm:text-left">
+                <h1 className="text-3xl font-bold text-white">{user.fullName || 'Bem-vindo!'}</h1>
+                <p className="text-white/80">{user.primaryEmailAddress?.emailAddress}</p>
+              </div>
             </div>
             
-            {/* Profile settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Informações pessoais</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <div className="p-6">
+              <h2 className="text-2xl font-semibold mb-6">Informações da conta</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nome completo</Label>
-                  <Input 
-                    id="name" 
-                    value={name} 
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Seu nome completo"
-                  />
+                  <p className="text-sm text-muted-foreground">Nome completo</p>
+                  <p className="font-medium">{user.fullName || 'Não informado'}</p>
                 </div>
-                
                 <div className="space-y-2">
-                  <Label htmlFor="email">E-mail</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    placeholder="seu@email.com"
-                  />
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium">{user.primaryEmailAddress?.emailAddress || 'Não informado'}</p>
                 </div>
-                
                 <div className="space-y-2">
-                  <Label htmlFor="phone">WhatsApp</Label>
-                  <Input 
-                    id="phone" 
-                    value={phone} 
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="(00) 00000-0000"
-                  />
+                  <p className="text-sm text-muted-foreground">ID de Usuário</p>
+                  <p className="font-medium">{user.id}</p>
                 </div>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  onClick={handleSave} 
-                  disabled={saving}
-                  className="bg-gold hover:bg-gold-light text-background"
-                >
-                  {saving ? 'Salvando...' : 'Salvar alterações'}
-                  {!saving && <Save size={16} className="ml-2" />}
-                </Button>
-              </CardFooter>
-            </Card>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Data de criação</p>
+                  <p className="font-medium">{new Date(user.createdAt).toLocaleDateString('pt-BR')}</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-end mt-8">
+                <SignOutButton>
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2"
+                    onClick={() => navigate('/')}
+                  >
+                    <LogOut size={16} />
+                    Sair
+                  </Button>
+                </SignOutButton>
+              </div>
+            </div>
           </div>
         </motion.div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

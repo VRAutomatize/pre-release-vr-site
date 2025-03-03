@@ -125,7 +125,7 @@ export const PricingCard = ({
         
         <p className="text-sm font-medium text-foreground/80 mb-4">Recursos incluídos:</p>
         <ul className="space-y-3">
-          {/* Add basic plan features for all plans */}
+          {/* Basic plan features */}
           {plan.name === "Básico" && (
             <>
               <li className="flex items-start gap-3">
@@ -177,13 +177,47 @@ export const PricingCard = ({
             </>
           )}
           
-          {showBasicPrefix && plan.name !== "Básico" && plan.name !== "Pro" && (
+          {/* Advanced plan specific features */}
+          {plan.name === "Avançado" && (
+            <>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">Todos os recursos dos Planos Básico e Pro</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Atendimento via imagem</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Processamento de arquivos</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Funcionalidades de SDR</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Integração com loja virtual</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Recuperação de vendas</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Pesquisa e aprendizado automático</span>
+              </li>
+            </>
+          )}
+          
+          {showBasicPrefix && plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Básico</span>
             </li>
           )}
-          {showProPrefix && plan.name !== "Pro" && plan.name !== "Básico" && (
+          {showProPrefix && plan.name !== "Pro" && plan.name !== "Básico" && plan.name !== "Avançado" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Pro</span>
@@ -196,8 +230,8 @@ export const PricingCard = ({
             </li>
           )}
           
-          {/* Only show features for plans other than Basic and Pro */}
-          {plan.name !== "Básico" && plan.name !== "Pro" && features.map((feature, index) => (
+          {/* Only show features for plans other than Basic, Pro and Advanced */}
+          {plan.name !== "Básico" && plan.name !== "Pro" && plan.name !== "Avançado" && features.map((feature, index) => (
             <li key={feature.name} className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm">{feature.name}</span>

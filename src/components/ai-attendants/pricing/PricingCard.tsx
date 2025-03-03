@@ -41,9 +41,9 @@ export const PricingCard = ({
   return (
     <TooltipProvider delayDuration={300}>
       <div
-        className={`rounded-2xl overflow-hidden animate-fade-up transform transition-all duration-300 hover:shadow-lg ${
+        className={`rounded-2xl overflow-visible relative animate-fade-up transform transition-all duration-300 hover:shadow-lg ${
           plan.highlighted
-            ? 'bg-gold/[0.03] border border-gold/20 relative'
+            ? 'bg-gold/[0.03] border border-gold/20'
             : 'bg-secondary/5 border border-border'
         }`}
         style={{ 
@@ -59,31 +59,33 @@ export const PricingCard = ({
         )}
         
         {plan.highlighted && (
-          <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold text-background">
+          <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold text-background z-20">
             Mais Popular
           </Badge>
         )}
         
-        {/* Plan Header with Pricing */}
-        <PlanHeader plan={plan} isAnnual={isAnnual} />
-        
-        <div className={`p-6 md:p-8 ${plan.highlighted ? 'bg-gold/[0.02]' : ''}`}>
-          {/* Standard Features */}
-          <StandardFeatures planName={plan.name} />
+        <div className="overflow-hidden rounded-2xl">
+          {/* Plan Header with Pricing */}
+          <PlanHeader plan={plan} isAnnual={isAnnual} />
           
-          <div className="h-px w-full bg-border my-4"></div>
-          
-          <p className="text-sm font-medium text-foreground/80 mb-4">Recursos incluídos:</p>
-          <ul className="space-y-3">
-            {/* Plan Specific Features */}
-            <PlanFeatures 
-              planName={plan.name} 
-              features={features}
-              showBasicPrefix={showBasicPrefix}
-              showProPrefix={showProPrefix}
-              showAdvancedPrefix={showAdvancedPrefix}
-            />
-          </ul>
+          <div className={`p-6 md:p-8 ${plan.highlighted ? 'bg-gold/[0.02]' : ''}`}>
+            {/* Standard Features */}
+            <StandardFeatures planName={plan.name} />
+            
+            <div className="h-px w-full bg-border my-4"></div>
+            
+            <p className="text-sm font-medium text-foreground/80 mb-4">Recursos incluídos:</p>
+            <ul className="space-y-3">
+              {/* Plan Specific Features */}
+              <PlanFeatures 
+                planName={plan.name} 
+                features={features}
+                showBasicPrefix={showBasicPrefix}
+                showProPrefix={showProPrefix}
+                showAdvancedPrefix={showAdvancedPrefix}
+              />
+            </ul>
+          </div>
         </div>
       </div>
     </TooltipProvider>

@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { formatCurrency } from "@/utils/pricing";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 
 type Feature = {
   name: string;
@@ -118,23 +118,25 @@ export const PricingCard = ({
           )}
         </div>
         
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button 
-              className={`w-full mb-6 ${
-                plan.highlighted 
-                  ? "bg-gold hover:bg-gold/90 text-background" 
-                  : ""
-              }`}
-              variant={plan.highlighted ? "default" : "outline"}
-            >
-              {plan.buttonText}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="bg-background border-border">
-            <p>Inicie uma demonstração agora</p>
-          </TooltipContent>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                className={`w-full mb-6 ${
+                  plan.highlighted 
+                    ? "bg-gold hover:bg-gold/90 text-background" 
+                    : ""
+                }`}
+                variant={plan.highlighted ? "default" : "outline"}
+              >
+                {plan.buttonText}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="bg-background border-border">
+              <p>Inicie uma demonstração agora</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       
       <div className="border-t border-border pt-4 mt-auto">

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -42,6 +43,36 @@ const Header = ({ children }: HeaderProps) => {
     }
   };
 
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== '/') {
+      // If not on homepage, navigate there first
+      navigate('/');
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100);
+    } else {
+      // Already on homepage, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+    // Close mobile menu if open
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <header
       className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
@@ -69,12 +100,18 @@ const Header = ({ children }: HeaderProps) => {
           {/* Desktop Navigation */}
           {children || (
             <div className="hidden md:flex items-center gap-8">
-              <a href="#services" className="hover:text-gold transition-colors">
+              <button 
+                onClick={() => scrollToSection('services')} 
+                className="hover:text-gold transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-gold after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
                 Serviços
-              </a>
-              <a href="#benefits" className="hover:text-gold transition-colors">
+              </button>
+              <button 
+                onClick={() => scrollToSection('benefits')} 
+                className="hover:text-gold transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-gold after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
                 Benefícios
-              </a>
+              </button>
               <a href="#contact" className="hover:text-gold transition-colors">
                 Contato
               </a>
@@ -96,20 +133,18 @@ const Header = ({ children }: HeaderProps) => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden glass mt-4 rounded-lg p-4 flex flex-col gap-4">
-            <a
-              href="#services"
-              className="hover:text-gold transition-colors"
-              onClick={() => setIsMenuOpen(false)}
+            <button
+              onClick={() => scrollToSection('services')}
+              className="hover:text-gold transition-colors text-left"
             >
               Serviços
-            </a>
-            <a
-              href="#benefits"
-              className="hover:text-gold transition-colors"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button
+              onClick={() => scrollToSection('benefits')}
+              className="hover:text-gold transition-colors text-left"
             >
               Benefícios
-            </a>
+            </button>
             <a
               href="#contact"
               className="hover:text-gold transition-colors"

@@ -5,7 +5,7 @@ import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "l
 
 const services = [
   {
-    title: "Atendentes IA",
+    title: "Funcionários Digitais",
     description: "Funcionários Digitais que nunca tiram férias, trabalham 24/7 e não pedem aumento! Economize até 73% com folha de pagamento.",
     icon: MessageSquare,
     route: "/services/ai-attendants"

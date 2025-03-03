@@ -1,0 +1,27 @@
+
+export const featureBenefits: Record<string, string> = {
+  "Atendimento via texto": "Conversas naturais e fluidas por texto em diversos canais de comunicação.",
+  "Agendamentos": "Gerenciamento automático de compromissos, incluindo confirmações e lembretes.",
+  "Suporte a múltiplos idiomas (PT, EN, ES)": "Atendimento profissional em português, inglês e espanhol sem custo adicional.",
+  "Atendimento via áudio": "Processamento e resposta para mensagens de áudio, tornando a comunicação mais natural.",
+  "Agendamentos para equipes": "Coordenação inteligente de agendas para várias pessoas ou departamentos.",
+  "Follow-up automático": "Acompanhamento proativo de clientes em diferentes etapas da jornada.",
+  "Sistema de NPS": "Coleta e análise automatizada da satisfação dos clientes.",
+  "RAG inteligente": "Recuperação avançada de informações específicas do seu negócio para respostas precisas.",
+  "Suporte prioritário": "Atendimento exclusivo com tempo de resposta reduzido para suas solicitações.",
+  "Atendimento via imagem": "Capacidade de analisar e responder a imagens enviadas pelos clientes.",
+  "Processamento de arquivos": "Análise e resposta baseada em documentos e arquivos enviados.",
+  "Funcionalidades de SDR": "Prospecção ativa, qualificação de leads e agendamento de reuniões.",
+  "Integração com loja virtual": "Conexão direta com sua plataforma de e-commerce para suporte a vendas.",
+  "Recuperação de vendas": "Reengajamento automático de carrinhos abandonados e clientes inativos.",
+  "Pesquisa e aprendizado automático": "Melhoria contínua baseada nas interações e feedback dos usuários.",
+  "Desenvolvimento sob medida": "Criação de funcionalidades específicas para seu modelo de negócio.",
+  "Integrações personalizadas": "Conexão com sistemas e ferramentas específicas da sua empresa.",
+  "Treinamento especializado (medicina, etc.)": "Conhecimento em áreas técnicas específicas como terminologia médica.",
+  "Suporte a 26 idiomas": "Atendimento global em diversos idiomas para expansão internacional.",
+  "Interação assíncrona": "Manutenção do contexto mesmo com pausas na conversa por dias ou semanas.",
+  "Memória e contexto avançados": "Capacidade de lembrar detalhes de conversas anteriores para personalização.",
+  "RAG avançado": "Sistema avançado de recuperação e geração para respostas precisas e contextuais.",
+  "Análises de dados personalizadas": "Relatórios e insights específicos para seu negócio e objetivos.",
+  "Gerenciamento completo": "Administração integral do sistema sem necessidade de envolvimento da sua equipe."
+};

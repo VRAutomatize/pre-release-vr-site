@@ -1,3 +1,4 @@
+
 export const calculatePrice = (monthlyPrice: number, isAnnual: boolean) => {
   if (isAnnual) {
     return (monthlyPrice * 12).toFixed(2);
@@ -35,8 +36,14 @@ export const getProFeatures = (features: any[]) => {
   ).map(feature => feature.name);
 };
 
+export const getAdvancedFeatures = (features: any[]) => {
+  return features.filter(feature => 
+    feature.advanced === true && feature.pro === false && feature.basic === false
+  ).map(feature => feature.name);
+};
+
 export const getPremiumFeatures = (features: any[]) => {
   return features.filter(feature => 
-    feature.premium === true && feature.pro === false && feature.basic === false
+    feature.premium === true && feature.advanced === false && feature.pro === false && feature.basic === false
   ).map(feature => feature.name);
 };

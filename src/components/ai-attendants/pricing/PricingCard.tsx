@@ -143,7 +143,41 @@ export const PricingCard = ({
             </>
           )}
           
-          {showBasicPrefix && plan.name !== "Básico" && (
+          {/* Pro plan specific features */}
+          {plan.name === "Pro" && (
+            <>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">Todos os recursos do Básico</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Atendimento via áudio</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Agendamentos para equipes</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Follow-up automático</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Sistema de NPS</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">RAG inteligente</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Suporte prioritário</span>
+              </li>
+            </>
+          )}
+          
+          {showBasicPrefix && plan.name !== "Básico" && plan.name !== "Pro" && (
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm font-medium">Todos os recursos do Básico</span>
@@ -162,7 +196,8 @@ export const PricingCard = ({
             </li>
           )}
           
-          {features.map((feature, index) => (
+          {/* Only show features for plans other than Basic and Pro */}
+          {plan.name !== "Básico" && plan.name !== "Pro" && features.map((feature, index) => (
             <li key={feature.name} className="flex items-start gap-3">
               <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
               <span className="text-sm">{feature.name}</span>

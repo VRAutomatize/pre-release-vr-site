@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import DigitalEmployees from "./pages/services/DigitalEmployees";
+import AIAttendants from "./pages/services/AIAttendants";
 import CRM from "./pages/services/CRM";
 import Chatbots from "./pages/services/Chatbots";
 import LeadCapture from "./pages/services/LeadCapture";
@@ -32,7 +32,7 @@ const AnimationLayout = () => {
       <PageTransition key={location.pathname}>
         <Routes location={location}>
           <Route path="/" element={<Index />} />
-          <Route path="/services/digital-employees" element={<DigitalEmployees />} />
+          <Route path="/services/ai-attendants" element={<AIAttendants />} />
           <Route path="/services/crm" element={<CRM />} />
           <Route path="/services/chatbots" element={<Chatbots />} />
           <Route path="/services/lead-capture" element={<LeadCapture />} />

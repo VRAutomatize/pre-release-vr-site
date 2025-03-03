@@ -5,10 +5,10 @@ import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "l
 
 const services = [
   {
-    title: "Funcionários Digitais",
-    description: "Funcionários Digitais que nunca tiram férias, trabalham 24/7 e não pedem aumento. Economize até 73% com folha de pagamento.",
+    title: "Atendentes IA",
+    description: "Automatize seu atendimento com assistentes virtuais inteligentes via WhatsApp e telefone. Disponível 24/7 para seus clientes.",
     icon: MessageSquare,
-    route: "/services/digital-employees"
+    route: "/services/ai-attendants"
   },
   {
     title: "Implementação CRM",

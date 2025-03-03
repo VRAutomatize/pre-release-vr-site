@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { MessageSquare, Calendar, Globe, Headphones, Users, BarChart2, Zap, Shield, Image, FileText, BarChart, ShoppingCart, RefreshCw, Search, Code, Box, Languages, Clock, Brain, PieChart, Database, Check } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { PricingCard } from "@/components/digital-employees/pricing/PricingCard";
-import { PricingFeatures } from "@/components/digital-employees/pricing/PricingFeatures";
-import { features, plans, pricingFaqs } from "@/components/digital-employees/pricing/pricingData";
+import { PricingCard } from "./pricing/PricingCard";
+import { PricingFeatures } from "./pricing/PricingFeatures";
+import { features, plans, pricingFaqs } from "./pricing/pricingData";
 import {
   Accordion,
   AccordionContent,

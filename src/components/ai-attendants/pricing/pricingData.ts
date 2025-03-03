@@ -61,3 +61,34 @@ export const plans = [
     buttonText: "Solicitar Orçamento"
   }
 ];
+
+export const pricingFaqs = [
+  {
+    question: "Existe algum limite de mensagens ou contatos?",
+    answer: "Não, todos os nossos planos oferecem mensagens e contatos ilimitados, sem cobrança adicional pelo volume de uso."
+  },
+  {
+    question: "Há algum período de fidelidade?",
+    answer: "Não existe período de fidelidade em nossos planos. Você pode cancelar a qualquer momento sem multas ou taxas adicionais."
+  },
+  {
+    question: "Como funciona o período de teste grátis?",
+    answer: "Oferecemos 7 dias de teste grátis nos planos Básico, Pro e Avançado para que você possa experimentar a plataforma sem compromisso. Não é necessário cartão de crédito para iniciar o teste."
+  },
+  {
+    question: "Existe custo de implementação?",
+    answer: "Os planos Básico, Pro e Avançado não possuem custo de implementação. Apenas o plano Premium, por ser totalmente personalizado, possui um valor de implementação que pode ser parcelado."
+  },
+  {
+    question: "Todos os planos têm acesso ao dashboard?",
+    answer: "Sim, todos os planos incluem acesso completo ao dashboard com métricas e opções de personalização para monitorar e otimizar o desempenho do seu atendente IA."
+  },
+  {
+    question: "Como funciona o suporte a idiomas?",
+    answer: "Os planos Básico, Pro e Avançado oferecem suporte a português, inglês e espanhol. O plano Premium amplia para 26 idiomas diferentes."
+  },
+  {
+    question: "Preciso de conhecimento técnico para utilizar a plataforma?",
+    answer: "Não, nossa plataforma foi projetada para ser intuitiva e de fácil uso. Além disso, oferecemos suporte para auxiliar em todo o processo de configuração e utilização."
+  }
+];

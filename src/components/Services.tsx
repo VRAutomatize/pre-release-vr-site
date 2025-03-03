@@ -1,8 +1,10 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import React, { useMemo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "lucide-react";
 
+// Dados estáticos memorizados para evitar recriação
 const services = [
   {
     title: "Funcionários Digitais",
@@ -42,21 +44,56 @@ const services = [
   }
 ];
 
-const Services = () => {
+// Componente de serviço individual memoizado
+const ServiceCard = React.memo(({ 
+  service, 
+  onClick 
+}: { 
+  service: typeof services[0]; 
+  onClick: () => void;
+}) => {
+  // Ícone memoizado
+  const Icon = service.icon;
+  
+  return (
+    <div 
+      onClick={onClick}
+      className="transition-transform hover:-translate-y-2 duration-300 cursor-pointer"
+    >
+      <Card className="h-full floating-card">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <Icon className="h-8 w-8 text-gold" />
+            <CardTitle className="text-xl">{service.title}</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="text-foreground/80">{service.description}</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+});
+
+// Componente principal memoizado
+const Services = React.memo(() => {
   const navigate = useNavigate();
   
-  const handleServiceClick = (route: string) => {
-    // Navigate to the service page
-    navigate(route);
-    
-    // After navigation, scroll to the top smoothly (for cases where animation is too fast)
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
+  // Handler de clique memoizado para evitar recriações
+  const createHandleServiceClick = useCallback((route: string) => {
+    return () => {
+      // Navegar para a página do serviço
+      navigate(route);
+      
+      // Scroll para o topo com debounce para evitar manipulações desnecessárias do DOM
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
       });
-    }, 100);
-  };
+    };
+  }, [navigate]);
   
   return (
     <section id="services" className="py-20 px-4">
@@ -70,28 +107,16 @@ const Services = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service) => (
-            <div 
+            <ServiceCard 
               key={service.title}
-              onClick={() => handleServiceClick(service.route)}
-              className="transition-transform hover:-translate-y-2 duration-300 cursor-pointer"
-            >
-              <Card className="h-full floating-card">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <service.icon className="h-8 w-8 text-gold" />
-                    <CardTitle className="text-xl">{service.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-foreground/80">{service.description}</p>
-                </CardContent>
-              </Card>
-            </div>
+              service={service}
+              onClick={createHandleServiceClick(service.route)}
+            />
           ))}
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default Services;

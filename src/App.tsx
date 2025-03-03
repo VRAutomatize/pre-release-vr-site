@@ -1,51 +1,71 @@
 
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AIAttendants from "./pages/services/AIAttendants";
-import CRM from "./pages/services/CRM";
-import Chatbots from "./pages/services/Chatbots";
-import LeadCapture from "./pages/services/LeadCapture";
-import Automation from "./pages/services/Automation";
-import Consulting from "./pages/services/Consulting";
 import PageTransition from "./components/PageTransition";
 
-const queryClient = new QueryClient();
+// Carregamento dinâmico das páginas para melhorar performance inicial
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AIAttendants = lazy(() => import("./pages/services/AIAttendants"));
+const CRM = lazy(() => import("./pages/services/CRM"));
+const Chatbots = lazy(() => import("./pages/services/Chatbots"));
+const LeadCapture = lazy(() => import("./pages/services/LeadCapture"));
+const Automation = lazy(() => import("./pages/services/Automation"));
+const Consulting = lazy(() => import("./pages/services/Consulting"));
 
-// AnimationLayout component handles route transitions
+// Cliente de consulta de dados memoizado 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // Evita consultas desnecessárias ao focar na janela
+      staleTime: 300000, // 5 minutos de cache para dados
+    },
+  },
+});
+
+// Componente de loading otimizado
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-16 h-16 border-4 border-gold/20 border-t-gold rounded-full animate-spin"></div>
+  </div>
+);
+
+// AnimationLayout com scroll automático otimizado
 const AnimationLayout = () => {
   const location = useLocation();
   
-  // Scroll to top when route changes
-  React.useEffect(() => {
+  // Scroll para o topo otimizado com useLayoutEffect para acontecer antes da renderização
+  React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <AnimatePresence mode="wait">
       <PageTransition key={location.pathname}>
-        <Routes location={location}>
-          <Route path="/" element={<Index />} />
-          <Route path="/services/ai-attendants" element={<AIAttendants />} />
-          <Route path="/services/crm" element={<CRM />} />
-          <Route path="/services/chatbots" element={<Chatbots />} />
-          <Route path="/services/lead-capture" element={<LeadCapture />} />
-          <Route path="/services/automation" element={<Automation />} />
-          <Route path="/services/consulting" element={<Consulting />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes location={location}>
+            <Route path="/" element={<Index />} />
+            <Route path="/services/ai-attendants" element={<AIAttendants />} />
+            <Route path="/services/crm" element={<CRM />} />
+            <Route path="/services/chatbots" element={<Chatbots />} />
+            <Route path="/services/lead-capture" element={<LeadCapture />} />
+            <Route path="/services/automation" element={<Automation />} />
+            <Route path="/services/consulting" element={<Consulting />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </PageTransition>
     </AnimatePresence>
   );
 };
 
-const App = () => (
+// Componente App com memoização para prevenir renderizações desnecessárias
+const App = React.memo(() => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -55,6 +75,6 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+));
 
 export default App;

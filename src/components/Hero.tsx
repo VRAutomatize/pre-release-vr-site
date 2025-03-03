@@ -1,5 +1,5 @@
 
-import { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -8,10 +8,12 @@ import HeroTitle from "./shared/HeroTitle";
 import HeroDescription from "./shared/HeroDescription";
 import HeroActions from "./shared/HeroActions";
 
-const Hero = () => {
+// Componente Hero otimizado com memoização para evitar renderizações desnecessárias
+const Hero = React.memo(() => {
   const { toast } = useToast();
   
-  const scrollToServices = () => {
+  // useCallback para evitar recriação de funções
+  const scrollToServices = useCallback(() => {
     const servicesSection = document.querySelector('#services');
     servicesSection?.scrollIntoView({ behavior: 'smooth' });
     
@@ -20,11 +22,23 @@ const Hero = () => {
       description: "Você está sendo redirecionado para a seção de serviços",
       duration: 2000,
     });
-  };
+  }, [toast]);
+
+  const handleWhatsAppClick = useCallback(() => {
+    window.open('https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20na%20Assessoria%20Gratuita%20de%20vocês!', '_blank');
+    toast({
+      title: "Redirecionando para WhatsApp",
+      description: "Você será redirecionado para iniciar uma conversa no WhatsApp",
+      duration: 3000,
+    });
+  }, [toast]);
+
+  // Componente de imagem com lazy loading
+  const HeroImage = lazy(() => import('./shared/HeroImage'));
 
   return (
     <section className="min-h-[85vh] flex items-center relative overflow-hidden pt-24">
-      {/* Background Effects */}
+      {/* Background Effects - Otimizados com div únicas */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
@@ -65,14 +79,7 @@ const Hero = () => {
               <Button 
                 className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 animate-fade-up"
                 style={{ animationDelay: "1.5s" }}
-                onClick={() => {
-                  window.open('https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20na%20Assessoria%20Gratuita%20de%20vocês!', '_blank');
-                  toast({
-                    title: "Redirecionando para WhatsApp",
-                    description: "Você será redirecionado para iniciar uma conversa no WhatsApp",
-                    duration: 3000,
-                  });
-                }}
+                onClick={handleWhatsAppClick}
               >
                 Assessoria Gratuita
                 <ArrowRight className="ml-2 animate-pulse" size={20} />
@@ -88,7 +95,7 @@ const Hero = () => {
             </HeroActions>
           </div>
 
-          {/* Right side image with lazy loading */}
+          {/* Right side image with optimized lazy loading */}
           <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDelay: "1.9s" }}>
             <Suspense fallback={<div className="w-[60%] h-[400px] bg-gray-800/20 animate-pulse rounded-lg mx-auto" />}>
               <img 
@@ -96,6 +103,7 @@ const Hero = () => {
                 alt="Profissional com laptop"
                 className="w-[60%] h-auto object-contain mx-auto"
                 loading="lazy"
+                decoding="async"
               />
             </Suspense>
           </div>
@@ -103,6 +111,6 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Hero;

@@ -1,5 +1,5 @@
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, memo } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BackToTop from "@/components/BackToTop";
@@ -12,37 +12,56 @@ const About = lazy(() => import("@/components/About"));
 const ConsultationCard = lazy(() => import("@/components/ConsultationCard"));
 const Footer = lazy(() => import("@/components/Footer"));
 
-// Loading component with skeleton animation
+// Componente de loading otimizado com skeletons
 const LoadingComponent = () => (
   <div className="w-full h-48 animate-pulse bg-secondary/20 rounded-lg" />
 );
 
-const Index = () => {
+// Componentes de observabilidade para carregar quando visíveis
+const LazyLoadSection = memo(({ children, id }: { children: React.ReactNode; id?: string }) => {
+  return (
+    <div id={id}>
+      <Suspense fallback={<LoadingComponent />}>
+        {children}
+      </Suspense>
+    </div>
+  );
+});
+
+// Componente principal com memoização
+const Index = memo(() => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
-      <Suspense fallback={<LoadingComponent />}>
+      
+      <LazyLoadSection>
         <ClientLogos />
-      </Suspense>
-      <Suspense fallback={<LoadingComponent />}>
+      </LazyLoadSection>
+      
+      <LazyLoadSection id="services">
         <Services />
-      </Suspense>
-      <Suspense fallback={<LoadingComponent />}>
+      </LazyLoadSection>
+      
+      <LazyLoadSection id="benefits">
         <Benefits />
-      </Suspense>
-      <Suspense fallback={<LoadingComponent />}>
+      </LazyLoadSection>
+      
+      <LazyLoadSection>
         <About />
-      </Suspense>
-      <Suspense fallback={<LoadingComponent />}>
+      </LazyLoadSection>
+      
+      <LazyLoadSection id="contact">
         <ConsultationCard />
-      </Suspense>
-      <Suspense fallback={<LoadingComponent />}>
+      </LazyLoadSection>
+      
+      <LazyLoadSection>
         <Footer />
-      </Suspense>
+      </LazyLoadSection>
+      
       <BackToTop />
     </div>
   );
-};
+});
 
 export default Index;

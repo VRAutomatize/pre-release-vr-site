@@ -12,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const featureIcons: { [key: string]: React.ComponentType } = {
   "Atendimento via texto": MessageSquare,
@@ -73,96 +74,98 @@ const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
-    <section className="py-20 px-4" id="pricing">
-      <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-16 animate-fade-up">
-          <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6">
-            Nossos Planos
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Escolha o Plano Ideal para o Seu Negócio
-          </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto mb-4">
-            Soluções flexíveis para empresas de todos os tamanhos
-          </p>
-          
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4 md:mb-0 md:mr-8">
-              <MessageSquare className="h-5 w-5 text-gold" />
-              <p className="text-lg font-semibold text-gold">
-                Mensagens ilimitadas em todos os planos
-              </p>
+    <TooltipProvider delayDuration={300}>
+      <section className="py-20 px-4" id="pricing">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16 animate-fade-up">
+            <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6">
+              Nossos Planos
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Escolha o Plano Ideal para o Seu Negócio
+            </h2>
+            <p className="text-lg text-foreground/80 max-w-2xl mx-auto mb-4">
+              Soluções flexíveis para empresas de todos os tamanhos
+            </p>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+              <div className="flex items-center justify-center gap-2 mb-4 md:mb-0 md:mr-8">
+                <MessageSquare className="h-5 w-5 text-gold" />
+                <p className="text-lg font-semibold text-gold">
+                  Mensagens ilimitadas em todos os planos
+                </p>
+              </div>
+              
+              <div className="flex items-center justify-center gap-2 mb-4 md:mb-0 md:mr-8">
+                <Calendar className="h-5 w-5 text-gold" />
+                <p className="text-lg font-semibold text-gold">
+                  7 dias de teste grátis
+                </p>
+              </div>
+              
+              <div className="flex items-center justify-center gap-2">
+                <BarChart className="h-5 w-5 text-gold" />
+                <p className="text-lg font-semibold text-gold">
+                  Dashboard completo
+                </p>
+              </div>
             </div>
             
-            <div className="flex items-center justify-center gap-2 mb-4 md:mb-0 md:mr-8">
-              <Calendar className="h-5 w-5 text-gold" />
-              <p className="text-lg font-semibold text-gold">
-                7 dias de teste grátis
-              </p>
-            </div>
-            
-            <div className="flex items-center justify-center gap-2">
-              <BarChart className="h-5 w-5 text-gold" />
-              <p className="text-lg font-semibold text-gold">
-                Dashboard completo
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-center gap-4 mb-12">
-            <span className={`text-base font-medium ${!isAnnual ? "text-gold" : "text-foreground/60"}`}>
-              Mensal
-            </span>
-            <Switch
-              checked={isAnnual}
-              onCheckedChange={setIsAnnual}
-              className="data-[state=checked]:bg-gold data-[state=unchecked]:bg-input h-[24px] w-[44px]"
-            />
-            <span className={`text-base font-medium ${isAnnual ? "text-gold" : "text-foreground/60"}`}>
-              Anual
-            </span>
-            {isAnnual && (
-              <span className="ml-2 bg-gold/10 text-gold text-xs px-2 py-1 rounded-full">
-                Economia de até 30%
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <span className={`text-base font-medium ${!isAnnual ? "text-gold" : "text-foreground/60"}`}>
+                Mensal
               </span>
-            )}
+              <Switch
+                checked={isAnnual}
+                onCheckedChange={setIsAnnual}
+                className="data-[state=checked]:bg-gold data-[state=unchecked]:bg-input h-[24px] w-[44px]"
+              />
+              <span className={`text-base font-medium ${isAnnual ? "text-gold" : "text-foreground/60"}`}>
+                Anual
+              </span>
+              {isAnnual && (
+                <span className="ml-2 bg-gold/10 text-gold text-xs px-2 py-1 rounded-full">
+                  Economia de até 30%
+                </span>
+              )}
+            </div>
+          </div>
+
+          <Tabs defaultValue="cards" className="w-full mb-16">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
+              <TabsTrigger value="cards">Cartões</TabsTrigger>
+              <TabsTrigger value="table">Tabela</TabsTrigger>
+            </TabsList>
+            <TabsContent value="cards">
+              <PricingCards isAnnual={isAnnual} />
+            </TabsContent>
+            <TabsContent value="table">
+              <PricingFeatures isAnnual={isAnnual} />
+            </TabsContent>
+          </Tabs>
+
+          {/* FAQ Section */}
+          <div className="mt-32">
+            <h2 className="text-3xl font-bold text-center mb-12">Perguntas Frequentes</h2>
+            
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                {pricingFaqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger className="text-left">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </div>
-
-        <Tabs defaultValue="cards" className="w-full mb-16">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
-            <TabsTrigger value="cards">Cartões</TabsTrigger>
-            <TabsTrigger value="table">Tabela</TabsTrigger>
-          </TabsList>
-          <TabsContent value="cards">
-            <PricingCards isAnnual={isAnnual} />
-          </TabsContent>
-          <TabsContent value="table">
-            <PricingFeatures isAnnual={isAnnual} />
-          </TabsContent>
-        </Tabs>
-
-        {/* FAQ Section */}
-        <div className="mt-32">
-          <h2 className="text-3xl font-bold text-center mb-12">Perguntas Frequentes</h2>
-          
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              {pricingFaqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </TooltipProvider>
   );
 };
 

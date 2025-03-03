@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { MessageSquare, Calendar, Globe, Headphones, Users, BarChart2, Zap, Shield, Image, FileText, BarChart, ShoppingCart, RefreshCw, Search, Code, Box, Languages, Clock, Brain, PieChart, Database, Check } from "lucide-react";
+import { MessageSquare, Calendar, Globe, Headphones, Users, BarChart2, BarChart, ShoppingCart, Zap, Shield, Image, FileText, RefreshCw, Search, Code, Box, Languages, Clock, Brain, PieChart, Database, Check } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PricingCard } from "./pricing/PricingCard";
 import { PricingFeatures } from "./pricing/PricingFeatures";
+import CompactPricingComparison from "./pricing/CompactPricingComparison";
 import { features, plans, pricingFaqs } from "./pricing/pricingData";
 import {
   Accordion,
@@ -130,15 +131,19 @@ const PricingTable = () => {
         </div>
 
         <Tabs defaultValue="cards" className="w-full mb-16">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-12">
             <TabsTrigger value="cards">Cartões</TabsTrigger>
             <TabsTrigger value="table">Tabela</TabsTrigger>
+            <TabsTrigger value="compact">Comparativo</TabsTrigger>
           </TabsList>
           <TabsContent value="cards">
             <PricingCards isAnnual={isAnnual} />
           </TabsContent>
           <TabsContent value="table">
             <PricingFeatures isAnnual={isAnnual} />
+          </TabsContent>
+          <TabsContent value="compact">
+            <CompactPricingComparison />
           </TabsContent>
         </Tabs>
 

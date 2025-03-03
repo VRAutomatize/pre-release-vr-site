@@ -132,7 +132,7 @@ export const PricingCard = ({
                 {plan.buttonText}
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="bg-background border-border">
+            <TooltipContent>
               <p>Inicie uma demonstração agora</p>
             </TooltipContent>
           </Tooltip>

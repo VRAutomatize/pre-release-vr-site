@@ -81,7 +81,7 @@ export const pricingFaqs = [
   },
   {
     question: "Todos os planos têm acesso ao dashboard?",
-    answer: "Sim, todos os planos incluem acesso completo ao dashboard com métricas e opções de personalização para monitorar e otimizar o desempenho do seu atendente IA."
+    answer: "Sim, todos os planos incluem acesso completo ao dashboard com métricas e opções de personalização para monitorar e otimizar o desempenho do seu funcionário digital."
   },
   {
     question: "Como funciona o suporte a idiomas?",

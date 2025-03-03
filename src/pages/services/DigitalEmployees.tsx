@@ -1,10 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
-import PricingTable from "@/components/ai-attendants/PricingTable";
+import MessagesCounter from "@/components/digital-employees/MessagesCounter";
+import PricingTable from "@/components/digital-employees/PricingTable";
 import FinalCTA from "@/components/crm/FinalCTA";
 import Benefits from "@/components/Benefits";
 import HeroTag from "@/components/shared/HeroTag";
@@ -16,13 +15,13 @@ const features = [
   {
     icon: MessageSquare,
     title: "Atendimento 24/7",
-    description: "Automatize seu atendimento com assistentes virtuais inteligentes que trabalham sem parar, garantindo suporte contínuo aos seus clientes.",
+    description: "Automatize seu atendimento com funcionários digitais inteligentes que trabalham sem parar, garantindo suporte contínuo aos seus clientes.",
     cta: "Ver Demonstração"
   },
   {
     icon: Users,
     title: "Personalização Avançada",
-    description: "Assistentes treinados com a identidade da sua marca, capazes de manter conversas naturais e resolver problemas complexos.",
+    description: "Funcionários digitais treinados com a identidade da sua marca, capazes de manter conversas naturais e resolver problemas complexos.",
     cta: "Conhecer Recursos"
   },
   {
@@ -62,8 +61,8 @@ const benefits = [
   }
 ];
 
-const AIAttendants = () => {
-  const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20atendentes%20de%20IA!";
+const DigitalEmployees = () => {
+  const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Funcion%C3%A1rios%20Digitais!";
 
   return (
     <div className="min-h-screen bg-background">
@@ -192,4 +191,4 @@ const AIAttendants = () => {
   );
 };
 
-export default AIAttendants;
+export default DigitalEmployees;

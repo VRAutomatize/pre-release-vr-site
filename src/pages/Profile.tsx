@@ -86,8 +86,8 @@ const Profile = () => {
                   <p className="text-sm text-muted-foreground">{user.primaryEmailAddress?.emailAddress}</p>
                   
                   <div className="w-full mt-6">
-                    <SignOutButton signOutCallback={() => navigate('/')}>
-                      <Button variant="outline" className="w-full gap-2">
+                    <SignOutButton>
+                      <Button variant="outline" className="w-full gap-2" onClick={() => navigate('/')}>
                         <LogOut size={16} />
                         Sair da conta
                       </Button>

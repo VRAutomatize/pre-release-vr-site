@@ -4,11 +4,12 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import App from './App.tsx'
 import './index.css'
 
-// You must add VITE_CLERK_PUBLISHABLE_KEY to your .env file
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_REPLACE_WITH_YOUR_KEY';
+// Get the publishable key from environment variables
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-if (!PUBLISHABLE_KEY || PUBLISHABLE_KEY === 'pk_test_REPLACE_WITH_YOUR_KEY') {
-  console.warn("Missing Clerk Publishable Key - Replace with your key in .env file");
+// Check if the key is available
+if (!PUBLISHABLE_KEY) {
+  console.error("Missing Clerk Publishable Key - Add your key to .env file");
 }
 
 createRoot(document.getElementById("root")!).render(

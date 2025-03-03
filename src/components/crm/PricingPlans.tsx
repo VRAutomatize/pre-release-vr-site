@@ -1,8 +1,11 @@
+
 import { useState } from "react";
 import { Plan } from "@/types/pricing";
 import PricingHeader from "./pricing/PricingHeader";
 import PlanCard from "./pricing/PlanCard";
 import InfoCards from "./pricing/InfoCards";
+import { Button } from "@/components/ui/button";
+import { PricingFeatures } from "../ai-attendants/pricing/PricingFeatures";
 
 const plans: Plan[] = [
   {
@@ -53,21 +56,38 @@ const plans: Plan[] = [
 
 const PricingPlans = () => {
   const [isAnnual, setIsAnnual] = useState(true);
+  const [showTable, setShowTable] = useState(false);
 
   return (
     <section id="plans" className="relative z-10 py-20">
       <PricingHeader isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4 items-start">
-        {plans.map((plan, planIndex) => (
-          <PlanCard
-            key={plan.name}
-            plan={plan}
-            isAnnual={isAnnual}
-            index={planIndex}
-          />
-        ))}
+      
+      <div className="flex justify-center mb-10">
+        <Button 
+          variant="outline" 
+          className="text-gold hover:text-gold/80 border-gold/20 hover:bg-gold/5 hover:border-gold/30 px-6"
+          onClick={() => setShowTable(!showTable)}
+        >
+          {showTable ? "Planos" : "Compare"}
+        </Button>
       </div>
+
+      {!showTable ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto px-4 items-start">
+          {plans.map((plan, planIndex) => (
+            <PlanCard
+              key={plan.name}
+              plan={plan}
+              isAnnual={isAnnual}
+              index={planIndex}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="max-w-5xl mx-auto px-4">
+          <PricingFeatures isAnnual={isAnnual} />
+        </div>
+      )}
 
       <InfoCards />
     </section>

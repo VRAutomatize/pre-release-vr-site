@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { MessageSquare, Calendar, Globe, Headphones, Users, BarChart2, Zap, Shield, Image, FileText, BarChart, ShoppingCart, RefreshCw, Search, Code, Box, Languages, Clock, Brain, PieChart, Database, Check } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { PricingCard } from "./pricing/PricingCard";
 import { PricingFeatures } from "./pricing/PricingFeatures";
 import { features, plans, pricingFaqs } from "./pricing/pricingData";
@@ -72,6 +72,7 @@ const PricingCards = ({ isAnnual }: { isAnnual: boolean }) => {
 
 const PricingTable = () => {
   const [isAnnual, setIsAnnual] = useState(false);
+  const [showTable, setShowTable] = useState(false);
 
   return (
     <TooltipProvider delayDuration={300}>
@@ -131,18 +132,23 @@ const PricingTable = () => {
             </div>
           </div>
 
-          <Tabs defaultValue="cards" className="w-full mb-16">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
-              <TabsTrigger value="cards">Cartões</TabsTrigger>
-              <TabsTrigger value="table">Tabela</TabsTrigger>
-            </TabsList>
-            <TabsContent value="cards">
-              <PricingCards isAnnual={isAnnual} />
-            </TabsContent>
-            <TabsContent value="table">
+          <div className="flex justify-center mb-10">
+            <Button 
+              variant="outline" 
+              className="text-gold hover:text-gold/80 border-gold/20 hover:bg-gold/5 hover:border-gold/30 px-6"
+              onClick={() => setShowTable(!showTable)}
+            >
+              {showTable ? "Planos" : "Compare"}
+            </Button>
+          </div>
+
+          <div className="transition-all duration-300">
+            {showTable ? (
               <PricingFeatures isAnnual={isAnnual} />
-            </TabsContent>
-          </Tabs>
+            ) : (
+              <PricingCards isAnnual={isAnnual} />
+            )}
+          </div>
 
           {/* FAQ Section */}
           <div className="mt-32">

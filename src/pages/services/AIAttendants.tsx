@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -107,8 +106,7 @@ const AIAttendants = () => {
               
               <HeroDescription>
                 Economize até 73% com folha de pagamento enquanto multiplica a produtividade. Sem processos seletivos, 
-                sem treinamentos demorados, sem burocracias trabalhistas. Contrate funcionários digitais 
-                que nunca adoecem e estão sempre prontos para atender seus clientes com excelência.
+                sem treinamentos demorados, sem burocracias trabalhistas.
               </HeroDescription>
               
               <HeroActions>

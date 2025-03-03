@@ -10,7 +10,7 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
   const prevValueRef = useRef(0);
   const [difference, setDifference] = useState(0);
   const [showFloatingValue, setShowFloatingValue] = useState(false);
-  const targetValue = 128765;  // Changed to a more realistic number for completed service interactions
+  const targetValue = 128765;  // Number for completed service interactions
   const initialAnimationDuration = 2000;
   const incrementInterval = 3000;
 
@@ -36,14 +36,17 @@ const MessagesCounter = ({ className }: MessagesCounterProps) => {
     }
 
     const interval = setInterval(() => {
-      setMessagesCount(prev => prev + generateRandomIncrement());
+      setMessagesCount(prev => {
+        const newValue = prev + generateRandomIncrement();
+        return newValue;
+      });
     }, incrementInterval);
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (prevValueRef.current !== messagesCount) {
+    if (prevValueRef.current !== messagesCount && messagesCount > prevValueRef.current) {
       const diff = messagesCount - prevValueRef.current;
       setDifference(diff);
       setShowFloatingValue(true);

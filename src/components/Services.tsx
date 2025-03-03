@@ -6,7 +6,7 @@ import { MessageSquare, Database, Bot, ArrowDownToLine, Cog, Briefcase } from "l
 const services = [
   {
     title: "Atendentes IA",
-    description: "Automatize seu atendimento com assistentes virtuais inteligentes via WhatsApp e telefone. Disponível 24/7 para seus clientes.",
+    description: "Funcionários Digitais que nunca tiram férias, trabalham 24/7 e não pedem aumento! Economize até 73% com folha de pagamento.",
     icon: MessageSquare,
     route: "/services/ai-attendants"
   },

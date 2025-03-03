@@ -144,11 +144,11 @@ export const PricingCard = ({
             </li>
           )}
           
-          {features.map((feature) => {
+          {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <li key={feature.name} className="flex items-start gap-3">
-                <Icon className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
                 <span className="text-sm">{feature.name}</span>
               </li>
             );

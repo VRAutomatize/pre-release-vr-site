@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
-import { Clock, DollarSign, Users, Brain, Shield, BarChart2 } from "lucide-react";
+import { Clock, DollarSign, Users, Brain, Shield, BarChart2, MessagesSquare } from "lucide-react";
 
 // Updated data with more impactful metrics
 const data = [
@@ -57,6 +57,12 @@ const benefits = [
     problem: "Informações desencontradas prejudicam sua marca?",
     solution: "Elimine respostas inconsistentes com uma base de conhecimento unificada que nunca esquece detalhes importantes.",
   },
+  {
+    icon: MessagesSquare,
+    title: "Produtividade Multiplicada",
+    problem: "Atendentes não dão conta da demanda?",
+    solution: "Um único funcionário digital realiza em média 350 atendimentos por dia, enquanto um humano consegue apenas 100, aumentando sua produtividade em 250%.",
+  }
 ];
 
 const Benefits = () => {
@@ -75,7 +81,7 @@ const Benefits = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-20">
           {benefits.map((benefit, index) => (
             <Card 
               key={benefit.title}

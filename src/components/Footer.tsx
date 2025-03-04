@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Mail, Copyright, Globe } from "lucide-react";
 import { Separator } from "./ui/separator";
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-gold">VR Automate</h3>
+            <h3 className="text-xl font-bold text-gold">VR Automatize</h3>
             <p className="text-sm text-muted-foreground">
               Transformando negócios através da automação inteligente e soluções digitais inovadoras.
             </p>
@@ -41,6 +42,16 @@ const Footer = () => {
                   Automação
                 </Link>
               </li>
+              <li>
+                <Link to="/services/lead-capture" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+                  Captação de Leads
+                </Link>
+              </li>
+              <li>
+                <Link to="/services/consulting" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+                  Consultoria
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -49,11 +60,11 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-foreground">Contato</h4>
             <div className="space-y-2">
               <a
-                href="mailto:contato@vrautomate.com.br"
+                href="mailto:contato@vrautomatize.com.br"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-gold transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                contato@vrautomate.com.br
+                contato@vrautomatize.com.br
               </a>
             </div>
           </div>
@@ -63,7 +74,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-foreground">Redes Sociais</h4>
             <div className="flex items-center gap-4">
               <a
-                href="https://instagram.com/vrautomate"
+                href="https://instagram.com/vrautomatize"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-gold transition-colors"
@@ -71,7 +82,7 @@ const Footer = () => {
                 Instagram
               </a>
               <a
-                href="https://linkedin.com/company/vrautomate"
+                href="https://linkedin.com/company/vrautomatize"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-gold transition-colors"
@@ -88,7 +99,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Copyright className="h-4 w-4" />
-            <span>{currentYear} VR Automate. Todos os direitos reservados.</span>
+            <span>{currentYear} VR Automatize. Todos os direitos reservados.</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="text-sm text-muted-foreground hover:text-gold transition-colors">

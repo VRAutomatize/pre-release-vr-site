@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard, Calendar, Shield, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -11,31 +11,36 @@ import HeroTag from "@/components/shared/HeroTag";
 import HeroTitle from "@/components/shared/HeroTitle";
 import HeroDescription from "@/components/shared/HeroDescription";
 import HeroActions from "@/components/shared/HeroActions";
+import HeroImage from "@/components/shared/HeroImage";
 
 const features = [
   {
-    icon: MessageSquare,
-    title: "Atendimento 24/7",
-    description: "Automatize seu atendimento com assistentes virtuais inteligentes que trabalham sem parar, garantindo suporte contínuo aos seus clientes.",
-    cta: "Ver Demonstração"
-  },
-  {
-    icon: Users,
-    title: "Personalização Avançada",
-    description: "Assistentes treinados com a identidade da sua marca, capazes de manter conversas naturais e resolver problemas complexos.",
-    cta: "Conhecer Recursos"
+    icon: Clock,
+    title: "Sem Folha Salarial, Sem Faltas, Sem Turnover",
+    description: "Reduza drasticamente custos operacionais enquanto mantém atendimento ininterrupto. Nossos funcionários digitais não tiram férias, não pedem aumento e nunca abandonam o posto.",
+    cta: "Calcular Economia",
+    imageSrc: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=800"
   },
   {
     icon: Database,
-    title: "Integração com CRM",
-    description: "Sincronização automática com seu CRM, mantendo todo o histórico de atendimento organizado e acessível.",
-    cta: "Ver Integrações"
+    title: "Conhecimento Consistente e Inalterável",
+    description: "Elimine informações desencontradas e treinamentos constantes. Seu conhecimento corporativo fica perfeitamente preservado e consistente, sem depender da memória de funcionários.",
+    cta: "Conhecer Recursos",
+    imageSrc: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800"
   },
   {
-    icon: Check,
-    title: "Análise de Satisfação",
-    description: "Monitore a satisfação dos clientes em tempo real e receba insights valiosos para melhorar o atendimento.",
-    cta: "Explorar Análises"
+    icon: Users,
+    title: "Escale sem Dor de Cabeça",
+    description: "Esqueça processos seletivos demorados, período de adaptação e alta rotatividade. Duplique, triplique ou multiplique por dez sua capacidade de atendimento instantaneamente.",
+    cta: "Ver Demonstração",
+    imageSrc: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    icon: Brain,
+    title: "Personalidade Consistente Alinhada à sua Marca",
+    description: "Nada de humor variável ou atendentes mal-humorados. Nossos funcionários digitais mantêm o mesmo tom de voz e personalidade consistente que reflete perfeitamente seus valores de marca.",
+    cta: "Experimentar",
+    imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
   }
 ];
 
@@ -86,7 +91,7 @@ const AIAttendants = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-12 space-y-32">
-        {/* Hero Section - Reduced spacing from pt-24 to pt-12 */}
+        {/* Hero Section */}
         <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-12">
           {/* Background Effects */}
           <div className="absolute inset-0 z-0">
@@ -134,7 +139,7 @@ const AIAttendants = () => {
         
         {/* Features Section */}
         <section className="relative z-10 space-y-24">
-          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Funcionalidades Principais</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Problemas que Resolvemos Para Você</h2>
           <div className="space-y-32">
             {features.map((feature, index) => (
               <div 
@@ -145,8 +150,13 @@ const AIAttendants = () => {
                   className={`order-${index % 2 === 0 ? 1 : 2} animate-fade-up`}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
-                  <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300">
-                    <p className="text-foreground/60">Imagem da funcionalidade {index + 1}</p>
+                  <div className="w-full aspect-[16/9] glass rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500">
+                    <img 
+                      src={feature.imageSrc}
+                      alt={`Ilustração de ${feature.title}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
                   </div>
                 </div>
                 

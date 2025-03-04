@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap, Check, CreditCard, Calendar, Shield, Brain } from "lucide-react";
+import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -41,29 +41,6 @@ const features = [
     description: "Nada de humor variável ou atendentes mal-humorados. Nossos funcionários digitais mantêm o mesmo tom de voz e personalidade consistente que reflete perfeitamente seus valores de marca.",
     cta: "Experimentar",
     imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
-  }
-];
-
-const benefits = [
-  {
-    icon: MessageSquare,
-    title: "Atendimento Instantâneo",
-    description: "Resposta imediata para seus clientes, 24 horas por dia, 7 dias por semana.",
-  },
-  {
-    icon: Database,
-    title: "Gestão Centralizada",
-    description: "Todas as conversas e interações organizadas em um único lugar.",
-  },
-  {
-    icon: CreditCard,
-    title: "Redução de Custos",
-    description: "Economia significativa em comparação com equipe humana de atendimento.",
-  },
-  {
-    icon: Users,
-    title: "Escalabilidade",
-    description: "Atenda milhares de clientes simultaneamente sem perder qualidade.",
   }
 ];
 
@@ -176,25 +153,9 @@ const AIAttendants = () => {
           </div>
         </section>
 
-        {/* Benefits Section */}
-        <section className="relative z-10">
-          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios dos Funcionários Digitais</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <div 
-                key={benefit.title}
-                className="floating-card p-6 rounded-xl animate-fade-up"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <benefit.icon className="w-12 h-12 text-gold mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-foreground/80">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
+        {/* Benefits Section - Now using the updated component */}
         <Benefits />
+        
         <PricingTable />
         <FinalCTA whatsappLink={whatsappLink} />
       </div>

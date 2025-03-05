@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard } from "lucide-react";
+import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -12,37 +12,6 @@ import HeroTitle from "@/components/shared/HeroTitle";
 import HeroDescription from "@/components/shared/HeroDescription";
 import HeroActions from "@/components/shared/HeroActions";
 import HeroImage from "@/components/shared/HeroImage";
-
-const features = [
-  {
-    icon: Clock,
-    title: "Sem Folha Salarial, Sem Faltas, Sem Turnover",
-    description: "Reduza drasticamente custos operacionais enquanto mantém atendimento ininterrupto. Nossos funcionários digitais não tiram férias, não pedem aumento e nunca abandonam o posto.",
-    cta: "Calcular Economia",
-    imageSrc: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    icon: Database,
-    title: "Conhecimento Consistente e Inalterável",
-    description: "Elimine informações desencontradas e treinamentos constantes. Seu conhecimento corporativo fica perfeitamente preservado e consistente, sem depender da memória de funcionários.",
-    cta: "Conhecer Recursos",
-    imageSrc: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    icon: Users,
-    title: "Escale sem Dor de Cabeça",
-    description: "Esqueça processos seletivos demorados, período de adaptação e alta rotatividade. Duplique, triplique ou multiplique por dez sua capacidade de atendimento instantaneamente.",
-    cta: "Ver Demonstração",
-    imageSrc: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    icon: Brain,
-    title: "Personalidade Consistente Alinhada à sua Marca",
-    description: "Nada de humor variável ou atendentes mal-humorados. Nossos funcionários digitais mantêm o mesmo tom de voz e personalidade consistente que reflete perfeitamente seus valores de marca.",
-    cta: "Experimentar",
-    imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
-  }
-];
 
 const AIAttendants = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20atendentes%20de%20IA!";
@@ -114,42 +83,74 @@ const AIAttendants = () => {
           </div>
         </section>
         
-        {/* Features Section */}
-        <section className="relative z-10 space-y-24">
-          <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Problemas que Resolvemos Para Você</h2>
-          <div className="space-y-32">
-            {features.map((feature, index) => (
-              <div 
-                key={feature.title}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-              >
-                <div 
-                  className={`order-${index % 2 === 0 ? 1 : 2} animate-fade-up`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="w-full aspect-[16/9] glass rounded-xl overflow-hidden hover:shadow-xl transition-all duration-500">
-                    <img 
-                      src={feature.imageSrc}
-                      alt={`Ilustração de ${feature.title}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      loading="lazy"
-                    />
-                  </div>
+        {/* Redesigned Features Section - More concise and engaging */}
+        <section className="relative z-10 py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
+                Vantagens Exclusivas
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Por que <span className="text-gold">Milhares</span> de Empresas Estão Migrando
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Key Advantage Cards */}
+              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
+                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
+                  <Clock className="text-gold w-6 h-6" />
                 </div>
-                
-                <div 
-                  className={`order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl animate-fade-up`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <feature.icon className="w-12 h-12 text-gold mb-4" />
-                  <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
-                  <p className="text-foreground/80 mb-6">{feature.description}</p>
-                  <Button variant="outline" className="hover:bg-gold hover:text-background">
-                    {feature.cta}
-                  </Button>
-                </div>
+                <h3 className="text-lg font-semibold mb-2">Economize 73%</h3>
+                <p className="text-foreground/70 text-sm mb-3">Elimine folha salarial, encargos trabalhistas e benefícios.</p>
+                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Ver mais <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
-            ))}
+              
+              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
+                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
+                  <Users className="text-gold w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">3,5× Mais Produtivo</h3>
+                <p className="text-foreground/70 text-sm mb-3">Um assistente digital faz o trabalho de 3,5 funcionários humanos.</p>
+                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Ver mais <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+              
+              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
+                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
+                  <MessageSquare className="text-gold w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">24/7 Sem Parar</h3>
+                <p className="text-foreground/70 text-sm mb-3">Atendimento instantâneo em qualquer horário, sem custos extras.</p>
+                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Ver mais <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+              
+              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
+                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
+                  <Brain className="text-gold w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">Conhecimento Total</h3>
+                <p className="text-foreground/70 text-sm mb-3">Informações consistentes e atualizadas, sem esquecimentos.</p>
+                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Ver mais <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+            
+            <div className="mt-12 text-center">
+              <a 
+                href="#benefits"
+                className="inline-flex items-center justify-center gap-2 text-foreground/80 hover:text-gold transition-colors"
+              >
+                Descubra todos os benefícios
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </section>
 

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight, LayoutDashboard, Settings, Monitor } from "lucide-react";
+import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight, LayoutDashboard, Settings, Monitor, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -16,6 +16,14 @@ import HeroImage from "@/components/shared/HeroImage";
 const AIAttendants = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20atendentes%20de%20IA!";
 
+  // Function to scroll to a section
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header>
@@ -28,7 +36,7 @@ const AIAttendants = () => {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
+            className="bg-gold hover:bg-gold-light text-black rounded-md px-4 py-2 flex items-center gap-2"
           >
             <MessageSquare className="h-4 w-4" />
             Entre em contato
@@ -62,29 +70,27 @@ const AIAttendants = () => {
               </HeroDescription>
               
               <HeroActions>
-                <a 
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background h-12 px-8"
+                <button 
+                  onClick={() => scrollToSection('dashboard-preview')}
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-black h-12 px-8"
                 >
-                  Contratar!
-                </a>
-                <a 
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 hover:bg-gold hover:text-background"
+                  Ver Dashboard
+                  <ChevronDown className="ml-2 w-4 h-4" />
+                </button>
+                <button 
+                  onClick={() => scrollToSection('video-demo')}
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 hover:bg-gold hover:text-black"
                 >
-                  Saiba Mais
-                </a>
+                  Ver Demonstração
+                  <ChevronDown className="ml-2 w-4 h-4" />
+                </button>
               </HeroActions>
             </div>
           </div>
         </section>
         
         {/* Dashboard Preview Section */}
-        <section className="py-20 relative">
+        <section id="dashboard-preview" className="py-20 relative">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
@@ -173,22 +179,20 @@ const AIAttendants = () => {
             
             <div className="mt-12 flex justify-center">
               <Button asChild variant="outline" className="group">
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => scrollToSection('benefits')}
                   className="bg-background text-foreground hover:text-gold transition-colors"
                 >
-                  Agendar demonstração completa
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                  Ver benefícios dos Funcionários Digitais
+                  <ChevronDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                </button>
               </Button>
             </div>
           </div>
         </section>
         
         {/* Video Demonstration Section */}
-        <section className="py-20 bg-secondary/30 rounded-3xl">
+        <section id="video-demo" className="py-20 bg-secondary/30 rounded-3xl">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
@@ -215,16 +219,15 @@ const AIAttendants = () => {
               </div>
               
               <div className="mt-8 text-center">
-                <p className="text-foreground/70 mb-4">Não consegue visualizar o vídeo?</p>
+                <p className="text-foreground/70 mb-4">Quer resultados como estes para seu negócio?</p>
                 <Button asChild>
-                  <a 
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gold hover:bg-gold-light text-background"
+                  <button 
+                    onClick={() => scrollToSection('pricing-table')}
+                    className="bg-gold hover:bg-gold-light text-black"
                   >
-                    Agendar demonstração ao vivo
-                  </a>
+                    Ver planos e preços
+                    <ChevronDown className="ml-2 w-4 h-4" />
+                  </button>
                 </Button>
               </div>
             </div>
@@ -234,7 +237,9 @@ const AIAttendants = () => {
         {/* Benefits Section - Now using the updated component */}
         <Benefits />
         
-        <PricingTable />
+        <section id="pricing-table">
+          <PricingTable />
+        </section>
         <FinalCTA whatsappLink={whatsappLink} />
       </div>
     </div>

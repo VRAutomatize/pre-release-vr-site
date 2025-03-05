@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight, LayoutDashboard, Settings, Monitor, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,7 +15,6 @@ import HeroImage from "@/components/shared/HeroImage";
 const AIAttendants = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20atendentes%20de%20IA!";
 
-  // Function to scroll to a section
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -181,7 +179,7 @@ const AIAttendants = () => {
               <Button asChild variant="outline" className="group">
                 <button
                   onClick={() => scrollToSection('benefits')}
-                  className="bg-background text-foreground hover:text-gold transition-colors"
+                  className="bg-background text-foreground hover:text-black transition-colors"
                 >
                   Ver benefícios dos Funcionários Digitais
                   <ChevronDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight } from "lucide-react";
+import { Home, MessageSquare, Users, Clock, Database, Brain, Shield, Check, CreditCard, ArrowRight, LayoutDashboard, Settings, Monitor } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import MessagesCounter from "@/components/ai-attendants/MessagesCounter";
@@ -83,73 +83,150 @@ const AIAttendants = () => {
           </div>
         </section>
         
-        {/* Redesigned Features Section - More concise and engaging */}
-        <section className="relative z-10 py-16">
+        {/* Dashboard Preview Section */}
+        <section className="py-20 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
+                Interface Intuitiva
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Dashboard inteligente para <span className="text-gold">gerenciar seus atendentes</span>
+              </h2>
+              <p className="text-foreground/70 max-w-2xl mx-auto">
+                Acompanhe o desempenho dos seus Funcionários Digitais em tempo real. 
+                Configure, personalize e otimize sem precisar de conhecimento técnico.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+              {/* Main Dashboard Preview */}
+              <div className="glass border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all duration-300">
+                <div className="flex items-start mb-6">
+                  <div className="bg-gold/10 p-3 rounded-lg">
+                    <LayoutDashboard className="h-6 w-6 text-gold" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-semibold">Dashboard Principal</h3>
+                    <p className="text-foreground/70 text-sm mt-1">Visão geral completa dos seus atendimentos</p>
+                  </div>
+                </div>
+                
+                <div className="aspect-video rounded-lg bg-secondary/50 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <Monitor className="h-12 w-12 text-gold/50 mx-auto mb-4" />
+                    <p className="text-foreground/50">Prévia do Dashboard Principal</p>
+                  </div>
+                </div>
+                
+                <ul className="mt-6 space-y-3">
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Acompanhamento em tempo real de todos os atendimentos</span>
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Estatísticas de conversão e satisfação do cliente</span>
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Relatórios detalhados exportáveis em PDF</span>
+                  </li>
+                </ul>
+              </div>
+              
+              {/* Settings Dashboard Preview */}
+              <div className="glass border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all duration-300">
+                <div className="flex items-start mb-6">
+                  <div className="bg-gold/10 p-3 rounded-lg">
+                    <Settings className="h-6 w-6 text-gold" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-semibold">Tela de Configurações</h3>
+                    <p className="text-foreground/70 text-sm mt-1">Personalização completa do seu Funcionário Digital</p>
+                  </div>
+                </div>
+                
+                <div className="aspect-video rounded-lg bg-secondary/50 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <Settings className="h-12 w-12 text-gold/50 mx-auto mb-4" />
+                    <p className="text-foreground/50">Prévia da Tela de Configurações</p>
+                  </div>
+                </div>
+                
+                <ul className="mt-6 space-y-3">
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Personalização da personalidade e tom do atendente</span>
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Configuração de respostas automáticas e scripts</span>
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-gold mr-2" />
+                    <span>Integração com seus sistemas e bases de conhecimento</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-12 flex justify-center">
+              <Button asChild variant="outline" className="group">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-background text-foreground hover:text-gold transition-colors"
+                >
+                  Agendar demonstração completa
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+        
+        {/* Video Demonstration Section */}
+        <section className="py-20 bg-secondary/30 rounded-3xl">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
-                Vantagens Exclusivas
+                Veja em Ação
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold">
-                Por que <span className="text-gold">Milhares</span> de Empresas Estão Migrando
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Demonstração do <span className="text-gold">Funcionário Digital</span> no WhatsApp
               </h2>
+              <p className="text-foreground/70 max-w-2xl mx-auto">
+                Assista como nossos Funcionários Digitais atendem seus clientes de forma natural e eficiente, 
+                resolvendo dúvidas e realizando vendas automaticamente.
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Key Advantage Cards */}
-              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
-                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                  <Clock className="text-gold w-6 h-6" />
+            <div className="max-w-4xl mx-auto">
+              <div className="aspect-video rounded-xl bg-secondary/70 overflow-hidden relative glass border border-gold/20">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <MessageSquare className="h-16 w-16 text-gold/50 mx-auto mb-4" />
+                    <p className="text-xl font-medium text-foreground/70">Vídeo de Demonstração</p>
+                    <p className="text-foreground/50 mt-2">Assista ao vivo como o atendente interage com seus clientes</p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Economize 73%</h3>
-                <p className="text-foreground/70 text-sm mb-3">Elimine folha salarial, encargos trabalhistas e benefícios.</p>
-                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Ver mais <ArrowRight className="w-4 h-4" />
-                </a>
               </div>
               
-              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
-                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                  <Users className="text-gold w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">3,5× Mais Produtivo</h3>
-                <p className="text-foreground/70 text-sm mb-3">Um assistente digital faz o trabalho de 3,5 funcionários humanos.</p>
-                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Ver mais <ArrowRight className="w-4 h-4" />
-                </a>
+              <div className="mt-8 text-center">
+                <p className="text-foreground/70 mb-4">Não consegue visualizar o vídeo?</p>
+                <Button asChild>
+                  <a 
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gold hover:bg-gold-light text-background"
+                  >
+                    Agendar demonstração ao vivo
+                  </a>
+                </Button>
               </div>
-              
-              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
-                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                  <MessageSquare className="text-gold w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">24/7 Sem Parar</h3>
-                <p className="text-foreground/70 text-sm mb-3">Atendimento instantâneo em qualquer horário, sem custos extras.</p>
-                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Ver mais <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-              
-              <div className="glass p-6 rounded-lg transform transition-all duration-300 hover:translate-y-[-10px] hover:shadow-xl group">
-                <div className="bg-gold/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                  <Brain className="text-gold w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Conhecimento Total</h3>
-                <p className="text-foreground/70 text-sm mb-3">Informações consistentes e atualizadas, sem esquecimentos.</p>
-                <a href="#benefits" className="text-gold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Ver mais <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-            
-            <div className="mt-12 text-center">
-              <a 
-                href="#benefits"
-                className="inline-flex items-center justify-center gap-2 text-foreground/80 hover:text-gold transition-colors"
-              >
-                Descubra todos os benefícios
-                <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </section>

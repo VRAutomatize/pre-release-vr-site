@@ -6,7 +6,7 @@ import HeroSection from "@/components/ai-attendants/HeroSection";
 import DashboardPreview from "@/components/ai-attendants/DashboardPreview";
 import VideoDemo from "@/components/ai-attendants/VideoDemo";
 import PricingTable from "@/components/ai-attendants/PricingTable";
-import Benefits from "@/components/Benefits";
+import Benefits from "@/components/benefits/Benefits";
 import FinalCTA from "@/components/crm/FinalCTA";
 
 const AIAttendants = () => {
@@ -31,7 +31,7 @@ const AIAttendants = () => {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gold hover:bg-gold-light text-black rounded-md px-4 py-2 flex items-center gap-2"
+            className="bg-gold hover:bg-gold-light text-black hover:text-black font-medium rounded-md px-4 py-2 flex items-center gap-2"
           >
             <MessageSquare className="h-4 w-4" />
             Entre em contato

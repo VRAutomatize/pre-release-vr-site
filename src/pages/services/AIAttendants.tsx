@@ -221,7 +221,7 @@ const AIAttendants = () => {
                 <Button asChild>
                   <button 
                     onClick={() => scrollToSection('pricing-table')}
-                    className="bg-gold hover:bg-gold-light text-black"
+                    className="bg-gold hover:bg-gold-light text-black hover:text-black"
                   >
                     Ver planos e preços
                     <ChevronDown className="ml-2 w-4 h-4" />
@@ -232,7 +232,7 @@ const AIAttendants = () => {
           </div>
         </section>
 
-        {/* Benefits Section - Now using the updated component */}
+        {/* Benefits Section */}
         <Benefits />
         
         <section id="pricing-table">

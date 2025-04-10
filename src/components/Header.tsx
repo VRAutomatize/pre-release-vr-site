@@ -142,9 +142,14 @@ const Header = React.memo(({ children }: HeaderProps) => {
               >
                 Contato
               </a>
-              <Button className="bg-gold hover:bg-gold-light text-background transition-all duration-300 transform hover:scale-105">
+              <a
+                href="https://wa.me/5547988558257?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20VR%20Automatize!"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gold hover:bg-gold-light text-background hover:text-background transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2"
+              >
                 Entre em contato
-              </Button>
+              </a>
             </div>
           )}
 
@@ -179,9 +184,14 @@ const Header = React.memo(({ children }: HeaderProps) => {
             >
               Contato
             </button>
-            <Button className="bg-gold hover:bg-gold-light text-background w-full transition-all duration-300 transform hover:scale-105">
+            <a
+              href="https://wa.me/5547988558257?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20VR%20Automatize!"
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="bg-gold hover:bg-gold-light text-background hover:text-background w-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2"
+            >
               Entre em contato
-            </Button>
+            </a>
           </div>
         )}
       </div>

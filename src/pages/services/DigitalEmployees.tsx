@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
@@ -6,6 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
+import PageHero from "@/components/shared/PageHero";
 
 const DigitalEmployees = () => {
   // Animation variants for staggered elements
@@ -54,47 +54,35 @@ const DigitalEmployees = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
-        {/* Hero Section */}
-        <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-6 animate-fade-up">
-                Automação Inteligente
-              </span>
-              <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Funcionários Digitais: automatize sua operação, reduza custos e escale seu negócio sem contratar mais ninguém.
-              </h1>
-              <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                Esqueça as dores de contratar, treinar e gerenciar equipe para tarefas repetitivas.
-                Nós criamos soluções digitais sob medida que substituem pessoas por sistemas — que nunca dormem, não adoecem e entregam o mesmo nível de performance 24/7.
-              </p>
-              <p className="text-xl font-semibold text-gold mb-12 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-                Mais produtividade, menos custo fixo. É isso que um Funcionário Digital entrega.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                <a 
-                  href={calendarLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
-                >
-                  Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-6 border-gold/50 hover:bg-gold/10 hover:text-gold"
-                >
-                  Ver como funciona
-                </Button>
-              </div>
+        {/* Hero Section - Updated with PageHero component */}
+        <PageHero 
+          title="Funcionários Digitais: Automatize sua Operação"
+          subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
+          tag="Automação Inteligente"
+        >
+          <div className="space-y-6">
+            <p className="text-xl font-semibold text-gold mt-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
+              Mais produtividade. Menos custo fixo. Performance constante.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up" style={{ animationDelay: "0.8s" }}>
+              <a 
+                href={calendarLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4"
+              >
+                Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+              <Button 
+                variant="outline" 
+                className="text-lg px-8 py-4 border-gold/50 hover:bg-gold/10 hover:text-gold"
+              >
+                Ver como funciona
+              </Button>
             </div>
           </div>
-        </section>
+        </PageHero>
         
         {/* Ideal For Section */}
         <section className="relative">

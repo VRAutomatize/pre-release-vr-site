@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
@@ -6,6 +7,7 @@ import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import PageHero from "@/components/shared/PageHero";
+import HeroImage from "@/components/shared/HeroImage";
 
 const DigitalEmployees = () => {
   // Animation variants for staggered elements
@@ -45,7 +47,7 @@ const DigitalEmployees = () => {
             href={calendarLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
+            className="bg-gold hover:bg-gold-light text-background rounded-lg px-4 py-2 flex items-center gap-2"
           >
             <Clock className="h-4 w-4 mr-2" />
             Agendar Consulta
@@ -54,7 +56,7 @@ const DigitalEmployees = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
-        {/* Hero Section - Updated with PageHero component */}
+        {/* Hero Section - Updated with PageHero component and removed background image */}
         <PageHero 
           title="Funcionários Digitais: Automatize sua Operação"
           subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
@@ -70,21 +72,26 @@ const DigitalEmployees = () => {
                 href={calendarLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4"
+                className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4"
               >
                 Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
               </a>
               <Button 
                 variant="outline" 
-                className="text-lg px-8 py-4 border-gold/50 hover:bg-gold/10 hover:text-gold"
+                className="text-lg px-8 py-4 border-gold/50 hover:bg-gold/10 hover:text-gold rounded-lg"
               >
                 Ver como funciona
               </Button>
             </div>
           </div>
+          
+          {/* Added hero image from index page */}
+          <div className="mt-8 md:mt-12 animate-fade-up" style={{ animationDelay: "1s" }}>
+            <HeroImage />
+          </div>
         </PageHero>
         
-        {/* Ideal For Section */}
+        {/* Ideal For Section - Rounded corners added */}
         <section className="relative">
           <motion.div 
             className="max-w-4xl mx-auto text-center mb-16"
@@ -98,22 +105,22 @@ const DigitalEmployees = () => {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300">
+              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
                 <p className="text-xl text-left">Querem reduzir equipe operacional sem perder produtividade</p>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300">
+              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
                 <p className="text-xl text-left">Precisam escalar vendas, atendimento e processos com previsibilidade</p>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300">
+              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
                 <p className="text-xl text-left">Estão gastando demais com tarefas que podem ser automatizadas</p>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300">
+              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
                 <p className="text-xl text-left">Buscam padronização, eficiência e controle total da operação</p>
               </motion.div>
@@ -121,7 +128,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
-        {/* Comparison Section */}
+        {/* Comparison Section - Rounded corners added, contrast fixed */}
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-40 right-20 w-80 h-80 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "1s" }} />
@@ -139,8 +146,8 @@ const DigitalEmployees = () => {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Human Employee */}
-              <motion.div variants={itemVariants} className="floating-card p-8 rounded-xl relative overflow-hidden border-red-400/20">
+              {/* Human Employee - Rounded corners */}
+              <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-red-400/20">
                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-red-500/5 rounded-full"></div>
                 <Users className="w-16 h-16 text-red-400 mb-6" />
                 <h3 className="text-2xl font-semibold mb-6">Funcionário convencional:</h3>
@@ -163,8 +170,8 @@ const DigitalEmployees = () => {
                 </div>
               </motion.div>
 
-              {/* Digital Employee */}
-              <motion.div variants={itemVariants} className="floating-card p-8 rounded-xl relative overflow-hidden border-gold/20">
+              {/* Digital Employee - Rounded corners */}
+              <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-gold/20">
                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-gold/5 rounded-full"></div>
                 <Zap className="w-16 h-16 text-gold mb-6" />
                 <h3 className="text-2xl font-semibold mb-6">Funcionário Digital:</h3>
@@ -194,7 +201,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
-        {/* How It Works Section */}
+        {/* How It Works Section - Rounded corners */}
         <section className="relative">
           <motion.div 
             className="max-w-5xl mx-auto"
@@ -233,7 +240,7 @@ const DigitalEmployees = () => {
                 <motion.div
                   key={index}
                   variants={itemVariants} 
-                  className="floating-card p-6 flex flex-col items-center text-center hover:border-gold/40 transition-all duration-300 relative h-full"
+                  className="floating-card p-6 flex flex-col items-center text-center hover:border-gold/40 transition-all duration-300 relative h-full rounded-lg"
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
                   <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center mb-6">
@@ -247,7 +254,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
-        {/* Use Cases Section */}
+        {/* Use Cases Section - Rounded corners */}
         <section className="relative">
           <motion.div 
             className="max-w-5xl mx-auto"
@@ -286,7 +293,7 @@ const DigitalEmployees = () => {
                 <motion.div 
                   key={index}
                   variants={itemVariants} 
-                  className="floating-card p-8 flex items-start gap-6 hover:border-gold/40 transition-all duration-300"
+                  className="floating-card p-8 flex items-start gap-6 hover:border-gold/40 transition-all duration-300 rounded-lg"
                 >
                   <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
                     <useCase.icon className="h-6 w-6 text-gold" />
@@ -301,14 +308,14 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - Rounded corners */}
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/10 rounded-full filter blur-3xl animate-float" />
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
           </div>
           
-          <Card className="max-w-5xl mx-auto border-gold/30 relative overflow-hidden bg-black/30 backdrop-blur-lg">
+          <Card className="max-w-5xl mx-auto border-gold/30 relative overflow-hidden bg-black/30 backdrop-blur-lg rounded-lg">
             <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent"></div>
             <div className="p-8 md:p-12 relative z-10">
               <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -336,7 +343,7 @@ const DigitalEmployees = () => {
                       href={calendarLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4"
+                      className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4"
                     >
                       Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
                     </a>
@@ -355,7 +362,7 @@ const DigitalEmployees = () => {
                   href={calendarLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4 w-full"
+                  className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4 w-full"
                 >
                   Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
                 </a>

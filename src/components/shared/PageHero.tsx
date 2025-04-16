@@ -12,20 +12,9 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-const PageHero = ({ title, subtitle, tag, backgroundImage, children }: PageHeroProps) => {
+const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
   return (
     <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
-      {/* Background Image with lazy loading */}
-      <Suspense fallback={<div className="absolute inset-0 z-0 bg-gray-800/20 animate-pulse" />}>
-        <div 
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500"
-          style={{
-            backgroundImage: `url(${backgroundImage || 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=2000'})`,
-            opacity: 0.1
-          }}
-        />
-      </Suspense>
-
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-gold/20 rounded-full filter blur-3xl animate-float" />

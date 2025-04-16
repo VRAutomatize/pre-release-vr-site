@@ -13,7 +13,7 @@ interface BenefitItemProps {
 const BenefitItem = ({ icon: Icon, title, problem, solution, index }: BenefitItemProps) => {
   return (
     <Card 
-      className="floating-card p-6 relative overflow-hidden group hover:border-gold/40 transition-all duration-300"
+      className="floating-card p-6 relative overflow-hidden group hover:border-gold/40 transition-all duration-300 rounded-lg"
       style={{
         animationDelay: `${index * 0.2}s`,
       }}

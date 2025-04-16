@@ -10,7 +10,7 @@ interface HeroImageProps {
 const HeroImage = ({ 
   src = "/lovable-uploads/feb0a32a-fd43-4f11-a6eb-b9c493b7e77e.png", 
   alt = "Profissional com laptop",
-  className = "w-[60%] h-auto object-contain mx-auto"
+  className = "w-full h-auto object-contain"
 }: HeroImageProps) => {
   return (
     <img 

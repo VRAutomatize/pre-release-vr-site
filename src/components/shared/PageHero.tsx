@@ -16,7 +16,7 @@ interface PageHeroProps {
 const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
   return (
     <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
-      {/* Background Effects - Removed first div, kept second with reduced size */}
+      {/* Background Effects - Single small effect */}
       <div className="absolute inset-0 z-0">
         <div className="absolute bottom-20 right-20 w-48 h-48 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
       </div>
@@ -42,10 +42,8 @@ const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
           </div>
           
           {/* Image Column */}
-          <div className="w-full md:w-1/2 mt-8 md:mt-0">
-            <div className="animate-fade-up" style={{ animationDuration: "1.3s" }}>
-              <HeroImage />
-            </div>
+          <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDuration: "1.3s" }}>
+            <HeroImage />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -80,6 +81,10 @@ export default {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.5" },
         },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(0.95)" },
+        },
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
@@ -110,6 +115,7 @@ export default {
         "spin-slow": "spin-slow 8s linear infinite",
         "slide-in": "slide-in 0.3s ease-out",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
         shimmer: "shimmer 2s linear infinite",
         "float-fade": "float-fade 1.5s ease-out forwards",
       },

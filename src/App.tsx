@@ -17,6 +17,7 @@ const Chatbots = lazy(() => import("./pages/services/Chatbots"));
 const LeadCapture = lazy(() => import("./pages/services/LeadCapture"));
 const Automation = lazy(() => import("./pages/services/Automation"));
 const Consulting = lazy(() => import("./pages/services/Consulting"));
+const DigitalEmployees = lazy(() => import("./pages/services/DigitalEmployees"));
 
 // Cliente de consulta de dados memoizado 
 const queryClient = new QueryClient({
@@ -56,6 +57,7 @@ const AnimationLayout = () => {
             <Route path="/services/lead-capture" element={<LeadCapture />} />
             <Route path="/services/automation" element={<Automation />} />
             <Route path="/services/consulting" element={<Consulting />} />
+            <Route path="/services/digital-employees" element={<DigitalEmployees />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

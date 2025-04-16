@@ -18,7 +18,7 @@ const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
     <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-20 md:mt-12">
       {/* Background Effects - Removed first div, kept second with reduced size */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute bottom-20 right-20 w-48 h-48 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-20 right-20 w-24 h-24 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -41,10 +41,10 @@ const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
             </div>
           </div>
           
-          {/* Image Column */}
-          <div className="w-full md:w-1/2 mt-8 md:mt-0">
-            <div className="animate-fade-up" style={{ animationDuration: "1.3s" }}>
-              <HeroImage />
+          {/* Image Column - Matching Index page positioning */}
+          <div className="w-full md:w-1/2 mt-8 md:mt-0 flex justify-center items-center">
+            <div className="animate-fade-up max-w-[80%]" style={{ animationDuration: "1.3s" }}>
+              <HeroImage src="/lovable-uploads/77c90a03-2f82-4ecb-9e8c-95a95045fecb.png" alt="Mulher com roupa amarela" className="w-full h-auto object-contain" />
             </div>
           </div>
         </div>

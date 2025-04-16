@@ -15,7 +15,8 @@ const AIAttendants = lazy(() => import("./pages/services/AIAttendants"));
 const CRM = lazy(() => import("./pages/services/CRM"));
 const Chatbots = lazy(() => import("./pages/services/Chatbots"));
 const LeadCapture = lazy(() => import("./pages/services/LeadCapture"));
-const Automation = lazy(() => import("./pages/services/Automation"));
+const Automation = lazy(() => import("./pages/Automation"));
+const AutomationService = lazy(() => import("./pages/services/Automation"));
 const Consulting = lazy(() => import("./pages/services/Consulting"));
 
 // Cliente de consulta de dados memoizado 
@@ -50,11 +51,12 @@ const AnimationLayout = () => {
         <Suspense fallback={<LoadingFallback />}>
           <Routes location={location}>
             <Route path="/" element={<Index />} />
+            <Route path="/automation" element={<Automation />} />
             <Route path="/services/ai-attendants" element={<AIAttendants />} />
             <Route path="/services/crm" element={<CRM />} />
             <Route path="/services/chatbots" element={<Chatbots />} />
             <Route path="/services/lead-capture" element={<LeadCapture />} />
-            <Route path="/services/automation" element={<Automation />} />
+            <Route path="/services/automation" element={<AutomationService />} />
             <Route path="/services/consulting" element={<Consulting />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

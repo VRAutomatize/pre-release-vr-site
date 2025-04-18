@@ -22,9 +22,9 @@ const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row items-center">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Content Column */}
-          <div className="w-full md:w-1/2 md:pr-8">
+          <div className="w-full lg:w-1/2 md:pr-8">
             {tag && (
               <div className="animate-fade-up" style={{ animationDuration: "0.5s" }}>
                 <HeroTag>{tag}</HeroTag>
@@ -41,8 +41,8 @@ const PageHero = ({ title, subtitle, tag, children }: PageHeroProps) => {
             </div>
           </div>
           
-          {/* Image Column */}
-          <div className="hidden lg:block w-1/2 animate-fade-up" style={{ animationDuration: "1.3s" }}>
+          {/* Image Column - Hidden on mobile, visible and right-aligned on desktop */}
+          <div className="hidden lg:flex lg:justify-end lg:w-1/2 animate-fade-up" style={{ animationDuration: "1.3s" }}>
             <HeroImage />
           </div>
         </div>

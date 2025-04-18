@@ -274,7 +274,11 @@ const DigitalEmployees = () => {
                   </div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <img src="/lovable-uploads/0b4e9ef3-55f1-4f23-bd1a-eac74bd0bf8d.png" alt="VR Automatize Logo" className="w-48 h-48 object-contain animate-pulse-slow" />
+                  <img 
+                    src="/lovable-uploads/69d6e3a4-5346-41f7-988f-8151c83e758c.png" 
+                    alt="VR Automatize Logo" 
+                    className="w-48 h-48 object-contain animate-pulse-slow" 
+                  />
                 </div>
               </div>
               <div className="mt-8 md:hidden">

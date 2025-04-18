@@ -1,12 +1,10 @@
 import React from "react";
-import { Button } from "@/components/ui/button"; // Button seems unused, consider removing if not needed elsewhere
 import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import PageHero from "@/components/shared/PageHero";
-import HeroImage from "@/components/shared/HeroImage"; // Assuming this is the correct path
 
 const DigitalEmployees = () => {
   // Animation variants for staggered elements
@@ -54,41 +52,25 @@ const DigitalEmployees = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* --- Hero Section Start --- */}
-        {/* Use Flexbox for side-by-side layout on medium screens and up */}
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-16">
+        <PageHero
+          title="Funcionários Digitais: Automatize sua Operação"
+          subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
+          tag="Automação Inteligente"
+        >
+          {/* Additional content passed as children to PageHero */}
+          <div className="space-y-6 mt-6">
+            <p className="text-xl font-semibold text-gold animate-fade-up" style={{ animationDelay: "0.6s" }}>
+              Mais produtividade. Menos custo fixo. Performance constante.
+            </p>
 
-          {/* Text Content Area (Left Side) */}
-          <div className="md:w-1/2 lg:w-3/5 text-center md:text-left"> {/* Assign width and text alignment */}
-            <PageHero
-              title="Funcionários Digitais: Automatize sua Operação"
-              subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
-              tag="Automação Inteligente"
-            >
-              {/* Additional content passed as children to PageHero */}
-              <div className="space-y-6 mt-6"> {/* Added margin-top */}
-                <p className="text-xl font-semibold text-gold animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                  Mais produtividade. Menos custo fixo. Performance constante.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up" style={{ animationDelay: "0.8s" }}>
-                  <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4">
-                    Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
-                </div>
-              </div>
-            </PageHero>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up" style={{ animationDelay: "0.8s" }}>
+              <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4">
+                Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </div>
           </div>
-
-          {/* Image Area (Right Side) */}
-          <div className="md:w-1/2 lg:w-2/5 mt-8 md:mt-0 flex justify-center md:justify-end"> {/* Assign width, remove top margin on md+, control alignment */}
-            {/* Render the HeroImage component */}
-            {/* Removed the extra div and animation wrapper - apply animation within HeroImage if needed */}
-            <HeroImage />
-          </div>
-
-        </div>
+        </PageHero>
         {/* --- Hero Section End --- */}
-
 
         {/* Ideal For Section - Rounded corners added */}
         <section className="relative">
@@ -98,8 +80,7 @@ const DigitalEmployees = () => {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-              {/* Rest of the cards... */}
-               <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
+              <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
                 <p className="text-xl text-left">Querem reduzir equipe operacional sem perder produtividade</p>
               </motion.div>
@@ -136,7 +117,6 @@ const DigitalEmployees = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Human Employee - Rounded corners */}
               <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-red-400/20">
-                 {/* ... content ... */}
                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-red-500/5 rounded-full"></div>
                 <Users className="w-16 h-16 text-red-400 mb-6" />
                 <h3 className="text-2xl font-semibold mb-6">Funcionário convencional:</h3>
@@ -161,7 +141,6 @@ const DigitalEmployees = () => {
 
               {/* Digital Employee - Rounded corners */}
               <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-gold/20">
-                 {/* ... content ... */}
                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-gold/5 rounded-full"></div>
                 <Zap className="w-16 h-16 text-gold mb-6" />
                 <h3 className="text-2xl font-semibold mb-6">Funcionário Digital:</h3>
@@ -193,8 +172,7 @@ const DigitalEmployees = () => {
 
         {/* How It Works Section - Rounded corners */}
         <section className="relative">
-           {/* ... content ... */}
-           <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
+          <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
               Como funciona nosso processo:
             </motion.h2>
@@ -230,7 +208,6 @@ const DigitalEmployees = () => {
 
         {/* Use Cases Section - Rounded corners */}
         <section className="relative">
-          {/* ... content ... */}
           <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
@@ -268,8 +245,7 @@ const DigitalEmployees = () => {
 
         {/* CTA Section - Rounded corners */}
         <section className="relative py-20">
-           {/* ... content ... */}
-           <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/10 rounded-full filter blur-3xl animate-float" />
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
           </div>

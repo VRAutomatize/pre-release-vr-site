@@ -186,7 +186,7 @@ const DigitalEmployees = () => {
             </div>
 
             <motion.p variants={itemVariants} className="text-xl text-center mt-12 font-semibold text-gold">
-              Em 12 meses, a economia pode passar dos R$30.000 — e o retorno ser múltiplas vezes maior.
+              Em 12 meses, a economia pode passar dos R$100.000* — e o retorno ser múltiplas vezes maior.
             </motion.p>
           </motion.div>
         </section>

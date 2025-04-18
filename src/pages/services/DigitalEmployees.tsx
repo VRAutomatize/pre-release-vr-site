@@ -5,9 +5,9 @@ import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import PageHero from "@/components/shared/PageHero";
-import BackgroundRemover from "@/components/shared/BackgroundRemover";
 
 const DigitalEmployees = () => {
+  // Animation variants for staggered elements
   const containerVariants = {
     hidden: {
       opacity: 0
@@ -51,11 +51,13 @@ const DigitalEmployees = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
+        {/* --- Hero Section Start --- */}
         <PageHero
           title="Funcionários Digitais: Automatize sua Operação"
           subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
           tag="Automação Inteligente"
         >
+          {/* Additional content passed as children to PageHero */}
           <div className="space-y-6 mt-6">
             <p className="text-xl font-semibold text-gold animate-fade-up" style={{ animationDelay: "0.6s" }}>
               Mais produtividade. Menos custo fixo. Performance constante.
@@ -68,19 +70,9 @@ const DigitalEmployees = () => {
             </div>
           </div>
         </PageHero>
+        {/* --- Hero Section End --- */}
 
-        <section className="container mx-auto px-4 text-center">
-          <motion.div 
-            initial="hidden" 
-            whileInView="show" 
-            viewport={{ once: true, amount: 0.3 }} 
-            variants={containerVariants}
-            className="flex justify-center"
-          >
-            <BackgroundRemover />
-          </motion.div>
-        </section>
-
+        {/* Ideal For Section - Rounded corners added */}
         <section className="relative">
           <motion.div className="max-w-4xl mx-auto text-center mb-16" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
@@ -111,6 +103,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
+        {/* Comparison Section - Rounded corners added, contrast fixed */}
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-40 right-20 w-80 h-80 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "1s" }} />
@@ -122,6 +115,7 @@ const DigitalEmployees = () => {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Human Employee - Rounded corners */}
               <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-red-400/20">
                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-red-500/5 rounded-full"></div>
                 <Users className="w-16 h-16 text-red-400 mb-6" />
@@ -145,6 +139,7 @@ const DigitalEmployees = () => {
                 </div>
               </motion.div>
 
+              {/* Digital Employee - Rounded corners */}
               <motion.div variants={itemVariants} className="floating-card p-8 rounded-lg relative overflow-hidden border-gold/20">
                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-gold/5 rounded-full"></div>
                 <Zap className="w-16 h-16 text-gold mb-6" />
@@ -175,6 +170,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
+        {/* How It Works Section - Rounded corners */}
         <section className="relative">
           <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
@@ -210,6 +206,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
+        {/* Use Cases Section - Rounded corners */}
         <section className="relative">
           <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center">
@@ -246,6 +243,7 @@ const DigitalEmployees = () => {
           </motion.div>
         </section>
 
+        {/* CTA Section - Rounded corners */}
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/10 rounded-full filter blur-3xl animate-float" />

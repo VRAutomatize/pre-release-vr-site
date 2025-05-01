@@ -5,7 +5,9 @@ import { toast } from "sonner";
 // These would eventually come from an API/backend
 const EMPLOYEES = [
   { username: "admin", password: "admin123", name: "Administrador" },
-  { username: "funcionario", password: "func123", name: "Funcionário" }
+  { username: "funcionario", password: "func123", name: "Funcionário" },
+  { username: "kaio.fdcore@vrautomatize.com", password: "kaio2025", name: "Kaio" },
+  { username: "rafael.fdcore@vrautomatize.com", password: "rafael2025", name: "Rafael" }
 ];
 
 interface User {

@@ -78,7 +78,7 @@ const EmployeeSidebar = () => {
   return (
     <div 
       className={cn(
-        "flex h-screen flex-col border-r border-gold/20 bg-background/70 backdrop-blur transition-all duration-300 z-10 overflow-hidden",
+        "flex h-screen flex-col border-r border-gold/20 bg-background/40 backdrop-blur-md transition-all duration-300 z-10 overflow-hidden",
         sidebarWidth
       )}
       onMouseEnter={() => !isMobile && setHovered(true)}

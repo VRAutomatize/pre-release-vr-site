@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -35,8 +34,17 @@ const Dashboard = () => {
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        {/* Large blurred logo in background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
+          <img 
+            src="/favicon.ico" 
+            alt="VR Automatize" 
+            className="w-[80%] max-w-[800px] object-contain"
+          />
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 relative z-10">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-gold">Dashboard</h1>
             <p className="text-sm md:text-base text-muted-foreground">
@@ -74,7 +82,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full relative z-10">
           <TabsContent value="metrics" className="mt-0 space-y-6">
             {/* Metrics Cards */}
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">

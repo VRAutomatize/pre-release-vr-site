@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Users, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,8 +55,17 @@ const Devs = () => {
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80">
-        <div className="flex items-center justify-between mb-6">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        {/* Large blurred logo in background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
+          <img 
+            src="/favicon.ico" 
+            alt="VR Automatize" 
+            className="w-[80%] max-w-[800px] object-contain"
+          />
+        </div>
+
+        <div className="flex items-center justify-between mb-6 relative z-10">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-gold">Desenvolvedores</h1>
             <p className="text-sm md:text-base text-muted-foreground">
@@ -75,7 +83,7 @@ const Devs = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6 relative z-10">
           <Card className="glass-blur border-gold/20 shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">

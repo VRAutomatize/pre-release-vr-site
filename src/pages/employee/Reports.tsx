@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,7 +22,7 @@ const Reports = () => {
   
   const isMobile = useIsMobile();
 
-  const handleOpenForm = (url: string, title: string, description?: string) => {
+  const handleOpenForm = useCallback((url: string, title: string, description?: string) => {
     setActiveForm({
       isOpen: true,
       url,
@@ -30,20 +30,23 @@ const Reports = () => {
       description,
     });
     
-    // For mobile devices, we want to prevent scrolling on the body when the form is open
+    // Para dispositivos móveis, evitamos rolagem no body quando o form está aberto
     if (isMobile) {
       document.body.style.overflow = 'hidden';
+      // Adiciona uma classe específica para mobile para ajudar na estilização
+      document.body.classList.add('form-overlay-open');
     }
-  };
+  }, [isMobile]);
 
-  const handleCloseForm = () => {
+  const handleCloseForm = useCallback(() => {
     setActiveForm((prev) => ({ ...prev, isOpen: false }));
     
-    // Restore scrolling when form is closed
+    // Restaura a rolagem quando o formulário é fechado
     if (isMobile) {
       document.body.style.overflow = '';
+      document.body.classList.remove('form-overlay-open');
     }
-  };
+  }, [isMobile]);
 
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">

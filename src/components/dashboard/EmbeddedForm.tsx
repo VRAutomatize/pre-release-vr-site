@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useMemo } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -21,6 +21,15 @@ export function EmbeddedForm({
 }: EmbeddedFormProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isMobile = useIsMobile();
+  
+  // Modificar URL para desativar tema do n8n e forçar tema escuro/transparente
+  const enhancedFormUrl = useMemo(() => {
+    const url = new URL(formUrl);
+    // Adicionar parâmetros para desativar tema padrão e definir tema escuro
+    url.searchParams.set('disableTheme', 'true');
+    url.searchParams.set('darkMode', 'true');
+    return url.toString();
+  }, [formUrl]);
 
   if (!isOpen) return null;
   
@@ -47,11 +56,11 @@ export function EmbeddedForm({
           <X className="h-4 w-4" />
         </button>
         
-        {/* Iframe Container */}
-        <div className="w-full h-full overflow-hidden rounded-lg">
+        {/* Iframe Container - Adicionando uma camada extra para garantir transparência */}
+        <div className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]/95' : ''}`}>
           <iframe
-            src={formUrl}
-            className="w-full h-full bg-transparent !bg-transparent"
+            src={enhancedFormUrl}
+            className={`w-full h-full ${isMobile ? 'bg-transparent !bg-transparent' : 'bg-transparent'}`}
             title={title}
             frameBorder="0"
             style={{ 

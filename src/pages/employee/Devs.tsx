@@ -1,10 +1,11 @@
 
 import React, { useState } from "react";
-import { Users, RefreshCw, HelpCircle } from "lucide-react";
+import { Users, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
+import { EmbeddedForm } from "@/components/dashboard/EmbeddedForm";
 
 const developersList = [
   { id: 1, name: "Carlos Santos", status: "available", specialty: "Frontend", lastActive: "Agora" },
@@ -16,6 +17,17 @@ const developersList = [
 const Devs = () => {
   const [devs, setDevs] = useState(developersList);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [activeForm, setActiveForm] = useState<{
+    isOpen: boolean;
+    url: string;
+    title: string;
+    description: string;
+  }>({
+    isOpen: false,
+    url: "",
+    title: "",
+    description: "",
+  });
 
   const refreshData = () => {
     setIsRefreshing(true);
@@ -29,7 +41,16 @@ const Devs = () => {
   };
   
   const openSupportForm = () => {
-    window.open("https://vrautomatize-n8n.snrhk1.easypanel.host/form/abrir_chamado", "_blank");
+    setActiveForm({
+      isOpen: true,
+      url: "https://vrautomatize-n8n.snrhk1.easypanel.host/form/abrir_chamado",
+      title: "Suporte Técnico",
+      description: "Abra um chamado para solicitar suporte técnico dos desenvolvedores"
+    });
+  };
+
+  const handleCloseForm = () => {
+    setActiveForm((prev) => ({ ...prev, isOpen: false }));
   };
 
   return (
@@ -93,7 +114,7 @@ const Devs = () => {
             <CardHeader className="flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="rounded-full bg-gold/10 p-3 shadow-inner">
-                  <HelpCircle className="h-5 w-5 text-gold" />
+                  <Users className="h-5 w-5 text-gold" />
                 </div>
                 <CardTitle className="text-gold">Suporte Técnico</CardTitle>
               </div>
@@ -107,12 +128,19 @@ const Devs = () => {
                 onClick={openSupportForm}
                 className="bg-gold hover:bg-gold/90 text-background"
               >
-                <HelpCircle className="h-4 w-4 mr-2" />
                 Abrir Chamado de Suporte
               </Button>
             </CardContent>
           </Card>
         </div>
+
+        <EmbeddedForm
+          isOpen={activeForm.isOpen}
+          onClose={handleCloseForm}
+          title={activeForm.title}
+          description={activeForm.description}
+          formUrl={activeForm.url}
+        />
       </main>
     </div>
   );

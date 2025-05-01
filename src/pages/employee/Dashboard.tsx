@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { RefreshCw, BarChart, Users, Calendar, DollarSign } from "lucide-react";
+import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,6 +9,7 @@ import MetricsCard from "@/components/dashboard/MetricsCard";
 import SalesHistory from "@/components/dashboard/SalesHistory";
 import LeadsHistory from "@/components/dashboard/LeadsHistory";
 import CommissionsPanel from "@/components/dashboard/CommissionsPanel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -36,53 +37,73 @@ const Dashboard = () => {
               Bem-vindo, {user?.name || "Colaborador"}. Aqui estão seus dados atualizados.
             </p>
           </div>
-          <Button 
-            onClick={refreshData} 
-            variant="outline" 
-            className="border-gold/20 text-gold hover:bg-gold/10 w-full md:w-auto"
-            disabled={isRefreshing}
-          >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
-            Atualizar Dados
-          </Button>
+          <div className="flex gap-2 w-full md:w-auto">
+            <Tabs defaultValue="metrics" className="w-full md:w-auto">
+              <TabsList className="grid grid-cols-2 w-full">
+                <TabsTrigger value="metrics" className="flex items-center gap-2">
+                  <BarChart className="h-4 w-4" />
+                  <span className="hidden md:inline">Métricas</span>
+                </TabsTrigger>
+                <TabsTrigger value="commissions" className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4" />
+                  <span className="hidden md:inline">Comissões</span>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+            <Button 
+              onClick={refreshData} 
+              variant="outline" 
+              className="border-gold/20 text-gold hover:bg-gold/10"
+              disabled={isRefreshing}
+              size="icon"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            </Button>
+          </div>
         </div>
 
-        {/* Metrics Cards */}
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-6">
-          <MetricsCard
-            title="Total de Vendas"
-            value="R$ 7.950,00"
-            description="Mês atual"
-            icon={<BarChart className="h-4 w-4" />}
-          />
-          <MetricsCard
-            title="Leads Captados"
-            value="28"
-            description="Últimos 30 dias"
-            icon={<Users className="h-4 w-4" />}
-          />
-          <MetricsCard
-            title="Taxa de Conversão"
-            value="14,3%"
-            description="Leads → Vendas"
-            icon={<Calendar className="h-4 w-4" />}
-          />
-          <MetricsCard
-            title="Comissões"
-            value="R$ 1.850,75"
-            description="Disponível para solicitação"
-            icon={<DollarSign className="h-4 w-4" />}
-          />
-        </div>
+        <Tabs defaultValue="metrics" className="w-full">
+          <TabsContent value="metrics" className="mt-0 space-y-6">
+            {/* Metrics Cards */}
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+              <MetricsCard
+                title="Total de Vendas"
+                value="R$ 7.950,00"
+                description="Mês atual"
+                icon={<BarChart className="h-4 w-4" />}
+              />
+              <MetricsCard
+                title="Leads Captados"
+                value="28"
+                description="Últimos 30 dias"
+                icon={<Users className="h-4 w-4" />}
+              />
+              <MetricsCard
+                title="Taxa de Conversão"
+                value="14,3%"
+                description="Leads → Vendas"
+                icon={<Calendar className="h-4 w-4" />}
+              />
+              <MetricsCard
+                title="Comissões"
+                value="R$ 1.850,75"
+                description="Disponível para solicitação"
+                icon={<DollarSign className="h-4 w-4" />}
+              />
+            </div>
 
-        {/* Sales and Leads History */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <SalesHistory />
-          <LeadsHistory />
-        </div>
-
-        {/* Commissions Panel */}
-        <CommissionsPanel />
+            {/* Sales and Leads History */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <SalesHistory />
+              <LeadsHistory />
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="commissions" className="mt-0">
+            {/* Commissions Panel */}
+            <CommissionsPanel />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );

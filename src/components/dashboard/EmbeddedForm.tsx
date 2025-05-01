@@ -1,6 +1,8 @@
+
 import React from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface EmbeddedFormProps {
   isOpen: boolean;
@@ -17,8 +19,8 @@ export function EmbeddedForm({
   description,
   formUrl,
 }: EmbeddedFormProps) {
-  // Keep media query for potential responsive adjustments
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isMobile = useIsMobile();
 
   if (!isOpen) return null;
   
@@ -35,7 +37,7 @@ export function EmbeddedForm({
       <p id="form-description" className="sr-only">{description || "Form embedded from external source"}</p>
       
       {/* Form Container */}
-      <div className="relative w-[95vw] h-[90vh] sm:w-[90vw] sm:h-[85vh] max-w-5xl">
+      <div className={`relative ${isMobile ? 'w-full h-full' : 'w-[95vw] h-[90vh] sm:w-[90vw] sm:h-[85vh]'} max-w-5xl`}>
         {/* Close Button */}
         <button 
           onClick={onClose}
@@ -49,7 +51,7 @@ export function EmbeddedForm({
         <div className="w-full h-full overflow-hidden rounded-lg">
           <iframe
             src={formUrl}
-            className="w-full h-full bg-transparent"
+            className="w-full h-full bg-transparent !bg-transparent"
             title={title}
             frameBorder="0"
             style={{ 
@@ -57,7 +59,6 @@ export function EmbeddedForm({
               background: "transparent",
               overflow: "hidden"
             }}
-            allowTransparency
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
           />

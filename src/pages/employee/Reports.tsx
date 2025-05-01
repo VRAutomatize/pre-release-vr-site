@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import { EmbeddedForm } from "@/components/dashboard/EmbeddedForm";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Reports = () => {
   const [activeForm, setActiveForm] = useState<{
@@ -18,6 +19,8 @@ const Reports = () => {
     title: "",
     description: "",
   });
+  
+  const isMobile = useIsMobile();
 
   const handleOpenForm = (url: string, title: string, description?: string) => {
     setActiveForm({
@@ -26,10 +29,20 @@ const Reports = () => {
       title,
       description,
     });
+    
+    // For mobile devices, we want to prevent scrolling on the body when the form is open
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
   };
 
   const handleCloseForm = () => {
     setActiveForm((prev) => ({ ...prev, isOpen: false }));
+    
+    // Restore scrolling when form is closed
+    if (isMobile) {
+      document.body.style.overflow = '';
+    }
   };
 
   return (

@@ -48,6 +48,17 @@ const Reports = () => {
     }
   }, [isMobile]);
 
+  // Verificar se estamos em ambiente de desenvolvimento para usar URLs de teste se necessário
+  const isDevEnvironment = import.meta.env.DEV;
+  const getFormUrl = (url: string) => {
+    // Se estivermos em desenvolvimento e a URL não estiver definida ou for inválida,
+    // podemos fornecer um fallback para teste
+    if (isDevEnvironment && (!url || url === "")) {
+      return "https://example.com/form-placeholder";
+    }
+    return url;
+  };
+
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />

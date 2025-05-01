@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "@/hooks/use-toast";
 
 interface EmbeddedFormProps {
   isOpen: boolean;
@@ -24,11 +25,20 @@ export function EmbeddedForm({
   
   // Modificar URL para desativar tema do n8n e forçar tema escuro/transparente
   const enhancedFormUrl = useMemo(() => {
-    const url = new URL(formUrl);
-    // Adicionar parâmetros para desativar tema padrão e definir tema escuro
-    url.searchParams.set('disableTheme', 'true');
-    url.searchParams.set('darkMode', 'true');
-    return url.toString();
+    // Validar se formUrl é uma URL válida
+    try {
+      // Check if URL has protocol, if not add https://
+      const urlToProcess = formUrl.startsWith('http') ? formUrl : `https://${formUrl}`;
+      const url = new URL(urlToProcess);
+      // Adicionar parâmetros para desativar tema padrão e definir tema escuro
+      url.searchParams.set('disableTheme', 'true');
+      url.searchParams.set('darkMode', 'true');
+      return url.toString();
+    } catch (error) {
+      console.error("Invalid URL provided:", formUrl);
+      // Return the original URL if invalid
+      return formUrl;
+    }
   }, [formUrl]);
 
   if (!isOpen) return null;
@@ -58,19 +68,25 @@ export function EmbeddedForm({
         
         {/* Iframe Container - Adicionando uma camada extra para garantir transparência */}
         <div className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]/95' : ''}`}>
-          <iframe
-            src={enhancedFormUrl}
-            className={`w-full h-full ${isMobile ? 'bg-transparent !bg-transparent' : 'bg-transparent'}`}
-            title={title}
-            frameBorder="0"
-            style={{ 
-              backgroundColor: "transparent",
-              background: "transparent",
-              overflow: "hidden"
-            }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-          />
+          {formUrl ? (
+            <iframe
+              src={enhancedFormUrl}
+              className={`w-full h-full ${isMobile ? 'bg-transparent !bg-transparent' : 'bg-transparent'}`}
+              title={title}
+              frameBorder="0"
+              style={{ 
+                backgroundColor: "transparent",
+                background: "transparent",
+                overflow: "hidden"
+              }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-white">
+              <p>URL de formulário inválida</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

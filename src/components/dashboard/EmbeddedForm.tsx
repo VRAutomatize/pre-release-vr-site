@@ -1,5 +1,5 @@
 
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,17 +23,38 @@ export function EmbeddedForm({
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isMobile = useIsMobile();
   
+  // Inject custom styles when the form is open
+  useEffect(() => {
+    if (isOpen && isMobile) {
+      document.body.classList.add('form-overlay-open');
+    } else {
+      document.body.classList.remove('form-overlay-open');
+    }
+    
+    return () => {
+      document.body.classList.remove('form-overlay-open');
+    };
+  }, [isOpen, isMobile]);
+  
   // Modificar URL para desativar tema do n8n e forçar tema escuro/transparente
   const enhancedFormUrl = useMemo(() => {
     // Validar se formUrl é uma URL válida
     try {
+      // Check if formUrl is empty or undefined
+      if (!formUrl || formUrl.trim() === '') {
+        return '';
+      }
+      
       // Check if URL has protocol, if not add https://
       const urlToProcess = formUrl.startsWith('http') ? formUrl : `https://${formUrl}`;
       const url = new URL(urlToProcess);
+      
       // Adicionar parâmetros para desativar tema padrão e definir tema escuro
       url.searchParams.set('disableTheme', 'true');
       url.searchParams.set('darkMode', 'true');
-      url.searchParams.set('embedWithoutTheme', 'true'); // Novo parâmetro para tentar forçar melhor compatibilidade
+      url.searchParams.set('embedWithoutTheme', 'true');
+      url.searchParams.set('transparentBackground', 'true'); // Adicional para tentar forçar transparência
+      
       return url.toString();
     } catch (error) {
       console.error("Invalid URL provided:", formUrl);
@@ -68,12 +89,14 @@ export function EmbeddedForm({
         </button>
         
         {/* Iframe Container with stronger background for mobile */}
-        <div className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]/95' : ''}`} 
-             style={{ backgroundColor: isMobile ? '#1A1F2C' : 'transparent' }}>
+        <div 
+          className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]' : ''}`} 
+          style={{ backgroundColor: isMobile ? '#1A1F2C' : 'transparent' }}
+        >
           {formUrl ? (
             <iframe
               src={enhancedFormUrl}
-              className={`w-full h-full ${isMobile ? '!bg-[#1A1F2C]' : 'bg-transparent'}`} 
+              className={`w-full h-full ${isMobile ? 'bg-[#1A1F2C]' : 'bg-transparent'}`} 
               title={title}
               frameBorder="0"
               style={{ 

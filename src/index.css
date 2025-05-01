@@ -34,32 +34,56 @@
       position: relative;
     }
     
-    /* Estilos específicos para formulários incorporados no mobile */
+    /* Estilos específicos para formulários incorporados no modo mobile */
     body.form-overlay-open iframe {
+      background-color: #1A1F2C !important;
+    }
+    
+    /* Estilos específicos para n8n formulários no modo mobile */
+    body.form-overlay-open .n8n-form-container,
+    body.form-overlay-open .n8n-form-card,
+    body.form-overlay-open .n8n-form-background {
       background: #1A1F2C !important;
       background-color: #1A1F2C !important;
+      backdrop-filter: none !important;
     }
     
-    /* Override específico para n8n forms */
-    body.form-overlay-open .n8n-form-container {
-      background-color: #1A1F2C !important;
+    /* Estilizando texto e inputs nos formulários n8n */
+    body.form-overlay-open .n8n-form-title,
+    body.form-overlay-open .n8n-form-label,
+    body.form-overlay-open .n8n-form-description {
+      color: #d4d4d8 !important;
     }
     
-    /* Override para todos os elementos dentro do iframe */
+    body.form-overlay-open input, 
+    body.form-overlay-open select, 
+    body.form-overlay-open textarea {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    }
+    
+    /* Forçar o tema escuro em todos os elementos dentro do iframe */
     body.form-overlay-open iframe * {
-      background-color: transparent !important;
+      color-scheme: dark !important;
     }
     
-    /* Override para o fundo do body dentro do iframe */
+    /* Cor de fundo para qualquer página dentro do iframe */
+    body.form-overlay-open iframe html,
     body.form-overlay-open iframe body {
       background-color: #1A1F2C !important;
+      background: #1A1F2C !important;
+      color-scheme: dark !important;
     }
     
-    /* Additional n8n specific overrides */
-    body.form-overlay-open .n8n-form-container,
-    body.form-overlay-open .n8n-form-background,
-    body.form-overlay-open .n8n-form-container .form-page {
+    /* Cor de fundo para qualquer elemento com classe que possa estar usando background branco */
+    body.form-overlay-open .form-page,
+    body.form-overlay-open .form-container,
+    body.form-overlay-open .form-background,
+    body.form-overlay-open .form-wrapper,
+    body.form-overlay-open .form {
       background-color: #1A1F2C !important;
+      background: #1A1F2C !important;
     }
   }
 }

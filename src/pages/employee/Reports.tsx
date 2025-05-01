@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,20 +11,17 @@ const Reports = () => {
     isOpen: boolean;
     url: string;
     title: string;
-    description: string;
   }>({
     isOpen: false,
     url: "",
     title: "",
-    description: "",
   });
 
-  const handleOpenForm = (url: string, title: string, description: string) => {
+  const handleOpenForm = (url: string, title: string) => {
     setActiveForm({
       isOpen: true,
       url,
       title,
-      description,
     });
   };
 
@@ -68,8 +66,7 @@ const Reports = () => {
               <Button 
                 onClick={() => handleOpenForm(
                   "https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore",
-                  "Gerar Venda",
-                  "Preencha o formulário para registrar uma nova venda no sistema"
+                  "Gerar Venda"
                 )}
                 className="w-full bg-gold hover:bg-gold/90 text-background"
               >
@@ -94,8 +91,7 @@ const Reports = () => {
               <Button 
                 onClick={() => handleOpenForm(
                   "https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial",
-                  "Notificar Time Comercial",
-                  "Envie uma notificação importante para o time comercial"
+                  "Notificar Time Comercial"
                 )}
                 className="w-full bg-gold hover:bg-gold/90 text-background"
               >
@@ -109,7 +105,6 @@ const Reports = () => {
           isOpen={activeForm.isOpen}
           onClose={handleCloseForm}
           title={activeForm.title}
-          description={activeForm.description}
           formUrl={activeForm.url}
         />
       </main>

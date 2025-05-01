@@ -35,30 +35,30 @@ const CommissionsPanel = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="rounded-lg bg-background/50 p-3 shadow-sm border border-gold/10">
+          <div className="rounded-lg bg-gold/5 p-3 shadow-md border border-gold/20">
             <div className="flex items-center gap-2">
               <BadgeDollarSign className="h-4 w-4 text-green-600" />
-              <p className="text-sm font-medium text-muted-foreground">Recebido</p>
+              <p className="text-sm font-medium text-white">Recebido</p>
             </div>
-            <p className="mt-1 text-xl font-bold text-green-600">
+            <p className="mt-1 text-xl font-bold text-green-500">
               {commissionData.received.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
-          <div className="rounded-lg bg-background/50 p-3 shadow-sm border border-gold/10">
+          <div className="rounded-lg bg-gold/5 p-3 shadow-md border border-gold/20">
             <div className="flex items-center gap-2">
-              <WalletMinimal className="h-4 w-4 text-amber-600" />
-              <p className="text-sm font-medium text-muted-foreground">Confirmado</p>
+              <WalletMinimal className="h-4 w-4 text-amber-500" />
+              <p className="text-sm font-medium text-white">Confirmado</p>
             </div>
-            <p className="mt-1 text-xl font-bold text-amber-600">
+            <p className="mt-1 text-xl font-bold text-amber-500">
               {commissionData.confirmed.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
-          <div className="rounded-lg bg-background/50 p-3 shadow-sm border border-gold/10">
+          <div className="rounded-lg bg-gold/5 p-3 shadow-md border border-gold/20">
             <div className="flex items-center gap-2">
-              <BadgePercent className="h-4 w-4 text-blue-600" />
-              <p className="text-sm font-medium text-muted-foreground">Pendente</p>
+              <BadgePercent className="h-4 w-4 text-blue-500" />
+              <p className="text-sm font-medium text-white">Pendente</p>
             </div>
-            <p className="mt-1 text-xl font-bold text-blue-600">
+            <p className="mt-1 text-xl font-bold text-blue-500">
               {commissionData.pending.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
@@ -66,7 +66,7 @@ const CommissionsPanel = () => {
         
         <div className="space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h3 className="text-sm font-medium">Comissões Confirmadas</h3>
+            <h3 className="text-sm font-medium text-white">Comissões Confirmadas</h3>
             {commissionData.items.length > 0 && (
               <Button 
                 onClick={handlePaymentRequest} 
@@ -82,10 +82,10 @@ const CommissionsPanel = () => {
           
           <div className="grid gap-3 sm:grid-cols-1">
             {commissionData.items.map(item => (
-              <div key={item.id} className="flex items-center justify-between rounded-lg border border-gold/10 p-3 bg-background/30">
+              <div key={item.id} className="flex items-center justify-between rounded-lg border border-gold/20 p-3 bg-gold/5 backdrop-blur-lg shadow-md">
                 <div className="space-y-1">
-                  <p className="font-medium">{item.client}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="font-medium text-white">{item.client}</p>
+                  <p className="text-xs text-gold/80">
                     {new Date(item.date).toLocaleDateString('pt-BR')}
                   </p>
                 </div>

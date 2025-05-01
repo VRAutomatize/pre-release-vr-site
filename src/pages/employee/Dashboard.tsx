@@ -45,12 +45,18 @@ const Dashboard = () => {
           </div>
           <div className="flex gap-2 w-full md:w-auto">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full md:w-auto">
-              <TabsList className="grid grid-cols-2 w-full">
-                <TabsTrigger value="metrics" className="flex items-center gap-2">
+              <TabsList className="grid grid-cols-2 w-full bg-background/40 backdrop-blur-md border border-gold/20">
+                <TabsTrigger 
+                  value="metrics" 
+                  className="flex items-center gap-2 data-[state=active]:bg-gold/20 data-[state=active]:text-gold transition-all duration-300"
+                >
                   <BarChart className="h-4 w-4" />
                   <span className="hidden md:inline">Métricas</span>
                 </TabsTrigger>
-                <TabsTrigger value="commissions" className="flex items-center gap-2">
+                <TabsTrigger 
+                  value="commissions" 
+                  className="flex items-center gap-2 data-[state=active]:bg-gold/20 data-[state=active]:text-gold transition-all duration-300"
+                >
                   <Wallet className="h-4 w-4" />
                   <span className="hidden md:inline">Comissões</span>
                 </TabsTrigger>

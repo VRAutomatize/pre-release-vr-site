@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 // These would eventually come from an API/backend
 const EMPLOYEES = [

@@ -33,17 +33,17 @@ const Reports = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col md:flex-row h-[100vh] w-full">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-6 bg-background/80">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gold">Gerar Relatório</h1>
-          <p className="text-muted-foreground">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-bold text-gold">Gerar Relatório</h1>
+          <p className="text-sm md:text-base text-muted-foreground">
             Selecione uma das opções abaixo para iniciar o processo
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <Card className="glass-card card-hover">
             <CardHeader>
               <div className="flex items-center gap-3">
@@ -107,6 +107,6 @@ const Reports = () => {
       </main>
     </div>
   );
-};
+}
 
 export default Reports;

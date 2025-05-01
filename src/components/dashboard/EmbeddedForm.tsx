@@ -58,7 +58,7 @@ export function EmbeddedForm({
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
-      <DrawerContent className="h-[90vh]">
+      <DrawerContent className="h-[100vh] max-h-[100vh] rounded-none">
         <DrawerHeader className="border-b border-gold/20">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
@@ -69,7 +69,7 @@ export function EmbeddedForm({
         <div className="flex-1 overflow-hidden px-0">
           <iframe
             src={formUrl}
-            className="w-full h-[calc(90vh-120px)] border-0"
+            className="w-full h-[calc(100vh-120px)] border-0"
             title={title}
           />
         </div>

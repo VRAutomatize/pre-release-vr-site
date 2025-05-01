@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +16,6 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface EmbeddedFormProps {
@@ -39,7 +38,7 @@ export function EmbeddedForm({
   if (isDesktop) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl h-[80vh] p-0">
+        <DialogContent className="max-w-4xl h-[80vh] p-0 bg-background/90 backdrop-blur-lg border-gold/20">
           <DialogHeader className="p-6 border-b border-gold/20">
             <DialogTitle>{title}</DialogTitle>
             {description && <DialogDescription>{description}</DialogDescription>}
@@ -57,7 +56,7 @@ export function EmbeddedForm({
   }
 
   return (
-    <Drawer open={isOpen} onOpenChange={onClose}>
+    <Drawer open={isOpen} onOpenChange={onClose} shouldScaleBackground>
       <DrawerContent className="h-[100vh] max-h-[100vh] rounded-none">
         <DrawerHeader className="border-b border-gold/20">
           <DrawerTitle>{title}</DrawerTitle>

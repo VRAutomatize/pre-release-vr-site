@@ -26,10 +26,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[100vh] w-full">
+    <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 md:mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-gold">Dashboard</h1>
             <p className="text-sm md:text-base text-muted-foreground">
@@ -48,7 +48,7 @@ const Dashboard = () => {
         </div>
 
         {/* Metrics Cards */}
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-6">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-6">
           <MetricsCard
             title="Total de Vendas"
             value="R$ 7.950,00"
@@ -76,7 +76,7 @@ const Dashboard = () => {
         </div>
 
         {/* Sales and Leads History */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <SalesHistory />
           <LeadsHistory />
         </div>

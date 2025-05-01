@@ -11,17 +11,20 @@ const Reports = () => {
     isOpen: boolean;
     url: string;
     title: string;
+    description?: string;
   }>({
     isOpen: false,
     url: "",
     title: "",
+    description: "",
   });
 
-  const handleOpenForm = (url: string, title: string) => {
+  const handleOpenForm = (url: string, title: string, description?: string) => {
     setActiveForm({
       isOpen: true,
       url,
       title,
+      description,
     });
   };
 
@@ -66,7 +69,8 @@ const Reports = () => {
               <Button 
                 onClick={() => handleOpenForm(
                   "https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore",
-                  "Gerar Venda"
+                  "Gerar Venda",
+                  "Formulário para registrar uma nova venda no sistema"
                 )}
                 className="w-full bg-gold hover:bg-gold/90 text-background"
               >
@@ -91,7 +95,8 @@ const Reports = () => {
               <Button 
                 onClick={() => handleOpenForm(
                   "https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial",
-                  "Notificar Time Comercial"
+                  "Notificar Time Comercial",
+                  "Envie uma notificação importante para o time comercial"
                 )}
                 className="w-full bg-gold hover:bg-gold/90 text-background"
               >
@@ -101,11 +106,12 @@ const Reports = () => {
           </Card>
         </div>
 
-        {/* Embed the form with our improved component */}
+        {/* Embed the form with our improved fullscreen component */}
         <EmbeddedForm
           isOpen={activeForm.isOpen}
           onClose={handleCloseForm}
           title={activeForm.title}
+          description={activeForm.description}
           formUrl={activeForm.url}
         />
       </main>

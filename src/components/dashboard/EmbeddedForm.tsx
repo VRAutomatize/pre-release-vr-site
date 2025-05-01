@@ -1,16 +1,4 @@
-
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerClose,
-} from "@/components/ui/drawer";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
@@ -29,74 +17,44 @@ export function EmbeddedForm({
   description,
   formUrl,
 }: EmbeddedFormProps) {
+  // Keep media query for potential responsive adjustments
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  if (isDesktop) {
-    return (
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent 
-          className="sm:max-w-4xl w-[95vw] h-[85vh] p-0 overflow-hidden border-gold/20 bg-[rgba(0,0,0,0)]"
-        >
-          {/* Visually hidden title and description for accessibility */}
-          <DialogTitle className="sr-only">{title}</DialogTitle>
-          <DialogDescription className="sr-only">{description || "Form embedded from external source"}</DialogDescription>
-          
-          <div className="absolute right-4 top-4 z-[60]">
-            <button 
-              onClick={onClose}
-              className="rounded-full bg-black/20 p-1.5 text-gold hover:bg-black/40 transition-colors"
-              aria-label="Close"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-          
-          <div className="w-full h-full overflow-hidden">
-            <iframe
-              src={formUrl}
-              className="w-full h-full"
-              title={title}
-              frameBorder="0"
-              style={{ 
-                backgroundColor: "transparent",
-                overflow: "hidden"
-              }}
-              allowTransparency
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
+  if (!isOpen) return null;
+  
   return (
-    <Drawer open={isOpen} onOpenChange={onClose} shouldScaleBackground>
-      <DrawerContent 
-        className="h-[90vh] max-h-[95vh] p-0 rounded-t-xl overflow-hidden bg-[rgba(0,0,0,0)] !bg-transparent border-t-0"
-        style={{
-          backgroundColor: "rgba(0,0,0,0)",
-          background: "rgba(0,0,0,0)"
-        }}
-      >
-        {/* Custom handle that's more subtle */}
-        <div className="mx-auto mt-1.5 h-1.5 w-12 rounded-full bg-gold/30" />
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="form-title"
+      aria-describedby="form-description"
+    >
+      {/* Visually hidden title and description for accessibility */}
+      <h2 id="form-title" className="sr-only">{title}</h2>
+      <p id="form-description" className="sr-only">{description || "Form embedded from external source"}</p>
+      
+      {/* Form Container */}
+      <div className="relative w-[95vw] h-[90vh] sm:w-[90vw] sm:h-[85vh] max-w-5xl">
+        {/* Close Button */}
+        <button 
+          onClick={onClose}
+          className="absolute right-3 top-3 z-[60] rounded-full bg-black/20 p-1.5 text-gold hover:bg-black/40 transition-colors"
+          aria-label="Close"
+        >
+          <X className="h-4 w-4" />
+        </button>
         
-        <DrawerClose className="absolute right-4 top-4 z-[60]">
-          <div className="rounded-full bg-black/20 p-1.5">
-            <X className="h-4 w-4 text-gold" />
-          </div>
-        </DrawerClose>
-        
-        <div className="w-full h-full overflow-hidden">
+        {/* Iframe Container */}
+        <div className="w-full h-full overflow-hidden rounded-lg">
           <iframe
             src={formUrl}
-            className="w-full h-full"
+            className="w-full h-full bg-transparent"
             title={title}
             frameBorder="0"
             style={{ 
               backgroundColor: "transparent",
+              background: "transparent",
               overflow: "hidden"
             }}
             allowTransparency
@@ -104,7 +62,7 @@ export function EmbeddedForm({
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
           />
         </div>
-      </DrawerContent>
-    </Drawer>
+      </div>
+    </div>
   );
 }

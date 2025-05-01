@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +21,14 @@ const Reports = () => {
   });
   
   const isMobile = useIsMobile();
+
+  // Clean up effect to ensure body classes are removed when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('form-overlay-open');
+    };
+  }, []);
 
   const handleOpenForm = useCallback((url: string, title: string, description?: string) => {
     setActiveForm({

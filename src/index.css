@@ -36,13 +36,30 @@
     
     /* Estilos específicos para formulários incorporados no mobile */
     body.form-overlay-open iframe {
-      background: transparent !important;
-      background-color: transparent !important;
+      background: #1A1F2C !important;
+      background-color: #1A1F2C !important;
     }
     
     /* Override específico para n8n forms */
     body.form-overlay-open .n8n-form-container {
+      background-color: #1A1F2C !important;
+    }
+    
+    /* Override para todos os elementos dentro do iframe */
+    body.form-overlay-open iframe * {
       background-color: transparent !important;
+    }
+    
+    /* Override para o fundo do body dentro do iframe */
+    body.form-overlay-open iframe body {
+      background-color: #1A1F2C !important;
+    }
+    
+    /* Additional n8n specific overrides */
+    body.form-overlay-open .n8n-form-container,
+    body.form-overlay-open .n8n-form-background,
+    body.form-overlay-open .n8n-form-container .form-page {
+      background-color: #1A1F2C !important;
     }
   }
 }

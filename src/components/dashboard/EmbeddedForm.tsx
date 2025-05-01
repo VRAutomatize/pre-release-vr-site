@@ -33,6 +33,7 @@ export function EmbeddedForm({
       // Adicionar parâmetros para desativar tema padrão e definir tema escuro
       url.searchParams.set('disableTheme', 'true');
       url.searchParams.set('darkMode', 'true');
+      url.searchParams.set('embedWithoutTheme', 'true'); // Novo parâmetro para tentar forçar melhor compatibilidade
       return url.toString();
     } catch (error) {
       console.error("Invalid URL provided:", formUrl);
@@ -45,7 +46,7 @@ export function EmbeddedForm({
   
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="form-title"
@@ -60,24 +61,25 @@ export function EmbeddedForm({
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute right-3 top-3 z-[60] rounded-full bg-black/20 p-1.5 text-gold hover:bg-black/40 transition-colors"
+          className="absolute right-3 top-3 z-[60] rounded-full bg-black/50 p-1.5 text-gold hover:bg-black/70 transition-colors"
           aria-label="Close"
         >
           <X className="h-4 w-4" />
         </button>
         
-        {/* Iframe Container - Adicionando uma camada extra para garantir transparência */}
-        <div className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]/95' : ''}`}>
+        {/* Iframe Container with stronger background for mobile */}
+        <div className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]/95' : ''}`} 
+             style={{ backgroundColor: isMobile ? '#1A1F2C' : 'transparent' }}>
           {formUrl ? (
             <iframe
               src={enhancedFormUrl}
-              className={`w-full h-full ${isMobile ? 'bg-transparent !bg-transparent' : 'bg-transparent'}`}
+              className={`w-full h-full ${isMobile ? '!bg-[#1A1F2C]' : 'bg-transparent'}`} 
               title={title}
               frameBorder="0"
               style={{ 
-                backgroundColor: "transparent",
-                background: "transparent",
-                overflow: "hidden"
+                backgroundColor: isMobile ? '#1A1F2C' : 'transparent',
+                background: isMobile ? '#1A1F2C' : 'transparent',
+                overflow: "hidden",
               }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"

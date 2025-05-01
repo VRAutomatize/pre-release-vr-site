@@ -36,7 +36,7 @@ const SidebarItem = ({
         collapsed ? "justify-center" : ""
       )}
     >
-      <Icon className="h-5 w-5" />
+      <Icon className="h-5 w-5 flex-shrink-0" />
       {(!collapsed || isHovered) && (
         <span className={cn(
           "transition-opacity whitespace-nowrap", 
@@ -112,8 +112,8 @@ const EmployeeSidebar = () => {
           <h2 className="text-lg font-semibold text-gold">VR</h2>
         )}
       </div>
-      <div className="flex-1 overflow-auto py-4 px-2">
-        <nav className="flex flex-col gap-2">
+      <div className="flex-1 py-4 px-2 overflow-y-auto overflow-x-hidden">
+        <nav className="flex flex-col gap-2 min-w-0 w-full">
           <SidebarItem
             icon={LayoutDashboard}
             label="Dashboard"
@@ -148,7 +148,7 @@ const EmployeeSidebar = () => {
             collapsed && !hovered ? "justify-center" : ""
           )}
         >
-          <LogOut size={16} />
+          <LogOut size={16} className="flex-shrink-0" />
           {(!collapsed || hovered) && <span className={cn(
             "transition-opacity duration-300 whitespace-nowrap",
             isExpanded ? "opacity-100" : "opacity-0"

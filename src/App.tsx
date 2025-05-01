@@ -24,6 +24,8 @@ const DigitalEmployees = lazy(() => import("./pages/services/DigitalEmployees"))
 // Employee portal pages
 const Login = lazy(() => import("./pages/employee/Login"));
 const Dashboard = lazy(() => import("./pages/employee/Dashboard"));
+const Reports = lazy(() => import("./pages/employee/Reports"));
+const Devs = lazy(() => import("./pages/employee/Devs"));
 
 // Memoized query client
 const queryClient = new QueryClient({
@@ -72,6 +74,22 @@ const AnimationLayout = () => {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/reports" 
+              element={
+                <ProtectedRoute>
+                  <Reports />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/devs" 
+              element={
+                <ProtectedRoute>
+                  <Devs />
                 </ProtectedRoute>
               } 
             />

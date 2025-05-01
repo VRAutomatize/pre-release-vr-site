@@ -38,7 +38,7 @@ export function EmbeddedForm({
   if (isDesktop) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl h-[80vh] p-0 bg-background/90 backdrop-blur-lg border-gold/20">
+        <DialogContent className="max-w-4xl h-[80vh] p-0 border-gold/20">
           <DialogHeader className="p-6 border-b border-gold/20">
             <DialogTitle>{title}</DialogTitle>
             {description && <DialogDescription>{description}</DialogDescription>}

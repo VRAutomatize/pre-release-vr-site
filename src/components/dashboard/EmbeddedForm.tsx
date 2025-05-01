@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -25,6 +26,7 @@ export function EmbeddedForm({
   isOpen,
   onClose,
   title,
+  description,
   formUrl,
 }: EmbeddedFormProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -35,8 +37,9 @@ export function EmbeddedForm({
         <DialogContent 
           className="sm:max-w-4xl w-[95vw] h-[85vh] p-0 overflow-hidden border-gold/20 bg-[rgba(0,0,0,0)]"
         >
-          {/* Visually hidden title for accessibility */}
+          {/* Visually hidden title and description for accessibility */}
           <DialogTitle className="sr-only">{title}</DialogTitle>
+          <DialogDescription className="sr-only">{description || "Form embedded from external source"}</DialogDescription>
           
           <div className="absolute right-4 top-4 z-[60]">
             <button 
@@ -71,8 +74,13 @@ export function EmbeddedForm({
   return (
     <Drawer open={isOpen} onOpenChange={onClose} shouldScaleBackground>
       <DrawerContent 
-        className="h-[90vh] max-h-[95vh] p-0 rounded-t-xl overflow-hidden bg-[rgba(0,0,0,0)]"
+        className="h-[90vh] max-h-[95vh] p-0 rounded-t-xl overflow-hidden bg-[rgba(0,0,0,0)] !bg-transparent border-t-0"
+        style={{
+          backgroundColor: "rgba(0,0,0,0)",
+          background: "rgba(0,0,0,0)"
+        }}
       >
+        {/* Custom handle that's more subtle */}
         <div className="mx-auto mt-1.5 h-1.5 w-12 rounded-full bg-gold/30" />
         
         <DrawerClose className="absolute right-4 top-4 z-[60]">

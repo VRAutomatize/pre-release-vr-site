@@ -38,8 +38,8 @@ export function EmbeddedForm({
   if (isDesktop) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl h-[80vh] p-0 border-gold/20">
-          <DialogHeader className="p-6 border-b border-gold/20">
+        <DialogContent className="max-w-4xl h-[80vh] p-0 border-gold/20" style={{ background: "transparent" }}>
+          <DialogHeader className="p-6 border-b border-gold/20 bg-background/60 backdrop-blur-md">
             <DialogTitle>{title}</DialogTitle>
             {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
@@ -48,6 +48,7 @@ export function EmbeddedForm({
               src={formUrl}
               className="w-full h-[calc(80vh-120px)] border-0"
               title={title}
+              style={{ background: "transparent" }}
             />
           </div>
         </DialogContent>
@@ -57,8 +58,8 @@ export function EmbeddedForm({
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose} shouldScaleBackground>
-      <DrawerContent className="h-[100vh] max-h-[100vh] rounded-none">
-        <DrawerHeader className="border-b border-gold/20">
+      <DrawerContent className="h-[100vh] max-h-[100vh] rounded-none" style={{ background: "transparent" }}>
+        <DrawerHeader className="border-b border-gold/20 bg-background/60 backdrop-blur-md">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}
           <DrawerClose className="absolute right-4 top-4">
@@ -70,6 +71,7 @@ export function EmbeddedForm({
             src={formUrl}
             className="w-full h-[calc(100vh-120px)] border-0"
             title={title}
+            style={{ background: "transparent" }}
           />
         </div>
       </DrawerContent>

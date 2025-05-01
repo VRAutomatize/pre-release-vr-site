@@ -44,15 +44,15 @@ const Reports = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <Card className="glass-card card-hover">
+          <Card className="glass-blur border-gold/20 card-hover shadow-md">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="rounded-full bg-gold/10 p-3">
+                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
                   <FileText className="h-5 w-5 text-gold" />
                 </div>
-                <CardTitle>Gerar Venda</CardTitle>
+                <CardTitle className="text-gold">Gerar Venda</CardTitle>
               </div>
-              <CardDescription>
+              <CardDescription className="text-gold/70">
                 Preencha o formulário para registrar uma nova venda no sistema
               </CardDescription>
             </CardHeader>
@@ -70,15 +70,15 @@ const Reports = () => {
             </CardContent>
           </Card>
 
-          <Card className="glass-card card-hover">
+          <Card className="glass-blur border-gold/20 card-hover shadow-md">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="rounded-full bg-gold/10 p-3">
+                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
                   <Send className="h-5 w-5 text-gold" />
                 </div>
-                <CardTitle>Notificar Time Comercial</CardTitle>
+                <CardTitle className="text-gold">Notificar Time Comercial</CardTitle>
               </div>
-              <CardDescription>
+              <CardDescription className="text-gold/70">
                 Envie uma notificação importante para o time comercial
               </CardDescription>
             </CardHeader>

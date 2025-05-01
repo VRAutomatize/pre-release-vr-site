@@ -33,20 +33,20 @@ const Devs = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="flex items-center justify-between mb-8">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gold">Desenvolvedores</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-xl md:text-2xl font-bold text-gold">Desenvolvedores</h1>
+            <p className="text-sm md:text-base text-muted-foreground">
               Verifique a disponibilidade dos desenvolvedores e solicite suporte técnico
             </p>
           </div>
           <Button 
             onClick={refreshData} 
             variant="outline" 
-            className="border-gold/20 text-gold"
+            className="border-gold/20 text-gold hover:bg-gold/10"
             disabled={isRefreshing}
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
@@ -55,11 +55,13 @@ const Devs = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-6">
-          <Card className="border border-gold/20">
+          <Card className="glass-blur border-gold/20 shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-gold" />
-                <CardTitle>Disponibilidade de Desenvolvedores</CardTitle>
+                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
+                  <Users className="h-5 w-5 text-gold" />
+                </div>
+                <CardTitle className="text-gold">Disponibilidade de Desenvolvedores</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -67,18 +69,18 @@ const Devs = () => {
                 {devs.map((dev) => (
                   <div 
                     key={dev.id}
-                    className="flex flex-col p-4 rounded-lg border border-gold/10 bg-background"
+                    className="flex flex-col p-4 rounded-lg border border-gold/20 bg-gold/5 backdrop-blur-sm shadow-md"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium">{dev.name}</span>
+                      <span className="font-medium text-white">{dev.name}</span>
                       <span className={`h-3 w-3 rounded-full ${
                         dev.status === "available" ? "bg-green-500" :
                         dev.status === "busy" ? "bg-amber-500" :
                         "bg-gray-400"
                       }`} />
                     </div>
-                    <span className="text-sm text-muted-foreground">{dev.specialty}</span>
-                    <span className="text-xs text-muted-foreground mt-1">
+                    <span className="text-sm text-gold/80">{dev.specialty}</span>
+                    <span className="text-xs text-gold/70 mt-1">
                       Ativo: {dev.lastActive}
                     </span>
                   </div>
@@ -87,15 +89,17 @@ const Devs = () => {
             </CardContent>
           </Card>
 
-          <Card className="border border-gold/20">
+          <Card className="glass-blur border-gold/20 shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <HelpCircle className="h-5 w-5 text-gold" />
-                <CardTitle>Suporte Técnico</CardTitle>
+                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
+                  <HelpCircle className="h-5 w-5 text-gold" />
+                </div>
+                <CardTitle className="text-gold">Suporte Técnico</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="flex flex-col items-center text-center space-y-4">
-              <p>
+              <p className="text-gold/80">
                 Está enfrentando dificuldades técnicas ou precisa de suporte dos desenvolvedores?
                 Abra um chamado usando o formulário abaixo:
               </p>

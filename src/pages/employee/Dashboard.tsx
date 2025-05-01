@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, BarChart, Users, Calendar, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
@@ -28,7 +28,7 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-6">
+      <main className="flex-1 overflow-y-auto p-6 bg-background/80">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gold">Dashboard</h1>
@@ -39,7 +39,7 @@ const Dashboard = () => {
           <Button 
             onClick={refreshData} 
             variant="outline" 
-            className="border-gold/20 text-gold"
+            className="border-gold/20 text-gold hover:bg-gold/10"
             disabled={isRefreshing}
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
@@ -53,21 +53,25 @@ const Dashboard = () => {
             title="Total de Vendas"
             value="R$ 7.950,00"
             description="Mês atual"
+            icon={<BarChart className="h-4 w-4" />}
           />
           <MetricsCard
             title="Leads Captados"
             value="28"
             description="Últimos 30 dias"
+            icon={<Users className="h-4 w-4" />}
           />
           <MetricsCard
             title="Taxa de Conversão"
             value="14,3%"
             description="Leads → Vendas"
+            icon={<Calendar className="h-4 w-4" />}
           />
           <MetricsCard
             title="Comissões"
             value="R$ 1.850,75"
             description="Disponível para solicitação"
+            icon={<DollarSign className="h-4 w-4" />}
           />
         </div>
 

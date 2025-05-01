@@ -18,12 +18,12 @@ const MetricsCard = ({
   className,
 }: MetricsCardProps) => {
   return (
-    <Card className={`border border-gold/20 bg-background/50 backdrop-blur ${className}`}>
+    <Card className={`glass-card card-hover ${className}`}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
-        {icon && <div className="text-gold">{icon}</div>}
+        {icon && <div className="text-gold p-2 bg-gold/10 rounded-full">{icon}</div>}
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold text-gold">{value}</div>

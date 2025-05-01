@@ -17,13 +17,15 @@ const SidebarItem = ({
   label, 
   href, 
   active,
-  collapsed
+  collapsed,
+  isHovered
 }: { 
   icon: React.ElementType; 
   label: string; 
   href: string; 
   active: boolean;
   collapsed: boolean;
+  isHovered: boolean;
 }) => {
   return (
     <Link
@@ -35,8 +37,16 @@ const SidebarItem = ({
       )}
     >
       <Icon className="h-5 w-5" />
-      {!collapsed && <span>{label}</span>}
-      {collapsed && (
+      {(!collapsed || isHovered) && (
+        <span className={cn(
+          "transition-opacity whitespace-nowrap", 
+          isHovered && collapsed ? "opacity-100" : "",
+          collapsed && !isHovered ? "opacity-0" : "opacity-100"
+        )}>
+          {label}
+        </span>
+      )}
+      {collapsed && !isHovered && (
         <div className="absolute left-full z-50 ml-1 opacity-0 transform scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 origin-left">
           <div className="bg-background/80 backdrop-blur-lg border border-gold/20 rounded-md py-1 px-2 shadow-lg">
             <span className="whitespace-nowrap">{label}</span>
@@ -68,7 +78,7 @@ const EmployeeSidebar = () => {
   return (
     <div 
       className={cn(
-        "flex h-screen flex-col border-r border-gold/20 bg-background/70 backdrop-blur transition-all duration-300 z-10",
+        "flex h-screen flex-col border-r border-gold/20 bg-background/70 backdrop-blur transition-all duration-300 z-10 overflow-hidden",
         sidebarWidth
       )}
       onMouseEnter={() => !isMobile && setHovered(true)}
@@ -80,7 +90,12 @@ const EmployeeSidebar = () => {
       )}>
         {(!collapsed || hovered) ? (
           <>
-            <h2 className="text-lg font-semibold text-gold">VR Link</h2>
+            <h2 className={cn(
+              "text-lg font-semibold text-gold whitespace-nowrap transition-opacity duration-300",
+              isExpanded ? "opacity-100" : "opacity-0"
+            )}>
+              VR Link
+            </h2>
             {!isMobile && (
               <button 
                 onClick={() => setCollapsed(!collapsed)}
@@ -104,21 +119,24 @@ const EmployeeSidebar = () => {
             label="Dashboard"
             href="/dashboard"
             active={currentPath === "/dashboard"}
-            collapsed={collapsed && !hovered}
+            collapsed={collapsed}
+            isHovered={hovered}
           />
           <SidebarItem
             icon={FileText}
             label="Gerar Relatório"
             href="/dashboard/reports"
             active={currentPath === "/dashboard/reports"}
-            collapsed={collapsed && !hovered}
+            collapsed={collapsed}
+            isHovered={hovered}
           />
           <SidebarItem
             icon={Users}
             label="Devs"
             href="/dashboard/devs"
             active={currentPath === "/dashboard/devs"}
-            collapsed={collapsed && !hovered}
+            collapsed={collapsed}
+            isHovered={hovered}
           />
         </nav>
       </div>
@@ -131,7 +149,10 @@ const EmployeeSidebar = () => {
           )}
         >
           <LogOut size={16} />
-          {(!collapsed || hovered) && <span>Sair</span>}
+          {(!collapsed || hovered) && <span className={cn(
+            "transition-opacity duration-300 whitespace-nowrap",
+            isExpanded ? "opacity-100" : "opacity-0"
+          )}>Sair</span>}
         </button>
       </div>
     </div>

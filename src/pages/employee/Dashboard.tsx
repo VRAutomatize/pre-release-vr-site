@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const Dashboard = () => {
   const { user } = useAuth();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [activeTab, setActiveTab] = useState("metrics");
 
   const refreshData = () => {
     setIsRefreshing(true);
@@ -24,6 +25,11 @@ const Dashboard = () => {
       setIsRefreshing(false);
       toast.success("Dados atualizados com sucesso!");
     }, 1500);
+  };
+
+  // Handle tab change
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
   };
 
   return (
@@ -38,7 +44,7 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex gap-2 w-full md:w-auto">
-            <Tabs defaultValue="metrics" className="w-full md:w-auto">
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full md:w-auto">
               <TabsList className="grid grid-cols-2 w-full">
                 <TabsTrigger value="metrics" className="flex items-center gap-2">
                   <BarChart className="h-4 w-4" />
@@ -62,7 +68,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="metrics" className="w-full">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsContent value="metrics" className="mt-0 space-y-6">
             {/* Metrics Cards */}
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">

@@ -7,8 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-// Carregamento dinâmico das páginas para melhorar performance inicial
+// Dynamic page loading for performance
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AIAttendants = lazy(() => import("./pages/services/AIAttendants"));
@@ -19,28 +21,32 @@ const Automation = lazy(() => import("./pages/services/Automation"));
 const Consulting = lazy(() => import("./pages/services/Consulting"));
 const DigitalEmployees = lazy(() => import("./pages/services/DigitalEmployees"));
 
-// Cliente de consulta de dados memoizado 
+// Employee portal pages
+const Login = lazy(() => import("./pages/employee/Login"));
+const Dashboard = lazy(() => import("./pages/employee/Dashboard"));
+
+// Memoized query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false, // Evita consultas desnecessárias ao focar na janela
-      staleTime: 300000, // 5 minutos de cache para dados
+      refetchOnWindowFocus: false,
+      staleTime: 300000, // 5 minutes of cache
     },
   },
 });
 
-// Componente de loading otimizado
+// Optimized loading fallback
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="w-16 h-16 border-4 border-gold/20 border-t-gold rounded-full animate-spin"></div>
   </div>
 );
 
-// AnimationLayout com scroll automático otimizado
+// Animation layout with optimized auto-scroll
 const AnimationLayout = () => {
   const location = useLocation();
   
-  // Scroll para o topo otimizado com useLayoutEffect para acontecer antes da renderização
+  // Optimized scroll to top with useLayoutEffect
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -58,6 +64,18 @@ const AnimationLayout = () => {
             <Route path="/services/automation" element={<Automation />} />
             <Route path="/services/consulting" element={<Consulting />} />
             <Route path="/services/digital-employees" element={<DigitalEmployees />} />
+            
+            {/* Employee portal routes */}
+            <Route path="/login" element={<Login />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
@@ -66,16 +84,18 @@ const AnimationLayout = () => {
   );
 };
 
-// Componente App com memoização para prevenir renderizações desnecessárias
+// Main App with memoization for performance
 const App = React.memo(() => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AnimationLayout />
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AnimationLayout />
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 ));
 

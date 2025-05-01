@@ -101,6 +101,7 @@ const Reports = () => {
           </Card>
         </div>
 
+        {/* Embed the form with our improved component */}
         <EmbeddedForm
           isOpen={activeForm.isOpen}
           onClose={handleCloseForm}

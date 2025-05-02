@@ -1,5 +1,6 @@
+
 import React from "react";
-import { FileText, Video, Headphones, Book } from "lucide-react";
+import { FileText, Play, Book, Video } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
@@ -13,6 +14,12 @@ const ResourcesPanel = () => {
   
   const handleResourceClick = (title: string) => {
     toast.info(`Acessando recurso: ${title}`);
+  };
+  
+  const handleWhatsAppDemoClick = () => {
+    // URL will be provided later
+    toast.info("Link para demonstração será aberto em breve");
+    // This function will later open the external URL in a new tab
   };
   
   return (
@@ -31,8 +38,8 @@ const ResourcesPanel = () => {
           </TabsTrigger>
           <TabsTrigger value="demos" className="data-[state=active]:bg-gold/20 data-[state=active]:text-gold">
             <div className="flex items-center gap-2">
-              <Headphones className="h-4 w-4" />
-              <span className="hidden md:inline">Contatos Demo</span>
+              <Play className="h-4 w-4" />
+              <span className="hidden md:inline">Demos</span>
             </div>
           </TabsTrigger>
           <TabsTrigger value="scripts" className="data-[state=active]:bg-gold/20 data-[state=active]:text-gold">
@@ -79,32 +86,14 @@ const ResourcesPanel = () => {
           </div>
         </TabsContent>
         
-        {/* Demos Tab */}
+        {/* Demos Tab - Updated to only show WhatsApp Demo */}
         <TabsContent value="demos" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <ResourceCard 
-              icon={<Headphones className="h-5 w-5 text-gold" />}
-              title="CRM Demo" 
-              description="Acesso demo ao CRM para apresentação"
-              onClick={() => handleResourceClick("CRM Demo")}
-            />
-            <ResourceCard 
-              icon={<Headphones className="h-5 w-5 text-gold" />}
-              title="Chat Bot Demo" 
-              description="Demonstração ao vivo de chatbot para potenciais clientes"
-              onClick={() => handleResourceClick("Chat Bot Demo")}
-            />
-            <ResourceCard 
-              icon={<Headphones className="h-5 w-5 text-gold" />}
-              title="Automação Demo" 
-              description="Demo interativa de automação de processos"
-              onClick={() => handleResourceClick("Automação Demo")}
-            />
-            <ResourceCard 
-              icon={<Headphones className="h-5 w-5 text-gold" />}
-              title="Atendente Virtual" 
-              description="Demonstração de assistente virtual para clientes"
-              onClick={() => handleResourceClick("Atendente Virtual")}
+              icon={<Play className="h-5 w-5 text-gold" />}
+              title="WhatsApp Demo" 
+              description="Demonstração ao vivo do atendente digital no WhatsApp"
+              onClick={handleWhatsAppDemoClick}
             />
           </div>
         </TabsContent>
@@ -209,3 +198,4 @@ const ResourceCard = ({
 };
 
 export default ResourcesPanel;
+

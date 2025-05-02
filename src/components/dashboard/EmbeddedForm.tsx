@@ -26,12 +26,22 @@ export function EmbeddedForm({
   const [isLoading, setIsLoading] = useState(true);
   const [useDirectRenderer, setUseDirectRenderer] = useState(false);
   
+  // Detect if we should use our custom form renderer for specific forms
+  useEffect(() => {
+    if (isOpen) {
+      // Check if the form URL matches our supported forms
+      const useDirect = isMobile && (
+        formUrl.includes("gerar_venda") || 
+        formUrl.includes("notifica_time_comercial")
+      );
+      setUseDirectRenderer(useDirect);
+    }
+  }, [isOpen, formUrl, isMobile]);
+  
   // Inject custom styles when the form is open
   useEffect(() => {
     if (isOpen && isMobile) {
       document.body.classList.add('form-overlay-open');
-      // Use direct renderer on mobile 
-      setUseDirectRenderer(isMobile);
     } else {
       document.body.classList.remove('form-overlay-open');
     }
@@ -101,8 +111,8 @@ export function EmbeddedForm({
         </button>
         
         {/* Content Renderer - Either Direct or Iframe */}
-        {isMobile && useDirectRenderer ? (
-          // Use our custom direct form renderer on mobile
+        {useDirectRenderer ? (
+          // Use our custom direct form renderer
           <div className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]">
             <DirectFormRenderer formUrl={formUrl} onClose={onClose} />
           </div>

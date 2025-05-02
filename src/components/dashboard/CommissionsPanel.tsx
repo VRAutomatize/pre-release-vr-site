@@ -5,15 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-// Sample commission data
+// Empty commission data - prepared for future webhook integration
 const commissionData = {
-  received: 3200.5,
-  confirmed: 1850.75,
-  pending: 950.25,
-  items: [
-    { id: 1, client: "Empresa ABC", value: 850.25, date: "2025-04-20", status: "Confirmado" },
-    { id: 2, client: "Tech Solutions", value: 1000.50, date: "2025-04-15", status: "Confirmado" },
-  ]
+  received: 0,
+  confirmed: 0,
+  pending: 0,
+  items: []
 };
 
 const CommissionsPanel = () => {
@@ -81,7 +78,7 @@ const CommissionsPanel = () => {
           </div>
           
           <div className="grid gap-3 sm:grid-cols-1">
-            {commissionData.items.map(item => (
+            {commissionData.items.map((item: any) => (
               <div key={item.id} className="flex items-center justify-between rounded-lg border border-gold/20 p-3 bg-gold/5 backdrop-blur-lg shadow-md">
                 <div className="space-y-1">
                   <p className="font-medium text-white">{item.client}</p>

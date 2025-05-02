@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -88,25 +89,25 @@ const Dashboard = () => {
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
               <MetricsCard
                 title="Total de Vendas"
-                value="R$ 7.950,00"
+                value="R$ 0,00"
                 description="Mês atual"
                 icon={<BarChart className="h-4 w-4" />}
               />
               <MetricsCard
                 title="Leads Captados"
-                value="28"
+                value="0"
                 description="Últimos 30 dias"
                 icon={<Users className="h-4 w-4" />}
               />
               <MetricsCard
                 title="Taxa de Conversão"
-                value="14,3%"
+                value="0,0%"
                 description="Leads → Vendas"
                 icon={<Calendar className="h-4 w-4" />}
               />
               <MetricsCard
                 title="Comissões"
-                value="R$ 1.850,75"
+                value="R$ 0,00"
                 description="Disponível para solicitação"
                 icon={<DollarSign className="h-4 w-4" />}
               />

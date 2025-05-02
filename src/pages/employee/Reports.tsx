@@ -88,9 +88,7 @@ const Reports = () => {
                 </div>
                 <CardTitle className="text-gold">Gerar Venda</CardTitle>
               </div>
-              <CardDescription className="text-gold/70">
-                Preencha o formulário para registrar uma nova venda no sistema
-              </CardDescription>
+              <CardDescription className="text-gold/70">Preencha o formulário para registrar uma nova venda no sistema. Uma venda direta contabiliza 30% de comissão!</CardDescription>
             </CardHeader>
             <CardContent>
               <Button onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} className="w-full bg-gold hover:bg-gold/90 text-background">

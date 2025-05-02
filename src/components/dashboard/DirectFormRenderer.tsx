@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, ChevronRight, Check, User, Mail, Phone } from "lucide-react";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface DirectFormRendererProps {
@@ -43,6 +44,7 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors, isValid, isSubmitted, isDirty },
     trigger
   } = useForm<FormData>({
@@ -345,10 +347,16 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
                       </Label>
                       <p className="text-xs text-[#9ca3af]">Permite envio de mensagens de áudio</p>
                     </div>
-                    <Switch
-                      id="envia_audio"
-                      {...register("envia_audio")}
-                      className="data-[state=checked]:bg-gold"
+                    <Controller
+                      name="envia_audio"
+                      control={control}
+                      render={({ field }) => (
+                        <Switch
+                          id="envia_audio"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      )}
                     />
                   </div>
                   
@@ -359,10 +367,16 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
                       </Label>
                       <p className="text-xs text-[#9ca3af]">Infraestrutura exclusiva</p>
                     </div>
-                    <Switch
-                      id="servidor_dedicado"
-                      {...register("servidor_dedicado")}
-                      className="data-[state=checked]:bg-gold"
+                    <Controller
+                      name="servidor_dedicado"
+                      control={control}
+                      render={({ field }) => (
+                        <Switch
+                          id="servidor_dedicado"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      )}
                     />
                   </div>
                 </div>

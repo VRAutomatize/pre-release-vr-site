@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
+import { DirectFormRenderer } from "./DirectFormRenderer";
 
 interface EmbeddedFormProps {
   isOpen: boolean;
@@ -23,11 +24,14 @@ export function EmbeddedForm({
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(true);
+  const [useDirectRenderer, setUseDirectRenderer] = useState(false);
   
   // Inject custom styles when the form is open
   useEffect(() => {
     if (isOpen && isMobile) {
       document.body.classList.add('form-overlay-open');
+      // Use direct renderer on mobile 
+      setUseDirectRenderer(isMobile);
     } else {
       document.body.classList.remove('form-overlay-open');
     }
@@ -96,41 +100,51 @@ export function EmbeddedForm({
           <X className="h-4 w-4" />
         </button>
         
-        {/* Loading indicator */}
-        {isLoading && isMobile && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#1A1F2C] z-10">
-            <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+        {/* Content Renderer - Either Direct or Iframe */}
+        {isMobile && useDirectRenderer ? (
+          // Use our custom direct form renderer on mobile
+          <div className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]">
+            <DirectFormRenderer formUrl={formUrl} onClose={onClose} />
           </div>
-        )}
-        
-        {/* Iframe Container with stronger background for mobile */}
-        <div 
-          className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]' : ''}`} 
-          style={{ backgroundColor: isMobile ? '#1A1F2C' : 'transparent' }}
-        >
-          {formUrl ? (
-            <iframe
-              src={enhancedFormUrl}
-              className={`w-full h-full ${isMobile ? 'bg-[#1A1F2C]' : 'bg-transparent'}`} 
-              title={title}
-              frameBorder="0"
-              style={{ 
-                backgroundColor: isMobile ? '#1A1F2C' : 'transparent',
-                background: isMobile ? '#1A1F2C' : 'transparent',
-                overflow: "hidden",
-                opacity: isLoading && isMobile ? 0 : 1,
-                transition: "opacity 0.3s ease-in-out"
-              }}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-              onLoad={() => setIsLoading(false)}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-white">
-              <p>URL de formulário inválida</p>
+        ) : (
+          // Use iframe on desktop or as fallback
+          <>
+            {/* Loading indicator */}
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#1A1F2C] z-10">
+                <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            
+            {/* Iframe Container */}
+            <div 
+              className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]"
+            >
+              {formUrl ? (
+                <iframe
+                  src={enhancedFormUrl}
+                  className="w-full h-full bg-[#1A1F2C]"
+                  title={title}
+                  frameBorder="0"
+                  style={{ 
+                    backgroundColor: '#1A1F2C',
+                    background: '#1A1F2C',
+                    overflow: "hidden",
+                    opacity: isLoading ? 0 : 1,
+                    transition: "opacity 0.3s ease-in-out"
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
+                  onLoad={() => setIsLoading(false)}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-white">
+                  <p>URL de formulário inválida</p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

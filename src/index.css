@@ -35,75 +35,12 @@
       position: relative;
     }
     
-    /* Estilos específicos para formulários incorporados no modo mobile */
-    body.form-overlay-open iframe {
-      background-color: #1A1F2C !important;
-    }
-    
-    /* Estilos específicos para n8n formulários no modo mobile */
-    body.form-overlay-open .n8n-form-container,
-    body.form-overlay-open .n8n-form-card,
-    body.form-overlay-open .n8n-form-background {
-      background: #1A1F2C !important;
-      background-color: #1A1F2C !important;
-      backdrop-filter: none !important;
-    }
-    
-    /* Estilizando texto e inputs nos formulários n8n */
-    body.form-overlay-open .n8n-form-title,
-    body.form-overlay-open .n8n-form-label,
-    body.form-overlay-open .n8n-form-description {
-      color: #d4d4d8 !important;
-    }
-    
-    body.form-overlay-open input, 
-    body.form-overlay-open select, 
-    body.form-overlay-open textarea {
-      background-color: rgba(255, 255, 255, 0.05) !important;
-      color: #ffffff !important;
-      border: 1px solid rgba(255, 215, 0, 0.2) !important;
-    }
-    
-    /* Forçar o tema escuro em todos os elementos dentro do iframe */
-    body.form-overlay-open iframe * {
-      color-scheme: dark !important;
-    }
-    
-    /* Cor de fundo para qualquer página dentro do iframe */
-    body.form-overlay-open iframe html,
-    body.form-overlay-open iframe body {
-      background-color: #1A1F2C !important;
-      background: #1A1F2C !important;
-      color-scheme: dark !important;
-    }
-    
-    /* Cor de fundo para qualquer elemento com classe que possa estar usando background branco */
-    body.form-overlay-open .form-page,
-    body.form-overlay-open .form-container,
-    body.form-overlay-open .form-background,
-    body.form-overlay-open .form-wrapper,
-    body.form-overlay-open .form {
-      background-color: #1A1F2C !important;
-      background: #1A1F2C !important;
-    }
-    
-    /* Prevent iframe flash on load */
-    body.form-overlay-open iframe {
-      opacity: 0;
-      transition: opacity 0.3s ease-in;
-    }
-    
-    body.form-overlay-open iframe.loaded {
-      opacity: 1;
-    }
-    
-    /* Force dark background on all iframe content */
-    body.form-overlay-open iframe::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #1A1F2C;
-      z-index: -1;
+    /* Estilos específicos para o modo mobile quando o formulário está aberto */
+    body.form-overlay-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
     }
   }
 }
@@ -273,15 +210,5 @@
     height: 100vh !important;
     max-height: 100vh !important;
     border-radius: 0 !important;
-  }
-  
-  /* Força transparência para formulários incorporados no modo mobile */
-  .form-overlay-open iframe {
-    background-color: transparent !important;
-  }
-  
-  /* Estilo específico para o container de forms n8n */ 
-  .form-overlay-open .n8n-form-background {
-    background-color: transparent !important;
   }
 }

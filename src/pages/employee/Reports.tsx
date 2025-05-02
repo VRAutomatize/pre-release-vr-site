@@ -43,12 +43,6 @@ const Reports = () => {
       document.body.style.overflow = 'hidden';
       // Adiciona uma classe específica para mobile para ajudar na estilização
       document.body.classList.add('form-overlay-open');
-      
-      // Apply custom meta viewport on mobile to prevent scaling issues
-      const meta = document.querySelector('meta[name="viewport"]');
-      if (meta) {
-        meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-      }
     }
   }, [isMobile]);
 
@@ -59,12 +53,6 @@ const Reports = () => {
     if (isMobile) {
       document.body.style.overflow = '';
       document.body.classList.remove('form-overlay-open');
-      
-      // Restore original viewport meta
-      const meta = document.querySelector('meta[name="viewport"]');
-      if (meta) {
-        meta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-      }
     }
   }, [isMobile]);
 
@@ -153,7 +141,7 @@ const Reports = () => {
           </Card>
         </div>
 
-        {/* Embed the form with our improved fullscreen component */}
+        {/* Use our enhanced form component that now supports both direct rendering and iframes */}
         <EmbeddedForm
           isOpen={activeForm.isOpen}
           onClose={handleCloseForm}

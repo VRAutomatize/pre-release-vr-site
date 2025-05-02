@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -64,6 +65,9 @@ const EmployeeSidebar = () => {
   const location = useLocation();
   const { logout } = useAuth();
   const currentPath = location.pathname;
+  const searchParams = new URLSearchParams(location.search);
+  const currentTab = searchParams.get("tab");
+  
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [collapsed, setCollapsed] = useState(true);
   const [hovered, setHovered] = useState(false);
@@ -121,7 +125,7 @@ const EmployeeSidebar = () => {
             icon={LayoutDashboard}
             label="Dashboard"
             href="/dashboard"
-            active={currentPath === "/dashboard"}
+            active={currentPath === "/dashboard" && !currentTab || currentTab === "metrics"}
             collapsed={collapsed}
             isHovered={hovered}
           />
@@ -137,7 +141,7 @@ const EmployeeSidebar = () => {
             icon={BookOpen}
             label="Recursos"
             href="/dashboard?tab=resources"
-            active={currentPath === "/dashboard" && location.search.includes("tab=resources")}
+            active={currentTab === "resources"}
             collapsed={collapsed}
             isHovered={hovered}
           />

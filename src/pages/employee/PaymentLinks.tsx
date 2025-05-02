@@ -1,0 +1,654 @@
+
+import React, { useState, useEffect } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import EmployeeSidebar from "@/components/EmployeeSidebar";
+import { Loader2 } from "lucide-react";
+
+// Types for API responses
+interface Client {
+  id: string;
+  name: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+// CNP Validation Schema
+const cnpjSchema = z.object({
+  cnpj: z
+    .string()
+    .min(14, "CNPJ deve ter pelo menos 14 dígitos")
+    .refine((val) => validateCNPJ(val), "CNPJ inválido")
+});
+
+// Client Registration Schema
+const clientRegistrationSchema = z.object({
+  cnpj: z.string(),
+  companyName: z.string().min(3, "Nome da empresa é obrigatório"),
+  clientName: z.string().min(3, "Nome do cliente é obrigatório"),
+  phone: z.string().min(10, "Telefone inválido"),
+  address: z.string().min(3, "Endereço é obrigatório"),
+  number: z.string().min(1, "Número é obrigatório"),
+  complement: z.string().optional(),
+  district: z.string().min(3, "Bairro é obrigatório"),
+  zipCode: z.string().min(8, "CEP inválido")
+});
+
+// Payment Schema
+const paymentSchema = z.object({
+  clientId: z.string(),
+  productId: z.string().min(1, "Selecione um produto"),
+  paymentMethod: z.enum(["pix", "credit_card"], {
+    required_error: "Selecione um método de pagamento",
+  }),
+  value: z.coerce.number().min(1, "Valor deve ser maior que 0"),
+  installments: z.coerce
+    .number()
+    .min(1, "Número de parcelas inválido")
+    .optional()
+    .nullable()
+});
+
+// Helper function to validate CNPJ
+function validateCNPJ(cnpj: string): boolean {
+  // Basic format check
+  cnpj = cnpj.replace(/[^\d]/g, '');
+  if (cnpj.length !== 14) return false;
+  
+  // Check for all same digits
+  if (/^(\d)\1+$/.test(cnpj)) return false;
+  
+  // Validate check digits
+  let size = cnpj.length - 2;
+  let numbers = cnpj.substring(0, size);
+  const digits = cnpj.substring(size);
+  let sum = 0;
+  let pos = size - 7;
+  
+  for (let i = size; i >= 1; i--) {
+    sum += parseInt(numbers.charAt(size - i), 10) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  
+  let result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+  if (result !== parseInt(digits.charAt(0), 10)) return false;
+  
+  size = size + 1;
+  numbers = cnpj.substring(0, size);
+  sum = 0;
+  pos = size - 7;
+  
+  for (let i = size; i >= 1; i--) {
+    sum += parseInt(numbers.charAt(size - i), 10) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  
+  result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+  return result === parseInt(digits.charAt(1), 10);
+}
+
+// Function to format CNPJ display
+function formatCNPJ(cnpj: string): string {
+  cnpj = cnpj.replace(/[^\d]/g, '');
+  return cnpj.replace(
+    /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+    '$1.$2.$3/$4-$5'
+  );
+}
+
+enum Step {
+  CheckCNPJ,
+  RegisterClient,
+  CreatePayment,
+}
+
+const PaymentLinks = () => {
+  const [step, setStep] = useState<Step>(Step.CheckCNPJ);
+  const [loading, setLoading] = useState(false);
+  const [client, setClient] = useState<Client | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  
+  const cnpjForm = useForm<z.infer<typeof cnpjSchema>>({
+    resolver: zodResolver(cnpjSchema),
+    defaultValues: {
+      cnpj: "",
+    },
+  });
+  
+  const clientForm = useForm<z.infer<typeof clientRegistrationSchema>>({
+    resolver: zodResolver(clientRegistrationSchema),
+    defaultValues: {
+      cnpj: "",
+      companyName: "",
+      clientName: "",
+      phone: "",
+      address: "",
+      number: "",
+      complement: "",
+      district: "",
+      zipCode: "",
+    },
+  });
+  
+  const paymentForm = useForm<z.infer<typeof paymentSchema>>({
+    resolver: zodResolver(paymentSchema),
+    defaultValues: {
+      clientId: "",
+      productId: "",
+      paymentMethod: "pix",
+      value: 0,
+      installments: null,
+    },
+  });
+
+  // Fetch products when entering payment creation step
+  useEffect(() => {
+    if (step === Step.CreatePayment) {
+      fetchProducts();
+    }
+  }, [step]);
+  
+  // Check CNPJ and find client
+  const onCheckCNPJ = async (data: z.infer<typeof cnpjSchema>) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/find_cnpj?cnpj=${data.cnpj}`);
+      const result = await response.json();
+      
+      if (result === "not_found") {
+        // Client not found, go to registration step
+        clientForm.setValue("cnpj", data.cnpj);
+        setStep(Step.RegisterClient);
+        toast.info("Cliente não encontrado. Por favor, registre um novo cliente.");
+      } else {
+        // Client found, go to payment creation
+        setClient({ id: result, name: "Cliente Encontrado" });
+        paymentForm.setValue("clientId", result);
+        setStep(Step.CreatePayment);
+        toast.success("Cliente encontrado!");
+      }
+    } catch (error) {
+      console.error("Error checking CNPJ:", error);
+      toast.error("Erro ao verificar o CNPJ. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Register a new client
+  const onRegisterClient = async (data: z.infer<typeof clientRegistrationSchema>) => {
+    setLoading(true);
+    try {
+      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/create_client", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      const result = await response.json();
+      
+      if (result === "error") {
+        toast.error("Erro ao cadastrar cliente. Tente novamente.");
+      } else {
+        // Client created, go to payment creation
+        setClient({ id: result, name: data.companyName });
+        paymentForm.setValue("clientId", result);
+        setStep(Step.CreatePayment);
+        toast.success("Cliente cadastrado com sucesso!");
+      }
+    } catch (error) {
+      console.error("Error registering client:", error);
+      toast.error("Erro ao cadastrar cliente. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Fetch available products
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/list_products");
+      const result = await response.json();
+      
+      if (Array.isArray(result)) {
+        setProducts(result);
+      } else {
+        toast.error("Erro ao carregar produtos");
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error("Erro ao carregar produtos. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Create payment link
+  const onCreatePayment = async (data: z.infer<typeof paymentSchema>) => {
+    setLoading(true);
+    try {
+      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/criar_cobranca", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      const result = await response.json();
+      
+      if (result === "error") {
+        toast.error("Erro ao gerar link de pagamento. Tente novamente.");
+      } else {
+        toast.success("Link de pagamento gerado com sucesso!");
+        // Reset forms and return to first step
+        cnpjForm.reset();
+        clientForm.reset();
+        paymentForm.reset();
+        setClient(null);
+        setStep(Step.CheckCNPJ);
+      }
+    } catch (error) {
+      console.error("Error creating payment:", error);
+      toast.error("Erro ao gerar link de pagamento. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Handle payment method change
+  const onPaymentMethodChange = (value: string) => {
+    if (value === "pix") {
+      paymentForm.setValue("installments", null);
+    }
+  };
+  
+  return (
+    <div className="flex h-[100vh] w-full overflow-hidden">
+      <EmployeeSidebar />
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        {/* Gold blurred background image */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
+          <div className="w-[100%] h-[100%] backdrop-blur-3xl">
+            <img 
+              src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
+              alt="VR Automatize" 
+              className="w-full h-full object-cover opacity-40" 
+            />
+          </div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex flex-col mb-6">
+            <h1 className="text-xl md:text-2xl font-bold text-gold">Gerenciador de Links de Pagamento</h1>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Crie e gerencie links de pagamento para seus clientes.
+            </p>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            {step === Step.CheckCNPJ && (
+              <Card className="glass-blur border-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-gold">Verificar CNPJ</CardTitle>
+                  <CardDescription>
+                    Digite o CNPJ do cliente para iniciar o processo
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...cnpjForm}>
+                    <form onSubmit={cnpjForm.handleSubmit(onCheckCNPJ)} className="space-y-6">
+                      <FormField
+                        control={cnpjForm.control}
+                        name="cnpj"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>CNPJ do Cliente</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="00.000.000/0000-00" 
+                                {...field} 
+                                onChange={(e) => {
+                                  const value = e.target.value.replace(/[^\d]/g, '');
+                                  field.onChange(value);
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-gold hover:bg-gold/80 text-black"
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verificando...</>
+                        ) : (
+                          "Verificar CNPJ"
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            )}
+            
+            {step === Step.RegisterClient && (
+              <Card className="glass-blur border-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-gold">Cadastrar Novo Cliente</CardTitle>
+                  <CardDescription>
+                    CNPJ {formatCNPJ(clientForm.getValues("cnpj"))} não encontrado. Preencha os dados para cadastrar.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...clientForm}>
+                    <form onSubmit={clientForm.handleSubmit(onRegisterClient)} className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormField
+                          control={clientForm.control}
+                          name="companyName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Nome da Empresa</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Empresa SA" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="clientName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Nome do Cliente</FormLabel>
+                              <FormControl>
+                                <Input placeholder="João Silva" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Telefone</FormLabel>
+                              <FormControl>
+                                <Input placeholder="(11) 99999-9999" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="zipCode"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>CEP</FormLabel>
+                              <FormControl>
+                                <Input placeholder="00000-000" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="address"
+                          render={({ field }) => (
+                            <FormItem className="col-span-2">
+                              <FormLabel>Endereço</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Av. Paulista" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="number"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Número</FormLabel>
+                              <FormControl>
+                                <Input placeholder="123" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="complement"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Complemento (opcional)</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Sala 123" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={clientForm.control}
+                          name="district"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Bairro</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Centro" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="flex gap-2 justify-end">
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          onClick={() => setStep(Step.CheckCNPJ)}
+                          className="border-gold/20 text-gold hover:bg-gold/10"
+                        >
+                          Voltar
+                        </Button>
+                        <Button 
+                          type="submit" 
+                          className="bg-gold hover:bg-gold/80 text-black"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Cadastrando...</>
+                          ) : (
+                            "Cadastrar Cliente"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            )}
+            
+            {step === Step.CreatePayment && (
+              <Card className="glass-blur border-gold/20">
+                <CardHeader>
+                  <CardTitle className="text-gold">Gerar Link de Pagamento</CardTitle>
+                  <CardDescription>
+                    Selecione as informações para criar o link de pagamento
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...paymentForm}>
+                    <form onSubmit={paymentForm.handleSubmit(onCreatePayment)} className="space-y-6">
+                      <FormField
+                        control={paymentForm.control}
+                        name="productId"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Produto</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="border-gold/20">
+                                  <SelectValue placeholder="Selecione um produto" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {products.map((product) => (
+                                  <SelectItem key={product.id} value={product.id}>
+                                    {product.name} - R$ {product.price.toFixed(2)}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={paymentForm.control}
+                        name="paymentMethod"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Método de Pagamento</FormLabel>
+                            <Select
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                onPaymentMethodChange(value);
+                              }}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="border-gold/20">
+                                  <SelectValue placeholder="Selecione o método de pagamento" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="pix">Pix</SelectItem>
+                                <SelectItem value="credit_card">Cartão de Crédito</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={paymentForm.control}
+                        name="value"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Valor</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="number"
+                                placeholder="0.00"
+                                step="0.01"
+                                min="0"
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(parseFloat(e.target.value) || 0);
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      {paymentForm.watch("paymentMethod") === "credit_card" && (
+                        <FormField
+                          control={paymentForm.control}
+                          name="installments"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Número de Parcelas</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  placeholder="1"
+                                  min="1"
+                                  max="12"
+                                  {...field}
+                                  value={field.value || ""}
+                                  onChange={(e) => {
+                                    field.onChange(parseInt(e.target.value) || null);
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                      
+                      <div className="flex gap-2 justify-end">
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          onClick={() => setStep(Step.CheckCNPJ)}
+                          className="border-gold/20 text-gold hover:bg-gold/10"
+                        >
+                          Voltar
+                        </Button>
+                        <Button 
+                          type="submit" 
+                          className="bg-gold hover:bg-gold/80 text-black"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando Link...</>
+                          ) : (
+                            "Gerar Link de Pagamento"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default PaymentLinks;

@@ -26,6 +26,7 @@ const Login = lazy(() => import("./pages/employee/Login"));
 const Dashboard = lazy(() => import("./pages/employee/Dashboard"));
 const Reports = lazy(() => import("./pages/employee/Reports"));
 const Devs = lazy(() => import("./pages/employee/Devs"));
+const PaymentLinks = lazy(() => import("./pages/employee/PaymentLinks"));
 
 // Memoized query client
 const queryClient = new QueryClient({
@@ -82,6 +83,14 @@ const AnimationLayout = () => {
               element={
                 <ProtectedRoute>
                   <Reports />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/payments" 
+              element={
+                <ProtectedRoute>
+                  <PaymentLinks />
                 </ProtectedRoute>
               } 
             />

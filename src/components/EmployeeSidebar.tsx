@@ -7,7 +7,8 @@ import {
   Users, 
   LogOut,
   ChevronRight,
-  BookOpen
+  BookOpen,
+  CreditCard
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -142,6 +143,14 @@ const EmployeeSidebar = () => {
             label="Recursos"
             href="/dashboard?tab=resources"
             active={currentTab === "resources"}
+            collapsed={collapsed}
+            isHovered={hovered}
+          />
+          <SidebarItem
+            icon={CreditCard}
+            label="Links Pagamento"
+            href="/dashboard/payments"
+            active={currentPath === "/dashboard/payments"}
             collapsed={collapsed}
             isHovered={hovered}
           />

@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import { EmbeddedForm } from "@/components/dashboard/EmbeddedForm";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 const Reports = () => {
   const [activeForm, setActiveForm] = useState<{
     isOpen: boolean;
@@ -26,6 +28,7 @@ const Reports = () => {
       document.body.classList.remove('form-overlay-open');
     };
   }, []);
+
   const handleOpenForm = useCallback((url: string, title: string, description?: string) => {
     setActiveForm({
       isOpen: true,
@@ -41,6 +44,7 @@ const Reports = () => {
       document.body.classList.add('form-overlay-open');
     }
   }, [isMobile]);
+
   const handleCloseForm = useCallback(() => {
     setActiveForm(prev => ({
       ...prev,
@@ -64,12 +68,18 @@ const Reports = () => {
     }
     return url;
   };
-  return <div className="flex h-[100vh] w-full overflow-hidden">
+  
+  return (
+    <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Large blurred logo in background */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
-          <img src="/favicon.ico" alt="VR Automatize" className="w-[80%] max-w-[800px] object-contain" />
+        {/* Gold blurred background image */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.08] overflow-hidden">
+          <img 
+            src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
+            alt="VR Automatize" 
+            className="w-[120%] h-[120%] object-cover" 
+          />
         </div>
 
         <div className="mb-6 relative z-10">
@@ -118,6 +128,8 @@ const Reports = () => {
         {/* Use our enhanced form component that now supports both direct rendering and iframes */}
         <EmbeddedForm isOpen={activeForm.isOpen} onClose={handleCloseForm} title={activeForm.title} description={activeForm.description} formUrl={activeForm.url} />
       </main>
-    </div>;
+    </div>
+  );
 };
+
 export default Reports;

@@ -73,13 +73,15 @@ const Reports = () => {
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Gold blurred background image */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.08] overflow-hidden">
-          <img 
-            src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
-            alt="VR Automatize" 
-            className="w-[120%] h-[120%] object-cover" 
-          />
+        {/* Gold blurred background image - increased blur and decreased opacity */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
+          <div className="w-[120%] h-[120%] backdrop-blur-3xl">
+            <img 
+              src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
+              alt="VR Automatize" 
+              className="w-full h-full object-cover opacity-40" 
+            />
+          </div>
         </div>
 
         <div className="mb-6 relative z-10">

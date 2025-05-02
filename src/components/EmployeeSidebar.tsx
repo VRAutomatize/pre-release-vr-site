@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -19,7 +18,8 @@ const SidebarItem = ({
   href, 
   active,
   collapsed,
-  isHovered
+  isHovered,
+  onClick
 }: { 
   icon: React.ElementType; 
   label: string; 
@@ -27,6 +27,7 @@ const SidebarItem = ({
   active: boolean;
   collapsed: boolean;
   isHovered: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <Link
@@ -36,6 +37,7 @@ const SidebarItem = ({
         active ? "bg-gold/10 text-gold" : "text-foreground",
         collapsed ? "justify-center" : ""
       )}
+      onClick={onClick}
     >
       <Icon className="h-5 w-5 flex-shrink-0" />
       {(!collapsed || isHovered) && (
@@ -134,8 +136,8 @@ const EmployeeSidebar = () => {
           <SidebarItem
             icon={BookOpen}
             label="Recursos"
-            href="/dashboard"
-            active={false}
+            href="/dashboard?tab=resources"
+            active={currentPath === "/dashboard" && location.search.includes("tab=resources")}
             collapsed={collapsed}
             isHovered={hovered}
           />

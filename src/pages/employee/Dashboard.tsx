@@ -1,5 +1,6 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -14,8 +15,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [activeTab, setActiveTab] = useState("metrics");
+  
+  // Get tab from URL query parameter or default to "metrics"
+  const getTabFromURL = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get("tab") || "metrics";
+  };
+  
+  const [activeTab, setActiveTab] = useState(getTabFromURL());
+  
+  // Update URL when tab changes
+  useEffect(() => {
+    const currentTab = getTabFromURL();
+    if (currentTab !== activeTab) {
+      setActiveTab(currentTab);
+    }
+  }, [location.search]);
 
   const refreshData = () => {
     setIsRefreshing(true);
@@ -31,6 +49,7 @@ const Dashboard = () => {
   // Handle tab change
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    navigate(`/dashboard?tab=${value}`, { replace: true });
   };
 
   return (
@@ -87,7 +106,7 @@ const Dashboard = () => {
             </Tabs>
             <Button 
               type="button"
-              onClick={refreshData} 
+              onClick={() => refreshData()} 
               variant="outline" 
               className="border-gold/20 text-gold hover:bg-gold/10"
               disabled={isRefreshing}

@@ -1,17 +1,27 @@
-
 import React from "react";
 import { FileText, Video, Headphones, Book } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const ResourcesPanel = () => {
+  const [activeTab, setActiveTab] = React.useState("contracts");
+  
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
+  
+  const handleResourceClick = (title: string) => {
+    toast.info(`Acessando recurso: ${title}`);
+  };
+  
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gold">Recursos para Vendas</h2>
       </div>
       
-      <Tabs defaultValue="contracts" className="w-full">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className="w-full grid grid-cols-4 bg-background/40 backdrop-blur-md border border-gold/20 mb-6">
           <TabsTrigger value="contracts" className="data-[state=active]:bg-gold/20 data-[state=active]:text-gold">
             <div className="flex items-center gap-2">
@@ -46,25 +56,25 @@ const ResourcesPanel = () => {
               icon={<FileText className="h-5 w-5 text-gold" />}
               title="Contrato Padrão" 
               description="Modelo de contrato para serviços de automação"
-              link="#"
+              onClick={() => handleResourceClick("Contrato Padrão")}
             />
             <ResourceCard 
               icon={<FileText className="h-5 w-5 text-gold" />}
               title="Contrato Premium" 
               description="Modelo de contrato para serviços premium"
-              link="#"
+              onClick={() => handleResourceClick("Contrato Premium")}
             />
             <ResourceCard 
               icon={<FileText className="h-5 w-5 text-gold" />}
               title="Termo de Adesão" 
               description="Documento para adesão aos serviços da VR"
-              link="#"
+              onClick={() => handleResourceClick("Termo de Adesão")}
             />
             <ResourceCard 
               icon={<FileText className="h-5 w-5 text-gold" />}
               title="NDA" 
               description="Acordo de confidencialidade para compartilhamento de dados"
-              link="#"
+              onClick={() => handleResourceClick("NDA")}
             />
           </div>
         </TabsContent>
@@ -76,25 +86,25 @@ const ResourcesPanel = () => {
               icon={<Headphones className="h-5 w-5 text-gold" />}
               title="CRM Demo" 
               description="Acesso demo ao CRM para apresentação"
-              link="#"
+              onClick={() => handleResourceClick("CRM Demo")}
             />
             <ResourceCard 
               icon={<Headphones className="h-5 w-5 text-gold" />}
               title="Chat Bot Demo" 
               description="Demonstração ao vivo de chatbot para potenciais clientes"
-              link="#"
+              onClick={() => handleResourceClick("Chat Bot Demo")}
             />
             <ResourceCard 
               icon={<Headphones className="h-5 w-5 text-gold" />}
               title="Automação Demo" 
               description="Demo interativa de automação de processos"
-              link="#"
+              onClick={() => handleResourceClick("Automação Demo")}
             />
             <ResourceCard 
               icon={<Headphones className="h-5 w-5 text-gold" />}
               title="Atendente Virtual" 
               description="Demonstração de assistente virtual para clientes"
-              link="#"
+              onClick={() => handleResourceClick("Atendente Virtual")}
             />
           </div>
         </TabsContent>
@@ -106,25 +116,25 @@ const ResourcesPanel = () => {
               icon={<Book className="h-5 w-5 text-gold" />}
               title="Script Inicial" 
               description="Script para primeiro contato com potenciais clientes"
-              link="#"
+              onClick={() => handleResourceClick("Script Inicial")}
             />
             <ResourceCard 
               icon={<Book className="h-5 w-5 text-gold" />}
               title="Objeções Comuns" 
               description="Como responder às objeções mais frequentes"
-              link="#"
+              onClick={() => handleResourceClick("Objeções Comuns")}
             />
             <ResourceCard 
               icon={<Book className="h-5 w-5 text-gold" />}
               title="Fechamento" 
               description="Técnicas para fechamento de vendas"
-              link="#"
+              onClick={() => handleResourceClick("Fechamento")}
             />
             <ResourceCard 
               icon={<Book className="h-5 w-5 text-gold" />}
               title="Pós-Venda" 
               description="Script para acompanhamento pós-venda"
-              link="#"
+              onClick={() => handleResourceClick("Pós-Venda")}
             />
           </div>
         </TabsContent>
@@ -136,25 +146,25 @@ const ResourcesPanel = () => {
               icon={<Video className="h-5 w-5 text-gold" />}
               title="Apresentação da Empresa" 
               description="Vídeo institucional sobre a VR Automatize"
-              link="#"
+              onClick={() => handleResourceClick("Apresentação da Empresa")}
             />
             <ResourceCard 
               icon={<Video className="h-5 w-5 text-gold" />}
               title="CRM em Ação" 
               description="Demonstração em vídeo do CRM em funcionamento"
-              link="#"
+              onClick={() => handleResourceClick("CRM em Ação")}
             />
             <ResourceCard 
               icon={<Video className="h-5 w-5 text-gold" />}
               title="Case de Sucesso" 
               description="Entrevista com clientes satisfeitos"
-              link="#"
+              onClick={() => handleResourceClick("Case de Sucesso")}
             />
             <ResourceCard 
               icon={<Video className="h-5 w-5 text-gold" />}
               title="Tutorial de Apresentação" 
               description="Como apresentar os produtos VR para clientes"
-              link="#"
+              onClick={() => handleResourceClick("Tutorial de Apresentação")}
             />
           </div>
         </TabsContent>
@@ -168,15 +178,15 @@ const ResourceCard = ({
   icon, 
   title, 
   description, 
-  link 
+  onClick 
 }: { 
   icon: React.ReactNode; 
   title: string; 
   description: string; 
-  link: string;
+  onClick: () => void;
 }) => {
   return (
-    <Card className="glass-blur border-gold/20 hover:border-gold/40 transition-all hover:shadow-md">
+    <Card className="glass-blur border-gold/20 hover:border-gold/40 transition-all hover:shadow-md cursor-pointer" onClick={onClick}>
       <CardHeader className="pb-3">
         <div className="flex items-center gap-3">
           <div className="rounded-full bg-gold/10 p-3 shadow-inner">
@@ -187,14 +197,12 @@ const ResourceCard = ({
       </CardHeader>
       <CardContent className="pb-4">
         <CardDescription className="text-gold/70 mb-4">{description}</CardDescription>
-        <a 
-          href={link} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <button 
+          type="button"
           className="text-sm font-medium text-gold hover:underline flex items-center"
         >
           Acessar recurso
-        </a>
+        </button>
       </CardContent>
     </Card>
   );

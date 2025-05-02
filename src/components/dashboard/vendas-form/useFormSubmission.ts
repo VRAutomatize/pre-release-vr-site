@@ -33,8 +33,8 @@ export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }:
       
       console.log('Submitting form with data:', webhookData);
       
-      // Send data to webhook (same endpoint for both forms)
-      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/gerar-venda", {
+      // Send data to webhook (same endpoint for both forms) - UPDATED URL HERE
+      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/envia-relatorio", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

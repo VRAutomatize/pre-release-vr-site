@@ -5,11 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { User, Mail, Phone } from "lucide-react";
+import { User, Mail, Phone, Building, MapPin } from "lucide-react";
 import { FormData } from "./types";
 
 interface FormStepProps {
   form: UseFormReturn<FormData>;
+  isDirectSale?: boolean;
 }
 
 // Step 1: Company Information
@@ -64,7 +65,7 @@ export function CompanyInfoStep({ form }: FormStepProps) {
 }
 
 // Step 2: Client Information
-export function ClientInfoStep({ form }: FormStepProps) {
+export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
   const { register, formState: { errors } } = form;
   
   return (
@@ -121,6 +122,42 @@ export function ClientInfoStep({ form }: FormStepProps) {
           <p className="text-red-400 text-sm mt-1">{errors.email_cliente.message}</p>
         )}
       </div>
+      
+      {isDirectSale && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="cnpj" className="text-[#d4d4d8] flex items-center gap-2">
+              <Building className="h-4 w-4 text-gold" />
+              CNPJ <span className="text-gold">*</span>
+            </Label>
+            <Input
+              id="cnpj"
+              placeholder="00.000.000/0000-00"
+              {...register("cnpj", { required: "CNPJ é obrigatório" })}
+              className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+            />
+            {errors.cnpj && (
+              <p className="text-red-400 text-sm mt-1">{errors.cnpj.message}</p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="endereco_comercial" className="text-[#d4d4d8] flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-gold" />
+              Endereço Comercial <span className="text-gold">*</span>
+            </Label>
+            <Textarea
+              id="endereco_comercial"
+              placeholder="Endereço completo da empresa"
+              {...register("endereco_comercial", { required: "Endereço comercial é obrigatório" })}
+              className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+            />
+            {errors.endereco_comercial && (
+              <p className="text-red-400 text-sm mt-1">{errors.endereco_comercial.message}</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

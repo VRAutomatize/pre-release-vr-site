@@ -9,6 +9,8 @@ export type FormData = {
   valor_implementacao: string;
   envia_audio: boolean;
   servidor_dedicado: boolean;
+  cnpj?: string;
+  endereco_comercial?: string;
 };
 
 export type FormStep = 1 | 2 | 3;

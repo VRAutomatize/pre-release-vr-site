@@ -38,6 +38,8 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
       valor_implementacao: "",
       envia_audio: false,
       servidor_dedicado: false,
+      cnpj: "",
+      endereco_comercial: ""
     },
   });
   
@@ -117,7 +119,7 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
             {currentStep === 1 && <CompanyInfoStep form={form} />}
             
             {/* Step 2: Client Information */}
-            {currentStep === 2 && <ClientInfoStep form={form} />}
+            {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
             
             {/* Step 3: Service Options or Lead Info */}
             {currentStep === 3 && (

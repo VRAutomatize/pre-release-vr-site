@@ -62,6 +62,13 @@ export function ConfirmationDialog({
                 <p><span className="text-gold/80">Nome:</span> {formData.nome_cliente}</p>
                 <p><span className="text-gold/80">Telefone:</span> {formData.telefone_cliente}</p>
                 <p><span className="text-gold/80">Email:</span> {formData.email_cliente || "Não informado"}</p>
+                
+                {isDirectSale && (
+                  <>
+                    <p><span className="text-gold/80">CNPJ:</span> {formData.cnpj}</p>
+                    <p><span className="text-gold/80">Endereço:</span> {formData.endereco_comercial}</p>
+                  </>
+                )}
               </div>
             </div>
             

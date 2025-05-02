@@ -7,9 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { User, Mail, Phone, DollarSign } from "lucide-react";
 import { FormData } from "./types";
+import { ClientInfoStep as BaseClientInfoStep, CompanyInfoStep } from "./FormSteps";
 
 interface FormStepProps {
   form: UseFormReturn<FormData>;
+  isDirectSale?: boolean;
 }
 
 // Step 3: Lead Information - Similar to ServiceOptionsStep but for lead notification
@@ -81,5 +83,5 @@ export function LeadInfoStep({ form }: FormStepProps) {
   );
 }
 
-// Reuse the CompanyInfoStep and ClientInfoStep from the original form
-export { CompanyInfoStep, ClientInfoStep } from "./FormSteps";
+// Use ClientInfoStep from FormSteps.tsx
+export { CompanyInfoStep, BaseClientInfoStep as ClientInfoStep };

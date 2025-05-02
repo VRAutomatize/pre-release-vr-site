@@ -34,17 +34,20 @@ export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }:
       // Get seller tag from the authenticated user's email
       const sellerTag = getSellerTag();
       
-      // Prepare data for webhook - use same webhook for both forms
-      // Only difference is the venda_direta flag which determines if it's a direct sale or lead
+      // Prepare data for webhook - ensure all fields are included for both forms
+      // For 'notifica_time_comercial' form, explicitly set cnpj and endereco_comercial to null if not provided
       const webhookData = {
         ...data,
+        // Ensure these fields are included even if they're not in the form
+        cnpj: data.cnpj || null,
+        endereco_comercial: data.endereco_comercial || null,
         seller_tag: sellerTag,
         venda_direta: isDirectSale
       };
       
       console.log('Submitting form with data:', webhookData);
       
-      // Send data to webhook (same endpoint for both forms) - UPDATED URL HERE
+      // Send data to webhook (same endpoint for both forms)
       const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/envia-relatorio", {
         method: "POST",
         headers: {

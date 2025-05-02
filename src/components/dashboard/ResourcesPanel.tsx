@@ -1,3 +1,4 @@
+
 import React from "react";
 import { FileText, Play, Book, Video } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -80,9 +81,9 @@ const ResourcesPanel = () => {
         <TabsContent value="videos" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="Apresentação da Empresa" description="Vídeo institucional sobre a VR Automatize" onClick={() => handleResourceClick("Apresentação da Empresa")} />
-            <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="CRM em Ação" description="Demonstração em vídeo do CRM em funcionamento" onClick={() => handleResourceClick("CRM em Ação")} />
+            <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="Conteúdos Funcionário Digital Core" description="Demonstração em vídeo do CRM em funcionamento" onClick={() => handleResourceClick("Conteúdos Funcionário Digital Core")} />
             <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="Case de Sucesso" description="Entrevista com clientes satisfeitos" onClick={() => handleResourceClick("Case de Sucesso")} />
-            <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="Tutorial de Apresentação" description="Como apresentar os produtos VR para clientes" onClick={() => handleResourceClick("Tutorial de Apresentação")} />
+            <ResourceCard icon={<Video className="h-5 w-5 text-gold" />} title="Conteúdos Funcionário Digital Premium" description="Como apresentar os produtos VR para clientes" onClick={() => handleResourceClick("Conteúdos Funcionário Digital Premium")} />
           </div>
         </TabsContent>
       </Tabs>

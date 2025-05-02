@@ -1,5 +1,5 @@
 
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -24,23 +24,16 @@ export function EmbeddedForm({
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(true);
-  const [useDirectRenderer, setUseDirectRenderer] = useState(false);
   
-  // Detect if we should use our custom form renderer for specific forms
-  useEffect(() => {
-    if (isOpen) {
-      // Check if the form URL matches our supported forms
-      const useDirect = isMobile && (
-        formUrl.includes("gerar_venda") || 
-        formUrl.includes("notifica_time_comercial")
-      );
-      setUseDirectRenderer(useDirect);
-    }
-  }, [isOpen, formUrl, isMobile]);
+  // Always use our custom form renderer for supported forms
+  const useDirectRenderer = useMemo(() => {
+    return formUrl.includes("gerar_venda") || 
+           formUrl.includes("notifica_time_comercial");
+  }, [formUrl]);
   
   // Inject custom styles when the form is open
-  useEffect(() => {
-    if (isOpen && isMobile) {
+  React.useEffect(() => {
+    if (isOpen) {
       document.body.classList.add('form-overlay-open');
     } else {
       document.body.classList.remove('form-overlay-open');
@@ -49,41 +42,7 @@ export function EmbeddedForm({
     return () => {
       document.body.classList.remove('form-overlay-open');
     };
-  }, [isOpen, isMobile]);
-  
-  // Reset loading state when form opens
-  useEffect(() => {
-    if (isOpen) {
-      setIsLoading(true);
-    }
   }, [isOpen]);
-  
-  // Modificar URL para desativar tema do n8n e forçar tema escuro/transparente
-  const enhancedFormUrl = useMemo(() => {
-    // Validar se formUrl é uma URL válida
-    try {
-      // Check if formUrl is empty or undefined
-      if (!formUrl || formUrl.trim() === '') {
-        return '';
-      }
-      
-      // Check if URL has protocol, if not add https://
-      const urlToProcess = formUrl.startsWith('http') ? formUrl : `https://${formUrl}`;
-      const url = new URL(urlToProcess);
-      
-      // Adicionar parâmetros para desativar tema padrão e definir tema escuro
-      url.searchParams.set('disableTheme', 'true');
-      url.searchParams.set('darkMode', 'true');
-      url.searchParams.set('embedWithoutTheme', 'true');
-      url.searchParams.set('transparentBackground', 'true'); // Adicional para tentar forçar transparência
-      
-      return url.toString();
-    } catch (error) {
-      console.error("Invalid URL provided:", formUrl);
-      // Return the original URL if invalid
-      return formUrl;
-    }
-  }, [formUrl]);
 
   if (!isOpen) return null;
   
@@ -110,14 +69,14 @@ export function EmbeddedForm({
           <X className="h-4 w-4" />
         </button>
         
-        {/* Content Renderer - Either Direct or Iframe */}
+        {/* Content Renderer - Always use Direct Renderer for supported forms */}
         {useDirectRenderer ? (
-          // Use our custom direct form renderer
+          // Use our custom direct form renderer for all devices
           <div className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]">
             <DirectFormRenderer formUrl={formUrl} onClose={onClose} />
           </div>
         ) : (
-          // Use iframe on desktop or as fallback
+          // Fallback to iframe for unsupported forms
           <>
             {/* Loading indicator */}
             {isLoading && (
@@ -131,22 +90,9 @@ export function EmbeddedForm({
               className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]"
             >
               {formUrl ? (
-                <iframe
-                  src={enhancedFormUrl}
-                  className="w-full h-full bg-[#1A1F2C]"
-                  title={title}
-                  frameBorder="0"
-                  style={{ 
-                    backgroundColor: '#1A1F2C',
-                    background: '#1A1F2C',
-                    overflow: "hidden",
-                    opacity: isLoading ? 0 : 1,
-                    transition: "opacity 0.3s ease-in-out"
-                  }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
-                  onLoad={() => setIsLoading(false)}
-                />
+                <div className="w-full h-full flex items-center justify-center text-white">
+                  <p>External forms are not supported. Please use our custom forms.</p>
+                </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-white">
                   <p>URL de formulário inválida</p>

@@ -25,7 +25,7 @@ export function FormNavigation({
       {currentStep > 1 ? (
         <Button
           type="button"
-          onClick={onPrev}
+          onClick={() => onPrev()}
           variant="outline"
           className="border-gold/20 text-gold hover:bg-gold/10"
           disabled={isSubmitting}
@@ -35,7 +35,7 @@ export function FormNavigation({
       ) : (
         <Button
           type="button"
-          onClick={onCancel}
+          onClick={() => onCancel()}
           variant="outline"
           className="border-gold/20 text-gold hover:bg-gold/10"
           disabled={isSubmitting}
@@ -47,7 +47,7 @@ export function FormNavigation({
       {currentStep < totalSteps ? (
         <Button
           type="button"
-          onClick={onNext}
+          onClick={() => onNext()}
           className="bg-gold hover:bg-gold/90 text-[#1A1F2C] font-medium"
           disabled={isSubmitting}
         >

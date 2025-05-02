@@ -56,7 +56,11 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex gap-2 w-full md:w-auto">
-            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full md:w-auto">
+            <Tabs 
+              value={activeTab} 
+              onValueChange={handleTabChange} 
+              className="w-full md:w-auto"
+            >
               <TabsList className="grid grid-cols-3 w-full bg-background/40 backdrop-blur-md border border-gold/20">
                 <TabsTrigger 
                   value="metrics" 
@@ -82,6 +86,7 @@ const Dashboard = () => {
               </TabsList>
             </Tabs>
             <Button 
+              type="button"
               onClick={refreshData} 
               variant="outline" 
               className="border-gold/20 text-gold hover:bg-gold/10"

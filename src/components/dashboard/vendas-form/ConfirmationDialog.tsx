@@ -119,13 +119,15 @@ export function ConfirmationDialog({
         <DialogFooter className="flex gap-2 sm:gap-2 mt-4">
           <Button
             variant="outline" 
-            onClick={onClose}
+            onClick={() => onClose()}
+            type="button"
             className="flex-1 border-gold/20 text-gold hover:bg-gold/10"
           >
             Voltar
           </Button>
           <Button 
-            onClick={onConfirm}
+            onClick={() => onConfirm()}
+            type="button"
             className="flex-1 bg-gold hover:bg-gold/90 text-[#1A1F2C] font-medium"
           >
             <Check className="h-4 w-4 mr-1" />

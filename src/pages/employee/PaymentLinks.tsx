@@ -159,16 +159,46 @@ const PaymentLinks = () => {
     }
   }, [step]);
   
+  // Auto-check CNPJ when it reaches 14 digits
+  const handleCNPJChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/[^\d]/g, '');
+    
+    // Limit to 14 digits
+    if (value.length > 14) {
+      value = value.slice(0, 14);
+    }
+    
+    // Apply formatting mask
+    let maskedValue = value;
+    if (value.length > 2) maskedValue = value.slice(0, 2) + '.' + value.slice(2);
+    if (value.length > 5) maskedValue = maskedValue.slice(0, 6) + '.' + value.slice(5);
+    if (value.length > 8) maskedValue = maskedValue.slice(0, 10) + '/' + value.slice(8);
+    if (value.length > 12) maskedValue = maskedValue.slice(0, 15) + '-' + value.slice(12);
+    
+    // Update form with raw value (without mask)
+    cnpjForm.setValue('cnpj', value);
+    
+    // Display formatted value in input
+    e.target.value = maskedValue;
+    
+    // Auto check when CNPJ is complete
+    if (value.length === 14) {
+      if (validateCNPJ(value)) {
+        await checkCNPJ(value);
+      }
+    }
+  };
+  
   // Check CNPJ and find client
-  const onCheckCNPJ = async (data: z.infer<typeof cnpjSchema>) => {
+  const checkCNPJ = async (cnpjValue: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/find_cnpj?cnpj=${data.cnpj}`);
+      const response = await fetch(`https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/find_cnpj?cnpj=${cnpjValue}`);
       const result = await response.json();
       
       if (result === "not_found") {
         // Client not found, go to registration step
-        clientForm.setValue("cnpj", data.cnpj);
+        clientForm.setValue("cnpj", cnpjValue);
         setStep(Step.RegisterClient);
         toast.info("Cliente não encontrado. Por favor, registre um novo cliente.");
       } else {
@@ -277,6 +307,38 @@ const PaymentLinks = () => {
     }
   };
   
+  // Format phone input
+  const formatPhone = (phone: string) => {
+    phone = phone.replace(/\D/g, "");
+    if (phone.length > 11) {
+      phone = phone.slice(0, 11);
+    }
+    
+    if (phone.length > 7) {
+      phone = `(${phone.slice(0, 2)}) ${phone.slice(2, 7)}-${phone.slice(7)}`;
+    } else if (phone.length > 2) {
+      phone = `(${phone.slice(0, 2)}) ${phone.slice(2)}`;
+    } else if (phone.length > 0) {
+      phone = `(${phone}`;
+    }
+    
+    return phone;
+  };
+  
+  // Format CEP input
+  const formatCEP = (cep: string) => {
+    cep = cep.replace(/\D/g, "");
+    if (cep.length > 8) {
+      cep = cep.slice(0, 8);
+    }
+    
+    if (cep.length > 5) {
+      cep = `${cep.slice(0, 5)}-${cep.slice(5)}`;
+    }
+    
+    return cep;
+  };
+  
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
@@ -300,6 +362,42 @@ const PaymentLinks = () => {
             </p>
           </div>
           
+          {/* Progress steps indicator */}
+          <div className="max-w-2xl mx-auto mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  step === Step.CheckCNPJ ? "bg-gold text-black" : "bg-gold/20 text-gold"
+                }`}>
+                  1
+                </div>
+                <span className="text-xs mt-1">CNPJ</span>
+              </div>
+              
+              <div className={`flex-1 h-1 mx-2 ${step > Step.CheckCNPJ ? "bg-gold" : "bg-gold/20"}`}></div>
+              
+              <div className="flex flex-col items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  step === Step.RegisterClient ? "bg-gold text-black" : "bg-gold/20 text-gold"
+                }`}>
+                  2
+                </div>
+                <span className="text-xs mt-1">Cliente</span>
+              </div>
+              
+              <div className={`flex-1 h-1 mx-2 ${step > Step.RegisterClient ? "bg-gold" : "bg-gold/20"}`}></div>
+              
+              <div className="flex flex-col items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  step === Step.CreatePayment ? "bg-gold text-black" : "bg-gold/20 text-gold"
+                }`}>
+                  3
+                </div>
+                <span className="text-xs mt-1">Pagamento</span>
+              </div>
+            </div>
+          </div>
+          
           <div className="max-w-2xl mx-auto">
             {step === Step.CheckCNPJ && (
               <Card className="glass-blur border-gold/20">
@@ -311,7 +409,7 @@ const PaymentLinks = () => {
                 </CardHeader>
                 <CardContent>
                   <Form {...cnpjForm}>
-                    <form onSubmit={cnpjForm.handleSubmit(onCheckCNPJ)} className="space-y-6">
+                    <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
                       <FormField
                         control={cnpjForm.control}
                         name="cnpj"
@@ -321,11 +419,8 @@ const PaymentLinks = () => {
                             <FormControl>
                               <Input 
                                 placeholder="00.000.000/0000-00" 
-                                {...field} 
-                                onChange={(e) => {
-                                  const value = e.target.value.replace(/[^\d]/g, '');
-                                  field.onChange(value);
-                                }}
+                                onChange={handleCNPJChange}
+                                className="text-lg"
                               />
                             </FormControl>
                             <FormMessage />
@@ -333,17 +428,11 @@ const PaymentLinks = () => {
                         )}
                       />
                       
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-gold hover:bg-gold/80 text-black"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verificando...</>
-                        ) : (
-                          "Verificar CNPJ"
-                        )}
-                      </Button>
+                      {loading && (
+                        <div className="flex justify-center">
+                          <Loader2 className="h-6 w-6 animate-spin text-gold" />
+                        </div>
+                      )}
                     </form>
                   </Form>
                 </CardContent>
@@ -397,7 +486,14 @@ const PaymentLinks = () => {
                             <FormItem>
                               <FormLabel>Telefone</FormLabel>
                               <FormControl>
-                                <Input placeholder="(11) 99999-9999" {...field} />
+                                <Input 
+                                  placeholder="(11) 99999-9999"
+                                  value={formatPhone(field.value)}
+                                  onChange={(e) => {
+                                    const rawValue = e.target.value.replace(/\D/g, "");
+                                    field.onChange(rawValue);
+                                  }}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -411,7 +507,14 @@ const PaymentLinks = () => {
                             <FormItem>
                               <FormLabel>CEP</FormLabel>
                               <FormControl>
-                                <Input placeholder="00000-000" {...field} />
+                                <Input 
+                                  placeholder="00000-000"
+                                  value={formatCEP(field.value)}
+                                  onChange={(e) => {
+                                    const rawValue = e.target.value.replace(/\D/g, "");
+                                    field.onChange(rawValue);
+                                  }}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>

@@ -10,7 +10,7 @@ const EMPLOYEES = [
   { username: "rafael.fdcore@vrautomatize.com", password: "rafael2025", name: "Rafael" }
 ];
 
-interface User {
+export interface User {
   username: string;
   name: string;
 }

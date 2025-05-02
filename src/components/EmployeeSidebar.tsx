@@ -6,7 +6,8 @@ import {
   FileText, 
   Users, 
   LogOut,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -127,6 +128,14 @@ const EmployeeSidebar = () => {
             label="Gerar Relatório"
             href="/dashboard/reports"
             active={currentPath === "/dashboard/reports"}
+            collapsed={collapsed}
+            isHovered={hovered}
+          />
+          <SidebarItem
+            icon={BookOpen}
+            label="Recursos"
+            href="/dashboard"
+            active={false}
             collapsed={collapsed}
             isHovered={hovered}
           />

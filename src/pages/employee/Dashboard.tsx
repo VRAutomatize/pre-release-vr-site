@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide-react";
+import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
@@ -9,6 +9,7 @@ import MetricsCard from "@/components/dashboard/MetricsCard";
 import SalesHistory from "@/components/dashboard/SalesHistory";
 import LeadsHistory from "@/components/dashboard/LeadsHistory";
 import CommissionsPanel from "@/components/dashboard/CommissionsPanel";
+import ResourcesPanel from "@/components/dashboard/ResourcesPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Dashboard = () => {
@@ -56,7 +57,7 @@ const Dashboard = () => {
           </div>
           <div className="flex gap-2 w-full md:w-auto">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full md:w-auto">
-              <TabsList className="grid grid-cols-2 w-full bg-background/40 backdrop-blur-md border border-gold/20">
+              <TabsList className="grid grid-cols-3 w-full bg-background/40 backdrop-blur-md border border-gold/20">
                 <TabsTrigger 
                   value="metrics" 
                   className="flex items-center gap-2 data-[state=active]:bg-gold/20 data-[state=active]:text-gold transition-all duration-300"
@@ -70,6 +71,13 @@ const Dashboard = () => {
                 >
                   <Wallet className="h-4 w-4" />
                   <span className="hidden md:inline">Comissões</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="resources" 
+                  className="flex items-center gap-2 data-[state=active]:bg-gold/20 data-[state=active]:text-gold transition-all duration-300"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span className="hidden md:inline">Recursos</span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -125,6 +133,11 @@ const Dashboard = () => {
           <TabsContent value="commissions" className="mt-0">
             {/* Commissions Panel */}
             <CommissionsPanel />
+          </TabsContent>
+          
+          <TabsContent value="resources" className="mt-0">
+            {/* Resources Panel */}
+            <ResourcesPanel />
           </TabsContent>
         </Tabs>
       </main>

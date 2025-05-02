@@ -178,12 +178,6 @@ const Dashboard = () => {
         </div>
 
         {renderTabContent()}
-        
-        {activeTab === "resources" && (
-          <TabsContent value="resources" className="mt-0">
-            {/* ResourcesPanel is now rendered in renderTabContent */}
-          </TabsContent>
-        )}
       </main>
     </div>
   );

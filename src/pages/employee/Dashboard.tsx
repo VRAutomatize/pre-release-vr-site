@@ -36,13 +36,15 @@ const Dashboard = () => {
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Large blurred logo in background */}
+        {/* Gold blurred background image */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
-          <img 
-            src="/favicon.ico" 
-            alt="VR Automatize" 
-            className="w-[80%] max-w-[800px] object-contain"
-          />
+          <div className="w-[100%] h-[100%] backdrop-blur-3xl">
+            <img 
+              src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
+              alt="VR Automatize" 
+              className="w-full h-full object-cover opacity-40" 
+            />
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 relative z-10">

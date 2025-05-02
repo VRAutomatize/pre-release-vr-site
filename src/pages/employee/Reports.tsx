@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -73,9 +72,9 @@ const Reports = () => {
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Gold blurred background image - increased blur and decreased opacity */}
+        {/* Gold blurred background image - smaller size */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
-          <div className="w-[120%] h-[120%] backdrop-blur-3xl">
+          <div className="w-[100%] h-[100%] backdrop-blur-3xl">
             <img 
               src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
               alt="VR Automatize" 

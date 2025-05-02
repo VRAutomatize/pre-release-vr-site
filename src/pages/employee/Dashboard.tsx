@@ -52,22 +52,28 @@ const Dashboard = () => {
     navigate(`/dashboard?tab=${value}`, { replace: true });
   };
 
-  return (
-    <div className="flex h-[100vh] w-full overflow-hidden">
-      <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Gold blurred background image */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
-          <div className="w-[100%] h-[100%] backdrop-blur-3xl">
-            <img 
-              src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
-              alt="VR Automatize" 
-              className="w-full h-full object-cover opacity-40" 
-            />
+  // Render different content based on active tab
+  const renderTabContent = () => {
+    if (activeTab === "resources") {
+      return (
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6">
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold text-gold">Recursos</h1>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Acesse materiais e ferramentas para auxiliar nas suas vendas.
+              </p>
+            </div>
           </div>
+          
+          <ResourcesPanel />
         </div>
-
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 relative z-10">
+      );
+    }
+    
+    return (
+      <div className="relative z-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-gold">Dashboard</h1>
             <p className="text-sm md:text-base text-muted-foreground">
@@ -110,7 +116,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full relative z-10">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsContent value="metrics" className="mt-0 space-y-6">
             {/* Metrics Cards */}
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
@@ -151,12 +157,33 @@ const Dashboard = () => {
             {/* Commissions Panel */}
             <CommissionsPanel />
           </TabsContent>
-          
-          <TabsContent value="resources" className="mt-0">
-            {/* Resources Panel */}
-            <ResourcesPanel />
-          </TabsContent>
         </Tabs>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex h-[100vh] w-full overflow-hidden">
+      <EmployeeSidebar />
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        {/* Gold blurred background image */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
+          <div className="w-[100%] h-[100%] backdrop-blur-3xl">
+            <img 
+              src="/lovable-uploads/1480847a-bcda-486a-8757-c4f23cc30f8b.png" 
+              alt="VR Automatize" 
+              className="w-full h-full object-cover opacity-40" 
+            />
+          </div>
+        </div>
+
+        {renderTabContent()}
+        
+        {activeTab === "resources" && (
+          <TabsContent value="resources" className="mt-0">
+            {/* ResourcesPanel is now rendered in renderTabContent */}
+          </TabsContent>
+        )}
       </main>
     </div>
   );

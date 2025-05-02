@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, ChevronRight, Check, User, Mail, Phone } from "lucide-react";
@@ -8,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface DirectFormRendererProps {
   formUrl: string;
@@ -34,6 +34,9 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState<FormStep>(1);
   const [formError, setFormError] = useState<string | null>(null);
+  
+  // Get authenticated user
+  const { user } = useAuth();
   
   // React Hook Form setup
   const {
@@ -63,17 +66,23 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
   // Determine form type based on URL
   const isGerarVendaForm = formUrl.includes("gerar_venda") || formUrl.includes("venda");
   
+  // Extract seller tag from authenticated user's email
+  const getSellerTag = () => {
+    if (!user || !user.username) return "";
+    
+    // Extract username part from email (before @)
+    const emailParts = user.username.split('@');
+    return emailParts[0] || "";
+  };
+  
   // Handle form submission
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setFormError(null);
     
     try {
-      // Extract seller tag from email (if available)
-      let sellerTag = "";
-      if (data.email_cliente && data.email_cliente.includes("@")) {
-        sellerTag = data.email_cliente.split("@")[0];
-      }
+      // Get seller tag from the authenticated user's email
+      const sellerTag = getSellerTag();
       
       // Prepare data for webhook
       const webhookData = {
@@ -81,6 +90,8 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
         seller_tag: sellerTag,
         venda_direta: true
       };
+      
+      console.log('Submitting form with data:', webhookData);
       
       // Send data to webhook
       const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/gerar-venda", {
@@ -187,6 +198,18 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
               <span className={currentStep >= 3 ? "text-gold" : ""}>Serviços</span>
             </div>
           </div>
+          
+          {/* Seller tag indicator */}
+          {user && (
+            <div className="mb-4 px-3 py-2 bg-gold/5 border border-gold/10 rounded-md">
+              <p className="text-sm text-gold/80">
+                Vendedor: <span className="font-medium text-gold">{user.name}</span>
+                {getSellerTag() && (
+                  <span className="text-xs ml-2 text-gold/60">({getSellerTag()})</span>
+                )}
+              </p>
+            </div>
+          )}
           
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Step 1: Company Information */}

@@ -14,12 +14,23 @@ interface UseFormSubmissionProps {
 export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }: UseFormSubmissionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-
-  const handleSubmit = async (data: FormData) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  
+  // Function to handle form validation and show confirmation dialog
+  const prepareSubmission = async (data: FormData) => {
+    // Show confirmation dialog
+    setShowConfirmation(true);
+  };
+  
+  // Function to handle the actual form submission after confirmation
+  const submitForm = async () => {
     setIsSubmitting(true);
     setFormError(null);
     
     try {
+      // Get the form data
+      const data = form.getValues();
+      
       // Get seller tag from the authenticated user's email
       const sellerTag = getSellerTag();
       
@@ -71,13 +82,22 @@ export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }:
       });
     } finally {
       setIsSubmitting(false);
+      setShowConfirmation(false);
     }
+  };
+  
+  // Close the confirmation dialog
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
   };
 
   return {
     isSubmitting,
     formError,
-    handleSubmit: form.handleSubmit(handleSubmit),
+    handleSubmit: form.handleSubmit(prepareSubmission),
+    submitForm,
+    showConfirmation,
+    closeConfirmation,
     setFormError
   };
 }

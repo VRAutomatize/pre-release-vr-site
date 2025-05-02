@@ -10,6 +10,7 @@ import { SellerInfo } from "./vendas-form/SellerInfo";
 import { FormNavigation } from "./vendas-form/FormNavigation";
 import { useFormSubmission } from "./vendas-form/useFormSubmission";
 import { useFormNavigation } from "./vendas-form/useFormNavigation";
+import { ConfirmationDialog } from "./vendas-form/ConfirmationDialog";
 
 interface DirectFormRendererProps {
   formUrl: string;
@@ -56,7 +57,14 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
   const isDirectSale = isGerarVendaForm;
   
   // Form submission
-  const { isSubmitting, formError, handleSubmit } = useFormSubmission({ 
+  const { 
+    isSubmitting, 
+    formError, 
+    handleSubmit, 
+    submitForm, 
+    showConfirmation, 
+    closeConfirmation 
+  } = useFormSubmission({ 
     onClose, 
     getSellerTag,
     form,
@@ -140,6 +148,15 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
           </form>
         </div>
       </div>
+      
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog 
+        isOpen={showConfirmation}
+        onClose={closeConfirmation}
+        onConfirm={submitForm}
+        formData={form.getValues()}
+        isDirectSale={isDirectSale}
+      />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -84,6 +85,25 @@
     body.form-overlay-open .form {
       background-color: #1A1F2C !important;
       background: #1A1F2C !important;
+    }
+    
+    /* Prevent iframe flash on load */
+    body.form-overlay-open iframe {
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    
+    body.form-overlay-open iframe.loaded {
+      opacity: 1;
+    }
+    
+    /* Force dark background on all iframe content */
+    body.form-overlay-open iframe::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #1A1F2C;
+      z-index: -1;
     }
   }
 }

@@ -1,5 +1,5 @@
 
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -22,6 +22,7 @@ export function EmbeddedForm({
 }: EmbeddedFormProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isMobile = useIsMobile();
+  const [isLoading, setIsLoading] = useState(true);
   
   // Inject custom styles when the form is open
   useEffect(() => {
@@ -35,6 +36,13 @@ export function EmbeddedForm({
       document.body.classList.remove('form-overlay-open');
     };
   }, [isOpen, isMobile]);
+  
+  // Reset loading state when form opens
+  useEffect(() => {
+    if (isOpen) {
+      setIsLoading(true);
+    }
+  }, [isOpen]);
   
   // Modificar URL para desativar tema do n8n e forçar tema escuro/transparente
   const enhancedFormUrl = useMemo(() => {
@@ -88,6 +96,13 @@ export function EmbeddedForm({
           <X className="h-4 w-4" />
         </button>
         
+        {/* Loading indicator */}
+        {isLoading && isMobile && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#1A1F2C] z-10">
+            <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+        
         {/* Iframe Container with stronger background for mobile */}
         <div 
           className={`w-full h-full overflow-hidden rounded-lg ${isMobile ? 'bg-[#1A1F2C]' : ''}`} 
@@ -103,9 +118,12 @@ export function EmbeddedForm({
                 backgroundColor: isMobile ? '#1A1F2C' : 'transparent',
                 background: isMobile ? '#1A1F2C' : 'transparent',
                 overflow: "hidden",
+                opacity: isLoading && isMobile ? 0 : 1,
+                transition: "opacity 0.3s ease-in-out"
               }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
+              onLoad={() => setIsLoading(false)}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-white">

@@ -8,9 +8,10 @@ interface UseFormSubmissionProps {
   onClose: () => void;
   getSellerTag: () => string;
   form: UseFormReturn<FormData>;
+  isDirectSale: boolean;
 }
 
-export function useFormSubmission({ onClose, getSellerTag, form }: UseFormSubmissionProps) {
+export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }: UseFormSubmissionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -22,16 +23,17 @@ export function useFormSubmission({ onClose, getSellerTag, form }: UseFormSubmis
       // Get seller tag from the authenticated user's email
       const sellerTag = getSellerTag();
       
-      // Prepare data for webhook
+      // Prepare data for webhook - use same webhook for both forms
+      // Only difference is the venda_direta flag which determines if it's a direct sale or lead
       const webhookData = {
         ...data,
         seller_tag: sellerTag,
-        venda_direta: true
+        venda_direta: isDirectSale
       };
       
       console.log('Submitting form with data:', webhookData);
       
-      // Send data to webhook
+      // Send data to webhook (same endpoint for both forms)
       const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/gerar-venda", {
         method: "POST",
         headers: {
@@ -44,10 +46,14 @@ export function useFormSubmission({ onClose, getSellerTag, form }: UseFormSubmis
         throw new Error(`Error: ${response.status}`);
       }
       
-      // Show success message
+      // Show success message based on form type
       toast({
-        title: "Venda registrada com sucesso!",
-        description: "Os dados foram enviados para processamento.",
+        title: isDirectSale 
+          ? "Venda registrada com sucesso!" 
+          : "Time comercial notificado com sucesso!",
+        description: isDirectSale
+          ? "Os dados foram enviados para processamento."
+          : "O lead foi encaminhado para o time comercial.",
       });
       
       // Close the form
@@ -57,7 +63,9 @@ export function useFormSubmission({ onClose, getSellerTag, form }: UseFormSubmis
       setFormError("Falha ao enviar o formulário. Por favor, tente novamente.");
       
       toast({
-        title: "Erro ao registrar venda",
+        title: isDirectSale 
+          ? "Erro ao registrar venda" 
+          : "Erro ao notificar time comercial",
         description: "Não foi possível processar sua solicitação. Tente novamente.",
         variant: "destructive",
       });

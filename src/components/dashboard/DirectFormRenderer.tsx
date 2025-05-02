@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
 import { FormData, FormStep } from "./vendas-form/types";
 import { CompanyInfoStep, ClientInfoStep, ServiceOptionsStep } from "./vendas-form/FormSteps";
+import { LeadInfoStep } from "./vendas-form/LeadFormSteps";
 import { FormProgress } from "./vendas-form/FormProgress";
 import { SellerInfo } from "./vendas-form/SellerInfo";
 import { FormNavigation } from "./vendas-form/FormNavigation";
@@ -17,7 +18,8 @@ interface DirectFormRendererProps {
 
 export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps) {
   // Determine form type based on URL
-  const isGerarVendaForm = formUrl.includes("gerar_venda") || formUrl.includes("venda");
+  const isGerarVendaForm = formUrl.includes("gerar_venda");
+  const isNotificaComercialForm = formUrl.includes("notifica_time_comercial");
   
   // Get authenticated user
   const { user } = useAuth();
@@ -50,14 +52,18 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
   // Form navigation (steps)
   const { currentStep, handleNextStep, handlePrevStep } = useFormNavigation(form);
   
+  // Determine if this is a direct sale or lead notification
+  const isDirectSale = isGerarVendaForm;
+  
   // Form submission
-  const { isSubmitting, formError, handleSubmit, setFormError } = useFormSubmission({ 
+  const { isSubmitting, formError, handleSubmit } = useFormSubmission({ 
     onClose, 
     getSellerTag,
-    form
+    form,
+    isDirectSale
   });
 
-  if (!isGerarVendaForm) {
+  if (!isGerarVendaForm && !isNotificaComercialForm) {
     return (
       <div className="h-full w-full overflow-auto bg-[#1A1F2C] p-4 md:p-6">
         <div className="max-w-xl mx-auto">
@@ -74,13 +80,22 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     );
   }
   
+  // Set form title and description based on form type
+  const formTitle = isGerarVendaForm 
+    ? "Gerar Venda" 
+    : "Notificar Time Comercial";
+    
+  const formDescription = isGerarVendaForm
+    ? "Preencha o formulário para registrar uma nova venda no sistema"
+    : "Envie um lead qualificado para o time comercial";
+  
   return (
     <div className="h-full w-full overflow-auto bg-[#1A1F2C] p-4 md:p-6">
       <div className="max-w-xl mx-auto">
         <div className="glass-blur rounded-lg p-6 border border-gold/20">
           <div className="mb-6">
-            <h2 className="text-xl md:text-2xl font-semibold text-gold mb-2">Gerar Venda</h2>
-            <p className="text-gold/70 mb-4">Preencha o formulário para registrar uma nova venda no sistema</p>
+            <h2 className="text-xl md:text-2xl font-semibold text-gold mb-2">{formTitle}</h2>
+            <p className="text-gold/70 mb-4">{formDescription}</p>
             
             {/* Progress bar */}
             <FormProgress currentStep={currentStep} totalSteps={3} />
@@ -96,10 +111,14 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
             {/* Step 2: Client Information */}
             {currentStep === 2 && <ClientInfoStep form={form} />}
             
-            {/* Step 3: Service Options */}
+            {/* Step 3: Service Options or Lead Info */}
             {currentStep === 3 && (
               <>
-                <ServiceOptionsStep form={form} />
+                {isGerarVendaForm ? (
+                  <ServiceOptionsStep form={form} />
+                ) : (
+                  <LeadInfoStep form={form} />
+                )}
                 
                 {formError && (
                   <div className="p-3 bg-red-900/20 border border-red-900/30 rounded-md text-sm text-red-400">

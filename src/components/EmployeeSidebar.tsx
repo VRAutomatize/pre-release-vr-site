@@ -73,12 +73,26 @@ const EmployeeSidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [hovered, setHovered] = useState(false);
   
-  // Always collapse on mobile
+  // Always collapse on mobile and prevent hover expansion
   useEffect(() => {
     if (isMobile) {
       setCollapsed(true);
+      setHovered(false);
     }
   }, [isMobile]);
+  
+  // Prevent hover effect on mobile
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setHovered(true);
+    }
+  };
+  
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setHovered(false);
+    }
+  };
   
   const sidebarWidth = collapsed && !hovered ? "w-16" : "w-64";
   const isExpanded = !collapsed || hovered;
@@ -87,16 +101,17 @@ const EmployeeSidebar = () => {
     <div 
       className={cn(
         "flex h-screen flex-col border-r border-gold/20 bg-background/40 backdrop-blur-md transition-all duration-300 z-10 overflow-hidden",
-        sidebarWidth
+        sidebarWidth,
+        isMobile ? "w-16" : "" // Force width to be collapsed on mobile
       )}
-      onMouseEnter={() => !isMobile && setHovered(true)}
-      onMouseLeave={() => !isMobile && setHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className={cn(
         "flex h-14 items-center border-b border-gold/20 px-4 transition-all duration-300",
         collapsed && !hovered ? "justify-center" : "justify-between"
       )}>
-        {(!collapsed || hovered) ? (
+        {(!collapsed || hovered) && !isMobile ? (
           <>
             <h2 className={cn(
               "text-lg font-semibold text-gold whitespace-nowrap transition-opacity duration-300",
@@ -128,7 +143,7 @@ const EmployeeSidebar = () => {
             href="/dashboard"
             active={currentPath === "/dashboard" && !currentTab || currentTab === "metrics"}
             collapsed={collapsed}
-            isHovered={hovered}
+            isHovered={isMobile ? false : hovered}
           />
           <SidebarItem
             icon={FileText}
@@ -136,7 +151,7 @@ const EmployeeSidebar = () => {
             href="/dashboard/reports"
             active={currentPath === "/dashboard/reports"}
             collapsed={collapsed}
-            isHovered={hovered}
+            isHovered={isMobile ? false : hovered}
           />
           <SidebarItem
             icon={BookOpen}
@@ -144,7 +159,7 @@ const EmployeeSidebar = () => {
             href="/dashboard?tab=resources"
             active={currentTab === "resources"}
             collapsed={collapsed}
-            isHovered={hovered}
+            isHovered={isMobile ? false : hovered}
           />
           <SidebarItem
             icon={CreditCard}
@@ -152,7 +167,7 @@ const EmployeeSidebar = () => {
             href="/dashboard/payments"
             active={currentPath === "/dashboard/payments"}
             collapsed={collapsed}
-            isHovered={hovered}
+            isHovered={isMobile ? false : hovered}
           />
           <SidebarItem
             icon={Users}
@@ -160,7 +175,7 @@ const EmployeeSidebar = () => {
             href="/dashboard/devs"
             active={currentPath === "/dashboard/devs"}
             collapsed={collapsed}
-            isHovered={hovered}
+            isHovered={isMobile ? false : hovered}
           />
         </nav>
       </div>
@@ -173,7 +188,7 @@ const EmployeeSidebar = () => {
           )}
         >
           <LogOut size={16} className="flex-shrink-0" />
-          {(!collapsed || hovered) && <span className={cn(
+          {(!collapsed || hovered) && !isMobile && <span className={cn(
             "transition-opacity duration-300 whitespace-nowrap",
             isExpanded ? "opacity-100" : "opacity-0"
           )}>Sair</span>}

@@ -1,15 +1,14 @@
 
 import React from "react";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
-import { formatCurrency, parseCurrencyToNumber, isValueInvalid } from "@/utils/paymentUtils";
+import { parseCurrencyToNumber } from "@/utils/paymentUtils";
 import { Product } from "@/types/payment";
+import FormActions from "./forms/FormActions";
+import PaymentMethodForm from "./forms/PaymentMethodForm";
 
 // Payment Schema
 const paymentSchema = z.object({
@@ -35,7 +34,7 @@ interface PaymentFormProps {
 }
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreatePayment, onBack, loading }) => {
-  const form = useForm<z.infer<typeof paymentSchema>>({
+  const methods = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
       clientId: clientId,
@@ -49,7 +48,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
   // Handle payment method change
   const onPaymentMethodChange = (value: string) => {
     if (value === "pix") {
-      form.setValue("installments", null);
+      methods.setValue("installments", null);
     }
   };
 
@@ -62,141 +61,28 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     const numericValue = parseInt(rawValue) || 0;
     
     // Update form
-    form.setValue("value", numericValue);
+    methods.setValue("value", numericValue);
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onCreatePayment)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="productId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Produto</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger className="border-gold/20">
-                    <SelectValue placeholder="Selecione um produto" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {products.map((product) => (
-                    <SelectItem key={product.id} value={product.id}>
-                      {product.name}
-                      {product.price ? ` - R$ ${product.price.toFixed(2)}` : ''}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="paymentMethod"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Método de Pagamento</FormLabel>
-              <Select
-                onValueChange={(value) => {
-                  field.onChange(value);
-                  onPaymentMethodChange(value);
-                }}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger className="border-gold/20">
-                    <SelectValue placeholder="Selecione o método de pagamento" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="pix">Pix</SelectItem>
-                  <SelectItem value="credit_card">Cartão de Crédito</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="value"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Valor</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Apenas números sem centavos"
-                  variant={isValueInvalid(field.value) ? "error" : "default"}
-                  value={field.value === 0 ? '' : formatCurrency(field.value)}
-                  onChange={handleValueChange}
-                  inputMode="numeric"
-                  className="text-right"
-                />
-              </FormControl>
-              <FormMessage />
-              <p className="text-xs text-muted-foreground">Digite apenas os números inteiros (sem centavos)</p>
-            </FormItem>
-          )}
-        />
-        
-        {form.watch("paymentMethod") === "credit_card" && (
-          <FormField
-            control={form.control}
-            name="installments"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Número de Parcelas</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="1"
-                    min="1"
-                    max="12"
-                    {...field}
-                    value={field.value || ""}
-                    onChange={(e) => {
-                      field.onChange(parseInt(e.target.value) || null);
-                    }}
-                    inputMode="numeric"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+    <FormProvider {...methods}>
+      <Form {...methods}>
+        <form onSubmit={methods.handleSubmit(onCreatePayment)} className="space-y-6">
+          <PaymentMethodForm 
+            products={products}
+            onPaymentMethodChange={onPaymentMethodChange}
+            handleValueChange={handleValueChange}
           />
-        )}
-        
-        <div className="flex flex-wrap gap-2 justify-end">
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onBack}
-            className="border-gold/20 text-gold hover:bg-gold/10 w-full sm:w-auto"
-          >
-            Voltar
-          </Button>
-          <Button 
-            type="submit" 
-            className="bg-gold hover:bg-gold/80 text-black w-full sm:w-auto"
-            disabled={loading}
-          >
-            {loading ? (
-              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando Link...</>
-            ) : (
-              "Gerar Link de Pagamento"
-            )}
-          </Button>
-        </div>
-      </form>
-    </Form>
+          
+          <FormActions 
+            onBack={onBack} 
+            loading={loading}
+            backLabel="Voltar"
+            submitLabel="Gerar Link de Pagamento"
+          />
+        </form>
+      </Form>
+    </FormProvider>
   );
 };
 

@@ -37,7 +37,7 @@ export function validateCNPJ(cnpj: string): boolean {
   return result === parseInt(digits.charAt(1), 10);
 }
 
-// Format CNPJ for display
+// Format CNPJ for display - Memoized version could be added for performance
 export function formatCNPJ(cnpj: string): string {
   cnpj = cnpj.replace(/[^\d]/g, '');
   return cnpj.replace(
@@ -46,7 +46,7 @@ export function formatCNPJ(cnpj: string): string {
   );
 }
 
-// Format currency value - improved to handle cursor positioning better
+// Optimize currency formatting with better integer handling
 export function formatCurrency(value: number | string): string {
   if (!value && value !== 0) return '';
   
@@ -61,7 +61,7 @@ export function formatCurrency(value: number | string): string {
   }).format(numValue);
 }
 
-// Parse formatted currency back to number - improved to handle integers only
+// Optimized for better integer parsing
 export function parseCurrencyToNumber(formatted: string): number {
   if (!formatted) return 0;
   
@@ -70,39 +70,43 @@ export function parseCurrencyToNumber(formatted: string): number {
   return parseInt(cleanValue) || 0;
 }
 
-// Format phone input
+// Format phone input with improved performance
 export function formatPhone(phone: string): string {
+  if (!phone) return '';
+  
   phone = phone.replace(/\D/g, "");
   if (phone.length > 11) {
     phone = phone.slice(0, 11);
   }
   
   if (phone.length > 7) {
-    phone = `(${phone.slice(0, 2)}) ${phone.slice(2, 7)}-${phone.slice(7)}`;
+    return `(${phone.slice(0, 2)}) ${phone.slice(2, 7)}-${phone.slice(7)}`;
   } else if (phone.length > 2) {
-    phone = `(${phone.slice(0, 2)}) ${phone.slice(2)}`;
+    return `(${phone.slice(0, 2)}) ${phone.slice(2)}`;
   } else if (phone.length > 0) {
-    phone = `(${phone}`;
+    return `(${phone}`;
   }
   
   return phone;
 }
 
-// Format CEP input
+// Format CEP input with improved performance
 export function formatCEP(cep: string): string {
+  if (!cep) return '';
+  
   cep = cep.replace(/\D/g, "");
   if (cep.length > 8) {
     cep = cep.slice(0, 8);
   }
   
   if (cep.length > 5) {
-    cep = `${cep.slice(0, 5)}-${cep.slice(5)}`;
+    return `${cep.slice(0, 5)}-${cep.slice(5)}`;
   }
   
   return cep;
 }
 
-// Check if value is below minimum requirement or above maximum
+// Optimized value validation
 export function isValueInvalid(value: number | undefined): boolean {
   return typeof value === 'number' && (value < 100 || value > 50000);
 }

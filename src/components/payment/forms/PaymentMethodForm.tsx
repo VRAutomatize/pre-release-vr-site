@@ -20,6 +20,38 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
 }) => {
   const form = useFormContext();
 
+  // Função para garantir que apenas números sejam digitados no campo de valor
+  const handleValueInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Permite apenas dígitos numéricos
+    const value = e.target.value.replace(/\D/g, '');
+    
+    // Se estiver vazio, mantém vazio ou zero conforme a lógica existente
+    if (!value) {
+      // Cria um novo evento sintético para passar para o handleValueChange
+      const syntheticEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          value: ''
+        }
+      };
+      handleValueChange(syntheticEvent);
+      return;
+    }
+    
+    // Cria um novo evento sintético com o valor filtrado
+    const syntheticEvent = {
+      ...e,
+      target: {
+        ...e.target,
+        value
+      }
+    };
+    
+    // Passa o evento com o valor filtrado para a função original
+    handleValueChange(syntheticEvent);
+  };
+
   return (
     <>
       <FormField
@@ -87,16 +119,16 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
             <FormLabel>Valor</FormLabel>
             <FormControl>
               <Input
-                placeholder="Apenas números sem centavos"
+                placeholder="R$ 0,00"
                 variant={isValueInvalid(field.value) ? "error" : "default"}
                 value={field.value === 0 ? '' : formatCurrency(field.value)}
-                onChange={handleValueChange}
+                onChange={handleValueInput}
                 inputMode="numeric"
                 className="text-right"
               />
             </FormControl>
             <FormMessage />
-            <p className="text-xs text-muted-foreground">Digite apenas os números inteiros (sem centavos)</p>
+            <p className="text-xs text-muted-foreground">Digite apenas números (a formatação será automática)</p>
           </FormItem>
         )}
       />

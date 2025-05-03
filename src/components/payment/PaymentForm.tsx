@@ -4,7 +4,6 @@ import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
 import { parseCurrencyToNumber } from "@/utils/paymentUtils";
 import { Product } from "@/types/payment";
 import FormActions from "./forms/FormActions";
@@ -52,15 +51,15 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     }
   };
 
-  // Handle value input with improved cursor management
+  // Manipula a entrada de valor, aceitando apenas números e convertendo para centavos
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Get the raw input value without formatting
+    // Pega o valor sem formatação
     const rawValue = e.target.value.replace(/\D/g, "");
     
-    // Convert to number (integers only)
+    // Converte para número (inteiros apenas)
     const numericValue = parseInt(rawValue) || 0;
     
-    // Update form
+    // Atualiza o formulário
     methods.setValue("value", numericValue);
   };
 

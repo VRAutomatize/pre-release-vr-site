@@ -11,7 +11,7 @@ import PaymentMethodForm from "./forms/PaymentMethodForm";
 // Payment Schema
 const paymentSchema = z.object({
   clientId: z.string(),
-  productId: z.string().min(1, "Selecione um produto"),
+  productName: z.string().min(1, "Selecione um produto"),
   paymentMethod: z.enum(["pix", "credit_card"], {
     required_error: "Selecione um método de pagamento",
   }),
@@ -36,7 +36,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     resolver: zodResolver(paymentSchema),
     defaultValues: {
       clientId: clientId,
-      productId: "",
+      productName: "",
       paymentMethod: "pix",
       value: 0,
       installments: null,

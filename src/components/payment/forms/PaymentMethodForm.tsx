@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -5,17 +6,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useFormContext } from 'react-hook-form';
 import { Product } from '@/types/payment';
 import { isValueInvalid } from '@/utils/paymentUtils';
+
 interface PaymentMethodFormProps {
   products: Product[];
   onPaymentMethodChange: (value: string) => void;
 }
+
 const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
   products,
   onPaymentMethodChange
 }) => {
   const form = useFormContext();
+  
   return <>
-      <FormField control={form.control} name="productId" render={({
+      <FormField control={form.control} name="productName" render={({
       field
     }) => <FormItem>
             <FormLabel>Produto</FormLabel>
@@ -26,7 +30,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {products.map(product => <SelectItem key={product.id} value={product.id}>
+                {products.map(product => <SelectItem key={product.id} value={product.name}>
                     {product.name}
                     {product.price ? ` - R$ ${product.price.toFixed(2)}` : ''}
                   </SelectItem>)}
@@ -79,4 +83,5 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
             </FormItem>} />}
     </>;
 };
+
 export default PaymentMethodForm;

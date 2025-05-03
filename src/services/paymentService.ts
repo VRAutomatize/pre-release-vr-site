@@ -1,5 +1,5 @@
-
 import { toast } from "sonner";
+import { AddressInfo } from "@/types/payment";
 
 const API_BASE_URL = "https://vrautomatize-n8n.snrhk1.easypanel.host";
 
@@ -115,5 +115,37 @@ export const createPayment = async (paymentData: any) => {
   } catch (error) {
     console.error("Error creating payment:", error);
     throw error;
+  }
+};
+
+// Check CEP and get address information
+export const checkCEP = async (cep: string): Promise<AddressInfo | null> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/webhook/check-cep`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cep }),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const responseText = await response.text();
+    console.log("CEP check response:", responseText);
+
+    // Try to parse as JSON if possible
+    try {
+      const result = JSON.parse(responseText);
+      return result;
+    } catch (e) {
+      console.error("Failed to parse CEP response:", e);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error checking CEP:", error);
+    return null;
   }
 };

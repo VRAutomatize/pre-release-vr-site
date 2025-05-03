@@ -69,7 +69,22 @@ const PaymentLinks = () => {
   const handleRegisterClient = async (data: z.infer<any>) => {
     setLoading(true);
     try {
-      const result = await registerClient(data);
+      // Make sure all necessary fields are passed to the API
+      const clientData = {
+        cnpj: data.cnpj,
+        companyName: data.companyName,
+        clientName: data.clientName,
+        phone: data.phone,
+        address: data.address,
+        number: data.number,
+        complement: data.complement || "",
+        district: data.district,
+        city: data.city,
+        state: data.state,
+        zipCode: data.zipCode
+      };
+      
+      const result = await registerClient(clientData);
       
       if (result.message && result.message === "Workflow was started") {
         // This is just an acknowledgment

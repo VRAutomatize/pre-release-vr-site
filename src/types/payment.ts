@@ -16,3 +16,12 @@ export enum Step {
   RegisterClient,
   CreatePayment,
 }
+
+export interface AddressInfo {
+  cep: string;
+  state: string;
+  city: string;
+  neighborhood: string;
+  street: string;
+}
+

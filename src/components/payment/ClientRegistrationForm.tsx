@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -34,6 +35,7 @@ interface ClientRegistrationFormProps {
 
 const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, onRegister, onBack, loading }) => {
   const [addressLoading, setAddressLoading] = useState(false);
+  const [autoFilledFields, setAutoFilledFields] = useState<Record<string, boolean>>({});
   
   const form = useForm<z.infer<typeof clientRegistrationSchema>>({
     resolver: zodResolver(clientRegistrationSchema),
@@ -52,6 +54,27 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
     },
   });
 
+  // Function to set field value and mark it as auto-filled
+  const setAutoFilledValue = (field: string, value: string) => {
+    if (value) {
+      form.setValue(field, value);
+      
+      // Mark field as auto-filled
+      setAutoFilledFields(prev => ({
+        ...prev,
+        [field]: true
+      }));
+      
+      // Remove the auto-filled status after 1 second
+      setTimeout(() => {
+        setAutoFilledFields(prev => ({
+          ...prev,
+          [field]: false
+        }));
+      }, 1000);
+    }
+  };
+
   // Handle CEP lookup
   const handleCEPLookup = async (cep: string) => {
     if (cep.length !== 8) return;
@@ -62,15 +85,15 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
       const addressInfo = await checkCEP(cep);
       
       if (addressInfo) {
-        // Set all available address fields from the response
-        form.setValue('address', addressInfo.street || addressInfo.logradouro || '');
-        form.setValue('district', addressInfo.neighborhood || addressInfo.bairro || '');
-        form.setValue('city', addressInfo.city || addressInfo.localidade || '');
-        form.setValue('state', addressInfo.state || addressInfo.uf || '');
+        // Set all available address fields from the response with visual feedback
+        setAutoFilledValue('address', addressInfo.street || addressInfo.logradouro || '');
+        setAutoFilledValue('district', addressInfo.neighborhood || addressInfo.bairro || '');
+        setAutoFilledValue('city', addressInfo.city || addressInfo.localidade || '');
+        setAutoFilledValue('state', addressInfo.state || addressInfo.uf || '');
         
         // If there's a complemento field, set it as well
         if (addressInfo.complemento && addressInfo.complemento !== '') {
-          form.setValue('complement', addressInfo.complemento);
+          setAutoFilledValue('complement', addressInfo.complemento);
         }
       }
     } catch (error) {
@@ -168,7 +191,9 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
               <FormItem className="md:col-span-2">
                 <FormLabel>Endereço</FormLabel>
                 <FormControl>
-                  <Input placeholder="Av. Paulista" {...field} />
+                  <div className={`relative ${autoFilledFields['address'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                    <Input placeholder="Av. Paulista" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -196,7 +221,9 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
               <FormItem>
                 <FormLabel>Complemento (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Sala 123" {...field} />
+                  <div className={`relative ${autoFilledFields['complement'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                    <Input placeholder="Sala 123" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -210,7 +237,9 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
               <FormItem>
                 <FormLabel>Bairro</FormLabel>
                 <FormControl>
-                  <Input placeholder="Centro" {...field} />
+                  <div className={`relative ${autoFilledFields['district'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                    <Input placeholder="Centro" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -224,7 +253,9 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
               <FormItem>
                 <FormLabel>Cidade</FormLabel>
                 <FormControl>
-                  <Input placeholder="São Paulo" {...field} />
+                  <div className={`relative ${autoFilledFields['city'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                    <Input placeholder="São Paulo" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -238,7 +269,9 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
               <FormItem>
                 <FormLabel>Estado</FormLabel>
                 <FormControl>
-                  <Input placeholder="SP" {...field} />
+                  <div className={`relative ${autoFilledFields['state'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                    <Input placeholder="SP" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

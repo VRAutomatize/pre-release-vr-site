@@ -51,18 +51,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     }
   };
 
-  // Manipula a entrada de valor, aceitando apenas números e convertendo para centavos
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Pega o valor sem formatação
-    const rawValue = e.target.value.replace(/\D/g, "");
-    
-    // Converte para número (inteiros apenas)
-    const numericValue = parseInt(rawValue) || 0;
-    
-    // Atualiza o formulário
-    methods.setValue("value", numericValue);
-  };
-
   return (
     <FormProvider {...methods}>
       <Form {...methods}>
@@ -70,7 +58,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
           <PaymentMethodForm 
             products={products}
             onPaymentMethodChange={onPaymentMethodChange}
-            handleValueChange={handleValueChange}
           />
           
           <FormActions 

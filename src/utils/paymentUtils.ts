@@ -61,12 +61,14 @@ export function formatCurrency(value: number | string): string {
   }).format(numValue);
 }
 
-// Optimized for better integer parsing
+// Improved function to parse currency to number without adding extra zeros
 export function parseCurrencyToNumber(formatted: string): number {
   if (!formatted) return 0;
   
-  // Remove currency symbol, spaces, commas and everything after
+  // Remove currency symbol, spaces, dots and everything non-numeric
   const cleanValue = formatted.replace(/[^\d]/g, '');
+  
+  // Convert to integer value
   return parseInt(cleanValue) || 0;
 }
 
@@ -110,3 +112,4 @@ export function formatCEP(cep: string): string {
 export function isValueInvalid(value: number | undefined): boolean {
   return typeof value === 'number' && (value < 100 || value > 50000);
 }
+

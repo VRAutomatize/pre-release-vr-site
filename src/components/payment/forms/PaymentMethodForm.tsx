@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,46 +10,45 @@ import { formatCurrency, isValueInvalid } from '@/utils/paymentUtils';
 interface PaymentMethodFormProps {
   products: Product[];
   onPaymentMethodChange: (value: string) => void;
-  handleValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ 
   products, 
-  onPaymentMethodChange,
-  handleValueChange
+  onPaymentMethodChange
 }) => {
   const form = useFormContext();
+  const [displayValue, setDisplayValue] = useState('');
 
-  // Função para garantir que apenas números sejam digitados no campo de valor
-  const handleValueInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Permite apenas dígitos numéricos
-    const value = e.target.value.replace(/\D/g, '');
+  // Handle numeric input and formatting for currency
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
     
-    // Se estiver vazio, mantém vazio ou zero conforme a lógica existente
-    if (!value) {
-      // Cria um novo evento sintético para passar para o handleValueChange
-      const syntheticEvent = {
-        ...e,
-        target: {
-          ...e.target,
-          value: ''
-        }
-      };
-      handleValueChange(syntheticEvent);
+    // If user is trying to clear the field (backspace/delete on empty field)
+    if (inputValue === '') {
+      setDisplayValue('');
+      form.setValue('value', 0);
       return;
     }
     
-    // Cria um novo evento sintético com o valor filtrado
-    const syntheticEvent = {
-      ...e,
-      target: {
-        ...e.target,
-        value
-      }
-    };
+    // Strip all non-numeric characters
+    const numericValue = inputValue.replace(/\D/g, '');
     
-    // Passa o evento com o valor filtrado para a função original
-    handleValueChange(syntheticEvent);
+    // If there are no numbers, set to empty
+    if (!numericValue) {
+      setDisplayValue('');
+      form.setValue('value', 0);
+      return;
+    }
+    
+    // Convert to a number (this will be stored in the form)
+    const valueAsNumber = parseInt(numericValue);
+    
+    // Format for display
+    const formattedValue = formatCurrency(valueAsNumber);
+    setDisplayValue(formattedValue);
+    
+    // Update the form value
+    form.setValue('value', valueAsNumber);
   };
 
   return (
@@ -121,8 +120,8 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
               <Input
                 placeholder="R$ 0,00"
                 variant={isValueInvalid(field.value) ? "error" : "default"}
-                value={field.value === 0 ? '' : formatCurrency(field.value)}
-                onChange={handleValueInput}
+                value={displayValue}
+                onChange={handleValueChange}
                 inputMode="numeric"
                 className="text-right"
               />

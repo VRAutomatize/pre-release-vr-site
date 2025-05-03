@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -37,7 +38,21 @@ interface ClientRegistrationFormProps {
 
 const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, onRegister, onBack, loading }) => {
   const [addressLoading, setAddressLoading] = useState(false);
-  const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({});
+  
+  // Initialize with the correct shape - all fields set to false initially
+  const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({
+    cnpj: false,
+    companyName: false,
+    clientName: false,
+    phone: false,
+    address: false,
+    number: false,
+    complement: false,
+    district: false,
+    city: false,
+    state: false,
+    zipCode: false
+  });
   
   const form = useForm<z.infer<typeof clientRegistrationSchema>>({
     resolver: zodResolver(clientRegistrationSchema),

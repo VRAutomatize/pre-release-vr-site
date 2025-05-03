@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -59,7 +58,7 @@ const EmployeeSidebar = () => {
         <img 
           src="/public/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
           alt="VR Link Logo" 
-          className="h-10 w-auto object-contain"
+          className="h-12 w-auto object-cover"
         />
       </div>
       <div className="flex-1 py-4 px-2 overflow-y-auto overflow-x-hidden">

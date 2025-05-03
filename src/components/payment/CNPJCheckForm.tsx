@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +22,8 @@ interface CNPJCheckFormProps {
 }
 
 const CNPJCheckForm: React.FC<CNPJCheckFormProps> = ({ onCheckCNPJ, loading }) => {
+  const [isInvalid, setIsInvalid] = useState(false);
+  
   const form = useForm<z.infer<typeof cnpjSchema>>({
     resolver: zodResolver(cnpjSchema),
     defaultValues: {
@@ -51,11 +53,16 @@ const CNPJCheckForm: React.FC<CNPJCheckFormProps> = ({ onCheckCNPJ, loading }) =
     // Display formatted value in input
     e.target.value = maskedValue;
     
-    // Auto check when CNPJ is complete
+    // Check if CNPJ is complete but invalid
     if (value.length === 14) {
-      if (validateCNPJ(value)) {
+      const isValidCNPJ = validateCNPJ(value);
+      setIsInvalid(!isValidCNPJ);
+      
+      if (isValidCNPJ) {
         onCheckCNPJ(value);
       }
+    } else {
+      setIsInvalid(false);
     }
   };
 
@@ -73,6 +80,7 @@ const CNPJCheckForm: React.FC<CNPJCheckFormProps> = ({ onCheckCNPJ, loading }) =
                   placeholder="00.000.000/0000-00" 
                   onChange={handleCNPJChange}
                   className="text-lg"
+                  variant={isInvalid ? "error" : "default"}
                 />
               </FormControl>
               <FormMessage />

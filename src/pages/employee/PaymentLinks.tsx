@@ -206,10 +206,22 @@ const PaymentLinks = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       
-      const result = await response.json();
+      // Get response text instead of trying to parse as JSON right away
+      const responseText = await response.text();
+      console.log("CNPJ check response text:", responseText);
+
+      // Try to parse as JSON if possible, otherwise use the text directly
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        // Response is not JSON, use it directly
+        result = responseText;
+      }
+      
       console.log("CNPJ check result:", result);
       
-      if (result.message && result.message === "Workflow was started") {
+      if (result && typeof result === "object" && result.message && result.message === "Workflow was started") {
         // This is just an acknowledgment, not the actual result
         toast.info("Verificando CNPJ...");
         setTimeout(() => {
@@ -840,4 +852,3 @@ const PaymentLinks = () => {
 };
 
 export default PaymentLinks;
-

@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { formatCNPJ, formatPhone, formatCEP } from "@/utils/paymentUtils";
 import { validateCNPJ } from "@/utils/paymentUtils";
 import { checkCEP } from "@/services/paymentService";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 // Client Registration Schema
 const clientRegistrationSchema = z.object({
@@ -39,6 +40,8 @@ interface ClientRegistrationFormProps {
 
 const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, onRegister, onBack, loading }) => {
   const [addressLoading, setAddressLoading] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [formData, setFormData] = useState<z.infer<typeof clientRegistrationSchema> | null>(null);
   
   // Initialize with the correct shape - all fields set to false initially
   const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({
@@ -126,222 +129,248 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
     }
   };
 
+  // Handle form submission to show confirmation
+  const handleShowConfirmation = (data: z.infer<typeof clientRegistrationSchema>) => {
+    setFormData(data);
+    setShowConfirmation(true);
+  };
+
+  // Handle confirmation dialog close
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
+  };
+
+  // Handle final submission after confirmation
+  const handleConfirmSubmit = () => {
+    if (formData) {
+      onRegister(formData);
+    }
+  };
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onRegister)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="companyName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome da Empresa</FormLabel>
-                <FormControl>
-                  <Input placeholder="Empresa SA" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="clientName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome do Cliente</FormLabel>
-                <FormControl>
-                  <Input placeholder="João Silva" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="email"
-                    placeholder="cliente@empresa.com" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Telefone</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="(11) 99999-9999"
-                    value={formatPhone(field.value)}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, "");
-                      field.onChange(rawValue);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="zipCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>CEP</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="00000-000"
-                    value={formatCEP(field.value)}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, "");
-                      field.onChange(rawValue);
-                      
-                      // Trigger CEP lookup when 8 digits are entered
-                      if (rawValue.length === 8) {
-                        handleCEPLookup(rawValue);
-                      }
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-                {addressLoading && <p className="text-xs text-muted-foreground">Buscando endereço...</p>}
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel>Endereço</FormLabel>
-                <FormControl>
-                  <div className={`relative ${autoFilledFields['address'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
-                    <Input placeholder="Av. Paulista" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="number"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Número</FormLabel>
-                <FormControl>
-                  <Input placeholder="123" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="complement"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Complemento (opcional)</FormLabel>
-                <FormControl>
-                  <div className={`relative ${autoFilledFields['complement'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
-                    <Input placeholder="Sala 123" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="district"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bairro</FormLabel>
-                <FormControl>
-                  <div className={`relative ${autoFilledFields['district'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
-                    <Input placeholder="Centro" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleShowConfirmation)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="companyName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome da Empresa</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Empresa SA" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="clientName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome do Cliente</FormLabel>
+                  <FormControl>
+                    <Input placeholder="João Silva" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="email"
+                      placeholder="cliente@empresa.com" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Telefone</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="(11) 99999-9999"
+                      value={formatPhone(field.value)}
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\D/g, "");
+                        field.onChange(rawValue);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="zipCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>CEP</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="00000-000"
+                      value={formatCEP(field.value)}
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\D/g, "");
+                        field.onChange(rawValue);
+                        
+                        // Trigger CEP lookup when 8 digits are entered
+                        if (rawValue.length === 8) {
+                          handleCEPLookup(rawValue);
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  {addressLoading && <p className="text-xs text-muted-foreground">Buscando endereço...</p>}
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className="md:col-span-2">
+                  <FormLabel>Endereço</FormLabel>
+                  <FormControl>
+                    <div className={`relative ${autoFilledFields['address'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                      <Input placeholder="Av. Paulista" {...field} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Número</FormLabel>
+                  <FormControl>
+                    <Input placeholder="123" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="complement"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Complemento (opcional)</FormLabel>
+                  <FormControl>
+                    <div className={`relative ${autoFilledFields['complement'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                      <Input placeholder="Sala 123" {...field} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="district"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bairro</FormLabel>
+                  <FormControl>
+                    <div className={`relative ${autoFilledFields['district'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                      <Input placeholder="Centro" {...field} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cidade</FormLabel>
-                <FormControl>
-                  <div className={`relative ${autoFilledFields['city'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
-                    <Input placeholder="São Paulo" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cidade</FormLabel>
+                  <FormControl>
+                    <div className={`relative ${autoFilledFields['city'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                      <Input placeholder="São Paulo" {...field} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="state"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Estado</FormLabel>
-                <FormControl>
-                  <div className={`relative ${autoFilledFields['state'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
-                    <Input placeholder="SP" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        
-        <div className="flex gap-2 justify-end">
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onBack}
-            className="border-gold/20 text-gold hover:bg-gold/10"
-          >
-            Voltar
-          </Button>
-          <Button 
-            type="submit" 
-            className="bg-gold hover:bg-gold/80 text-black"
-            disabled={loading}
-          >
-            {loading ? (
-              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Cadastrando...</>
-            ) : (
-              "Cadastrar Cliente"
-            )}
-          </Button>
-        </div>
-      </form>
-    </Form>
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Estado</FormLabel>
+                  <FormControl>
+                    <div className={`relative ${autoFilledFields['state'] ? 'after:absolute after:inset-0 after:rounded-md after:ring-2 after:ring-green-500/50 after:shadow-[0_0_10px_rgba(34,197,94,0.5)] after:animate-pulse after:pointer-events-none' : ''}`}>
+                      <Input placeholder="SP" {...field} />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          
+          <div className="flex gap-2 justify-end">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onBack}
+              className="border-gold/20 text-gold hover:bg-gold/10"
+            >
+              Voltar
+            </Button>
+            <Button 
+              type="submit" 
+              className="bg-gold hover:bg-gold/80 text-black"
+              disabled={loading}
+            >
+              Revisar e Cadastrar
+            </Button>
+          </div>
+        </form>
+      </Form>
+      
+      {formData && (
+        <ConfirmationDialog
+          open={showConfirmation}
+          onClose={handleCloseConfirmation}
+          onConfirm={handleConfirmSubmit}
+          loading={loading}
+          data={formData}
+        />
+      )}
+    </>
   );
 };
 

@@ -53,7 +53,13 @@ const PaymentLinks = () => {
         toast.info("Cliente não encontrado. Por favor, registre um novo cliente.");
       } else {
         // Client found, go to payment creation
-        setClient({ id: result, name: "Cliente Encontrado" });
+        // Save the client ID returned by the API
+        const clientId = result;
+        setClient({ 
+          id: clientId, 
+          name: "Cliente Encontrado", 
+          // Ideally, the API would return more client details
+        });
         setStep(Step.CreatePayment);
         toast.success("Cliente encontrado!");
       }
@@ -103,8 +109,19 @@ const PaymentLinks = () => {
       if (result === "error") {
         toast.error("Erro ao cadastrar cliente. Tente novamente.");
       } else {
-        // Client created, go to payment creation
-        setClient({ id: result, name: data.companyName, email: data.email });
+        // Client created successfully, store the client ID returned from API
+        console.log("Client registration result:", result);
+        
+        // Handle plain text response (client ID)
+        const clientId = typeof result === 'string' ? result : 
+                        (result.id ? result.id : 'client_unknown');
+                        
+        // Set client with returned ID and form data
+        setClient({ 
+          id: clientId, 
+          name: data.companyName, 
+          email: data.email 
+        });
         setStep(Step.CreatePayment);
         toast.success("Cliente cadastrado com sucesso!");
       }

@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 import { AddressInfo } from "@/types/payment";
 
@@ -44,6 +45,7 @@ export const checkCNPJ = async (cnpj: string) => {
 // Register a new client
 export const registerClient = async (clientData: any) => {
   try {
+    console.log("Registering client with data:", clientData);
     const response = await fetch(`${API_BASE_URL}/webhook/create_client`, {
       method: "POST",
       headers: {
@@ -56,7 +58,19 @@ export const registerClient = async (clientData: any) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     
-    const result = await response.json();
+    // Get response as text first
+    const responseText = await response.text();
+    console.log("Client registration response text:", responseText);
+    
+    // Try to parse as JSON if possible, otherwise return the text directly (client ID)
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch (e) {
+      // If it's not JSON, it might be a plain text client ID
+      result = responseText;
+    }
+    
     console.log("Client registration result:", result);
     
     return result;
@@ -108,7 +122,18 @@ export const createPayment = async (paymentData: any) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     
-    const result = await response.json();
+    // Handle potential plain text response
+    const responseText = await response.text();
+    console.log("Payment creation response text:", responseText);
+    
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch (e) {
+      // Not JSON, use the text directly
+      result = responseText;
+    }
+    
     console.log("Payment creation result:", result);
     
     return result;

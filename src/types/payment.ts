@@ -23,5 +23,15 @@ export interface AddressInfo {
   city: string;
   neighborhood: string;
   street: string;
+  // Additional fields from the API
+  logradouro?: string;
+  complemento?: string;
+  bairro?: string;
+  localidade?: string;
+  uf?: string;
+  unidade?: string;
+  ibge?: string;
+  gia?: string;
+  ddd?: string;
+  siafi?: string;
 }
-

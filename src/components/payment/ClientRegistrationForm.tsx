@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -63,10 +62,16 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
       const addressInfo = await checkCEP(cep);
       
       if (addressInfo) {
-        form.setValue('address', addressInfo.street || '');
-        form.setValue('district', addressInfo.neighborhood || '');
-        form.setValue('city', addressInfo.city || '');
-        form.setValue('state', addressInfo.state || '');
+        // Set all available address fields from the response
+        form.setValue('address', addressInfo.street || addressInfo.logradouro || '');
+        form.setValue('district', addressInfo.neighborhood || addressInfo.bairro || '');
+        form.setValue('city', addressInfo.city || addressInfo.localidade || '');
+        form.setValue('state', addressInfo.state || addressInfo.uf || '');
+        
+        // If there's a complemento field, set it as well
+        if (addressInfo.complemento && addressInfo.complemento !== '') {
+          form.setValue('complement', addressInfo.complemento);
+        }
       }
     } catch (error) {
       console.error("Error looking up CEP:", error);
@@ -268,4 +273,3 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
 };
 
 export default ClientRegistrationForm;
-

@@ -139,7 +139,32 @@ export const checkCEP = async (cep: string): Promise<AddressInfo | null> => {
     // Try to parse as JSON if possible
     try {
       const result = JSON.parse(responseText);
-      return result;
+      
+      // Check if the API returned an error
+      if (result.erro === "true") {
+        return null;
+      }
+      
+      // Map the API response to our AddressInfo type
+      return {
+        cep: result.cep || "",
+        street: result.logradouro || "",
+        neighborhood: result.bairro || "",
+        city: result.localidade || "",
+        state: result.uf || "",
+        // Add any additional fields that might be useful
+        complemento: result.complemento || "",
+        // Keep the original fields for compatibility
+        logradouro: result.logradouro || "",
+        bairro: result.bairro || "",
+        localidade: result.localidade || "",
+        uf: result.uf || "",
+        unidade: result.unidade || "",
+        ibge: result.ibge || "",
+        gia: result.gia || "",
+        ddd: result.ddd || "",
+        siafi: result.siafi || ""
+      };
     } catch (e) {
       console.error("Failed to parse CEP response:", e);
       return null;

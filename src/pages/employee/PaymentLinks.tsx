@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -21,7 +20,7 @@ interface Client {
 interface Product {
   id: string;
   name: string;
-  price: number;
+  price?: number;
 }
 
 // CNPJ Validation Schema
@@ -315,8 +314,17 @@ const PaymentLinks = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       
-      const result = await response.json();
-      console.log("Products result:", result);
+      const responseText = await response.text();
+      console.log("Products result:", responseText);
+      
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse products response:", e);
+        toast.error("Erro ao carregar produtos. Formato inválido.");
+        return;
+      }
       
       if (result.message && result.message === "Workflow was started") {
         // This is an acknowledgment, simulate products for demo
@@ -332,10 +340,17 @@ const PaymentLinks = () => {
         return;
       }
       
-      if (Array.isArray(result)) {
-        setProducts(result);
+      if (result && result.name && Array.isArray(result.name)) {
+        // Map the array of product names to Product objects
+        const mappedProducts = result.name.map((name: string, index: number) => ({
+          id: `prod_${index + 1}`, // Generate an ID based on the index
+          name: name,
+          // Default price as we don't have this information
+          price: 0
+        }));
+        setProducts(mappedProducts);
       } else {
-        toast.error("Erro ao carregar produtos");
+        toast.error("Erro ao carregar produtos. Formato inesperado.");
       }
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -731,7 +746,8 @@ const PaymentLinks = () => {
                               <SelectContent>
                                 {products.map((product) => (
                                   <SelectItem key={product.id} value={product.id}>
-                                    {product.name} - R$ {product.price.toFixed(2)}
+                                    {product.name}
+                                    {product.price ? ` - R$ ${product.price.toFixed(2)}` : ''}
                                   </SelectItem>
                                 ))}
                               </SelectContent>

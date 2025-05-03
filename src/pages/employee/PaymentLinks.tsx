@@ -51,7 +51,7 @@ const paymentSchema = z.object({
   paymentMethod: z.enum(["pix", "credit_card"], {
     required_error: "Selecione um método de pagamento",
   }),
-  value: z.coerce.number().min(100, "Valor mínimo deve ser R$ 100,00"),
+  value: z.coerce.number().min(100, "Valor mínimo deve ser R$ 100,00").max(50000, "Valor máximo deve ser R$ 50.000,00"),
   installments: z.coerce
     .number()
     .min(1, "Número de parcelas inválido")
@@ -451,9 +451,9 @@ const PaymentLinks = () => {
     return cep;
   };
   
-  // Check if value is below minimum requirement (100)
-  const isValueBelowMinimum = (value: number | undefined): boolean => {
-    return typeof value === 'number' && value < 100;
+  // Check if value is below minimum requirement (100) or above maximum (50000)
+  const isValueInvalid = (value: number | undefined): boolean => {
+    return typeof value === 'number' && (value < 100 || value > 50000);
   };
   
   return (
@@ -795,14 +795,15 @@ const PaymentLinks = () => {
                         name="value"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Valor (mínimo R$ 100,00)</FormLabel>
+                            <FormLabel>Valor</FormLabel>
                             <FormControl>
                               <Input
                                 type="number"
                                 placeholder="0.00"
                                 step="0.01"
                                 min="0"
-                                variant={isValueBelowMinimum(field.value) ? "error" : "default"}
+                                max="50000"
+                                variant={isValueInvalid(field.value) ? "error" : "default"}
                                 {...field}
                                 value={field.value === 0 ? '' : field.value}
                                 onChange={(e) => {

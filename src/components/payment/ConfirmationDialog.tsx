@@ -11,26 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { formatCNPJ, formatPhone, formatCEP } from "@/utils/paymentUtils";
+import { ClientFormData } from "./ClientRegistrationForm";
 
 interface ConfirmationDialogProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
   loading: boolean;
-  data: {
-    cnpj: string;
-    companyName: string;
-    clientName: string;
-    email: string;
-    phone: string;
-    address: string;
-    number: string;
-    complement?: string;
-    district: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
+  data: ClientFormData;
 }
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({

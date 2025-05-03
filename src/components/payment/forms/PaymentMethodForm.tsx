@@ -1,11 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useFormContext } from 'react-hook-form';
 import { Product } from '@/types/payment';
-import { formatCurrency, isValueInvalid } from '@/utils/paymentUtils';
+import { isValueInvalid } from '@/utils/paymentUtils';
 
 interface PaymentMethodFormProps {
   products: Product[];
@@ -17,39 +17,6 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
   onPaymentMethodChange
 }) => {
   const form = useFormContext();
-  const [displayValue, setDisplayValue] = useState('');
-
-  // Handle numeric input and formatting for currency
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    
-    // If user is trying to clear the field (backspace/delete on empty field)
-    if (inputValue === '') {
-      setDisplayValue('');
-      form.setValue('value', 0);
-      return;
-    }
-    
-    // Strip all non-numeric characters
-    const numericValue = inputValue.replace(/\D/g, '');
-    
-    // If there are no numbers, set to empty
-    if (!numericValue) {
-      setDisplayValue('');
-      form.setValue('value', 0);
-      return;
-    }
-    
-    // Convert to a number (this will be stored in the form)
-    const valueAsNumber = parseInt(numericValue);
-    
-    // Format for display
-    const formattedValue = formatCurrency(valueAsNumber);
-    setDisplayValue(formattedValue);
-    
-    // Update the form value
-    form.setValue('value', valueAsNumber);
-  };
 
   return (
     <>
@@ -118,16 +85,16 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({
             <FormLabel>Valor</FormLabel>
             <FormControl>
               <Input
-                placeholder="R$ 0,00"
+                placeholder="Valor"
+                type="number"
                 variant={isValueInvalid(field.value) ? "error" : "default"}
-                value={displayValue}
-                onChange={handleValueChange}
+                value={field.value || ""}
+                onChange={(e) => field.onChange(Number(e.target.value))}
                 inputMode="numeric"
                 className="text-right"
               />
             </FormControl>
             <FormMessage />
-            <p className="text-xs text-muted-foreground">Digite apenas números (a formatação será automática)</p>
           </FormItem>
         )}
       />

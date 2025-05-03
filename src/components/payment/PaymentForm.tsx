@@ -4,7 +4,6 @@ import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { parseCurrencyToNumber } from "@/utils/paymentUtils";
 import { Product } from "@/types/payment";
 import FormActions from "./forms/FormActions";
 import PaymentMethodForm from "./forms/PaymentMethodForm";

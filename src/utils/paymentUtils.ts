@@ -61,16 +61,13 @@ export function formatCurrency(value: number | string): string {
   }).format(numValue);
 }
 
-// Parse formatted currency back to number
+// Parse formatted currency back to number - improved to only take the integer part
 export function parseCurrencyToNumber(formatted: string): number {
   if (!formatted) return 0;
   
-  // Remove currency symbol, spaces and replace comma with dot
-  return parseFloat(
-    formatted
-      .replace(/[^\d,]/g, '')
-      .replace(',', '.')
-  ) || 0;
+  // Remove currency symbol, spaces, commas and everything after
+  const cleanValue = formatted.replace(/[^\d]/g, '');
+  return parseInt(cleanValue) || 0;
 }
 
 // Format phone input

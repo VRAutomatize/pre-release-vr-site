@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -343,18 +344,18 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
             />
           </div>
           
-          <div className="flex gap-2 justify-end">
+          <div className="flex flex-wrap gap-2 justify-end">
             <Button 
               type="button" 
               variant="outline" 
               onClick={onBack}
-              className="border-gold/20 text-gold hover:bg-gold/10"
+              className="border-gold/20 text-gold hover:bg-gold/10 w-full sm:w-auto"
             >
               Voltar
             </Button>
             <Button 
               type="submit" 
-              className="bg-gold hover:bg-gold/80 text-black"
+              className="bg-gold hover:bg-gold/80 text-black w-full sm:w-auto"
               disabled={loading}
             >
               Revisar e Cadastrar

@@ -72,7 +72,7 @@ const PaymentLinks = () => {
   };
   
   // Register a new client
-  const handleRegisterClient = async (data: z.infer<any>) => {
+  const handleRegisterClient = async (data: z.infer<typeof clientRegistrationSchema>) => {
     setLoading(true);
     try {
       // Make sure all necessary fields are passed to the API
@@ -217,7 +217,7 @@ const PaymentLinks = () => {
   };
   
   return (
-    <div className="flex h-[100vh] w-full overflow-hidden">
+    <div className="flex h-[100dvh] w-full overflow-hidden">
       <EmployeeSidebar />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
         {/* Gold blurred background image */}

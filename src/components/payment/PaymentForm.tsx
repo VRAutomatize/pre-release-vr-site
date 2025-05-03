@@ -53,6 +53,18 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     }
   };
 
+  // Handle value input with improved cursor management
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Get the raw input value without formatting
+    const rawValue = e.target.value.replace(/\D/g, "");
+    
+    // Convert to number
+    const numericValue = parseInt(rawValue) || 0;
+    
+    // Update form
+    form.setValue("value", numericValue);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onCreatePayment)} className="space-y-6">
@@ -121,18 +133,16 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
               <FormLabel>Valor</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="R$ 0,00"
+                  placeholder="Apenas números sem centavos"
                   variant={isValueInvalid(field.value) ? "error" : "default"}
                   value={field.value === 0 ? '' : formatCurrency(field.value)}
-                  onChange={(e) => {
-                    // Parse input value back to number
-                    const numericValue = parseCurrencyToNumber(e.target.value);
-                    field.onChange(numericValue);
-                  }}
+                  onChange={handleValueChange}
+                  inputMode="numeric"
                   className="text-right"
                 />
               </FormControl>
               <FormMessage />
+              <p className="text-xs text-muted-foreground">Digite apenas os números inteiros (sem centavos)</p>
             </FormItem>
           )}
         />
@@ -155,6 +165,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
                     onChange={(e) => {
                       field.onChange(parseInt(e.target.value) || null);
                     }}
+                    inputMode="numeric"
                   />
                 </FormControl>
                 <FormMessage />
@@ -163,18 +174,18 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
           />
         )}
         
-        <div className="flex gap-2 justify-end">
+        <div className="flex flex-wrap gap-2 justify-end">
           <Button 
             type="button" 
             variant="outline" 
             onClick={onBack}
-            className="border-gold/20 text-gold hover:bg-gold/10"
+            className="border-gold/20 text-gold hover:bg-gold/10 w-full sm:w-auto"
           >
             Voltar
           </Button>
           <Button 
             type="submit" 
-            className="bg-gold hover:bg-gold/80 text-black"
+            className="bg-gold hover:bg-gold/80 text-black w-full sm:w-auto"
             disabled={loading}
           >
             {loading ? (

@@ -106,6 +106,33 @@ function formatCNPJ(cnpj: string): string {
   );
 }
 
+// Function to format currency value
+function formatCurrency(value: number | string): string {
+  if (!value && value !== 0) return '';
+  
+  const numValue = typeof value === 'string' ? parseFloat(value) : value;
+  
+  // Format to BRL currency with 2 decimal places
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(numValue);
+}
+
+// Function to parse formatted currency back to number
+function parseCurrencyToNumber(formatted: string): number {
+  if (!formatted) return 0;
+  
+  // Remove currency symbol, spaces and replace comma with dot
+  return parseFloat(
+    formatted
+      .replace(/[^\d,]/g, '')
+      .replace(',', '.')
+  ) || 0;
+}
+
 enum Step {
   CheckCNPJ,
   RegisterClient,
@@ -798,17 +825,15 @@ const PaymentLinks = () => {
                             <FormLabel>Valor</FormLabel>
                             <FormControl>
                               <Input
-                                type="number"
-                                placeholder="0.00"
-                                step="0.01"
-                                min="0"
-                                max="50000"
+                                placeholder="R$ 0,00"
                                 variant={isValueInvalid(field.value) ? "error" : "default"}
-                                {...field}
-                                value={field.value === 0 ? '' : field.value}
+                                value={field.value === 0 ? '' : formatCurrency(field.value)}
                                 onChange={(e) => {
-                                  field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value));
+                                  // Parse input value back to number
+                                  const numericValue = parseCurrencyToNumber(e.target.value);
+                                  field.onChange(numericValue);
                                 }}
+                                className="text-right"
                               />
                             </FormControl>
                             <FormMessage />

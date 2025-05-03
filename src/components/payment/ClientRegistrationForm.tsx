@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -26,6 +25,9 @@ const clientRegistrationSchema = z.object({
   zipCode: z.string().min(8, "CEP inválido")
 });
 
+// Define valid field names type to ensure type safety
+type FormFieldName = keyof z.infer<typeof clientRegistrationSchema>;
+
 interface ClientRegistrationFormProps {
   cnpj: string;
   onRegister: (data: z.infer<typeof clientRegistrationSchema>) => void;
@@ -35,7 +37,7 @@ interface ClientRegistrationFormProps {
 
 const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, onRegister, onBack, loading }) => {
   const [addressLoading, setAddressLoading] = useState(false);
-  const [autoFilledFields, setAutoFilledFields] = useState<Record<string, boolean>>({});
+  const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({});
   
   const form = useForm<z.infer<typeof clientRegistrationSchema>>({
     resolver: zodResolver(clientRegistrationSchema),
@@ -55,7 +57,8 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
   });
 
   // Function to set field value and mark it as auto-filled
-  const setAutoFilledValue = (field: string, value: string) => {
+  // Using the FormFieldName type to ensure only valid field names are used
+  const setAutoFilledValue = (field: FormFieldName, value: string) => {
     if (value) {
       form.setValue(field, value);
       
@@ -86,6 +89,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
       
       if (addressInfo) {
         // Set all available address fields from the response with visual feedback
+        // Using proper field names from the form schema
         setAutoFilledValue('address', addressInfo.street || addressInfo.logradouro || '');
         setAutoFilledValue('district', addressInfo.neighborhood || addressInfo.bairro || '');
         setAutoFilledValue('city', addressInfo.city || addressInfo.localidade || '');

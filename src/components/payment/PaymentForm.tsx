@@ -58,7 +58,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
     // Get the raw input value without formatting
     const rawValue = e.target.value.replace(/\D/g, "");
     
-    // Convert to number
+    // Convert to number (integers only)
     const numericValue = parseInt(rawValue) || 0;
     
     // Update form

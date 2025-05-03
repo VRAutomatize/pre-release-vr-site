@@ -5,7 +5,7 @@ import { z } from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import CNPJCheckForm from "@/components/payment/CNPJCheckForm";
-import ClientRegistrationForm from "@/components/payment/ClientRegistrationForm";
+import ClientRegistrationForm, { clientRegistrationSchema } from "@/components/payment/ClientRegistrationForm";
 import PaymentForm from "@/components/payment/PaymentForm";
 import ProgressSteps from "@/components/payment/ProgressSteps";
 import { Step, Client, Product } from "@/types/payment";

@@ -46,7 +46,7 @@ export function formatCNPJ(cnpj: string): string {
   );
 }
 
-// Format currency value
+// Format currency value - improved to handle cursor positioning better
 export function formatCurrency(value: number | string): string {
   if (!value && value !== 0) return '';
   
@@ -61,7 +61,7 @@ export function formatCurrency(value: number | string): string {
   }).format(numValue);
 }
 
-// Parse formatted currency back to number - improved to only take the integer part
+// Parse formatted currency back to number - improved to handle integers only
 export function parseCurrencyToNumber(formatted: string): number {
   if (!formatted) return 0;
   

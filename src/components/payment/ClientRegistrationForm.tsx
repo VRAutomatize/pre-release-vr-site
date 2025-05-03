@@ -13,7 +13,7 @@ import { checkCEP } from "@/services/paymentService";
 import ConfirmationDialog from "./ConfirmationDialog";
 
 // Client Registration Schema
-const clientRegistrationSchema = z.object({
+export const clientRegistrationSchema = z.object({
   cnpj: z.string(),
   companyName: z.string().min(3, "Nome da empresa é obrigatório"),
   clientName: z.string().min(3, "Nome do cliente é obrigatório"),
@@ -29,7 +29,7 @@ const clientRegistrationSchema = z.object({
 });
 
 // Define the form data type
-type ClientFormData = z.infer<typeof clientRegistrationSchema>;
+export type ClientFormData = z.infer<typeof clientRegistrationSchema>;
 
 // Define valid field names type to ensure type safety
 type FormFieldName = keyof ClientFormData;

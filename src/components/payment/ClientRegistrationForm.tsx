@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -28,12 +27,15 @@ const clientRegistrationSchema = z.object({
   zipCode: z.string().min(8, "CEP inválido")
 });
 
+// Define the form data type
+type ClientFormData = z.infer<typeof clientRegistrationSchema>;
+
 // Define valid field names type to ensure type safety
-type FormFieldName = keyof z.infer<typeof clientRegistrationSchema>;
+type FormFieldName = keyof ClientFormData;
 
 interface ClientRegistrationFormProps {
   cnpj: string;
-  onRegister: (data: z.infer<typeof clientRegistrationSchema>) => void;
+  onRegister: (data: ClientFormData) => void;
   onBack: () => void;
   loading: boolean;
 }
@@ -41,7 +43,7 @@ interface ClientRegistrationFormProps {
 const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, onRegister, onBack, loading }) => {
   const [addressLoading, setAddressLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [formData, setFormData] = useState<z.infer<typeof clientRegistrationSchema> | null>(null);
+  const [formData, setFormData] = useState<ClientFormData | null>(null);
   
   // Initialize with the correct shape - all fields set to false initially
   const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({
@@ -59,7 +61,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
     zipCode: false
   });
   
-  const form = useForm<z.infer<typeof clientRegistrationSchema>>({
+  const form = useForm<ClientFormData>({
     resolver: zodResolver(clientRegistrationSchema),
     defaultValues: {
       cnpj: cnpj,
@@ -130,7 +132,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
   };
 
   // Handle form submission to show confirmation
-  const handleShowConfirmation = (data: z.infer<typeof clientRegistrationSchema>) => {
+  const handleShowConfirmation = (data: ClientFormData) => {
     setFormData(data);
     setShowConfirmation(true);
   };

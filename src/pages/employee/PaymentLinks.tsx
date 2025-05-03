@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -189,12 +188,25 @@ const PaymentLinks = () => {
     }
   };
   
-  // Check CNPJ and find client
+  // Check CNPJ and find client - Updated to use POST instead of GET
   const checkCNPJ = async (cnpjValue: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/find_cnpj?cnpj=${cnpjValue}`);
+      console.log("Checking CNPJ:", cnpjValue);
+      const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/find_cnpj", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cnpj: cnpjValue }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
       const result = await response.json();
+      console.log("CNPJ check result:", result);
       
       if (result === "not_found") {
         // Client not found, go to registration step
@@ -228,6 +240,10 @@ const PaymentLinks = () => {
         body: JSON.stringify(data),
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
       if (result === "error") {
@@ -252,6 +268,11 @@ const PaymentLinks = () => {
     setLoading(true);
     try {
       const response = await fetch("https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/list_products");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
       if (Array.isArray(result)) {
@@ -278,6 +299,10 @@ const PaymentLinks = () => {
         },
         body: JSON.stringify(data),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       
       const result = await response.json();
       

@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -55,8 +55,12 @@ const EmployeeSidebar = () => {
     <div 
       className="flex h-screen flex-col border-r border-gold/20 bg-background/40 backdrop-blur-md transition-all duration-300 z-10 overflow-hidden w-16"
     >
-      <div className="flex h-14 items-center border-b border-gold/20 px-4 justify-center">
-        <h2 className="text-lg font-semibold text-gold">VR</h2>
+      <div className="flex h-14 items-center border-b border-gold/20 px-1 justify-center">
+        <img 
+          src="/public/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
+          alt="VR Link Logo" 
+          className="h-10 w-auto object-contain"
+        />
       </div>
       <div className="flex-1 py-4 px-2 overflow-y-auto overflow-x-hidden">
         <nav className="flex flex-col gap-2 min-w-0 w-full">

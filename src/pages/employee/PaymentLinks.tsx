@@ -24,7 +24,7 @@ interface Product {
   price: number;
 }
 
-// CNP Validation Schema
+// CNPJ Validation Schema
 const cnpjSchema = z.object({
   cnpj: z
     .string()
@@ -189,7 +189,7 @@ const PaymentLinks = () => {
     }
   };
   
-  // Check CNPJ and find client - Updated to use POST instead of GET
+  // Check CNPJ and find client - POST request
   const checkCNPJ = async (cnpjValue: string) => {
     setLoading(true);
     try {
@@ -222,7 +222,8 @@ const PaymentLinks = () => {
         return;
       }
       
-      if (result === "not_found") {
+      // Check for both "not_found" and "notfound" responses
+      if (result === "not_found" || result === "notfound") {
         // Client not found, go to registration step
         clientForm.setValue("cnpj", cnpjValue);
         setStep(Step.RegisterClient);
@@ -263,6 +264,7 @@ const PaymentLinks = () => {
       
       if (result.message && result.message === "Workflow was started") {
         // This is just an acknowledgment
+        toast.info("Cadastrando cliente...");
         setTimeout(() => {
           // Simulate successful client creation
           const mockClientId = "client_" + Math.random().toString(36).substring(2, 9);

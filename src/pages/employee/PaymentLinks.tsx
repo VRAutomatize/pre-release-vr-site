@@ -74,6 +74,7 @@ const PaymentLinks = () => {
         cnpj: data.cnpj,
         companyName: data.companyName,
         clientName: data.clientName,
+        email: data.email,
         phone: data.phone,
         address: data.address,
         number: data.number,
@@ -92,7 +93,7 @@ const PaymentLinks = () => {
         setTimeout(() => {
           // Simulate successful client creation
           const mockClientId = "client_" + Math.random().toString(36).substring(2, 9);
-          setClient({ id: mockClientId, name: data.companyName });
+          setClient({ id: mockClientId, name: data.companyName, email: data.email });
           setStep(Step.CreatePayment);
           toast.success("Cliente cadastrado com sucesso!");
         }, 1500);
@@ -103,7 +104,7 @@ const PaymentLinks = () => {
         toast.error("Erro ao cadastrar cliente. Tente novamente.");
       } else {
         // Client created, go to payment creation
-        setClient({ id: result, name: data.companyName });
+        setClient({ id: result, name: data.companyName, email: data.email });
         setStep(Step.CreatePayment);
         toast.success("Cliente cadastrado com sucesso!");
       }

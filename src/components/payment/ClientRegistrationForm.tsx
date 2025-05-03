@@ -16,6 +16,7 @@ const clientRegistrationSchema = z.object({
   cnpj: z.string(),
   companyName: z.string().min(3, "Nome da empresa é obrigatório"),
   clientName: z.string().min(3, "Nome do cliente é obrigatório"),
+  email: z.string().email("Email inválido").min(1, "Email é obrigatório"),
   phone: z.string().min(10, "Telefone inválido"),
   address: z.string().min(3, "Endereço é obrigatório"),
   number: z.string().min(1, "Número é obrigatório"),
@@ -44,6 +45,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
     cnpj: false,
     companyName: false,
     clientName: false,
+    email: false,
     phone: false,
     address: false,
     number: false,
@@ -60,6 +62,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
       cnpj: cnpj,
       companyName: "",
       clientName: "",
+      email: "",
       phone: "",
       address: "",
       number: "",
@@ -149,6 +152,24 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
                 <FormLabel>Nome do Cliente</FormLabel>
                 <FormControl>
                   <Input placeholder="João Silva" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="email"
+                    placeholder="cliente@empresa.com" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

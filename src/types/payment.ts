@@ -16,6 +16,7 @@ export enum Step {
   CheckCNPJ,
   RegisterClient,
   CreatePayment,
+  PaymentResult,
 }
 
 export interface AddressInfo {
@@ -35,4 +36,12 @@ export interface AddressInfo {
   gia?: string;
   ddd?: string;
   siafi?: string;
+}
+
+export interface PaymentResult {
+  qrCodeImage?: string; // Base64 encoded image for PIX QR code
+  paymentLink?: string; // Link for credit card payments
+  paymentMethod: "pix" | "credit_card";
+  value: number;
+  productName: string;
 }

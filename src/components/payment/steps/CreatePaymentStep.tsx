@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import PaymentForm from '../PaymentForm';
+import PaymentForm, { PaymentFormData } from '../PaymentForm';
 import { Client, Product } from '@/types/payment';
 
 interface CreatePaymentStepProps {
   client: Client;
   products: Product[];
-  onCreatePayment: (data: any) => void;
+  onCreatePayment: (data: PaymentFormData) => void;
   onBack: () => void;
   loading: boolean;
 }

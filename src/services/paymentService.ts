@@ -1,6 +1,7 @@
 
 import { toast } from "sonner";
-import { AddressInfo } from "@/types/payment";
+import { AddressInfo, PaymentResult } from "@/types/payment";
+import { PaymentFormData } from "@/components/payment/PaymentForm";
 
 const API_BASE_URL = "https://vrautomatize-n8n.snrhk1.easypanel.host";
 
@@ -108,8 +109,9 @@ export const fetchProducts = async () => {
 };
 
 // Create payment link
-export const createPayment = async (paymentData: any) => {
+export const createPayment = async (paymentData: PaymentFormData): Promise<PaymentResult> => {
   try {
+    console.log("Creating payment with data:", paymentData);
     const response = await fetch(`${API_BASE_URL}/webhook/criar_cobranca`, {
       method: "POST",
       headers: {
@@ -130,13 +132,32 @@ export const createPayment = async (paymentData: any) => {
     try {
       result = JSON.parse(responseText);
     } catch (e) {
-      // Not JSON, use the text directly
+      // If not JSON (might be base64 image directly)
       result = responseText;
     }
     
     console.log("Payment creation result:", result);
     
-    return result;
+    // If the result is a direct base64 string (for PIX)
+    if (typeof result === "string" && paymentData.paymentMethod === "pix") {
+      // Check if it's a base64 image
+      if (result.startsWith("data:image")) {
+        return {
+          qrCodeImage: result,
+          paymentMethod: paymentData.paymentMethod,
+          value: paymentData.value,
+          productName: paymentData.productName
+        };
+      }
+    }
+    
+    // For credit card or other structured responses
+    return {
+      paymentLink: typeof result === "string" ? result : result?.link,
+      paymentMethod: paymentData.paymentMethod,
+      value: paymentData.value,
+      productName: paymentData.productName
+    };
   } catch (error) {
     console.error("Error creating payment:", error);
     throw error;

@@ -23,16 +23,18 @@ const paymentSchema = z.object({
     .nullable()
 });
 
+export type PaymentFormData = z.infer<typeof paymentSchema>;
+
 interface PaymentFormProps {
   clientId: string;
   products: Product[];
-  onCreatePayment: (data: z.infer<typeof paymentSchema>) => void;
+  onCreatePayment: (data: PaymentFormData) => void;
   onBack: () => void;
   loading: boolean;
 }
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreatePayment, onBack, loading }) => {
-  const methods = useForm<z.infer<typeof paymentSchema>>({
+  const methods = useForm<PaymentFormData>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
       clientId: clientId,

@@ -1,10 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { Step, Client, Product } from '@/types/payment';
+import { Step, Client, Product, PaymentResult } from '@/types/payment';
 import { checkCNPJ, registerClient, fetchProducts, createPayment } from '@/services/paymentService';
 import { ClientFormData } from '@/components/payment/ClientRegistrationForm';
-import { z } from 'zod';
+import { PaymentFormData } from '@/components/payment/PaymentForm';
 
 export const usePaymentWorkflow = () => {
   const [step, setStep] = useState<Step>(Step.CheckCNPJ);
@@ -12,6 +12,7 @@ export const usePaymentWorkflow = () => {
   const [client, setClient] = useState<Client | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [currentCNPJ, setCurrentCNPJ] = useState<string>("");
+  const [paymentResult, setPaymentResult] = useState<PaymentResult | null>(null);
   
   // Fetch products when entering payment creation step
   useEffect(() => {
@@ -165,31 +166,23 @@ export const usePaymentWorkflow = () => {
   };
   
   // Create payment link
-  const handleCreatePayment = async (data: z.infer<any>) => {
+  const handleCreatePayment = async (data: PaymentFormData) => {
     setLoading(true);
     try {
       const result = await createPayment(data);
       
-      if (result.message && result.message === "Workflow was started") {
-        // This is an acknowledgment
-        setTimeout(() => {
-          toast.success("Link de pagamento gerado com sucesso!");
-          // Reset and return to first step
-          resetForms();
-        }, 1500);
-        return;
-      }
-      
-      if (result === "error") {
-        toast.error("Erro ao gerar link de pagamento. Tente novamente.");
+      // Handle the payment result
+      if (result) {
+        // Store payment result and move to result step
+        setPaymentResult(result);
+        setStep(Step.PaymentResult);
+        toast.success("Pagamento gerado com sucesso!");
       } else {
-        toast.success("Link de pagamento gerado com sucesso!");
-        // Reset and return to first step
-        resetForms();
+        toast.error("Erro ao gerar pagamento. Tente novamente.");
       }
     } catch (error) {
       console.error("Error creating payment:", error);
-      toast.error("Erro ao gerar link de pagamento. Tente novamente.");
+      toast.error("Erro ao gerar pagamento. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -199,12 +192,18 @@ export const usePaymentWorkflow = () => {
   const resetForms = () => {
     setCurrentCNPJ("");
     setClient(null);
+    setPaymentResult(null);
     setStep(Step.CheckCNPJ);
   };
 
   // Go back to CNPJ check
   const handleBackToStart = () => {
-    setStep(Step.CheckCNPJ);
+    // If we're on the payment result page, reset to the CNPJ check
+    if (step === Step.PaymentResult) {
+      resetForms();
+    } else {
+      setStep(Step.CheckCNPJ);
+    }
   };
 
   return {
@@ -213,9 +212,11 @@ export const usePaymentWorkflow = () => {
     client,
     products,
     currentCNPJ,
+    paymentResult,
     handleCheckCNPJ,
     handleRegisterClient,
     handleCreatePayment,
-    handleBackToStart
+    handleBackToStart,
+    resetForms
   };
 };

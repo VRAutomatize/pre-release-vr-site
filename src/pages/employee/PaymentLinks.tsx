@@ -6,6 +6,7 @@ import { Step } from "@/types/payment";
 import CheckCNPJStep from "@/components/payment/steps/CheckCNPJStep";
 import RegisterClientStep from "@/components/payment/steps/RegisterClientStep";
 import CreatePaymentStep from "@/components/payment/steps/CreatePaymentStep";
+import PaymentResultStep from "@/components/payment/steps/PaymentResultStep";
 import { usePaymentWorkflow } from "@/hooks/usePaymentWorkflow";
 
 const PaymentLinks = () => {
@@ -15,6 +16,7 @@ const PaymentLinks = () => {
     client,
     products,
     currentCNPJ,
+    paymentResult,
     handleCheckCNPJ,
     handleRegisterClient,
     handleCreatePayment,
@@ -71,6 +73,13 @@ const PaymentLinks = () => {
                 onCreatePayment={handleCreatePayment}
                 onBack={handleBackToStart}
                 loading={loading}
+              />
+            )}
+
+            {step === Step.PaymentResult && paymentResult && (
+              <PaymentResultStep 
+                result={paymentResult}
+                onBack={handleBackToStart}
               />
             )}
           </div>

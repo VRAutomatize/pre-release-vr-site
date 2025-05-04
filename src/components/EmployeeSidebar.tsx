@@ -55,11 +55,11 @@ const EmployeeSidebar = () => {
     <div 
       className="flex h-screen flex-col border-r border-gold/20 bg-background/40 backdrop-blur-md transition-all duration-300 z-10 overflow-hidden w-16"
     >
-      <div className="flex h-14 items-center border-b border-gold/20 px-1 justify-center">
+      <div className="flex h-14 items-center border-b border-gold/20 px-1 justify-center overflow-hidden">
         <img 
           src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
           alt="VR Link Logo" 
-          className="h-16 w-auto object-cover scale-125 -mt-1 mb-1"
+          className="h-20 w-20 object-contain scale-150"
         />
       </div>
       <div className="flex-1 py-4 px-2 overflow-y-auto overflow-x-hidden">

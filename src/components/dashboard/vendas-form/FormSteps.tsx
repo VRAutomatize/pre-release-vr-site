@@ -1,11 +1,11 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { User, Mail, Phone, Building, MapPin } from "lucide-react";
+import { User, Mail, Phone, Building, MapPin, DollarSign, Percent } from "lucide-react";
 import { FormData } from "./types";
 import { formatCNPJ, formatPhone } from "@/utils/paymentUtils";
 
@@ -13,6 +13,19 @@ interface FormStepProps {
   form: UseFormReturn<FormData>;
   isDirectSale?: boolean;
 }
+
+// Helper function to calculate commission percentage based on value
+const getCommissionPercentage = (value: number): number => {
+  if (value < 950) return 20;
+  if (value < 1300) return 30;
+  return 35;
+};
+
+// Helper function to calculate commission amount
+const calculateCommission = (value: number): number => {
+  const percentage = getCommissionPercentage(value);
+  return (value * percentage) / 100;
+};
 
 // Step 1: Company Information
 export function CompanyInfoStep({ form }: FormStepProps) {
@@ -175,12 +188,19 @@ export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
 
 // Step 3: Service Options
 export function ServiceOptionsStep({ form }: FormStepProps) {
-  const { register, control, formState: { errors } } = form;
+  const { register, control, formState: { errors }, watch } = form;
+  const valorImplementacao = watch("valor_implementacao");
+  
+  // Convert the string value to number for calculation
+  const valorNumerico = parseFloat(valorImplementacao) || 0;
+  const comissaoPercentual = getCommissionPercentage(valorNumerico);
+  const valorComissao = calculateCommission(valorNumerico);
   
   return (
     <div className="space-y-4 animate-fade-in">
       <div className="space-y-2">
-        <Label htmlFor="valor_implementacao" className="text-[#d4d4d8]">
+        <Label htmlFor="valor_implementacao" className="text-[#d4d4d8] flex items-center gap-2">
+          <DollarSign className="h-4 w-4 text-gold" />
           Valor da Implementação <span className="text-gold">*</span>
         </Label>
         <Input
@@ -191,6 +211,15 @@ export function ServiceOptionsStep({ form }: FormStepProps) {
         />
         {errors.valor_implementacao && (
           <p className="text-red-400 text-sm mt-1">{errors.valor_implementacao.message}</p>
+        )}
+        
+        {valorNumerico > 0 && (
+          <div className="mt-2 flex items-center gap-2 text-emerald-400 text-sm">
+            <Percent className="h-4 w-4" />
+            <span>
+              Comissão: {comissaoPercentual}% (R$ {valorComissao.toFixed(2)})
+            </span>
+          </div>
         )}
       </div>
       
@@ -240,3 +269,4 @@ export function ServiceOptionsStep({ form }: FormStepProps) {
     </div>
   );
 }
+

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { User, Mail, Phone, DollarSign } from "lucide-react";
+import { User, Mail, Phone, DollarSign, Percent } from "lucide-react";
 import { FormData } from "./types";
 import { ClientInfoStep as BaseClientInfoStep, CompanyInfoStep } from "./FormSteps";
 import { formatPhone } from "@/utils/paymentUtils";
@@ -15,9 +15,28 @@ interface FormStepProps {
   isDirectSale?: boolean;
 }
 
+// Helper function to calculate commission percentage based on value
+const getCommissionPercentage = (value: number): number => {
+  if (value < 950) return 20;
+  if (value < 1300) return 30;
+  return 35;
+};
+
+// Helper function to calculate commission amount
+const calculateCommission = (value: number): number => {
+  const percentage = getCommissionPercentage(value);
+  return (value * percentage) / 100;
+};
+
 // Step 3: Lead Information - Similar to ServiceOptionsStep but for lead notification
 export function LeadInfoStep({ form }: FormStepProps) {
-  const { register, control, formState: { errors } } = form;
+  const { register, control, formState: { errors }, watch } = form;
+  const valorImplementacao = watch("valor_implementacao");
+  
+  // Convert the string value to number for calculation
+  const valorNumerico = parseFloat(valorImplementacao) || 0;
+  const comissaoPercentual = getCommissionPercentage(valorNumerico);
+  const valorComissao = calculateCommission(valorNumerico);
   
   return (
     <div className="space-y-4 animate-fade-in">
@@ -34,6 +53,15 @@ export function LeadInfoStep({ form }: FormStepProps) {
         />
         {errors.valor_implementacao && (
           <p className="text-red-400 text-sm mt-1">{errors.valor_implementacao.message}</p>
+        )}
+        
+        {valorNumerico > 0 && (
+          <div className="mt-2 flex items-center gap-2 text-emerald-400 text-sm">
+            <Percent className="h-4 w-4" />
+            <span>
+              Comissão: {comissaoPercentual}% (R$ {valorComissao.toFixed(2)})
+            </span>
+          </div>
         )}
       </div>
       

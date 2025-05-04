@@ -18,6 +18,16 @@ export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }:
   
   // Function to handle form validation and show confirmation dialog
   const prepareSubmission = async (data: FormData) => {
+    // Check if implementation value meets minimum requirement
+    const valorNumerico = parseFloat(data.valor_implementacao) || 0;
+    if (valorNumerico < 500) {
+      setFormError("Valor mínimo para implementação é R$ 500,00");
+      return;
+    }
+    
+    // Clear any previous errors
+    setFormError(null);
+    
     // Show confirmation dialog
     setShowConfirmation(true);
   };
@@ -30,6 +40,14 @@ export function useFormSubmission({ onClose, getSellerTag, form, isDirectSale }:
     try {
       // Get the form data
       const data = form.getValues();
+      
+      // Final validation check before submission
+      const valorNumerico = parseFloat(data.valor_implementacao) || 0;
+      if (valorNumerico < 500) {
+        setFormError("Valor mínimo para implementação é R$ 500,00");
+        setIsSubmitting(false);
+        return;
+      }
       
       // Get seller tag from the authenticated user's email
       const sellerTag = getSellerTag();

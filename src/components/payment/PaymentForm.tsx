@@ -16,11 +16,6 @@ const paymentSchema = z.object({
     required_error: "Selecione um método de pagamento",
   }),
   value: z.coerce.number().min(100, "Valor mínimo deve ser R$ 100,00").max(50000, "Valor máximo deve ser R$ 50.000,00"),
-  installments: z.coerce
-    .number()
-    .min(1, "Número de parcelas inválido")
-    .optional()
-    .nullable()
 });
 
 export type PaymentFormData = z.infer<typeof paymentSchema>;
@@ -41,16 +36,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
       productName: "",
       paymentMethod: "pix",
       value: 0,
-      installments: null,
     },
   });
-
-  // Handle payment method change
-  const onPaymentMethodChange = (value: string) => {
-    if (value === "pix") {
-      methods.setValue("installments", null);
-    }
-  };
 
   return (
     <FormProvider {...methods}>
@@ -58,7 +45,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ clientId, products, onCreateP
         <form onSubmit={methods.handleSubmit(onCreatePayment)} className="space-y-6">
           <PaymentMethodForm 
             products={products}
-            onPaymentMethodChange={onPaymentMethodChange}
           />
           
           <FormActions 

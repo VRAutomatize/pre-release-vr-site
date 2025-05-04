@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Share, Download } from "lucide-react";
 import { PaymentResult } from '@/types/payment';
 import { formatCurrency } from '@/utils/paymentUtils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PaymentResultDisplayProps {
   result: PaymentResult;
@@ -15,6 +16,8 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
   result, 
   onBack 
 }) => {
+  const isMobile = useIsMobile();
+
   // Debug logging to check the result
   useEffect(() => {
     console.log("Rendering PaymentResultDisplay with result:", result);
@@ -56,12 +59,15 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
       <CardContent className="flex flex-col items-center">
         {result.paymentMethod === 'pix' && result.qrCodeImage && (
           <div className="flex flex-col items-center gap-4">
-            <div className="p-4 bg-white rounded-md">
-              <img 
-                src={result.qrCodeImage} 
-                alt="QR Code PIX" 
-                className="w-64 h-64"
-              />
+            <div className="p-4 bg-white rounded-md w-auto">
+              {/* Fixed size container for QR code, especially on mobile */}
+              <div className={isMobile ? "w-[240px] h-[240px]" : "w-64 h-64"}>
+                <img 
+                  src={result.qrCodeImage} 
+                  alt="QR Code PIX" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
             <div className="text-center">
               <p className="font-semibold">{result.productName}</p>
@@ -93,17 +99,17 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
         {result.paymentMethod === 'pix' && result.qrCodeImage && (
-          <div className="flex gap-2 w-full">
+          <div className="flex flex-col sm:flex-row gap-2 w-full">
             <Button 
               onClick={handleShare}
-              className="flex-1 bg-emerald-600 hover:bg-emerald-700"
+              className="w-full bg-emerald-600 hover:bg-emerald-700"
             >
               <Share className="mr-2 h-4 w-4" /> Compartilhar via WhatsApp
             </Button>
             <Button 
               onClick={handleDownload}
               variant="outline"
-              className="flex-1 border-gold/20 text-gold hover:bg-gold/10"
+              className="w-full border-gold/20 text-gold hover:bg-gold/10"
             >
               <Download className="mr-2 h-4 w-4" /> Baixar QR Code
             </Button>

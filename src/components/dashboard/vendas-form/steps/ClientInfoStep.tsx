@@ -14,7 +14,7 @@ interface FormStepProps {
 }
 
 export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
-  const { register, formState: { errors } } = form;
+  const { register, formState: { errors }, setValue, watch } = form;
   
   return (
     <div className="space-y-4 animate-fade-in">
@@ -44,10 +44,10 @@ export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
           placeholder="(00) 00000-0000"
           {...register("telefone_cliente", { required: "Telefone do cliente é obrigatório" })}
           className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+          value={formatPhone(watch("telefone_cliente") || "")}
           onChange={(e) => {
             const value = e.target.value.replace(/\D/g, "");
-            e.target.value = formatPhone(value);
-            form.setValue("telefone_cliente", value);
+            setValue("telefone_cliente", value);
           }}
         />
         {errors.telefone_cliente && (
@@ -88,10 +88,10 @@ export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
               placeholder="00.000.000/0000-00"
               {...register("cnpj", { required: "CNPJ é obrigatório" })}
               className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+              value={formatCNPJ(watch("cnpj") || "")}
               onChange={(e) => {
                 const value = e.target.value.replace(/\D/g, "");
-                e.target.value = formatCNPJ(value);
-                form.setValue("cnpj", value);
+                setValue("cnpj", value);
               }}
             />
             {errors.cnpj && (

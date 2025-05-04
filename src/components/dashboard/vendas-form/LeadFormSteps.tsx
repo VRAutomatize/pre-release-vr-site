@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { User, Mail, Phone, DollarSign } from "lucide-react";
 import { FormData } from "./types";
 import { ClientInfoStep as BaseClientInfoStep, CompanyInfoStep } from "./FormSteps";
+import { formatPhone } from "@/utils/paymentUtils";
 
 interface FormStepProps {
   form: UseFormReturn<FormData>;

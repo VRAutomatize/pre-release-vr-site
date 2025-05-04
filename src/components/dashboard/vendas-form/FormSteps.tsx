@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { User, Mail, Phone, Building, MapPin } from "lucide-react";
 import { FormData } from "./types";
+import { formatCNPJ, formatPhone } from "@/utils/paymentUtils";
 
 interface FormStepProps {
   form: UseFormReturn<FormData>;
@@ -96,6 +97,11 @@ export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
           placeholder="(00) 00000-0000"
           {...register("telefone_cliente", { required: "Telefone do cliente é obrigatório" })}
           className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+          onChange={(e) => {
+            const value = e.target.value.replace(/\D/g, "");
+            e.target.value = formatPhone(value);
+            form.setValue("telefone_cliente", value);
+          }}
         />
         {errors.telefone_cliente && (
           <p className="text-red-400 text-sm mt-1">{errors.telefone_cliente.message}</p>
@@ -135,6 +141,11 @@ export function ClientInfoStep({ form, isDirectSale = false }: FormStepProps) {
               placeholder="00.000.000/0000-00"
               {...register("cnpj", { required: "CNPJ é obrigatório" })}
               className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                e.target.value = formatCNPJ(value);
+                form.setValue("cnpj", value);
+              }}
             />
             {errors.cnpj && (
               <p className="text-red-400 text-sm mt-1">{errors.cnpj.message}</p>

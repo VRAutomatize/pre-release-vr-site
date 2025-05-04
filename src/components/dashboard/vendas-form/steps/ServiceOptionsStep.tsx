@@ -1,21 +1,20 @@
 
 import React from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { DollarSign, Percent } from "lucide-react";
-import { FormData } from "./types";
-import { CompanyInfoStep, ClientInfoStep } from "./FormSteps";
-import { getCommissionPercentage, calculateCommission } from "./utils/commissionUtils";
+import { FormData } from "../types";
+import { getCommissionPercentage, calculateCommission } from "../utils/commissionUtils";
 
 interface FormStepProps {
   form: UseFormReturn<FormData>;
   isDirectSale?: boolean;
 }
 
-// Step 3: Lead Information - Similar to ServiceOptionsStep but for lead notification
-export function LeadInfoStep({ form }: FormStepProps) {
+export function ServiceOptionsStep({ form }: FormStepProps) {
   const { register, control, formState: { errors }, watch } = form;
   const valorImplementacao = watch("valor_implementacao");
   
@@ -29,12 +28,12 @@ export function LeadInfoStep({ form }: FormStepProps) {
       <div className="space-y-2">
         <Label htmlFor="valor_implementacao" className="text-[#d4d4d8] flex items-center gap-2">
           <DollarSign className="h-4 w-4 text-gold" />
-          Valor Informado ao Cliente <span className="text-gold">*</span>
+          Valor da Implementação <span className="text-gold">*</span>
         </Label>
         <Input
           id="valor_implementacao"
           placeholder="R$ 0,00"
-          {...register("valor_implementacao", { required: "Valor informado é obrigatório" })}
+          {...register("valor_implementacao", { required: "Valor da implementação é obrigatório" })}
           className="bg-[rgba(255,255,255,0.05)] border-[rgba(255,215,0,0.2)] text-white focus:border-gold"
         />
         {errors.valor_implementacao && (
@@ -59,7 +58,7 @@ export function LeadInfoStep({ form }: FormStepProps) {
             <Label htmlFor="envia_audio" className="text-[#d4d4d8]">
               Envio de áudio
             </Label>
-            <p className="text-xs text-[#9ca3af]">Cliente tem interesse em envio de mensagens de áudio</p>
+            <p className="text-xs text-[#9ca3af]">Permite envio de mensagens de áudio</p>
           </div>
           <Controller
             name="envia_audio"
@@ -79,7 +78,7 @@ export function LeadInfoStep({ form }: FormStepProps) {
             <Label htmlFor="servidor_dedicado" className="text-[#d4d4d8]">
               Servidor dedicado
             </Label>
-            <p className="text-xs text-[#9ca3af]">Cliente demonstrou interesse em infraestrutura exclusiva</p>
+            <p className="text-xs text-[#9ca3af]">Infraestrutura exclusiva</p>
           </div>
           <Controller
             name="servidor_dedicado"
@@ -97,6 +96,3 @@ export function LeadInfoStep({ form }: FormStepProps) {
     </div>
   );
 }
-
-// Re-export the other steps from FormSteps.tsx
-export { CompanyInfoStep, ClientInfoStep };

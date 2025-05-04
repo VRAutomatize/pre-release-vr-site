@@ -39,7 +39,7 @@ export interface AddressInfo {
 }
 
 export interface PaymentResult {
-  qrCodeImage?: string; // Base64 encoded image for PIX QR code
+  qrCodeImage?: string; // Base64 encoded image for PIX QR code or credit card link
   paymentLink?: string; // Link for credit card payments
   paymentMethod: "pix" | "credit_card";
   value: number;

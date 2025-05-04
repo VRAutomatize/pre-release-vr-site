@@ -1,9 +1,9 @@
-
 import { toast } from "sonner";
 import { AddressInfo, PaymentResult } from "@/types/payment";
 import { PaymentFormData } from "@/components/payment/PaymentForm";
 
 const API_BASE_URL = "https://vrautomatize-n8n.snrhk1.easypanel.host";
+const QR_CODE_API_URL = "https://api.qrserver.com/v1/create-qr-code/";
 
 // Check CNPJ and find client - POST request
 export const checkCNPJ = async (cnpj: string) => {
@@ -108,6 +108,29 @@ export const fetchProducts = async () => {
   }
 };
 
+// Generate QR code for a URL
+export const generateQRCode = async (url: string): Promise<string> => {
+  try {
+    // Use QRServer API to generate QR code
+    const qrCodeUrl = `${QR_CODE_API_URL}?size=300x300&data=${encodeURIComponent(url)}`;
+    
+    // Fetch the image and convert to base64
+    const response = await fetch(qrCodeUrl);
+    const blob = await response.blob();
+    
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+    throw error;
+  }
+};
+
 // Create payment link
 export const createPayment = async (paymentData: PaymentFormData): Promise<PaymentResult> => {
   try {
@@ -174,9 +197,37 @@ export const createPayment = async (paymentData: PaymentFormData): Promise<Payme
       }
     }
     
-    // For credit card or other structured responses
+    // For credit card payments
+    if (paymentData.paymentMethod === "credit_card") {
+      // Check if we have a valid result
+      if (!result || (typeof result === "object" && !result.url && !result.link)) {
+        throw new Error("Invalid payment link response");
+      }
+      
+      // Extract payment link from result
+      const paymentLink = typeof result === "string" ? result : 
+                         (result.url ? result.url : result.link);
+      
+      if (!paymentLink) {
+        throw new Error("No payment link received from server");
+      }
+      
+      // Generate QR code for the payment link
+      console.log("Generating QR code for payment link:", paymentLink);
+      const qrCodeImage = await generateQRCode(paymentLink);
+      
+      return {
+        paymentLink,
+        qrCodeImage,
+        paymentMethod: paymentData.paymentMethod,
+        value: paymentData.value,
+        productName: paymentData.productName
+      };
+    }
+    
+    // Default return for any other case (should not happen)
     return {
-      paymentLink: typeof result === "string" ? result : result?.link,
+      paymentLink: typeof result === "string" ? result : (result?.url || result?.link),
       paymentMethod: paymentData.paymentMethod,
       value: paymentData.value,
       productName: paymentData.productName

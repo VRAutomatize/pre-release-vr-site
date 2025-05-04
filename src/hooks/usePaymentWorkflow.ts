@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Step, Client, Product, PaymentResult } from '@/types/payment';
@@ -173,6 +174,16 @@ export const usePaymentWorkflow = () => {
       // Handle the payment result
       if (result) {
         console.log("Payment result received:", result);
+        
+        // Validate the result to ensure we have either a QR code or a payment link
+        if (
+          (data.paymentMethod === 'pix' && !result.qrCodeImage) ||
+          (data.paymentMethod === 'credit_card' && !result.qrCodeImage && !result.paymentLink)
+        ) {
+          toast.error("Erro ao gerar o pagamento. Tente novamente.");
+          return;
+        }
+        
         // Store payment result and move to result step
         setPaymentResult(result);
         setStep(Step.PaymentResult);

@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Users, RefreshCw } from "lucide-react";
+import { Users, RefreshCw, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -12,6 +12,7 @@ const developersList = [
   { id: 2, name: "Ana Silva", status: "busy", specialty: "Backend", lastActive: "Há 15 min" },
   { id: 3, name: "Marco Oliveira", status: "available", specialty: "Full Stack", lastActive: "Agora" },
   { id: 4, name: "Juliana Costa", status: "offline", specialty: "DevOps", lastActive: "Há 3 horas" },
+  { id: 5, name: "Alexsander Costa", status: "available", specialty: "Diretor de Operações", lastActive: "Agora", availableHours: "09:00 - 19:00" },
 ];
 
 const Devs = () => {
@@ -51,6 +52,10 @@ const Devs = () => {
 
   const handleCloseForm = () => {
     setActiveForm((prev) => ({ ...prev, isOpen: false }));
+  };
+  
+  const contactWhatsApp = () => {
+    window.open('https://wa.me/554792666367', '_blank');
   };
 
   return (
@@ -115,6 +120,11 @@ const Devs = () => {
                     <span className="text-xs text-gold/70 mt-1">
                       Ativo: {dev.lastActive}
                     </span>
+                    {dev.availableHours && (
+                      <span className="text-xs text-green-400 mt-1">
+                        Horário: {dev.availableHours}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -135,12 +145,21 @@ const Devs = () => {
                 Está enfrentando dificuldades técnicas ou precisa de suporte dos desenvolvedores?
                 Abra um chamado usando o formulário abaixo:
               </p>
-              <Button 
-                onClick={openSupportForm}
-                className="bg-gold hover:bg-gold/90 text-background"
-              >
-                Abrir Chamado de Suporte
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                <Button 
+                  onClick={openSupportForm}
+                  className="bg-gold hover:bg-gold/90 text-background"
+                >
+                  Abrir Chamado de Suporte
+                </Button>
+                <Button 
+                  onClick={contactWhatsApp}
+                  className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  Contato via WhatsApp
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

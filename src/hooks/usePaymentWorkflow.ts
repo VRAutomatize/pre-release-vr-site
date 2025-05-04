@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Step, Client, Product, PaymentResult } from '@/types/payment';
@@ -173,6 +172,7 @@ export const usePaymentWorkflow = () => {
       
       // Handle the payment result
       if (result) {
+        console.log("Payment result received:", result);
         // Store payment result and move to result step
         setPaymentResult(result);
         setStep(Step.PaymentResult);
@@ -198,12 +198,13 @@ export const usePaymentWorkflow = () => {
 
   // Go back to CNPJ check
   const handleBackToStart = () => {
-    // If we're on the payment result page, reset to the CNPJ check
-    if (step === Step.PaymentResult) {
-      resetForms();
-    } else {
+    // Only reset workflow when explicitly requested
+    // Do NOT reset when showing payment result
+    if (step !== Step.PaymentResult) {
       setStep(Step.CheckCNPJ);
     }
+    // For payment result, just allow creating a new payment
+    // but don't reset the entire workflow automatically
   };
 
   return {

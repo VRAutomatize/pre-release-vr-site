@@ -20,8 +20,15 @@ const PaymentLinks = () => {
     handleCheckCNPJ,
     handleRegisterClient,
     handleCreatePayment,
-    handleBackToStart
+    handleBackToStart,
+    resetForms
   } = usePaymentWorkflow();
+
+  // Debug logging
+  React.useEffect(() => {
+    console.log("Current step:", step);
+    console.log("Payment result:", paymentResult);
+  }, [step, paymentResult]);
 
   return (
     <div className="flex h-[100dvh] w-full overflow-hidden">
@@ -79,7 +86,7 @@ const PaymentLinks = () => {
             {step === Step.PaymentResult && paymentResult && (
               <PaymentResultStep 
                 result={paymentResult}
-                onBack={handleBackToStart}
+                onBack={() => resetForms()} // Use resetForms to explicitly start a new payment
               />
             )}
           </div>

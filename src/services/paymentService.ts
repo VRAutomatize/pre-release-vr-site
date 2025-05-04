@@ -131,19 +131,42 @@ export const createPayment = async (paymentData: PaymentFormData): Promise<Payme
     let result;
     try {
       result = JSON.parse(responseText);
+      console.log("Payment creation JSON result:", result);
     } catch (e) {
       // If not JSON (might be base64 image directly)
       result = responseText;
+      console.log("Payment creation non-JSON result:", 
+        result.substring(0, 100) + "..." + (result.length > 100 ? "(truncated)" : ""));
     }
     
-    console.log("Payment creation result:", result);
-    
-    // If the result is a direct base64 string (for PIX)
-    if (typeof result === "string" && paymentData.paymentMethod === "pix") {
-      // Check if it's a base64 image
-      if (result.startsWith("data:image")) {
+    // For PIX payment with direct base64 string
+    if (paymentData.paymentMethod === "pix") {
+      // Check if result is a string (likely base64 image)
+      if (typeof result === "string") {
+        // If it doesn't start with data:image, add the prefix
+        let qrCodeImage = result;
+        if (!result.startsWith("data:")) {
+          qrCodeImage = "data:image/png;base64," + result;
+        }
+        
+        console.log("QR code image prepared:", qrCodeImage.substring(0, 50) + "...");
+        
         return {
-          qrCodeImage: result,
+          qrCodeImage,
+          paymentMethod: paymentData.paymentMethod,
+          value: paymentData.value,
+          productName: paymentData.productName
+        };
+      } 
+      // For structured JSON response
+      else if (result && result.encodedImage) {
+        let qrCodeImage = result.encodedImage;
+        if (!qrCodeImage.startsWith("data:")) {
+          qrCodeImage = "data:image/png;base64," + qrCodeImage;
+        }
+        
+        return {
+          qrCodeImage,
           paymentMethod: paymentData.paymentMethod,
           value: paymentData.value,
           productName: paymentData.productName

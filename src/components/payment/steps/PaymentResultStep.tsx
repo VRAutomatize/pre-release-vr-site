@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PaymentResultDisplay from '../PaymentResultDisplay';
 import { PaymentResult } from '@/types/payment';
 
@@ -12,6 +12,11 @@ const PaymentResultStep: React.FC<PaymentResultStepProps> = ({
   result, 
   onBack
 }) => {
+  // Log the result to help with debugging
+  useEffect(() => {
+    console.log("Payment result received:", result);
+  }, [result]);
+
   return (
     <PaymentResultDisplay 
       result={result} 

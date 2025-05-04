@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Share, Download } from "lucide-react";
@@ -15,10 +15,16 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
   result, 
   onBack 
 }) => {
+  // Debug logging to check the result
+  useEffect(() => {
+    console.log("Rendering PaymentResultDisplay with result:", result);
+  }, [result]);
+
   // Function to download QR code image
   const handleDownload = () => {
     if (!result.qrCodeImage) return;
 
+    // Create a download link for the QR code
     const link = document.createElement('a');
     link.href = result.qrCodeImage;
     link.download = `pix-qrcode-${new Date().getTime()}.png`;
@@ -31,8 +37,7 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
   const handleShare = () => {
     if (!result.qrCodeImage) return;
 
-    // For WhatsApp, we'd ideally need a publicly accessible URL to the QR image
-    // As a fallback, we'll share a text message
+    // For WhatsApp, we'll share a text message
     const message = `Pagamento PIX no valor de ${formatCurrency(result.value)} para ${result.productName}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

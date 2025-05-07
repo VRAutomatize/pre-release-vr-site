@@ -1,3 +1,4 @@
+
 import React from "react";
 import { FileText, Play, Book, Video } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -61,8 +62,8 @@ const ResourcesPanel = () => {
         {/* Contracts Tab */}
         <TabsContent value="contracts" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="Contrato Padrão" description="Modelo de contrato para serviços de automação" onClick={() => handleResourceClick("Contrato Padrão")} />
-            <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="Contrato Premium" description="Modelo de contrato para serviços premium" onClick={() => handleResourceClick("Contrato Premium")} />
+            <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="Contrato Funcionário Digital Core" description="Modelo de contrato para serviços de automação básicos" onClick={() => handleResourceClick("Contrato Funcionário Digital Core")} />
+            <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="Contrato Funcionário Digital Pro" description="Modelo de contrato para serviços premium avançados" onClick={() => handleResourceClick("Contrato Funcionário Digital Pro")} />
             <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="Termo de Adesão" description="Documento para adesão aos serviços da VR" onClick={() => handleResourceClick("Termo de Adesão")} />
             <ResourceCard icon={<FileText className="h-5 w-5 text-gold" />} title="NDA" description="Acordo de confidencialidade para compartilhamento de dados" onClick={() => handleResourceClick("NDA")} />
           </div>

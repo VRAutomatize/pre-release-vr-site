@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Users, RefreshCw, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,10 +54,8 @@ const Devs = () => {
   };
   
   const contactWhatsApp = () => {
-    // Ensure the URL is correctly formatted with the message parameter
-    const phoneNumber = "554788110195";
-    const message = encodeURIComponent("Ativar");
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    // Use the specific WhatsApp URL as requested
+    const whatsappUrl = "https://wa.me/554788110195?text=Ativar%20Demo";
     
     // Open in new tab with proper URL handling
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

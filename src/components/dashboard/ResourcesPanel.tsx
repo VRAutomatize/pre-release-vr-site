@@ -13,13 +13,17 @@ const ResourcesPanel = () => {
   };
   
   const handleResourceClick = (title: string) => {
-    toast.info(`Acessando recurso: ${title}`);
+    if (title === "WhatsApp Demo") {
+      handleWhatsAppDemoClick();
+    } else {
+      toast.info(`Acessando recurso: ${title}`);
+    }
   };
   
   const handleWhatsAppDemoClick = () => {
-    // URL will be provided later
-    toast.info("Link para demonstração será aberto em breve");
-    // This function will later open the external URL in a new tab
+    // Open the specified WhatsApp link in a new tab
+    const whatsappUrl = "https://wa.me/554788110195?text=Ativar%20Demo";
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
   
   return <div className="space-y-6">
@@ -65,7 +69,7 @@ const ResourcesPanel = () => {
           </div>
         </TabsContent>
         
-        {/* Demos Tab - Updated to only show WhatsApp Demo */}
+        {/* Demos Tab - Updated to redirect to WhatsApp link */}
         <TabsContent value="demos" className="mt-0">
           <div className="grid grid-cols-1 gap-4">
             <ResourceCard icon={<Play className="h-5 w-5 text-gold" />} title="WhatsApp Demo" description="Demonstração ao vivo do atendente digital no WhatsApp" onClick={handleWhatsAppDemoClick} />

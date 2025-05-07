@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Users, RefreshCw, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,7 +54,8 @@ const Devs = () => {
   };
   
   const contactWhatsApp = () => {
-    window.open('https://wa.me/554792666367', '_blank');
+    // Updated phone number and added message parameter
+    window.open('https://wa.me/554788110195?text=Ativar', '_blank');
   };
 
   return (

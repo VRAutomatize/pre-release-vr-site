@@ -55,7 +55,7 @@ const DigitalEmployees = () => {
         {/* --- Hero Section Start --- */}
         <PageHero
           title="Funcionários Digitais"
-          subtitle="Reduza em até 6 dígitos seus custos fixos com colaboradores. Escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
+          subtitle="Reduza em até 6 dígitos seus custos fixos. Sistemas que trabalham 24/7 — sem pausas ou oscilações, substituindo processos operacionais."
           tag="A Automação Definitiva"
         >
           {/* Additional content passed as children to PageHero */}

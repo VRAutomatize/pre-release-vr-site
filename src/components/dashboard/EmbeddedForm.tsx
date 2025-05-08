@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { toast } from "@/hooks/use-toast";
 import { DirectFormRenderer } from "./DirectFormRenderer";
 

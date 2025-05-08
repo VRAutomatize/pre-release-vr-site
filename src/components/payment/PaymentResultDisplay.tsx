@@ -1,11 +1,10 @@
-
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Share, Download } from "lucide-react";
 import { PaymentResult } from '@/types/payment';
 import { formatCurrency } from '@/utils/paymentUtils';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface PaymentResultDisplayProps {
   result: PaymentResult;

@@ -1,5 +1,6 @@
+
 import React, { lazy, Suspense, useCallback } from "react";
-import { ArrowLeft, MessageSquare } from "lucide-react";
+import { ArrowLeft, MessageSquare, Database, Users, Check, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { Skeleton } from "@/components/ui/skeleton";

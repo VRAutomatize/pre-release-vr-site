@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import { EmbeddedForm } from "@/components/dashboard/EmbeddedForm";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Reports = () => {
   const [activeForm, setActiveForm] = useState<{

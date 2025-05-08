@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -58,7 +59,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       staleTime: 300000, // 5 minutes of cache
       retry: 1,
-      cacheTime: 600000, // 10 minutes cache
+      gcTime: 600000, // 10 minutes cache (previously cacheTime)
     },
   },
 });

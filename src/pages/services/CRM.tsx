@@ -1,6 +1,7 @@
+
 import React, { lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare } from "lucide-react";
+import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { Skeleton } from "@/components/ui/skeleton";

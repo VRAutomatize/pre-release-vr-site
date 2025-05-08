@@ -1,3 +1,4 @@
+
 import React from "react";
 import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -53,9 +54,9 @@ const DigitalEmployees = () => {
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* --- Hero Section Start --- */}
         <PageHero
-          title="Funcionários Digitais: Automatize sua Operação"
-          subtitle="Reduza custos, escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
-          tag="Automação Inteligente"
+          title="Funcionários Digitais"
+          subtitle="Reduza em até 6 dígitos seus custos fixos com colaboradores. Escale seu negócio e elimine dores de contratação. Nossas soluções digitais substituem pessoas por sistemas que trabalham 24/7 — sem pausas, doenças ou oscilações."
+          tag="A Automação Definitiva"
         >
           {/* Additional content passed as children to PageHero */}
           <div className="space-y-6 mt-6">

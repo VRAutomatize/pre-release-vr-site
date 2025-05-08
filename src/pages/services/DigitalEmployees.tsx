@@ -82,7 +82,7 @@ const DigitalEmployees = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
               <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
-                <p className="text-xl text-left">Querem reduzir o custo fixo mensal da empresa sem perder produtividade.</p>
+                <p className="text-xl text-left">Querem reduzir o custo fixo mensal sem perder produtividade.</p>
               </motion.div>
 
               <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">

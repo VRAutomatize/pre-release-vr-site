@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
@@ -62,7 +62,7 @@ const DigitalEmployees = () => {
             animationDelay: "0.8s"
           }}>
               <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4">
-                Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
+                <Calculator className="mr-2 h-5 w-5" /> Cálculo estimado da sua economia anual com automação <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </div>
           </div>
@@ -282,7 +282,7 @@ const DigitalEmployees = () => {
                   </ul>
                   <div className="mt-8 hidden md:block">
                     <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4">
-                      Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
+                      <Calculator className="mr-2 h-5 w-5" /> Cálculo estimado da sua economia anual com automação <ArrowRight className="ml-2 h-5 w-5" />
                     </a>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ const DigitalEmployees = () => {
               </div>
               <div className="mt-8 md:hidden">
                 <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4 w-full">
-                  Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
+                  <Calculator className="mr-2 h-5 w-5" /> Cálculo estimado da sua economia anual com automação <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </div>
             </div>

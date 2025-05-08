@@ -1,11 +1,21 @@
-
+import React, { lazy, Suspense, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
+import { ArrowLeft, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import Benefits from "@/components/Benefits";
-import PricingPlans from "@/components/crm/PricingPlans";
-import FinalCTA from "@/components/crm/FinalCTA";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+// Lazy loaded components
+const Benefits = lazy(() => import("@/components/Benefits"));
+const PricingPlans = lazy(() => import("@/components/crm/PricingPlans"));
+const FinalCTA = lazy(() => import("@/components/crm/FinalCTA"));
+
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<Skeleton className="w-full h-64" />}>
+    {children}
+  </Suspense>
+);
 
 const features = [
   {
@@ -59,6 +69,7 @@ const benefits = [
 
 const Consulting = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Assessoria%20Especializada%20de%20voc%C3%AAs!";
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-background">
@@ -94,24 +105,28 @@ const Consulting = () => {
                 Consultoria Especializada
               </span>
               <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Transforme seu negócio
+                {isMobile ? "Transforme seu negócio" : "Transforme seu negócio com especialistas"}
               </h1>
               <p className="text-lg md:text-2xl text-foreground/80 mb-12 max-w-3xl animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                Receba orientação especializada para identificar e implementar 
-                as melhores soluções de automação para seu negócio.
+                {isMobile 
+                  ? "Consultoria para automação empresarial" 
+                  : "Receba orientação especializada para identificar e implementar as melhores soluções de automação para seu negócio."}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                <Button 
-                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
-                  Agende uma Consultoria Gratuita
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-6"
+                  {isMobile ? "Agendar consulta" : "Agende uma Consultoria Gratuita"}
+                </a>
+                <a 
+                  href="#pricing-plans"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
-                  Ver Planos
-                </Button>
+                  {isMobile ? "Ver planos" : "Conheça nossos planos"}
+                </a>
               </div>
             </div>
           </div>
@@ -169,12 +184,22 @@ const Consulting = () => {
           </div>
         </section>
 
-        <Benefits />
-        <PricingPlans />
-        <FinalCTA whatsappLink={whatsappLink} />
+        <LazySection>
+          <Benefits />
+        </LazySection>
+        
+        <section id="pricing-plans">
+          <LazySection>
+            <PricingPlans />
+          </LazySection>
+        </section>
+        
+        <LazySection>
+          <FinalCTA whatsappLink={whatsappLink} />
+        </LazySection>
       </div>
     </div>
   );
 };
 
-export default Consulting;
+export default React.memo(Consulting);

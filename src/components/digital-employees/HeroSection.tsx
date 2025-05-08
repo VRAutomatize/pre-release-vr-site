@@ -2,14 +2,14 @@
 import React from "react";
 import { ArrowRight, Calculator } from "lucide-react";
 import PageHero from "@/components/shared/PageHero";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface HeroSectionProps {
   calendarLink: string;
 }
 
 const HeroSection = ({ calendarLink }: HeroSectionProps) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
   
   return (
     <PageHero 
@@ -40,4 +40,4 @@ const HeroSection = ({ calendarLink }: HeroSectionProps) => {
   );
 };
 
-export default HeroSection;
+export default React.memo(HeroSection);

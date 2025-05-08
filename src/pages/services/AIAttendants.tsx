@@ -1,23 +1,30 @@
 
+import React, { lazy, Suspense, useCallback } from "react";
 import { Home, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import HeroSection from "@/components/ai-attendants/HeroSection";
-import DashboardPreview from "@/components/ai-attendants/DashboardPreview";
-import VideoDemo from "@/components/ai-attendants/VideoDemo";
-import PricingTable from "@/components/ai-attendants/PricingTable";
-import Benefits from "@/components/benefits/Benefits";
-import FinalCTA from "@/components/crm/FinalCTA";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Lazy loading components
+const HeroSection = lazy(() => import("@/components/ai-attendants/HeroSection"));
+const DashboardPreview = lazy(() => import("@/components/ai-attendants/DashboardPreview"));
+const VideoDemo = lazy(() => import("@/components/ai-attendants/VideoDemo"));
+const PricingTable = lazy(() => import("@/components/ai-attendants/PricingTable"));
+const Benefits = lazy(() => import("@/components/benefits/Benefits"));
+const FinalCTA = lazy(() => import("@/components/crm/FinalCTA"));
+
+// Loading component
+const SectionLoading = () => <Skeleton className="w-full h-64" />;
 
 const AIAttendants = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20atendentes%20de%20IA!";
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -40,25 +47,34 @@ const AIAttendants = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-12 space-y-32">
-        {/* Hero Section */}
-        <HeroSection scrollToSection={scrollToSection} />
+        <Suspense fallback={<SectionLoading />}>
+          <HeroSection scrollToSection={scrollToSection} />
+        </Suspense>
         
-        {/* Dashboard Preview Section */}
-        <DashboardPreview scrollToSection={scrollToSection} />
+        <Suspense fallback={<SectionLoading />}>
+          <DashboardPreview scrollToSection={scrollToSection} />
+        </Suspense>
         
-        {/* Video Demonstration Section */}
-        <VideoDemo scrollToSection={scrollToSection} />
+        <Suspense fallback={<SectionLoading />}>
+          <VideoDemo scrollToSection={scrollToSection} />
+        </Suspense>
 
-        {/* Benefits Section */}
-        <Benefits />
+        <Suspense fallback={<SectionLoading />}>
+          <Benefits />
+        </Suspense>
         
         <section id="pricing-table">
-          <PricingTable />
+          <Suspense fallback={<SectionLoading />}>
+            <PricingTable />
+          </Suspense>
         </section>
-        <FinalCTA whatsappLink={whatsappLink} />
+        
+        <Suspense fallback={<SectionLoading />}>
+          <FinalCTA whatsappLink={whatsappLink} />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export default AIAttendants;
+export default React.memo(AIAttendants);

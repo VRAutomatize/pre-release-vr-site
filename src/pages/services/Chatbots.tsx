@@ -1,11 +1,21 @@
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, MessageSquare, Users, Database, Check, CreditCard } from "lucide-react";
+import React, { lazy, Suspense, useCallback } from "react";
+import { ArrowLeft, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import Benefits from "@/components/Benefits";
-import PricingPlans from "@/components/crm/PricingPlans";
-import FinalCTA from "@/components/crm/FinalCTA";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<Skeleton className="w-full h-64" />}>
+    {children}
+  </Suspense>
+);
+
+// Lazy-loaded components
+const Benefits = lazy(() => import("@/components/Benefits"));
+const PricingPlans = lazy(() => import("@/components/crm/PricingPlans"));
+const FinalCTA = lazy(() => import("@/components/crm/FinalCTA"));
 
 const features = [
   {
@@ -59,6 +69,7 @@ const benefits = [
 
 const Chatbots = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20Chatbots!";
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-background">
@@ -96,26 +107,30 @@ const Chatbots = () => {
               </span>
               
               <h1 className="text-4xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                Automatize suas conversas com IA
+                {isMobile ? "Automação inteligente" : "Automatize suas conversas com IA"}
               </h1>
               
               <p className="text-lg md:text-2xl text-foreground/80 mb-12 animate-fade-up" style={{ animationDelay: "0.4s" }}>
-                Chatbots inteligentes que entendem seus clientes e fornecem respostas precisas, 
-                melhorando a experiência e reduzindo custos.
+                {isMobile 
+                  ? "Chatbots que entendem seus clientes"
+                  : "Chatbots inteligentes que entendem seus clientes e fornecem respostas precisas, melhorando a experiência e reduzindo custos."}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
-                <Button 
-                  className="bg-gold hover:bg-gold-light text-background text-lg px-8 py-6"
+                <a 
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
-                  Agende uma Demonstração
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-6"
+                  {isMobile ? "Ver demonstração" : "Agende uma Demonstração"}
+                </a>
+                <a
+                  href="#benefits"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
-                  Ver Planos
-                </Button>
+                  {isMobile ? "Ver planos" : "Conheça nossos planos"}
+                </a>
               </div>
             </div>
           </div>
@@ -124,14 +139,14 @@ const Chatbots = () => {
         {/* Features Section */}
         <section className="relative z-10 space-y-24">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Funcionalidades Principais</h2>
-          <div className="space-y-32">
+          <div className="space-y-16 md:space-y-32">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               >
                 <div 
-                  className={`order-${index % 2 === 0 ? 1 : 2} animate-fade-up`}
+                  className={`order-${index % 2 === 0 ? 1 : 2} md:order-${index % 2 === 0 ? 1 : 2} animate-fade-up`}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <div className="w-full aspect-[16/9] glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all duration-300">
@@ -140,15 +155,20 @@ const Chatbots = () => {
                 </div>
                 
                 <div 
-                  className={`order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl animate-fade-up`}
+                  className={`order-${index % 2 === 0 ? 2 : 1} md:order-${index % 2 === 0 ? 2 : 1} floating-card p-8 rounded-xl animate-fade-up`}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <feature.icon className="w-12 h-12 text-gold mb-4" />
                   <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-foreground/80 mb-6">{feature.description}</p>
-                  <Button variant="outline" className="hover:bg-gold hover:text-background">
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 hover:bg-gold hover:text-background"
+                  >
                     {feature.cta}
-                  </Button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -156,9 +176,9 @@ const Chatbots = () => {
         </section>
 
         {/* Benefits Section */}
-        <section className="relative z-10">
+        <section id="benefits" className="relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios dos Chatbots</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <div 
                 key={benefit.title}
@@ -173,12 +193,20 @@ const Chatbots = () => {
           </div>
         </section>
 
-        <Benefits />
-        <PricingPlans />
-        <FinalCTA whatsappLink={whatsappLink} />
+        <LazySection>
+          <Benefits />
+        </LazySection>
+        
+        <LazySection>
+          <PricingPlans />
+        </LazySection>
+        
+        <LazySection>
+          <FinalCTA whatsappLink={whatsappLink} />
+        </LazySection>
       </div>
     </div>
   );
 };
 
-export default Chatbots;
+export default React.memo(Chatbots);

@@ -1,12 +1,22 @@
-
+import React, { lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, Users, BarChart2, Clock, Target, Database, Settings, Zap } from "lucide-react";
+import { Home, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import HeroSection from "@/components/crm/HeroSection";
-import PricingPlans from "@/components/crm/PricingPlans";
-import FinalCTA from "@/components/crm/FinalCTA";
-import Benefits from "@/components/Benefits";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+// Lazy loaded components
+const HeroSection = lazy(() => import("@/components/crm/HeroSection"));
+const PricingPlans = lazy(() => import("@/components/crm/PricingPlans"));
+const FinalCTA = lazy(() => import("@/components/crm/FinalCTA"));
+const Benefits = lazy(() => import("@/components/Benefits"));
+
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<Skeleton className="w-full h-64" />}>
+    {children}
+  </Suspense>
+);
 
 const features = [
   {
@@ -60,6 +70,7 @@ const benefits = [
 
 const CRM = () => {
   const whatsappLink = "https://wa.me/554788558257?text=Ol%C3%A1!%20Tenho%20interesse%20em%20sistemas%20de%20CRM!";
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,12 +93,14 @@ const CRM = () => {
       </Header>
 
       <div className="container mx-auto px-4 pt-0 space-y-32">
-        <HeroSection whatsappLink={whatsappLink} />
+        <LazySection>
+          <HeroSection whatsappLink={whatsappLink} />
+        </LazySection>
         
-        {/* Features Section */}
+        {/* Features Section - Keep with mobile optimizations */}
         <section className="relative z-10 space-y-24">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Funcionalidades Principais</h2>
-          <div className="space-y-32">
+          <div className="space-y-16 md:space-y-32">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
@@ -123,7 +136,7 @@ const CRM = () => {
           </div>
         </section>
 
-        {/* Benefits Section */}
+        {/* Benefits Section - Keep with mobile optimizations */}
         <section className="relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center animate-fade-up">Benefícios do CRM</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -141,12 +154,20 @@ const CRM = () => {
           </div>
         </section>
 
-        <Benefits />
-        <PricingPlans />
-        <FinalCTA whatsappLink={whatsappLink} />
+        <LazySection>
+          <Benefits />
+        </LazySection>
+        
+        <LazySection>
+          <PricingPlans />
+        </LazySection>
+        
+        <LazySection>
+          <FinalCTA whatsappLink={whatsappLink} />
+        </LazySection>
       </div>
     </div>
   );
 };
 
-export default CRM;
+export default React.memo(CRM);

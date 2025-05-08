@@ -1,5 +1,4 @@
-
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +8,30 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Better loading fallback
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-16 h-16 border-4 border-gold/20 border-t-gold rounded-full animate-spin"></div>
+      <p className="text-sm text-foreground/60">Carregando...</p>
+    </div>
+  </div>
+);
+
+// Create a PageLoader component with Skeleton
+const PageLoader = () => (
+  <div className="container mx-auto px-4 pt-24 space-y-8">
+    <Skeleton className="h-64 w-full rounded-xl" />
+    <Skeleton className="h-32 w-3/4 mx-auto rounded-xl" />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Skeleton className="h-48 rounded-xl" />
+      <Skeleton className="h-48 rounded-xl" />
+      <Skeleton className="h-48 rounded-xl" />
+    </div>
+  </div>
+);
 
 // Dynamic page loading for performance
 const Index = lazy(() => import("./pages/Index"));
@@ -28,22 +51,17 @@ const Reports = lazy(() => import("./pages/employee/Reports"));
 const Devs = lazy(() => import("./pages/employee/Devs"));
 const PaymentLinks = lazy(() => import("./pages/employee/PaymentLinks"));
 
-// Memoized query client
+// Memoized query client with improved caching
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
       staleTime: 300000, // 5 minutes of cache
+      retry: 1,
+      cacheTime: 600000, // 10 minutes cache
     },
   },
 });
-
-// Optimized loading fallback
-const LoadingFallback = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="w-16 h-16 border-4 border-gold/20 border-t-gold rounded-full animate-spin"></div>
-  </div>
-);
 
 // Animation layout with optimized auto-scroll
 const AnimationLayout = () => {
@@ -51,13 +69,16 @@ const AnimationLayout = () => {
   
   // Optimized scroll to top with useLayoutEffect
   React.useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }, [location.pathname]);
 
   return (
     <AnimatePresence mode="wait">
       <PageTransition key={location.pathname}>
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<PageLoader />}>
           <Routes location={location}>
             <Route path="/" element={<Index />} />
             <Route path="/services/ai-attendants" element={<AIAttendants />} />
@@ -112,18 +133,38 @@ const AnimationLayout = () => {
 };
 
 // Main App with memoization for performance
-const App = React.memo(() => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AnimationLayout />
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-));
+const App = React.memo(() => {
+  // Add touch handling optimization for mobile
+  useEffect(() => {
+    // Fix for 300ms delay on mobile taps
+    document.addEventListener('touchstart', function() {}, {passive: true});
+    
+    // Add viewport height fix for mobile browsers
+    const setViewportHeight = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    };
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    
+    return () => {
+      window.removeEventListener('resize', setViewportHeight);
+    };
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AnimationLayout />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+});
 
 export default App;

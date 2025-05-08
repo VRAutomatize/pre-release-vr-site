@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ArrowLeft, ArrowRight, Clock, Database, DollarSign, LineChart, Zap, Users, CheckCircle, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,7 +5,6 @@ import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import PageHero from "@/components/shared/PageHero";
-
 const DigitalEmployees = () => {
   // Animation variants for staggered elements
   const containerVariants = {
@@ -35,9 +33,7 @@ const DigitalEmployees = () => {
     }
   };
   const calendarLink = "https://www.cal.com/vrautomatize";
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Header>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2 hover:text-gold transition-colors">
@@ -53,18 +49,18 @@ const DigitalEmployees = () => {
 
       <div className="container mx-auto px-4 pt-24 space-y-32">
         {/* --- Hero Section Start --- */}
-        <PageHero
-          title="Funcionários Digitais"
-          subtitle="Reduza em até 6 dígitos seus custos fixos. Sistemas que trabalham 24/7 — sem pausas ou oscilações, substituindo processos operacionais."
-          tag="A Automação Definitiva"
-        >
+        <PageHero title="Funcionários Digitais" subtitle="Reduza em até 6 dígitos seus custos fixos. Sistemas que trabalham 24/7 — sem pausas ou oscilações, substituindo processos operacionais." tag="A Automação Definitiva">
           {/* Additional content passed as children to PageHero */}
           <div className="space-y-6 mt-6">
-            <p className="text-xl font-semibold text-gold animate-fade-up" style={{ animationDelay: "0.6s" }}>
+            <p className="text-xl font-semibold text-gold animate-fade-up" style={{
+            animationDelay: "0.6s"
+          }}>
               Mais produtividade. Menos custo fixo. Performance constante.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up" style={{ animationDelay: "0.8s" }}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up" style={{
+            animationDelay: "0.8s"
+          }}>
               <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-8 py-4">
                 Quero minha análise gratuita <ArrowRight className="ml-2 h-5 w-5" />
               </a>
@@ -75,7 +71,10 @@ const DigitalEmployees = () => {
 
         {/* Ideal For Section - Rounded corners added */}
         <section className="relative">
-          <motion.div className="max-w-4xl mx-auto text-center mb-16" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
+          <motion.div className="max-w-4xl mx-auto text-center mb-16" initial="hidden" whileInView="show" viewport={{
+          once: true,
+          amount: 0.3
+        }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
               Essa solução é ideal para negócios que:
             </motion.h2>
@@ -83,7 +82,7 @@ const DigitalEmployees = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
               <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-gold shrink-0" />
-                <p className="text-xl text-left">Querem reduzir equipe operacional sem perder produtividade</p>
+                <p className="text-xl text-left">Querem reduzir o custo fixo mensal da empresa sem perder produtividade.</p>
               </motion.div>
 
               <motion.div variants={itemVariants} className="floating-card p-6 flex items-start gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg">
@@ -107,10 +106,15 @@ const DigitalEmployees = () => {
         {/* Comparison Section - Rounded corners added, contrast fixed */}
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
-            <div className="absolute top-40 right-20 w-80 h-80 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "1s" }} />
+            <div className="absolute top-40 right-20 w-80 h-80 bg-gold/10 rounded-full filter blur-3xl animate-float" style={{
+            animationDelay: "1s"
+          }} />
           </div>
           
-          <motion.div className="max-w-6xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
+          <motion.div className="max-w-6xl mx-auto" initial="hidden" whileInView="show" viewport={{
+          once: true,
+          amount: 0.3
+        }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Comparativo real:</span> Humanos vs Funcionários Digitais
             </motion.h2>
@@ -173,7 +177,10 @@ const DigitalEmployees = () => {
 
         {/* How It Works Section - Rounded corners */}
         <section className="relative">
-          <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
+          <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{
+          once: true,
+          amount: 0.3
+        }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
               Como funciona nosso processo:
             </motion.h2>
@@ -209,7 +216,10 @@ const DigitalEmployees = () => {
 
         {/* Use Cases Section - Rounded corners */}
         <section className="relative">
-          <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={containerVariants}>
+          <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{
+          once: true,
+          amount: 0.3
+        }} variants={containerVariants}>
             <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
             </motion.h2>
@@ -248,7 +258,9 @@ const DigitalEmployees = () => {
         <section className="relative py-20">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-gold/10 rounded-full filter blur-3xl animate-float" />
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "2s" }} />
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{
+            animationDelay: "2s"
+          }} />
           </div>
 
           <Card className="max-w-5xl mx-auto border-gold/30 relative overflow-hidden bg-black/30 backdrop-blur-lg rounded-lg">
@@ -275,11 +287,7 @@ const DigitalEmployees = () => {
                   </div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <img 
-                    src="/lovable-uploads/69d6e3a4-5346-41f7-988f-8151c83e758c.png" 
-                    alt="VR Automatize Logo" 
-                    className="w-48 h-48 object-contain animate-pulse-slow" 
-                  />
+                  <img src="/lovable-uploads/69d6e3a4-5346-41f7-988f-8151c83e758c.png" alt="VR Automatize Logo" className="w-48 h-48 object-contain animate-pulse-slow" />
                 </div>
               </div>
               <div className="mt-8 md:hidden">
@@ -291,8 +299,6 @@ const DigitalEmployees = () => {
           </Card>
         </section>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default DigitalEmployees;

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -91,9 +92,9 @@ export function ConfirmationDialog({
                 
                 <p className="text-sm text-gold/80">Mensalidade:</p>
                 <div className="pl-4 space-y-1 text-sm">
-                  <p>Padrão: {formatCurrency(300)}</p>
-                  {formData.envia_audio && <p>Envio de Áudio: + {formatCurrency(150)}</p>}
-                  {formData.servidor_dedicado && <p>Servidor Dedicado: + {formatCurrency(90)}</p>}
+                  <p>Padrão: {formatCurrency(490)}</p>
+                  {formData.envia_audio && <p>Envio de Áudio: + {formatCurrency(200)}</p>}
+                  {formData.servidor_dedicado && <p>Servidor Dedicado: + {formatCurrency(100)}</p>}
                 </div>
                 
                 <div className="mt-2 pt-2 border-t border-gold/10 flex justify-between">

@@ -11,6 +11,13 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 
+// Add type definition for Window with Cal property
+declare global {
+  interface Window {
+    Cal?: any;
+  }
+}
+
 const DigitalEmployees = () => {
   // Configuration settings - usando URLs reais em produção
   const calendarLink = "https://cal.com/vrautomatize/call"; 

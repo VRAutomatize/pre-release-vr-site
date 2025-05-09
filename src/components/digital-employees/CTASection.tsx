@@ -3,13 +3,17 @@ import React from "react";
 import { CheckCircle, ArrowRight, Calculator } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { TypeformModal } from "@/components/form/TypeformModal";
+import { useTypeformModal } from "@/hooks/useTypeformModal";
 
 interface CTASectionProps {
   calendarLink: string;
+  webhookUrl?: string;
 }
 
-const CTASection = ({ calendarLink }: CTASectionProps) => {
+const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const { isOpen, openModal, closeModal } = useTypeformModal();
 
   return (
     <section className="relative py-20">
@@ -40,13 +44,16 @@ const CTASection = ({ calendarLink }: CTASectionProps) => {
                 ))}
               </ul>
               <div className="mt-8 hidden md:block">
-                <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-4">
+                <button 
+                  onClick={openModal} 
+                  className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-4"
+                >
                   <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
                   <span className="text-sm sm:text-lg">
                     {isMobile ? "Calcule sua economia" : "Cálculo estimado da sua economia anual com automação"}
                   </span>
                   <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-                </a>
+                </button>
               </div>
             </div>
             <div className="flex-1 flex justify-center">
@@ -54,14 +61,25 @@ const CTASection = ({ calendarLink }: CTASectionProps) => {
             </div>
           </div>
           <div className="mt-8 md:hidden">
-            <a href={calendarLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 py-3 w-full">
+            <button 
+              onClick={openModal} 
+              className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 py-3 w-full"
+            >
               <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
               <span className="text-sm">Calcule sua economia</span>
               <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-            </a>
+            </button>
           </div>
         </div>
       </Card>
+
+      {/* Typeform Modal */}
+      <TypeformModal 
+        isOpen={isOpen} 
+        onClose={closeModal} 
+        calendarLink={calendarLink}
+        webhookUrl={webhookUrl}
+      />
     </section>
   );
 };

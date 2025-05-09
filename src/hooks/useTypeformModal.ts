@@ -12,7 +12,10 @@ export const useTypeformModal = () => {
   
   const closeModal = () => {
     setIsOpen(false);
-    setShowCalendar(false);
+    // Não resetamos showCalendar imediatamente para permitir animação de saída
+    setTimeout(() => {
+      setShowCalendar(false);
+    }, 300);
   };
   
   const showCalendarView = () => {

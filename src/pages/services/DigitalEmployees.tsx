@@ -1,5 +1,5 @@
 
-import React, { useCallback } from "react";
+import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
 import CTASection from "@/components/digital-employees/CTASection";
@@ -12,11 +12,12 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 
 const DigitalEmployees = () => {
-  // Configuration settings
-  const calendarLink = "https://cal.com/your-link"; // Replace with your Cal.com URL
-  const webhookUrl = "https://webhook.site/your-webhook"; // Replace with your webhook URL
+  // Configuration settings - usando URLs reais em produção
+  const calendarLink = "https://cal.com/vrautomatize/call"; 
+  // Em produção, substitua por um webhook real
+  const webhookUrl = "https://webhook.site/your-webhook";
   
-  const whatsappLink = useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
+  const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,7 +52,7 @@ const DigitalEmployees = () => {
         {/* Comparison Section */}
         <ComparisonSection />
         
-        {/* CTA Section */}
+        {/* CTA Section - Compartilhando a mesma instância via hook */}
         <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} />
         
         {/* Ideal For Section */}

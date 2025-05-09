@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -48,21 +49,6 @@ const defaultValues: FormData = {
   industry: "",
 };
 
-// Helper function for formatting phone numbers as user types
-const formatPhoneNumber = (value: string) => {
-  // Remove non-numeric characters
-  const cleaned = value.replace(/\D/g, "");
-  
-  // Format based on the length
-  if (cleaned.length <= 2) {
-    return cleaned;
-  } else if (cleaned.length <= 7) {
-    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
-  } else {
-    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
-  }
-};
-
 export function TypeformModal({ 
   isOpen, 
   onClose, 
@@ -76,8 +62,9 @@ export function TypeformModal({
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progressData, setProgressData] = useState<Partial<FormData>>({});
+  const [calendarLoaded, setCalendarLoaded] = useState(false);
   
-  const { control, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isValid } } = useForm<FormData>({
+  const { control, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isValid }, reset } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues,
     mode: "onChange",
@@ -92,11 +79,30 @@ export function TypeformModal({
   useEffect(() => {
     if (!isOpen) {
       setCurrentStep(0);
+      reset(defaultValues);
+      setCalendarLoaded(false);
     }
-  }, [isOpen]);
+  }, [isOpen, reset]);
+
+  // Handle key press for form navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      
+      if (e.key === 'Enter' && !isSubmitting) {
+        e.preventDefault();
+        handleNextStep();
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, isSubmitting, currentStep]);
 
   // Function to send partial form data to webhook
-  const sendPartialData = async () => {
+  const sendPartialData = useCallback(async () => {
     if (!webhookUrl) return;
     
     const currentValues = getValues();
@@ -104,11 +110,15 @@ export function TypeformModal({
     setProgressData(dataToSend);
     
     try {
+      console.log("Sending partial data to webhook:", dataToSend);
+      
+      // Using fetch with no-cors mode to avoid CORS issues with webhook
       await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        mode: "no-cors",
         body: JSON.stringify({
           ...dataToSend,
           step: currentStep,
@@ -118,11 +128,12 @@ export function TypeformModal({
       });
     } catch (error) {
       console.error("Failed to send partial data:", error);
+      // Don't show error to user for partial data sends
     }
-  };
+  }, [webhookUrl, getValues, progressData, currentStep]);
   
   // Handle next step click
-  const handleNextStep = async () => {
+  const handleNextStep = useCallback(async () => {
     // Validate current field before proceeding
     const fieldsToValidate: (keyof FormData)[] = [
       "fullName", 
@@ -149,7 +160,7 @@ export function TypeformModal({
         await onSubmitForm(getValues());
       }
     }
-  };
+  }, [currentStep, totalSteps, sendPartialData, trigger, getValues, paidTraffic]);
   
   // Handle form submission
   const onSubmitForm = async (data: FormData) => {
@@ -158,11 +169,15 @@ export function TypeformModal({
     try {
       // Final webhook submission with complete data
       if (webhookUrl) {
+        console.log("Sending complete form data to webhook:", data);
+        
+        // Using fetch with no-cors mode to avoid CORS issues
         await fetch(webhookUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          mode: "no-cors",
           body: JSON.stringify({
             ...data,
             isComplete: true,
@@ -174,11 +189,11 @@ export function TypeformModal({
       // Show success toast
       toast({
         title: "Formulário enviado com sucesso!",
-        description: "Agendamento disponível abaixo",
+        description: "Carregando calendário de agendamento...",
         duration: 3000,
       });
       
-      // Show embedded calendar instead of redirecting
+      // Show embedded calendar
       if (onShowCalendar) {
         onShowCalendar();
       }
@@ -195,18 +210,13 @@ export function TypeformModal({
     }
   };
   
-  // Function to clean phone input - only allow digits
-  const cleanPhoneInput = (value: string): string => {
-    return value.replace(/\D/g, "");
-  };
-  
   // Function to handle form field display based on current step
   const renderStepContent = () => {
     switch (currentStep) {
       case 0: // Name
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Como podemos te chamar?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Como podemos te chamar?</h2>
             <Controller
               name="fullName"
               control={control}
@@ -215,12 +225,12 @@ export function TypeformModal({
                   {...field}
                   autoFocus
                   placeholder="Seu nome completo"
-                  className="text-lg py-6"
+                  className="text-lg py-6 text-center"
                 />
               )}
             />
             {errors.fullName && (
-              <p className="text-red-500 text-sm flex items-center">
+              <p className="text-red-500 text-sm flex items-center justify-center">
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {errors.fullName.message}
               </p>
@@ -231,7 +241,7 @@ export function TypeformModal({
       case 1: // Phone
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Qual seu WhatsApp?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Qual seu WhatsApp?</h2>
             <Controller
               name="phone"
               control={control}
@@ -239,30 +249,30 @@ export function TypeformModal({
                 <Input
                   {...field}
                   autoFocus
-                  placeholder="(00) 00000-0000"
-                  className="text-lg py-6"
+                  placeholder="Digite apenas números com DDD"
+                  className="text-lg py-6 text-center"
                   onChange={(e) => {
                     // Only allow digits
-                    const cleaned = cleanPhoneInput(e.target.value);
+                    const cleaned = e.target.value.replace(/\D/g, "");
                     field.onChange(cleaned);
                   }}
                 />
               )}
             />
             {errors.phone && (
-              <p className="text-red-500 text-sm flex items-center">
+              <p className="text-red-500 text-sm flex items-center justify-center">
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {errors.phone.message}
               </p>
             )}
-            <p className="text-sm text-muted-foreground">Apenas números, incluindo DDD</p>
+            <p className="text-sm text-muted-foreground text-center">Apenas números, incluindo DDD</p>
           </div>
         );
       
       case 2: // Email
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">E seu melhor e-mail?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">E seu melhor e-mail?</h2>
             <Controller
               name="email"
               control={control}
@@ -272,12 +282,12 @@ export function TypeformModal({
                   autoFocus
                   type="email"
                   placeholder="seu@email.com"
-                  className="text-lg py-6"
+                  className="text-lg py-6 text-center"
                 />
               )}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm flex items-center">
+              <p className="text-red-500 text-sm flex items-center justify-center">
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {errors.email.message}
               </p>
@@ -288,12 +298,12 @@ export function TypeformModal({
       case 3: // Instagram
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Qual seu Instagram?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Qual seu Instagram?</h2>
             <Controller
               name="instagram"
               control={control}
               render={({ field }) => (
-                <div className="relative">
+                <div className="relative max-w-md mx-auto">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <span className="text-gray-500">@</span>
                   </div>
@@ -301,19 +311,19 @@ export function TypeformModal({
                     {...field}
                     autoFocus
                     placeholder="seu.perfil"
-                    className="text-lg py-6 pl-8"
+                    className="text-lg py-6 pl-8 text-center"
                   />
                 </div>
               )}
             />
-            <p className="text-sm text-muted-foreground">Opcional</p>
+            <p className="text-sm text-muted-foreground text-center">Opcional</p>
           </div>
         );
       
       case 4: // Monthly Revenue
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Qual sua média de faturamento mensal?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Qual sua média de faturamento mensal?</h2>
             <Controller
               name="monthlyRevenue"
               control={control}
@@ -321,7 +331,7 @@ export function TypeformModal({
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="space-y-4"
+                  className="space-y-4 max-w-md mx-auto"
                 >
                   <div className="flex items-center space-x-2 p-4 rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" onClick={() => field.onChange("0-5000")}>
                     <RadioGroupItem value="0-5000" id="r1" />
@@ -356,12 +366,12 @@ export function TypeformModal({
       case 5: // Paid Traffic
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Você já investe em tráfego pago?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Você já investe em tráfego pago?</h2>
             <Controller
               name="paidTraffic"
               control={control}
               render={({ field }) => (
-                <div className="space-y-6">
+                <div className="space-y-6 max-w-md mx-auto">
                   <div className="flex items-center justify-between p-4 rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" onClick={() => field.onChange(true)}>
                     <label className="cursor-pointer w-full">Sim</label>
                     <Switch
@@ -386,7 +396,7 @@ export function TypeformModal({
         if (paidTraffic) {
           return (
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gold">Quanto investe mensalmente em tráfego pago?</h2>
+              <h2 className="text-2xl font-bold text-gold text-center">Quanto investe mensalmente em tráfego pago?</h2>
               <Controller
                 name="trafficInvestment"
                 control={control}
@@ -394,7 +404,7 @@ export function TypeformModal({
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="space-y-4"
+                    className="space-y-4 max-w-md mx-auto"
                   >
                     <div className="flex items-center space-x-2 p-4 rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" onClick={() => field.onChange("0-1000")}>
                       <RadioGroupItem value="0-1000" id="t1" />
@@ -425,21 +435,23 @@ export function TypeformModal({
         // If not using paid traffic, this is the industry step
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Qual seu ramo de atuação?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
             <Controller
               name="industry"
               control={control}
               render={({ field }) => (
-                <Textarea
-                  {...field}
-                  autoFocus
-                  placeholder="Descreva o ramo de atuação da sua empresa"
-                  className="text-lg py-4 min-h-[120px]"
-                />
+                <div className="max-w-md mx-auto">
+                  <Textarea
+                    {...field}
+                    autoFocus
+                    placeholder="Descreva o ramo de atuação da sua empresa"
+                    className="text-lg py-4 min-h-[120px] text-center"
+                  />
+                </div>
               )}
             />
             {errors.industry && (
-              <p className="text-red-500 text-sm flex items-center">
+              <p className="text-red-500 text-sm flex items-center justify-center">
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {errors.industry.message}
               </p>
@@ -450,21 +462,23 @@ export function TypeformModal({
       case 7: // Industry (only if paid traffic is true)
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold">Qual seu ramo de atuação?</h2>
+            <h2 className="text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
             <Controller
               name="industry"
               control={control}
               render={({ field }) => (
-                <Textarea
-                  {...field}
-                  autoFocus
-                  placeholder="Descreva o ramo de atuação da sua empresa"
-                  className="text-lg py-4 min-h-[120px]"
-                />
+                <div className="max-w-md mx-auto">
+                  <Textarea
+                    {...field}
+                    autoFocus
+                    placeholder="Descreva o ramo de atuação da sua empresa"
+                    className="text-lg py-4 min-h-[120px] text-center"
+                  />
+                </div>
               )}
             />
             {errors.industry && (
-              <p className="text-red-500 text-sm flex items-center">
+              <p className="text-red-500 text-sm flex items-center justify-center">
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {errors.industry.message}
               </p>
@@ -485,18 +499,26 @@ export function TypeformModal({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent 
-          className="max-w-5xl h-[85vh] sm:h-[90vh] bg-background border-gold/20 p-0 overflow-hidden"
-          onInteractOutside={(e) => e.preventDefault()}
+          className="max-w-5xl h-[95vh] w-[95vw] sm:w-[95vw] bg-background border-gold/20 p-0 overflow-hidden"
         >
-          <DialogTitle className="sr-only">Agendar consulta</DialogTitle>
-          
-          {/* Close button */}
+          {/* Close button - single one */}
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 z-50 rounded-full p-1 bg-black/50 text-gold hover:bg-black/70 transition-colors"
+            className="absolute top-4 right-4 z-50 rounded-full p-2 bg-black/50 text-gold hover:bg-black/70 transition-colors"
+            aria-label="Fechar"
           >
             <X className="h-5 w-5" />
           </button>
+          
+          {/* Loading indicator for calendar */}
+          {!calendarLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-background z-40">
+              <div className="flex flex-col items-center gap-4">
+                <Loader2 className="h-10 w-10 text-gold animate-spin" />
+                <p className="text-lg">Carregando calendário de agendamento...</p>
+              </div>
+            </div>
+          )}
           
           {/* Cal.com embed */}
           <div className="w-full h-full overflow-hidden">
@@ -505,6 +527,8 @@ export function TypeformModal({
               className="w-full h-full border-0"
               frameBorder="0"
               allow="camera; microphone; fullscreen; display-capture; autoplay; clipboard-write"
+              onLoad={() => setCalendarLoaded(true)}
+              title="Calendário de agendamento"
             ></iframe>
           </div>
         </DialogContent>
@@ -516,24 +540,22 @@ export function TypeformModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-5xl sm:w-[95vw] h-[85vh] sm:h-[90vh] bg-background border-gold/20 p-0 overflow-hidden"
-        onInteractOutside={(e) => e.preventDefault()}
+        className="max-w-5xl w-[95vw] h-[95vh] bg-background border-gold/20 p-0 overflow-hidden"
       >
-        <DialogTitle className="sr-only">Formulário de contato</DialogTitle>
-        
         {/* Progress bar */}
-        <div className="w-full h-1 bg-gray-200">
+        <div className="w-full h-1.5 bg-gray-200">
           <div 
-            className="h-1 bg-gold transition-all duration-300 ease-in-out"
+            className="h-1.5 bg-gold transition-all duration-300 ease-in-out"
             style={{ width: `${progress}%` }}
           />
         </div>
         
         <div className="p-6 h-full flex flex-col">
-          {/* Close button */}
+          {/* Close button - single one */}
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-50"
+            className="absolute top-4 right-4 rounded-full p-2 hover:bg-gray-800 transition-colors z-50 text-gold"
+            aria-label="Fechar"
           >
             <X className="h-5 w-5" />
           </button>
@@ -544,10 +566,10 @@ export function TypeformModal({
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
                 className="mb-8"
               >
                 {renderStepContent()}
@@ -562,30 +584,31 @@ export function TypeformModal({
                 variant="outline"
                 onClick={() => setCurrentStep(prev => prev - 1)}
                 disabled={isSubmitting}
+                className="text-base"
               >
                 Voltar
               </Button>
             )}
-            <div className={currentStep === 0 ? 'w-full' : 'ml-auto'}>
+            <div className={`${currentStep === 0 ? 'w-full flex justify-center' : 'ml-auto'}`}>
               <Button
                 onClick={handleNextStep}
                 disabled={isSubmitting}
-                className={`${currentStep === 0 ? 'w-full' : ''} bg-gold hover:bg-gold-light text-background`}
+                className={`${currentStep === 0 ? 'w-full max-w-md' : ''} bg-[#ffdd00] hover:bg-[#e6c700] text-black font-medium text-base py-6`}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" /> 
                     Enviando
                   </>
                 ) : currentStep === totalSteps - 1 ? (
                   <>
-                    <Check className="mr-2 h-4 w-4" />
+                    <Check className="mr-2 h-5 w-5" />
                     Finalizar
                   </>
                 ) : (
                   <>
                     Continuar
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </>
                 )}
               </Button>
@@ -596,3 +619,4 @@ export function TypeformModal({
     </Dialog>
   );
 }
+

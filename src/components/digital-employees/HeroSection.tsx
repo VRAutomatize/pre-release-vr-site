@@ -46,7 +46,7 @@ const HeroSection = ({ calendarLink, webhookUrl }: HeroSectionProps) => {
         </div>
       </PageHero>
 
-      {/* Typeform Modal */}
+      {/* Typeform Modal compartilhado */}
       <TypeformModal 
         isOpen={isOpen} 
         onClose={closeModal} 

@@ -32,7 +32,7 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
               <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
                 Vamos analisar sua operação gratuitamente.
               </h2>
-              <p className="text-lg mb-8">
+              <p className="text-lg md:text-xl text-foreground/80 mb-8">
                 Receba um diagnóstico completo com:
               </p>
               <ul className="space-y-4 mb-8">
@@ -46,7 +46,7 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
               <div className="mt-8 hidden md:block">
                 <button 
                   onClick={openModal} 
-                  className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-4"
+                  className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
                   <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
                   <span className="text-sm sm:text-lg">
@@ -73,15 +73,7 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
         </div>
       </Card>
 
-      {/* Typeform Modal */}
-      <TypeformModal 
-        isOpen={isOpen} 
-        onClose={closeModal} 
-        calendarLink={calendarLink}
-        webhookUrl={webhookUrl}
-        showCalendar={showCalendar}
-        onShowCalendar={showCalendarView}
-      />
+      {/* Typeform Modal - compartilha a mesma instância via hook */}
     </section>
   );
 };

@@ -13,7 +13,7 @@ interface CTASectionProps {
 
 const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const { isOpen, openModal, closeModal } = useTypeformModal();
+  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
 
   return (
     <section className="relative py-20">
@@ -79,6 +79,8 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
         onClose={closeModal} 
         calendarLink={calendarLink}
         webhookUrl={webhookUrl}
+        showCalendar={showCalendar}
+        onShowCalendar={showCalendarView}
       />
     </section>
   );

@@ -13,7 +13,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ calendarLink, webhookUrl }: HeroSectionProps) => {
   const isMobile = useIsMobile();
-  const { isOpen, openModal, closeModal } = useTypeformModal();
+  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
   
   return (
     <>
@@ -52,6 +52,8 @@ const HeroSection = ({ calendarLink, webhookUrl }: HeroSectionProps) => {
         onClose={closeModal} 
         calendarLink={calendarLink}
         webhookUrl={webhookUrl}
+        showCalendar={showCalendar}
+        onShowCalendar={showCalendarView}
       />
     </>
   );

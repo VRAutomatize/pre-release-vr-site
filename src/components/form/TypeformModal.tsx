@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -19,13 +18,15 @@ interface TypeformModalProps {
   onClose: () => void;
   calendarLink?: string;
   webhookUrl?: string;
+  showCalendar?: boolean;
+  onShowCalendar?: () => void;
 }
 
 // Form schema for validation
 const formSchema = z.object({
   fullName: z.string().min(3, "Nome completo é obrigatório"),
   phone: z.string()
-    .min(11, "Telefone deve ter pelo menos 11 dígitos (com DDD)")
+    .min(10, "Telefone deve ter pelo menos 10 dígitos (com DDD)")
     .regex(/^\d+$/, "Apenas números são permitidos"),
   email: z.string().email("Email inválido"),
   instagram: z.string().optional(),
@@ -62,7 +63,14 @@ const formatPhoneNumber = (value: string) => {
   }
 };
 
-export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com/your-link", webhookUrl = "" }: TypeformModalProps) {
+export function TypeformModal({ 
+  isOpen, 
+  onClose, 
+  calendarLink = "https://cal.com/vrautomatize/call", 
+  webhookUrl = "",
+  showCalendar = false,
+  onShowCalendar 
+}: TypeformModalProps) {
   const { toast } = useToast();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [currentStep, setCurrentStep] = useState(0);
@@ -166,15 +174,14 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
       // Show success toast
       toast({
         title: "Formulário enviado com sucesso!",
-        description: "Você será redirecionado para o calendário de agendamento",
+        description: "Agendamento disponível abaixo",
         duration: 3000,
       });
       
-      // Close modal and redirect to calendar
-      setTimeout(() => {
-        onClose();
-        window.location.href = calendarLink;
-      }, 1500);
+      // Show embedded calendar instead of redirecting
+      if (onShowCalendar) {
+        onShowCalendar();
+      }
       
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -186,6 +193,11 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
     } finally {
       setIsSubmitting(false);
     }
+  };
+  
+  // Function to clean phone input - only allow digits
+  const cleanPhoneInput = (value: string): string => {
+    return value.replace(/\D/g, "");
   };
   
   // Function to handle form field display based on current step
@@ -230,8 +242,9 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
                   placeholder="(00) 00000-0000"
                   className="text-lg py-6"
                   onChange={(e) => {
-                    const formatted = formatPhoneNumber(e.target.value);
-                    field.onChange(formatted);
+                    // Only allow digits
+                    const cleaned = cleanPhoneInput(e.target.value);
+                    field.onChange(cleaned);
                   }}
                 />
               )}
@@ -242,7 +255,7 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
                 {errors.phone.message}
               </p>
             )}
-            <p className="text-sm text-muted-foreground">Utilizaremos para contato via WhatsApp</p>
+            <p className="text-sm text-muted-foreground">Apenas números, incluindo DDD</p>
           </div>
         );
       
@@ -467,12 +480,47 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
   // Progress calculation
   const progress = Math.round((currentStep / (totalSteps - 1)) * 100);
 
+  // If showing calendar view
+  if (showCalendar) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent 
+          className="max-w-5xl h-[85vh] sm:h-[90vh] bg-background border-gold/20 p-0 overflow-hidden"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <DialogTitle className="sr-only">Agendar consulta</DialogTitle>
+          
+          {/* Close button */}
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 z-50 rounded-full p-1 bg-black/50 text-gold hover:bg-black/70 transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          
+          {/* Cal.com embed */}
+          <div className="w-full h-full overflow-hidden">
+            <iframe
+              src={calendarLink}
+              className="w-full h-full border-0"
+              frameBorder="0"
+              allow="camera; microphone; fullscreen; display-capture; autoplay; clipboard-write"
+            ></iframe>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Form view
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className={`${isMobile ? 'max-w-[95vw]' : 'max-w-2xl'} bg-background border-gold/20 p-0 overflow-hidden`}
+        className="max-w-5xl sm:w-[95vw] h-[85vh] sm:h-[90vh] bg-background border-gold/20 p-0 overflow-hidden"
         onInteractOutside={(e) => e.preventDefault()}
       >
+        <DialogTitle className="sr-only">Formulário de contato</DialogTitle>
+        
         {/* Progress bar */}
         <div className="w-full h-1 bg-gray-200">
           <div 
@@ -481,17 +529,17 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
           />
         </div>
         
-        <div className="p-6">
+        <div className="p-6 h-full flex flex-col">
           {/* Close button */}
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="absolute top-4 right-4 rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-50"
           >
             <X className="h-5 w-5" />
           </button>
           
           {/* Step content */}
-          <div className="min-h-[320px] flex flex-col justify-between">
+          <div className="flex-1 flex flex-col justify-center">
             {/* Current step content with animation */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -505,42 +553,42 @@ export function TypeformModal({ isOpen, onClose, calendarLink = "https://cal.com
                 {renderStepContent()}
               </motion.div>
             </AnimatePresence>
-            
-            {/* Navigation buttons */}
-            <div className="flex justify-between mt-8">
-              {currentStep > 0 && (
-                <Button
-                  variant="outline"
-                  onClick={() => setCurrentStep(prev => prev - 1)}
-                  disabled={isSubmitting}
-                >
-                  Voltar
-                </Button>
-              )}
-              <div className={currentStep === 0 ? 'w-full' : 'ml-auto'}>
-                <Button
-                  onClick={handleNextStep}
-                  disabled={isSubmitting}
-                  className={`${currentStep === 0 ? 'w-full' : ''} bg-gold hover:bg-gold-light text-background`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
-                      Enviando
-                    </>
-                  ) : currentStep === totalSteps - 1 ? (
-                    <>
-                      <Check className="mr-2 h-4 w-4" />
-                      Finalizar
-                    </>
-                  ) : (
-                    <>
-                      Continuar
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </div>
+          </div>
+          
+          {/* Navigation buttons */}
+          <div className="mt-auto flex justify-between">
+            {currentStep > 0 && (
+              <Button
+                variant="outline"
+                onClick={() => setCurrentStep(prev => prev - 1)}
+                disabled={isSubmitting}
+              >
+                Voltar
+              </Button>
+            )}
+            <div className={currentStep === 0 ? 'w-full' : 'ml-auto'}>
+              <Button
+                onClick={handleNextStep}
+                disabled={isSubmitting}
+                className={`${currentStep === 0 ? 'w-full' : ''} bg-gold hover:bg-gold-light text-background`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                    Enviando
+                  </>
+                ) : currentStep === totalSteps - 1 ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4" />
+                    Finalizar
+                  </>
+                ) : (
+                  <>
+                    Continuar
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </div>

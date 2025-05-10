@@ -14,13 +14,6 @@ import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
 
-// Add type definition for Window with Cal property
-declare global {
-  interface Window {
-    Cal?: any;
-  }
-}
-
 // Animation variants for scroll reveal
 const sectionVariants = {
   hidden: { opacity: 0, y: 30 },

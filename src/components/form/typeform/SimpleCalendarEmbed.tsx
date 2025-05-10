@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2, MessageSquare } from "lucide-react";
+import { X, Loader2, Link } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { CalProvider, getCalApi } from "@calcom/embed-react";
 
 interface SimpleCalendarEmbedProps {
   isOpen: boolean;
@@ -17,130 +18,63 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
-  const calendarContainerId = "vr-automatize-cal-container";
-  const calendarInitialized = useRef(false);
   
-  // Reset state when modal opens
+  // Reset loading state when modal opens
   useEffect(() => {
     if (isOpen) {
       setIsLoading(true);
       setLoadError(false);
-      calendarInitialized.current = false;
     }
   }, [isOpen]);
   
-  // Initialize calendar with VR Automatize parameters
+  // Use Cal.com's official embed API
   useEffect(() => {
-    if (!isOpen || calendarInitialized.current) return;
+    if (!isOpen) return;
     
     let timeoutId: number;
     
-    const initializeCalendar = () => {
+    const initializeCalendar = async () => {
       try {
-        console.log("Initializing VR Automatize calendar with direct script");
-        calendarInitialized.current = true;
+        console.log("Initializing Cal.com API");
+        const cal = await getCalApi();
         
-        // Create and append the script
-        const calScript = document.createElement("script");
-        calScript.type = "text/javascript";
-        calScript.innerHTML = `
-          (function (C, A, L) {
-            let p = function (a, ar) {
-              a.q.push(ar);
-            };
-            let d = C.document;
-            C.Cal =
-              C.Cal ||
-              function () {
-                let cal = C.Cal;
-                let ar = arguments;
-                if (!cal.loaded) {
-                  cal.ns = {};
-                  cal.q = cal.q || [];
-                  d.head.appendChild(d.createElement("script")).src = A;
-                  cal.loaded = true;
-                }
-                if (ar[0] === L) {
-                  const api = function () {
-                    p(api, arguments);
-                  };
-                  const namespace = ar[1];
-                  api.q = api.q || [];
-                  if (typeof namespace === "string") {
-                    cal.ns[namespace] = cal.ns[namespace] || api;
-                    p(cal.ns[namespace], ar);
-                    p(cal, ["initNamespace", namespace]);
-                  } else p(cal, ar);
-                  return;
-                }
-                p(cal, ar);
-              };
-          })(window, "https://app.cal.com/embed/embed.js", "init");
-          
-          // Initialize with VR Automatize settings
-          Cal("init", { origin: "https://app.cal.com" });
-
-          Cal("inline", {
-            elementOrSelector: "#${calendarContainerId}",
-            calLink: "vrautomatize/call",
-            config: {
-              theme: "dark",
-              hideEventTypeDetails: false,
-              layout: "month_view"
-            }
-          });
-          
-          // Add event listeners
-          Cal("on", {
-            action: "loaded",
-            callback: () => {
-              console.log("Cal.com calendar loaded successfully via pure JS");
-              window.dispatchEvent(new CustomEvent('cal:loaded'));
-            }
-          });
-          
-          Cal("on", {
-            action: "error",
-            callback: (error) => {
-              console.error("Cal.com calendar error:", error);
-              window.dispatchEvent(new CustomEvent('cal:error'));
-            }
-          });
-        `;
+        // Clear any previous instance
+        cal.destroy();
         
-        // Clean up any existing scripts first
-        const existingScripts = document.querySelectorAll('script[data-cal-embed="true"]');
-        existingScripts.forEach(script => script.remove());
+        // Configure Cal.com with options
+        cal("init", {
+          debug: true, // Enable debug mode for development
+          calLink: "vrautomatize/call",
+          elementOrSelector: "#cal-embed-area",
+          config: {
+            layout: "month_view",
+            theme: "dark",
+          }
+        });
         
-        // Add data attribute to track our script
-        calScript.setAttribute('data-cal-embed', 'true');
+        // Add event listeners for monitoring
+        cal("on", {
+          action: "loaded",
+          callback: () => {
+            console.log("Cal.com calendar loaded successfully");
+            setIsLoading(false);
+          }
+        });
         
-        document.body.appendChild(calScript);
+        cal("on", {
+          action: "error",
+          callback: (error: any) => {
+            console.error("Cal.com calendar error:", error);
+            setLoadError(true);
+            if (onFallback) onFallback();
+          }
+        });
         
-        // Listen for success event
-        const handleLoadSuccess = () => {
-          console.log("Calendar loaded event received");
-          setIsLoading(false);
-        };
-        
-        // Listen for error event
-        const handleLoadError = () => {
-          console.error("Calendar error event received");
-          setLoadError(true);
-          setIsLoading(false);
-          if (onFallback) onFallback();
-        };
-        
-        // Add event listeners
-        window.addEventListener('cal:loaded', handleLoadSuccess);
-        window.addEventListener('cal:error', handleLoadError);
-        
-        // Set a timeout for loading
+        // Set a timeout to detect loading issues
         timeoutId = window.setTimeout(() => {
           if (isLoading) {
             console.error("Calendar loading timed out after 15 seconds");
             setLoadError(true);
-            setIsLoading(false);
             toast({
               title: "Problema ao carregar calendário",
               description: "Estamos alternando para um método alternativo",
@@ -150,47 +84,31 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
           }
         }, 15000); // 15 second timeout
         
-        return () => {
-          window.removeEventListener('cal:loaded', handleLoadSuccess);
-          window.removeEventListener('cal:error', handleLoadError);
-          
-          // Clean up script when unmounting
-          if (calScript.parentNode) {
-            calScript.parentNode.removeChild(calScript);
-          }
-          
-          // Clean up Cal object if possible
-          if (window.Cal && typeof window.Cal.destroy === 'function') {
-            try {
-              window.Cal.destroy();
-            } catch (e) {
-              console.log("Cal.com cleanup error:", e);
-            }
-          }
-        };
       } catch (error) {
-        console.error("Failed to initialize calendar:", error);
+        console.error("Cal.com initialization error:", error);
         setLoadError(true);
-        setIsLoading(false);
         if (onFallback) onFallback();
       }
     };
     
-    // Small delay to ensure DOM is ready
+    // Initialize calendar with a small delay to ensure DOM is ready
     const initTimeout = setTimeout(() => {
       initializeCalendar();
-    }, 500);
+    }, 300);
     
+    // Cleanup function
     return () => {
       clearTimeout(initTimeout);
       if (timeoutId) clearTimeout(timeoutId);
+      
+      // Clean up Cal.com instance when component unmounts
+      try {
+        getCalApi().then(cal => cal?.destroy());
+      } catch (e) {
+        console.log("Cal.com cleanup error:", e);
+      }
     };
   }, [isOpen, isLoading, onFallback]);
-  
-  // Helper function for WhatsApp fallback
-  const getWhatsAppLink = () => {
-    return "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!";
-  };
   
   if (!isOpen) return null;
   
@@ -221,9 +139,9 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
           </div>
         )}
         
-        {/* Cal.com embed container */}
+        {/* Cal.com embed area */}
         <div 
-          id={calendarContainerId}
+          id="cal-embed-area" 
           className="relative h-[calc(95vh-60px)] w-full overflow-auto"
           style={{ minHeight: "600px" }}
         />
@@ -233,23 +151,13 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm z-50">
             <p className="text-destructive text-lg mb-4">Não foi possível carregar o calendário</p>
             <div className="space-y-4">
-              {onFallback && (
-                <button
-                  onClick={onFallback}
-                  className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center"
-                >
-                  Tentar método alternativo
-                </button>
-              )}
-              <a
-                href={getWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+              <button
+                onClick={onFallback}
+                className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center"
               >
-                <MessageSquare className="h-5 w-5" />
-                Agendar pelo WhatsApp
-              </a>
+                <Link className="mr-2 h-4 w-4" />
+                Tentar método alternativo
+              </button>
             </div>
           </div>
         )}

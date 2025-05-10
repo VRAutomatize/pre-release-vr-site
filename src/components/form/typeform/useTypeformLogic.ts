@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -90,7 +89,6 @@ export const useTypeformLogic = ({
       });
     } catch (error) {
       console.error("Failed to send partial data:", error);
-      // Don't show error to user for partial data sends
     }
   }, [webhookUrl, getValues, progressData, currentStep]);
   
@@ -124,7 +122,7 @@ export const useTypeformLogic = ({
     }
   }, [currentStep, totalSteps, sendPartialData, trigger, getValues, paidTraffic]);
   
-  // Handle form submission
+  // Modified form submission to better handle calendar transition
   const onSubmitForm = async (data: FormData) => {
     setIsSubmitting(true);
     
@@ -148,14 +146,14 @@ export const useTypeformLogic = ({
         });
       }
       
-      // Show success toast with animation hint
+      // Show success toast
       toast({
         title: "Formulário enviado com sucesso!",
-        description: "Carregando calendário de agendamento...",
+        description: "Preparando calendário...",
         duration: 3000,
       });
       
-      // Show embedded calendar after a short delay for better transition
+      // Close form first, then show calendar after a short delay
       setTimeout(() => {
         if (onShowCalendar) {
           onShowCalendar();

@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface UseCalendarEmbedProps {
   showCalendar: boolean;
@@ -12,68 +12,68 @@ export const useCalendarEmbed = ({
   isOpen,
   setCalendarLoaded
 }: UseCalendarEmbedProps) => {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  
   // Load Cal.com script dynamically when calendar view is shown
   useEffect(() => {
-    if (showCalendar && isOpen && !scriptLoaded) {
-      // Create Cal.com script
+    if (showCalendar && isOpen) {
+      // Create script element
       const script = document.createElement('script');
       script.src = "https://app.cal.com/embed/embed.js";
       script.async = true;
       script.onload = () => {
-        setScriptLoaded(true);
-        
-        // Initialize Cal.com after script is loaded
-        if (window.Cal) {
-          window.Cal("init", "call", {origin: "https://cal.com"});
-          
-          // Wait a bit for Cal to initialize properly
-          setTimeout(() => {
-            if (window.Cal && window.Cal.ns && window.Cal.ns.call) {
-              window.Cal.ns.call("inline", {
-                elementOrSelector: "#cal-embed-container",
-                config: {
-                  "layout": "month_view",
-                  "theme": "dark",
-                  "cssVarsPerTheme": {
-                    "dark": {
-                      "cal-brand": "#FFD700",
-                    }
-                  }
-                },
-                calLink: "vrautomatize/call",
-              });
-              
-              // Mark calendar as loaded after a short delay to ensure rendering
-              setTimeout(() => {
-                setCalendarLoaded(true);
-              }, 1000);
-            }
-          }, 500);
-        }
+        setTimeout(() => {
+          if (window.Cal) {
+            // Initialize Cal
+            window.Cal("init", "call", {origin: "https://cal.com"});
+            
+            // Setup inline calendar
+            window.Cal.ns.call("inline", {
+              elementOrSelector: "#my-cal-inline",
+              config: {
+                "layout": "month_view",
+                "theme": "dark"
+              },
+              calLink: "vrautomatize/call",
+            });
+            
+            // Add custom UI theme
+            window.Cal.ns.call("ui", {
+              "theme": "dark",
+              "cssVarsPerTheme": {
+                "dark": {
+                  "cal-brand": "#FFD700",
+                  "cal-bg": "#1A1F2C",
+                  "cal-text": "#FFFFFF"
+                }
+              },
+              "hideEventTypeDetails": true,
+              "layout": "month_view"
+            });
+            
+            // Mark as loaded after a short delay
+            setTimeout(() => {
+              setCalendarLoaded(true);
+            }, 1000);
+          }
+        }, 300);
       };
       
+      // Add the script to the page
       document.head.appendChild(script);
-    }
-    
-    // Cleanup function
-    return () => {
-      if (!isOpen && scriptLoaded) {
-        setScriptLoaded(false);
-        
-        // Find and remove the Cal.com script
-        const scripts = document.querySelectorAll('script');
-        scripts.forEach(script => {
-          if (script.src.includes('cal.com/embed/embed.js')) {
-            try {
-              document.head.removeChild(script);
-            } catch (error) {
-              console.error("Error removing Cal script:", error);
+      
+      // Cleanup function
+      return () => {
+        if (!isOpen) {
+          setCalendarLoaded(false);
+          
+          // Remove any Cal.com scripts when dialog closes
+          const scripts = document.querySelectorAll('script');
+          scripts.forEach(s => {
+            if (s.src && s.src.includes('cal.com/embed/embed.js')) {
+              s.remove();
             }
-          }
-        });
-      }
-    };
-  }, [showCalendar, isOpen, setCalendarLoaded, scriptLoaded]);
+          });
+        }
+      };
+    }
+  }, [showCalendar, isOpen, setCalendarLoaded]);
 };

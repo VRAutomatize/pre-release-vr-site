@@ -38,7 +38,7 @@ const HeroSection = ({ calendarLink, webhookUrl, openModal }: HeroSectionProps) 
             >
               <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
               <span className={isSmallScreen ? "text-sm" : "text-base"}>
-                {isMobile ? "Calcule sua economia" : "Cálculo estimado da sua economia anual com automação"}
+                {isMobile ? "Calcule sua economia" : "Descubra quanto sua empresa pode economizar"}
               </span>
               <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
             </button>

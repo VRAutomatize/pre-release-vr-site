@@ -59,11 +59,11 @@ const DigitalEmployees = () => {
         {/* Comparison Section */}
         <ComparisonSection />
         
-        {/* CTA Section - Compartilhando a mesma instância via hook */}
-        <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} />
-        
         {/* Ideal For Section */}
         <IdealForSection />
+        
+        {/* CTA Section - Now moved below IdealForSection */}
+        <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} />
       </div>
 
       <Footer />

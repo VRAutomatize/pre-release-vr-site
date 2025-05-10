@@ -63,7 +63,7 @@ const FormView: React.FC<FormViewProps> = ({
             <X className="h-5 w-5" />
           </button>
           
-          {/* Step content */}
+          {/* Step content - use flex classes to center content vertically */}
           <div className="flex-1 flex flex-col items-center justify-center">
             {/* Current step content with animation */}
             <AnimatePresence mode="wait">
@@ -73,7 +73,7 @@ const FormView: React.FC<FormViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="w-full max-w-md mx-auto"
+                className="w-full max-w-md mx-auto flex items-center justify-center"
               >
                 <FormStep 
                   currentStep={currentStep} 

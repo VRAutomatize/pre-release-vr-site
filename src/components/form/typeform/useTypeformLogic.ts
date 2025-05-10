@@ -148,17 +148,19 @@ export const useTypeformLogic = ({
         });
       }
       
-      // Show success toast
+      // Show success toast with animation hint
       toast({
         title: "Formulário enviado com sucesso!",
         description: "Carregando calendário de agendamento...",
         duration: 3000,
       });
       
-      // Show embedded calendar
-      if (onShowCalendar) {
-        onShowCalendar();
-      }
+      // Show embedded calendar after a short delay for better transition
+      setTimeout(() => {
+        if (onShowCalendar) {
+          onShowCalendar();
+        }
+      }, 500);
       
     } catch (error) {
       console.error("Error submitting form:", error);

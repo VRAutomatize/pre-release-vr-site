@@ -26,8 +26,12 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "peer relative aspect-square h-4 w-4 rounded-full border-2 border-gold/50 text-gold ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200",
-        "data-[state=checked]:border-gold data-[state=checked]:bg-transparent data-[state=checked]:shadow-[0_0_10px_rgba(255,215,0,0.5)] data-[state=checked]:after:absolute data-[state=checked]:after:content-[''] data-[state=checked]:after:inset-0 data-[state=checked]:after:m-auto data-[state=checked]:after:bg-gold data-[state=checked]:after:rounded-full data-[state=checked]:after:w-2 data-[state=checked]:after:h-2 data-[state=checked]:after:shadow-[0_0_6px_2px_rgba(255,215,0,0.5)]",
+        "peer relative aspect-square h-4 w-4 rounded-full border-2 border-gold/50 text-gold ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300",
+        "data-[state=checked]:border-gold data-[state=checked]:bg-transparent data-[state=checked]:shadow-[0_0_15px_rgba(255,215,0,0.5)]",
+        // Glass effect when checked
+        "after:content-[''] after:absolute after:inset-0 after:rounded-full after:scale-0 after:opacity-0 after:transition-all after:duration-300 data-[state=checked]:after:scale-100 data-[state=checked]:after:opacity-100 after:backdrop-blur-sm after:bg-gold/30",
+        // Inner dot
+        "before:content-[''] before:absolute before:inset-0 before:m-auto before:rounded-full before:w-1.5 before:h-1.5 before:bg-gold before:scale-0 before:opacity-0 before:transition-all before:duration-300 data-[state=checked]:before:scale-100 data-[state=checked]:before:opacity-100",
         className
       )}
       {...props}

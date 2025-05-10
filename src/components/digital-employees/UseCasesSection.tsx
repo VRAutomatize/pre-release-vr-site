@@ -56,28 +56,28 @@ const UseCasesSection = () => {
   ];
 
   return (
-    <section className="relative">
+    <section className="relative py-16">
       <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{
         once: true,
         amount: 0.3
       }} variants={containerVariants}>
-        <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-16 text-center">
+        <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-20 text-center">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {useCases.map((useCase, index) => (
             <motion.div 
               key={index} 
               variants={itemVariants} 
-              className="floating-card p-8 flex items-start gap-6 hover:border-gold/40 transition-all duration-300 rounded-lg"
+              className="floating-card p-8 flex items-start gap-6 hover:border-gold/40 transition-all duration-300 rounded-lg hover:-translate-y-2"
             >
-              <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                <useCase.icon className="h-6 w-6 text-gold" />
+              <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
+                <useCase.icon className="h-8 w-8 text-gold" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
-                <p className="text-foreground/70">{useCase.description}</p>
+                <h3 className="text-2xl font-semibold mb-3">{useCase.title}</h3>
+                <p className="text-foreground/70 text-lg">{useCase.description}</p>
               </div>
             </motion.div>
           ))}

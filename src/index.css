@@ -53,6 +53,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    scroll-behavior: smooth;
   }
 }
 
@@ -195,6 +196,30 @@
   
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
+  }
+
+  /* Scroll reveal animation */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Improved scroll experience */
+  html {
+    scroll-padding-top: 100px;
+  }
+  
+  /* Enhance spacing between sections on mobile */
+  @media (max-width: 768px) {
+    section {
+      margin-bottom: 4rem;
+    }
   }
 }
 

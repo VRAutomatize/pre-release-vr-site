@@ -54,7 +54,7 @@ const FormView: React.FC<FormViewProps> = ({
         </div>
         
         <div className="p-4 sm:p-6 h-full flex flex-col">
-          {/* Close button */}
+          {/* Close button - only showing the gold one */}
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 rounded-full p-2 hover:bg-gray-800 transition-colors z-50 text-gold"
@@ -86,7 +86,7 @@ const FormView: React.FC<FormViewProps> = ({
             </AnimatePresence>
           </div>
           
-          {/* Navigation buttons */}
+          {/* Navigation buttons - using the dashboard style */}
           <div className="mt-auto flex justify-between max-w-md w-full mx-auto">
             {currentStep > 0 && (
               <Button

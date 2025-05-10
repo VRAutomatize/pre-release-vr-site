@@ -157,20 +157,20 @@ const FormStep: React.FC<FormStepProps> = ({
                   { value: "50001-100000", label: "R$ 50.001 - R$ 100.000" },
                   { value: "100000+", label: "Acima de R$ 100.000" }
                 ].map((option, index) => (
-                  <div 
+                  <label 
                     key={option.value}
-                    className="flex items-center space-x-2 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
-                    onClick={() => field.onChange(option.value)}
+                    className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
+                    htmlFor={`r${index+1}`}
                   >
-                    <RadioGroupItem 
-                      value={option.value} 
-                      id={`r${index+1}`} 
-                      className="text-gold border-gold data-[state=checked]:border-gold data-[state=checked]:text-gold"
-                    />
-                    <label htmlFor={`r${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
-                      {option.label}
-                    </label>
-                  </div>
+                    <div className="flex items-center h-5">
+                      <RadioGroupItem 
+                        value={option.value} 
+                        id={`r${index+1}`}
+                        className="border-gold"
+                      />
+                    </div>
+                    <div className="text-sm sm:text-base">{option.label}</div>
+                  </label>
                 ))}
               </RadioGroup>
             )}
@@ -231,20 +231,20 @@ const FormStep: React.FC<FormStepProps> = ({
                     { value: "5001-10000", label: "R$ 5.001 - R$ 10.000" },
                     { value: "10000+", label: "Acima de R$ 10.000" }
                   ].map((option, index) => (
-                    <div 
+                    <label 
                       key={option.value}
-                      className="flex items-center space-x-2 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
-                      onClick={() => field.onChange(option.value)}
+                      className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
+                      htmlFor={`t${index+1}`}
                     >
-                      <RadioGroupItem 
-                        value={option.value} 
-                        id={`t${index+1}`} 
-                        className="text-gold border-gold data-[state=checked]:border-gold data-[state=checked]:text-gold"
-                      />
-                      <label htmlFor={`t${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
-                        {option.label}
-                      </label>
-                    </div>
+                      <div className="flex items-center h-5">
+                        <RadioGroupItem 
+                          value={option.value} 
+                          id={`t${index+1}`}
+                          className="border-gold"
+                        />
+                      </div>
+                      <div className="text-sm sm:text-base">{option.label}</div>
+                    </label>
                   ))}
                 </RadioGroup>
               )}

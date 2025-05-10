@@ -38,7 +38,7 @@ const FormView: React.FC<FormViewProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-5xl w-[95vw] h-[95vh] bg-background border-gold/20 p-0 overflow-hidden"
+        className="max-w-5xl w-[95vw] h-[95vh] bg-background/80 border-gold/20 p-0 overflow-hidden backdrop-blur-lg"
         // Remove the default close button by providing an empty onClose
         onInteractOutside={(e) => e.preventDefault()}
       >
@@ -54,7 +54,7 @@ const FormView: React.FC<FormViewProps> = ({
         </div>
         
         <div className="p-4 sm:p-6 h-full flex flex-col">
-          {/* Close button - only showing the gold one */}
+          {/* Close button */}
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 rounded-full p-2 hover:bg-gray-800 transition-colors z-50 text-gold"
@@ -64,7 +64,7 @@ const FormView: React.FC<FormViewProps> = ({
           </button>
           
           {/* Step content */}
-          <div className="flex-1 flex flex-col justify-center items-center">
+          <div className="flex-1 flex flex-col items-center justify-center">
             {/* Current step content with animation */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -73,7 +73,7 @@ const FormView: React.FC<FormViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="w-full max-w-md mx-auto flex flex-col justify-center items-center"
+                className="w-full max-w-md mx-auto"
               >
                 <FormStep 
                   currentStep={currentStep} 
@@ -86,8 +86,8 @@ const FormView: React.FC<FormViewProps> = ({
             </AnimatePresence>
           </div>
           
-          {/* Navigation buttons - using the dashboard style */}
-          <div className="mt-auto flex justify-between max-w-md w-full mx-auto">
+          {/* Navigation buttons */}
+          <div className="mt-6 flex justify-between max-w-md w-full mx-auto">
             {currentStep > 0 && (
               <Button
                 variant="outline"

@@ -1,7 +1,6 @@
 
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
-import { Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -27,14 +26,14 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "peer relative aspect-square h-4 w-4 rounded-full border-2 border-gold/50 text-gold ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200",
+        "data-[state=checked]:border-gold data-[state=checked]:bg-transparent data-[state=checked]:shadow-[0_0_10px_rgba(255,215,0,0.5)] data-[state=checked]:after:absolute data-[state=checked]:after:content-[''] data-[state=checked]:after:inset-0 data-[state=checked]:after:m-auto data-[state=checked]:after:bg-gold data-[state=checked]:after:rounded-full data-[state=checked]:after:w-2 data-[state=checked]:after:h-2 data-[state=checked]:after:shadow-[0_0_6px_2px_rgba(255,215,0,0.5)]",
         className
       )}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-2.5 w-2.5 fill-current text-current" />
-      </RadioGroupPrimitive.Indicator>
+      {/* Empty RadioGroupIndicator - using CSS for the indicator instead */}
+      <RadioGroupPrimitive.Indicator className="hidden" />
     </RadioGroupPrimitive.Item>
   )
 })

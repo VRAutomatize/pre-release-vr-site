@@ -13,6 +13,7 @@ import { ArrowLeft, MessageSquare } from "lucide-react";
 import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
+import CalendarViewAlt from "@/components/form/typeform/CalendarViewAlt";
 
 // Add type definition for Window with Cal property
 declare global {
@@ -43,7 +44,7 @@ const DigitalEmployees = () => {
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
   // Single instance of the typeform modal state
-  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
+  const { isOpen, showCalendar, useAltCalendarView, openModal, closeModal, showCalendarView } = useTypeformModal();
 
   // Smooth scroll effect
   useEffect(() => {
@@ -70,6 +71,13 @@ const DigitalEmployees = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Log calendar view status
+  useEffect(() => {
+    if (showCalendar) {
+      console.log("Calendar view requested, using alternative view:", useAltCalendarView);
+    }
+  }, [showCalendar, useAltCalendarView]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -158,15 +166,22 @@ const DigitalEmployees = () => {
         </motion.div>
       </div>
 
-      {/* Single TypeformModal instance for the entire page */}
-      <TypeformModal 
-        isOpen={isOpen} 
-        onClose={closeModal} 
-        calendarLink={calendarLink}
-        webhookUrl={webhookUrl}
-        showCalendar={showCalendar}
-        onShowCalendar={showCalendarView}
-      />
+      {/* Use the appropriate calendar view based on the hook setting */}
+      {showCalendar && useAltCalendarView ? (
+        <CalendarViewAlt 
+          isOpen={isOpen && showCalendar} 
+          onClose={closeModal} 
+        />
+      ) : (
+        <TypeformModal 
+          isOpen={isOpen} 
+          onClose={closeModal} 
+          calendarLink={calendarLink}
+          webhookUrl={webhookUrl}
+          showCalendar={showCalendar}
+          onShowCalendar={showCalendarView}
+        />
+      )}
 
       <Footer />
     </div>

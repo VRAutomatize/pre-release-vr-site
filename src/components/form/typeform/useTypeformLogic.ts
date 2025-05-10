@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ export const useTypeformLogic = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progressData, setProgressData] = useState<Partial<FormData>>({});
   const [calendarLoaded, setCalendarLoaded] = useState(false);
+  const [calendarError, setCalendarError] = useState(false);
   
   const { control, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isValid }, reset } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -42,8 +44,36 @@ export const useTypeformLogic = ({
       setCurrentStep(0);
       reset(defaultValues);
       setCalendarLoaded(false);
+      setCalendarError(false);
     }
   }, [isOpen, reset]);
+
+  // Set up listener for Cal.com errors
+  useEffect(() => {
+    if (showCalendar) {
+      const handleCalError = () => {
+        console.error("Cal.com error detected");
+        setCalendarError(true);
+      };
+      
+      // Listen for errors from Cal.com (custom event we could dispatch)
+      window.addEventListener('cal:error', handleCalError);
+      
+      // Set a timeout to detect if calendar hasn't loaded
+      const timeout = setTimeout(() => {
+        if (!calendarLoaded) {
+          console.log("Calendar loading timeout triggered");
+          setCalendarError(true);
+          setCalendarLoaded(true); // Stop the loading indicator
+        }
+      }, 12000); // 12 second timeout
+      
+      return () => {
+        window.removeEventListener('cal:error', handleCalError);
+        clearTimeout(timeout);
+      };
+    }
+  }, [showCalendar, calendarLoaded]);
 
   // Handle key press for form navigation
   useEffect(() => {
@@ -153,7 +183,10 @@ export const useTypeformLogic = ({
         duration: 3000,
       });
       
-      // Close form first, then show calendar after a short delay
+      // Reset calendar error state before showing calendar
+      setCalendarError(false);
+      
+      // Show calendar after a short delay
       setTimeout(() => {
         if (onShowCalendar) {
           onShowCalendar();
@@ -193,5 +226,7 @@ export const useTypeformLogic = ({
     handleNextStep,
     calendarLoaded,
     setCalendarLoaded,
+    calendarError,
+    setCalendarError,
   };
 };

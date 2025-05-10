@@ -1,19 +1,20 @@
 
 import React from "react";
-import { motion } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2 } from "lucide-react";
+import { X, Loader2, Calendar as CalendarIcon } from "lucide-react";
 
 interface CalendarViewProps {
   isOpen: boolean;
   onClose: () => void;
   calendarLoaded: boolean;
+  calendarError: boolean;
 }
 
 const CalendarView: React.FC<CalendarViewProps> = ({ 
   isOpen, 
   onClose, 
-  calendarLoaded 
+  calendarLoaded,
+  calendarError
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -36,8 +37,28 @@ const CalendarView: React.FC<CalendarViewProps> = ({
         
         {/* Simplified loading indicator */}
         {!calendarLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-40">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
             <Loader2 className="h-12 w-12 text-gold animate-spin" />
+            <p className="mt-4 text-gold font-medium">Carregando calendário...</p>
+          </div>
+        )}
+        
+        {/* Error state */}
+        {calendarError && calendarLoaded && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
+            <CalendarIcon className="h-16 w-16 text-gold/50 mb-4" />
+            <h3 className="text-xl font-semibold text-gold mb-2">Não foi possível carregar o calendário</h3>
+            <p className="text-white/70 mb-6 text-center max-w-md">
+              Por favor, tente novamente ou entre em contato pelo WhatsApp para agendar sua consulta.
+            </p>
+            <a 
+              href="https://wa.me/554788558257?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gold hover:bg-gold/80 text-black font-medium px-6 py-3 rounded-md transition-colors"
+            >
+              Abrir WhatsApp
+            </a>
           </div>
         )}
         

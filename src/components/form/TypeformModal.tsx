@@ -33,6 +33,7 @@ export function TypeformModal({
     handleNextStep,
     calendarLoaded,
     setCalendarLoaded,
+    calendarError,
     setValue
   } = useTypeformLogic({
     isOpen,
@@ -55,7 +56,8 @@ export function TypeformModal({
       <CalendarView 
         isOpen={isOpen} 
         onClose={onClose} 
-        calendarLoaded={calendarLoaded} 
+        calendarLoaded={calendarLoaded}
+        calendarError={calendarError}
       />
     );
   }

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -12,15 +13,6 @@ import { ArrowLeft, MessageSquare } from "lucide-react";
 import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
-import SimpleCalendarEmbed from "@/components/form/typeform/SimpleCalendarEmbed";
-import CalendarIframeView from "@/components/form/typeform/CalendarIframeView";
-
-// Add type definition for Window with Cal property
-declare global {
-  interface Window {
-    Cal?: any;
-  }
-}
 
 // Animation variants for scroll reveal
 const sectionVariants = {
@@ -42,16 +34,13 @@ const DigitalEmployees = () => {
   
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
-  // Single instance of the typeform modal state with enhanced fallback options
+  // Single instance of the typeform modal state
   const { 
     isOpen, 
-    showCalendar, 
-    calendarViewMethod,
-    calendarLoadAttempts,
+    showCalendar,
     openModal, 
     closeModal, 
-    showCalendarView,
-    switchCalendarMethod
+    showCalendarView
   } = useTypeformModal();
 
   // Smooth scroll effect
@@ -80,15 +69,12 @@ const DigitalEmployees = () => {
     };
   }, []);
 
-  // Enhanced calendar view logging
+  // Log when calendar is shown for debugging
   useEffect(() => {
     if (showCalendar) {
-      console.log("Calendar view requested:", {
-        method: calendarViewMethod,
-        loadAttempts: calendarLoadAttempts
-      });
+      console.log("Calendar view requested in DigitalEmployees page");
     }
-  }, [showCalendar, calendarViewMethod, calendarLoadAttempts]);
+  }, [showCalendar]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -177,7 +163,7 @@ const DigitalEmployees = () => {
         </motion.div>
       </div>
 
-      {/* New simplified calendar flow with fallbacks */}
+      {/* Single TypeformModal instance with calendar handling */}
       {isOpen && (
         <TypeformModal 
           isOpen={isOpen} 

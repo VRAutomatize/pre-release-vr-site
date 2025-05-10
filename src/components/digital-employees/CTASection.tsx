@@ -3,17 +3,15 @@ import React from "react";
 import { CheckCircle, ArrowRight, Calculator } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { TypeformModal } from "@/components/form/TypeformModal";
-import { useTypeformModal } from "@/hooks/useTypeformModal";
 
 interface CTASectionProps {
   calendarLink: string;
   webhookUrl?: string;
+  openModal: () => void;
 }
 
-const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
+const CTASection = ({ calendarLink, webhookUrl, openModal }: CTASectionProps) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
 
   return (
     <section className="relative py-20">
@@ -72,16 +70,6 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
           </div>
         </div>
       </Card>
-
-      {/* Typeform Modal */}
-      <TypeformModal 
-        isOpen={isOpen} 
-        onClose={closeModal} 
-        calendarLink={calendarLink}
-        webhookUrl={webhookUrl}
-        showCalendar={showCalendar}
-        onShowCalendar={showCalendarView}
-      />
     </section>
   );
 };

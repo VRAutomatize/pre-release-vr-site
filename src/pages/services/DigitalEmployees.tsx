@@ -12,7 +12,7 @@ import { ArrowLeft, MessageSquare } from "lucide-react";
 import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
-import CalendarViewAlt from "@/components/form/typeform/CalendarViewAlt";
+import SimpleCalendarEmbed from "@/components/form/typeform/SimpleCalendarEmbed";
 import CalendarIframeView from "@/components/form/typeform/CalendarIframeView";
 
 // Add type definition for Window with Cal property
@@ -46,13 +46,12 @@ const DigitalEmployees = () => {
   const { 
     isOpen, 
     showCalendar, 
-    useAltCalendarView, 
-    useFallbackIframe,
+    calendarViewMethod,
     calendarLoadAttempts,
     openModal, 
     closeModal, 
     showCalendarView,
-    switchToFallbackView
+    switchCalendarMethod
   } = useTypeformModal();
 
   // Smooth scroll effect
@@ -85,17 +84,11 @@ const DigitalEmployees = () => {
   useEffect(() => {
     if (showCalendar) {
       console.log("Calendar view requested:", {
-        useAlternativeView: useAltCalendarView,
-        useFallback: useFallbackIframe,
+        method: calendarViewMethod,
         loadAttempts: calendarLoadAttempts
       });
-      
-      // Detect Cal.com API issues
-      if (typeof window !== 'undefined' && !window.Cal && showCalendar) {
-        console.warn("Cal.com API not available in window object");
-      }
     }
-  }, [showCalendar, useAltCalendarView, useFallbackIframe, calendarLoadAttempts]);
+  }, [showCalendar, calendarViewMethod, calendarLoadAttempts]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -180,38 +173,12 @@ const DigitalEmployees = () => {
           variants={sectionVariants}
           className="reveal-section mb-16"
         >
-          <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} />
+          <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} openModal={openModal} />
         </motion.div>
       </div>
 
-      {/* Enhanced calendar view selection logic with fallback */}
-      {showCalendar && (
-        <>
-          {useFallbackIframe ? (
-            <CalendarIframeView
-              isOpen={isOpen && showCalendar}
-              onClose={closeModal}
-            />
-          ) : useAltCalendarView ? (
-            <CalendarViewAlt 
-              isOpen={isOpen && showCalendar} 
-              onClose={closeModal} 
-            />
-          ) : (
-            <TypeformModal 
-              isOpen={isOpen} 
-              onClose={closeModal} 
-              calendarLink={calendarLink}
-              webhookUrl={webhookUrl}
-              showCalendar={showCalendar}
-              onShowCalendar={showCalendarView}
-            />
-          )}
-        </>
-      )}
-      
-      {/* Regular form view when not showing calendar */}
-      {!showCalendar && (
+      {/* New simplified calendar flow with fallbacks */}
+      {isOpen && (
         <TypeformModal 
           isOpen={isOpen} 
           onClose={closeModal} 

@@ -5,6 +5,8 @@ import { useCalendarEmbed } from "./typeform/useCalendarEmbed";
 import FormView from "./typeform/FormView";
 import CalendarView from "./typeform/CalendarView";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
+import SimpleCalendarEmbed from "./typeform/SimpleCalendarEmbed";
+import CalendarIframeView from "./typeform/CalendarIframeView";
 
 interface TypeformModalProps {
   isOpen: boolean;
@@ -22,8 +24,11 @@ export function TypeformModal({
   showCalendar = false,
   onShowCalendar 
 }: TypeformModalProps) {
-  // Access the fallback mechanism
-  const { switchToFallbackView } = useTypeformModal();
+  // Access the useTypeformModal hook
+  const { 
+    calendarViewMethod, 
+    switchCalendarMethod
+  } = useTypeformModal();
   
   const {
     control,
@@ -56,25 +61,47 @@ export function TypeformModal({
 
   // Handle calendar load failure by switching to fallback
   useEffect(() => {
-    if (calendarLoadFailed && showCalendar) {
-      console.log("Calendar loading failed, switching to fallback iframe");
+    if (calendarLoadFailed && showCalendar && calendarViewMethod === 'default') {
+      console.log("Calendar loading failed in default view, switching to simple view");
       setTimeout(() => {
-        switchToFallbackView();
+        switchCalendarMethod('simple');
       }, 500);
     }
-  }, [calendarLoadFailed, showCalendar, switchToFallbackView]);
+  }, [calendarLoadFailed, showCalendar, calendarViewMethod, switchCalendarMethod]);
 
   // If showing calendar view
   if (showCalendar) {
-    return (
-      <CalendarView 
-        isOpen={isOpen} 
-        onClose={onClose} 
-        calendarLoaded={calendarLoaded}
-        calendarError={calendarError}
-        onSwitchToFallback={switchToFallbackView}
-      />
-    );
+    // Use the appropriate calendar component based on the selected method
+    switch (calendarViewMethod) {
+      case 'simple':
+        return (
+          <SimpleCalendarEmbed 
+            isOpen={isOpen} 
+            onClose={onClose}
+            onFallback={() => switchCalendarMethod('iframe')}
+          />
+        );
+      
+      case 'iframe':
+        return (
+          <CalendarIframeView 
+            isOpen={isOpen} 
+            onClose={onClose}
+          />
+        );
+      
+      case 'default':
+      default:
+        return (
+          <CalendarView 
+            isOpen={isOpen} 
+            onClose={onClose} 
+            calendarLoaded={calendarLoaded}
+            calendarError={calendarError}
+            onSwitchToFallback={() => switchCalendarMethod('simple')}
+          />
+        );
+    }
   }
 
   // Form view

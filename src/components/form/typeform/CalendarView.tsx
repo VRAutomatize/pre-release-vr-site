@@ -1,20 +1,22 @@
 
 import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2, Calendar as CalendarIcon } from "lucide-react";
+import { X, Loader2, Calendar as CalendarIcon, RefreshCw } from "lucide-react";
 
 interface CalendarViewProps {
   isOpen: boolean;
   onClose: () => void;
   calendarLoaded: boolean;
   calendarError: boolean;
+  onSwitchToFallback?: () => void;
 }
 
 const CalendarView: React.FC<CalendarViewProps> = ({ 
   isOpen, 
   onClose, 
   calendarLoaded,
-  calendarError
+  calendarError,
+  onSwitchToFallback
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -43,22 +45,33 @@ const CalendarView: React.FC<CalendarViewProps> = ({
           </div>
         )}
         
-        {/* Error state */}
+        {/* Error state with fallback option */}
         {calendarError && calendarLoaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
             <CalendarIcon className="h-16 w-16 text-gold/50 mb-4" />
             <h3 className="text-xl font-semibold text-gold mb-2">Não foi possível carregar o calendário</h3>
             <p className="text-white/70 mb-6 text-center max-w-md">
-              Por favor, tente novamente ou entre em contato pelo WhatsApp para agendar sua consulta.
+              Estamos com dificuldades para carregar o calendário neste momento.
             </p>
-            <a 
-              href="https://wa.me/554788558257?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gold hover:bg-gold/80 text-black font-medium px-6 py-3 rounded-md transition-colors"
-            >
-              Abrir WhatsApp
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4">
+              {onSwitchToFallback && (
+                <button
+                  onClick={onSwitchToFallback}
+                  className="bg-gold/20 hover:bg-gold/30 text-gold font-medium px-6 py-3 rounded-md transition-colors flex items-center justify-center gap-2"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Usar método alternativo
+                </button>
+              )}
+              <a 
+                href="https://wa.me/554788558257?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gold hover:bg-gold/80 text-black font-medium px-6 py-3 rounded-md transition-colors"
+              >
+                Agendar via WhatsApp
+              </a>
+            </div>
           </div>
         )}
         

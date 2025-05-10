@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -14,6 +13,7 @@ import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
 import CalendarViewAlt from "@/components/form/typeform/CalendarViewAlt";
+import CalendarIframeView from "@/components/form/typeform/CalendarIframeView";
 
 // Add type definition for Window with Cal property
 declare global {
@@ -36,15 +36,24 @@ const sectionVariants = {
 };
 
 const DigitalEmployees = () => {
-  // Configuration settings - usando URLs reais em produção
+  // Configuration settings
   const calendarLink = "https://cal.com/vrautomatize/call"; 
-  // Em produção, substitua por um webhook real
   const webhookUrl = "https://webhook.site/your-webhook";
   
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
-  // Single instance of the typeform modal state
-  const { isOpen, showCalendar, useAltCalendarView, openModal, closeModal, showCalendarView } = useTypeformModal();
+  // Single instance of the typeform modal state with enhanced fallback options
+  const { 
+    isOpen, 
+    showCalendar, 
+    useAltCalendarView, 
+    useFallbackIframe,
+    calendarLoadAttempts,
+    openModal, 
+    closeModal, 
+    showCalendarView,
+    switchToFallbackView
+  } = useTypeformModal();
 
   // Smooth scroll effect
   useEffect(() => {
@@ -72,12 +81,21 @@ const DigitalEmployees = () => {
     };
   }, []);
 
-  // Log calendar view status
+  // Enhanced calendar view logging
   useEffect(() => {
     if (showCalendar) {
-      console.log("Calendar view requested, using alternative view:", useAltCalendarView);
+      console.log("Calendar view requested:", {
+        useAlternativeView: useAltCalendarView,
+        useFallback: useFallbackIframe,
+        loadAttempts: calendarLoadAttempts
+      });
+      
+      // Detect Cal.com API issues
+      if (typeof window !== 'undefined' && !window.Cal && showCalendar) {
+        console.warn("Cal.com API not available in window object");
+      }
     }
-  }, [showCalendar, useAltCalendarView]);
+  }, [showCalendar, useAltCalendarView, useFallbackIframe, calendarLoadAttempts]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -166,13 +184,34 @@ const DigitalEmployees = () => {
         </motion.div>
       </div>
 
-      {/* Use the appropriate calendar view based on the hook setting */}
-      {showCalendar && useAltCalendarView ? (
-        <CalendarViewAlt 
-          isOpen={isOpen && showCalendar} 
-          onClose={closeModal} 
-        />
-      ) : (
+      {/* Enhanced calendar view selection logic with fallback */}
+      {showCalendar && (
+        <>
+          {useFallbackIframe ? (
+            <CalendarIframeView
+              isOpen={isOpen && showCalendar}
+              onClose={closeModal}
+            />
+          ) : useAltCalendarView ? (
+            <CalendarViewAlt 
+              isOpen={isOpen && showCalendar} 
+              onClose={closeModal} 
+            />
+          ) : (
+            <TypeformModal 
+              isOpen={isOpen} 
+              onClose={closeModal} 
+              calendarLink={calendarLink}
+              webhookUrl={webhookUrl}
+              showCalendar={showCalendar}
+              onShowCalendar={showCalendarView}
+            />
+          )}
+        </>
+      )}
+      
+      {/* Regular form view when not showing calendar */}
+      {!showCalendar && (
         <TypeformModal 
           isOpen={isOpen} 
           onClose={closeModal} 

@@ -13,10 +13,36 @@ export const useCalendarEmbed = ({
   setCalendarLoaded
 }: UseCalendarEmbedProps) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [calendarLoadFailed, setCalendarLoadFailed] = useState(false);
+  const [networkChecked, setNetworkChecked] = useState(false);
+  
+  // Check if network is available for Cal.com
+  useEffect(() => {
+    if (showCalendar && isOpen && !networkChecked) {
+      // Simple ping to Cal.com to check connectivity
+      fetch('https://app.cal.com/status', { 
+        method: 'HEAD',
+        mode: 'no-cors' 
+      })
+      .then(() => {
+        console.log("Cal.com network connection successful");
+        setNetworkChecked(true);
+      })
+      .catch(error => {
+        console.error("Cal.com network connection failed:", error);
+        setCalendarLoadFailed(true);
+        toast({
+          title: "Problema de conexão",
+          description: "Não foi possível conectar ao serviço de calendário",
+          variant: "destructive",
+        });
+      });
+    }
+  }, [showCalendar, isOpen, networkChecked]);
   
   // Load Cal.com script dynamically when calendar view is shown
   useEffect(() => {
-    if (showCalendar && isOpen) {
+    if (showCalendar && isOpen && !calendarLoadFailed) {
       // Keep track of script element to remove it when unmounting
       let script: HTMLScriptElement | null = null;
       let scriptLoadTimeout: number | undefined;
@@ -35,28 +61,40 @@ export const useCalendarEmbed = ({
           // Initialize Cal
           window.Cal("init", "call", {origin: "https://cal.com"});
           
-          // Setup inline calendar
+          // Setup inline calendar with maximum compatibility settings
           window.Cal.ns.call("inline", {
             elementOrSelector: "#my-cal-inline",
             config: {
               "layout": "month_view",
-              "theme": "dark"
+              "theme": "dark",
+              "hideEventTypeDetails": false,
+              "enabledLocales": ["pt", "en"]
             },
-            calLink: "vrautomatize/call",
+            calLink: "vrautomatize/call"
           });
           
           // Add custom UI theme
           window.Cal.ns.call("ui", {
             "theme": "dark",
-            "cssVarsPerTheme": {
-              "dark": {
-                "cal-brand": "#FFD700",
-                "cal-bg": "#1A1F2C",
-                "cal-text": "#FFFFFF"
+            "styles": {
+              "branding": {
+                "brandColor": "#FFD700"
               }
             },
-            "hideEventTypeDetails": true,
-            "layout": "month_view"
+            "hideEventTypeDetails": false
+          });
+          
+          // Add event listener for debugging
+          window.Cal.ns.call("on", {
+            action: "*",
+            callback: (data: any) => {
+              console.log(`Cal.com event: ${data?.action || 'unknown'}`);
+              
+              // Detect successful load
+              if (data?.action === 'calendar_loaded' || data?.action === 'loaded') {
+                setCalendarLoaded(true);
+              }
+            }
           });
           
           console.log("Cal.com initialization completed");
@@ -72,10 +110,15 @@ export const useCalendarEmbed = ({
         console.log("Loading Cal.com script");
         setCalendarLoaded(false);
         
+        // Remove any existing Cal scripts first
+        const existingScripts = document.querySelectorAll('script[src*="cal.com"]');
+        existingScripts.forEach(s => s.remove());
+        
         // Create script element
         script = document.createElement('script');
         script.src = "https://app.cal.com/embed/embed.js";
         script.async = true;
+        script.crossOrigin = "anonymous";
         
         // Handle script load success
         script.onload = () => {
@@ -123,16 +166,17 @@ export const useCalendarEmbed = ({
             console.error("Cal.com script loading timeout");
             handleCalendarFailure("Calendar loading timeout");
           }
-        }, 8000); // 8 second timeout
+        }, 12000); // 12 second timeout
       };
       
       // Handle calendar loading failure
       const handleCalendarFailure = (message: string) => {
         console.error(message);
+        setCalendarLoadFailed(true);
         setCalendarLoaded(true); // Mark as "loaded" to remove spinner
         toast({
           title: "Problema ao carregar calendário",
-          description: "Por favor, tente novamente mais tarde ou entre em contato por WhatsApp",
+          description: "Estamos alternando para um método de carregamento alternativo",
           variant: "destructive",
         });
       };
@@ -171,5 +215,11 @@ export const useCalendarEmbed = ({
         }
       };
     }
-  }, [showCalendar, isOpen, setCalendarLoaded]);
+  }, [showCalendar, isOpen, calendarLoadFailed, setCalendarLoaded]);
+  
+  return {
+    scriptLoaded,
+    calendarLoadFailed,
+    setCalendarLoadFailed
+  };
 };

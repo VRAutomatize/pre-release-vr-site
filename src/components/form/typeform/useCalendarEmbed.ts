@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 
@@ -59,22 +60,22 @@ export const useCalendarEmbed = ({
         
         try {
           // Initialize Cal
-          window.Cal("init", "call", {origin: "https://cal.com"});
+          window.Cal("init", { origin: "https://cal.com" });
           
           // Setup inline calendar with maximum compatibility settings
-          window.Cal.ns.call("inline", {
+          window.Cal("inline", {
             elementOrSelector: "#my-cal-inline",
+            calLink: "vrautomatize/call",
             config: {
               "layout": "month_view",
               "theme": "dark",
               "hideEventTypeDetails": false,
               "enabledLocales": ["pt", "en"]
-            },
-            calLink: "vrautomatize/call"
+            }
           });
           
           // Add custom UI theme
-          window.Cal.ns.call("ui", {
+          window.Cal("ui", {
             "theme": "dark",
             "styles": {
               "branding": {
@@ -85,7 +86,7 @@ export const useCalendarEmbed = ({
           });
           
           // Add event listener for debugging
-          window.Cal.ns.call("on", {
+          window.Cal("on", {
             action: "*",
             callback: (data: any) => {
               console.log(`Cal.com event: ${data?.action || 'unknown'}`);

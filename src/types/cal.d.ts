@@ -24,6 +24,16 @@ interface CalFunction {
       [key: string]: any;
     };
   }): void;
+  (command: "ui", options: {
+    theme: "dark" | "light";
+    styles?: {
+      branding?: {
+        brandColor?: string;
+      };
+      [key: string]: any;
+    };
+    hideEventTypeDetails?: boolean;
+  }): void;
   (command: "on", event: CalEvent): void;
   (command: string, ...args: any[]): void;
   ns: Record<string, any>;

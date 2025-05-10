@@ -165,7 +165,7 @@ const FormStep: React.FC<FormStepProps> = ({
                     <RadioGroupItem 
                       value={option.value} 
                       id={`r${index+1}`} 
-                      className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black"
+                      className="text-gold border-gold data-[state=checked]:border-gold data-[state=checked]:text-gold"
                     />
                     <label htmlFor={`r${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
                       {option.label}
@@ -239,7 +239,7 @@ const FormStep: React.FC<FormStepProps> = ({
                       <RadioGroupItem 
                         value={option.value} 
                         id={`t${index+1}`} 
-                        className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black"
+                        className="text-gold border-gold data-[state=checked]:border-gold data-[state=checked]:text-gold"
                       />
                       <label htmlFor={`t${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
                         {option.label}

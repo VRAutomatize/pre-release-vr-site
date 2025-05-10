@@ -3,17 +3,15 @@ import React from "react";
 import { ArrowRight, Calculator } from "lucide-react";
 import PageHero from "@/components/shared/PageHero";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { TypeformModal } from "@/components/form/TypeformModal";
-import { useTypeformModal } from "@/hooks/useTypeformModal";
 
 interface HeroSectionProps {
   calendarLink: string;
   webhookUrl?: string;
+  openModal: () => void;
 }
 
-const HeroSection = ({ calendarLink, webhookUrl }: HeroSectionProps) => {
+const HeroSection = ({ calendarLink, webhookUrl, openModal }: HeroSectionProps) => {
   const isMobile = useIsMobile();
-  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
   
   return (
     <>
@@ -45,16 +43,6 @@ const HeroSection = ({ calendarLink, webhookUrl }: HeroSectionProps) => {
           </div>
         </div>
       </PageHero>
-
-      {/* Typeform Modal compartilhado */}
-      <TypeformModal 
-        isOpen={isOpen} 
-        onClose={closeModal} 
-        calendarLink={calendarLink}
-        webhookUrl={webhookUrl}
-        showCalendar={showCalendar}
-        onShowCalendar={showCalendarView}
-      />
     </>
   );
 };

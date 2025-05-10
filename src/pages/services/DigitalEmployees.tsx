@@ -10,6 +10,8 @@ import IdealForSection from "@/components/digital-employees/IdealForSection";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
+import { TypeformModal } from "@/components/form/TypeformModal";
+import { useTypeformModal } from "@/hooks/useTypeformModal";
 
 // Add type definition for Window with Cal property
 declare global {
@@ -25,6 +27,9 @@ const DigitalEmployees = () => {
   const webhookUrl = "https://webhook.site/your-webhook";
   
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
+
+  // Single instance of the typeform modal state
+  const { isOpen, showCalendar, openModal, closeModal, showCalendarView } = useTypeformModal();
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,7 +53,7 @@ const DigitalEmployees = () => {
 
       <div className="container mx-auto px-4 pt-12">
         {/* Hero Section */}
-        <HeroSection calendarLink={calendarLink} webhookUrl={webhookUrl} />
+        <HeroSection calendarLink={calendarLink} webhookUrl={webhookUrl} openModal={openModal} />
         
         {/* Use Cases Section */}
         <UseCasesSection />
@@ -65,6 +70,16 @@ const DigitalEmployees = () => {
         {/* CTA Section - Now moved below IdealForSection */}
         <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} />
       </div>
+
+      {/* Single TypeformModal instance for the entire page */}
+      <TypeformModal 
+        isOpen={isOpen} 
+        onClose={closeModal} 
+        calendarLink={calendarLink}
+        webhookUrl={webhookUrl}
+        showCalendar={showCalendar}
+        onShowCalendar={showCalendarView}
+      />
 
       <Footer />
     </div>

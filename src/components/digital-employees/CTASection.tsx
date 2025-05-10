@@ -73,7 +73,15 @@ const CTASection = ({ calendarLink, webhookUrl }: CTASectionProps) => {
         </div>
       </Card>
 
-      {/* Typeform Modal - compartilha a mesma instância via hook */}
+      {/* Typeform Modal */}
+      <TypeformModal 
+        isOpen={isOpen} 
+        onClose={closeModal} 
+        calendarLink={calendarLink}
+        webhookUrl={webhookUrl}
+        showCalendar={showCalendar}
+        onShowCalendar={showCalendarView}
+      />
     </section>
   );
 };

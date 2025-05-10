@@ -59,7 +59,7 @@ export function EmbeddedForm({
       <p id="form-description" className="sr-only">{description || "Form embedded from external source"}</p>
       
       {/* Form Container */}
-      <div className={`relative ${isMobile ? 'w-full h-full' : 'w-[95vw] h-[90vh] sm:w-[90vw] sm:h-[85vh]'} max-w-5xl`}>
+      <div className={`relative ${isMobile ? 'w-full h-full' : 'w-[95vw] h-[90vh] sm:w-[90vw] sm:h-[85vh] rounded-lg overflow-hidden'} max-w-5xl`}>
         {/* Close Button */}
         <button 
           onClick={onClose}
@@ -72,7 +72,7 @@ export function EmbeddedForm({
         {/* Content Renderer - Always use Direct Renderer for supported forms */}
         {useDirectRenderer ? (
           // Use our custom direct form renderer for all devices
-          <div className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]">
+          <div className={`w-full h-full overflow-hidden ${!isMobile ? 'rounded-lg' : ''} bg-[#1A1F2C]`}>
             <DirectFormRenderer formUrl={formUrl} onClose={onClose} />
           </div>
         ) : (
@@ -87,7 +87,7 @@ export function EmbeddedForm({
             
             {/* Iframe Container */}
             <div 
-              className="w-full h-full overflow-hidden rounded-lg bg-[#1A1F2C]"
+              className={`w-full h-full overflow-hidden ${!isMobile ? 'rounded-lg' : ''} bg-[#1A1F2C]`}
             >
               {formUrl ? (
                 <div className="w-full h-full flex items-center justify-center text-white">

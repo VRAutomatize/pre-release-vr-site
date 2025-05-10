@@ -53,7 +53,7 @@ const FormView: React.FC<FormViewProps> = ({
           />
         </div>
         
-        <div className="p-6 h-full flex flex-col">
+        <div className="p-4 sm:p-6 h-full flex flex-col">
           {/* Close button */}
           <button 
             onClick={onClose}
@@ -73,7 +73,7 @@ const FormView: React.FC<FormViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="mb-8 w-full max-w-md mx-auto"
+                className="w-full max-w-md mx-auto flex flex-col justify-center items-center"
               >
                 <FormStep 
                   currentStep={currentStep} 

@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Controller } from "react-hook-form";
 import { formatPhone } from "@/utils/paymentUtils";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface FormStepProps {
   currentStep: number;
@@ -23,12 +24,14 @@ const FormStep: React.FC<FormStepProps> = ({
   paidTraffic,
   setValue
 }) => {
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  
   // Render the appropriate step content based on the current step
   switch (currentStep) {
     case 0: // Name
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Como podemos te chamar?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Como podemos te chamar?</h2>
           <Controller
             name="fullName"
             control={control}
@@ -37,7 +40,7 @@ const FormStep: React.FC<FormStepProps> = ({
                 {...field}
                 autoFocus
                 placeholder="Seu nome completo"
-                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold"
+                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold hover:text-white"
               />
             )}
           />
@@ -52,8 +55,8 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 1: // Phone
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Qual seu WhatsApp?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual seu WhatsApp?</h2>
           <Controller
             name="phone"
             control={control}
@@ -62,7 +65,7 @@ const FormStep: React.FC<FormStepProps> = ({
                 {...field}
                 autoFocus
                 placeholder="(00) 00000-0000"
-                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold"
+                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold hover:text-white"
                 onChange={(e) => {
                   // Only allow digits
                   const cleaned = e.target.value.replace(/\D/g, "");
@@ -84,8 +87,8 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 2: // Email
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">E seu melhor e-mail?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">E seu melhor e-mail?</h2>
           <Controller
             name="email"
             control={control}
@@ -95,7 +98,7 @@ const FormStep: React.FC<FormStepProps> = ({
                 autoFocus
                 type="email"
                 placeholder="seu@email.com"
-                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold"
+                className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold hover:text-white"
               />
             )}
           />
@@ -110,8 +113,8 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 3: // Instagram
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Qual seu Instagram?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual seu Instagram?</h2>
           <Controller
             name="instagram"
             control={control}
@@ -124,7 +127,7 @@ const FormStep: React.FC<FormStepProps> = ({
                   {...field}
                   autoFocus
                   placeholder="seu.perfil"
-                  className="text-lg py-6 pl-8 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold"
+                  className="text-lg py-6 pl-8 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold hover:text-white"
                 />
               </div>
             )}
@@ -135,8 +138,8 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 4: // Monthly Revenue
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Qual sua média de faturamento mensal?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual sua média de faturamento mensal?</h2>
           <Controller
             name="monthlyRevenue"
             control={control}
@@ -144,32 +147,31 @@ const FormStep: React.FC<FormStepProps> = ({
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="space-y-4 max-w-md mx-auto"
+                className="space-y-3 max-w-md mx-auto w-full"
               >
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("0-5000")}>
-                  <RadioGroupItem value="0-5000" id="r1" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r1" className="cursor-pointer w-full">Até R$ 5.000</label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("5001-10000")}>
-                  <RadioGroupItem value="5001-10000" id="r2" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r2" className="cursor-pointer w-full">R$ 5.001 - R$ 10.000</label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("10001-20000")}>
-                  <RadioGroupItem value="10001-20000" id="r3" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r3" className="cursor-pointer w-full">R$ 10.001 - R$ 20.000</label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("20001-50000")}>
-                  <RadioGroupItem value="20001-50000" id="r4" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r4" className="cursor-pointer w-full">R$ 20.001 - R$ 50.000</label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("50001-100000")}>
-                  <RadioGroupItem value="50001-100000" id="r5" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r5" className="cursor-pointer w-full">R$ 50.001 - R$ 100.000</label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("100000+")}>
-                  <RadioGroupItem value="100000+" id="r6" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                  <label htmlFor="r6" className="cursor-pointer w-full">Acima de R$ 100.000</label>
-                </div>
+                {[
+                  { value: "0-5000", label: "Até R$ 5.000" },
+                  { value: "5001-10000", label: "R$ 5.001 - R$ 10.000" },
+                  { value: "10001-20000", label: "R$ 10.001 - R$ 20.000" },
+                  { value: "20001-50000", label: "R$ 20.001 - R$ 50.000" },
+                  { value: "50001-100000", label: "R$ 50.001 - R$ 100.000" },
+                  { value: "100000+", label: "Acima de R$ 100.000" }
+                ].map((option, index) => (
+                  <div 
+                    key={option.value}
+                    className="flex items-center space-x-2 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
+                    onClick={() => field.onChange(option.value)}
+                  >
+                    <RadioGroupItem 
+                      value={option.value} 
+                      id={`r${index+1}`} 
+                      className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black"
+                    />
+                    <label htmlFor={`r${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </RadioGroup>
             )}
           />
@@ -178,29 +180,30 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 5: // Paid Traffic
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Você já investe em tráfego pago?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Você já investe em tráfego pago?</h2>
           <Controller
             name="paidTraffic"
             control={control}
             render={({ field }) => (
-              <div className="space-y-6 max-w-md mx-auto">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange(true)}>
-                  <label className="cursor-pointer w-full">Sim</label>
-                  <Switch
-                    checked={field.value === true}
-                    onCheckedChange={() => field.onChange(true)}
-                    className="data-[state=checked]:bg-gold"
-                  />
-                </div>
-                <div className="flex items-center justify-between p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange(false)}>
-                  <label className="cursor-pointer w-full">Não</label>
-                  <Switch
-                    checked={field.value === false}
-                    onCheckedChange={() => field.onChange(false)}
-                    className="data-[state=checked]:bg-gold"
-                  />
-                </div>
+              <div className="space-y-4 max-w-md mx-auto w-full">
+                {[
+                  { value: true, label: "Sim" },
+                  { value: false, label: "Não" }
+                ].map((option) => (
+                  <div 
+                    key={String(option.value)}
+                    className="flex items-center justify-between p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
+                    onClick={() => field.onChange(option.value)}
+                  >
+                    <label className="cursor-pointer w-full">{option.label}</label>
+                    <Switch
+                      checked={field.value === option.value}
+                      onCheckedChange={() => field.onChange(option.value)}
+                      className="data-[state=checked]:bg-gold"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           />
@@ -210,8 +213,8 @@ const FormStep: React.FC<FormStepProps> = ({
     case 6: // Traffic Investment (conditional) or Industry
       if (paidTraffic) {
         return (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gold text-center">Quanto investe mensalmente em tráfego pago?</h2>
+          <div className="space-y-4 w-full px-4 sm:px-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Quanto investe mensalmente em tráfego pago?</h2>
             <Controller
               name="trafficInvestment"
               control={control}
@@ -219,28 +222,30 @@ const FormStep: React.FC<FormStepProps> = ({
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="space-y-4 max-w-md mx-auto"
+                  className="space-y-3 max-w-md mx-auto w-full"
                 >
-                  <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("0-1000")}>
-                    <RadioGroupItem value="0-1000" id="t1" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                    <label htmlFor="t1" className="cursor-pointer w-full">Até R$ 1.000</label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("1001-3000")}>
-                    <RadioGroupItem value="1001-3000" id="t2" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                    <label htmlFor="t2" className="cursor-pointer w-full">R$ 1.001 - R$ 3.000</label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("3001-5000")}>
-                    <RadioGroupItem value="3001-5000" id="t3" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                    <label htmlFor="t3" className="cursor-pointer w-full">R$ 3.001 - R$ 5.000</label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("5001-10000")}>
-                    <RadioGroupItem value="5001-10000" id="t4" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                    <label htmlFor="t4" className="cursor-pointer w-full">R$ 5.001 - R$ 10.000</label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors" onClick={() => field.onChange("10000+")}>
-                    <RadioGroupItem value="10000+" id="t5" className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black" />
-                    <label htmlFor="t5" className="cursor-pointer w-full">Acima de R$ 10.000</label>
-                  </div>
+                  {[
+                    { value: "0-1000", label: "Até R$ 1.000" },
+                    { value: "1001-3000", label: "R$ 1.001 - R$ 3.000" },
+                    { value: "3001-5000", label: "R$ 3.001 - R$ 5.000" },
+                    { value: "5001-10000", label: "R$ 5.001 - R$ 10.000" },
+                    { value: "10000+", label: "Acima de R$ 10.000" }
+                  ].map((option, index) => (
+                    <div 
+                      key={option.value}
+                      className="flex items-center space-x-2 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
+                      onClick={() => field.onChange(option.value)}
+                    >
+                      <RadioGroupItem 
+                        value={option.value} 
+                        id={`t${index+1}`} 
+                        className="text-gold border-gold/50 data-[state=checked]:bg-gold data-[state=checked]:text-black"
+                      />
+                      <label htmlFor={`t${index+1}`} className="cursor-pointer w-full text-sm sm:text-base">
+                        {option.label}
+                      </label>
+                    </div>
+                  ))}
                 </RadioGroup>
               )}
             />
@@ -249,18 +254,18 @@ const FormStep: React.FC<FormStepProps> = ({
       } 
       // If not using paid traffic, this is the industry step
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
           <Controller
             name="industry"
             control={control}
             render={({ field }) => (
-              <div className="max-w-md mx-auto">
+              <div className="max-w-md mx-auto w-full">
                 <Textarea
                   {...field}
                   autoFocus
                   placeholder="Descreva o ramo de atuação da sua empresa"
-                  className="text-lg py-4 min-h-[120px] text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold resize-none"
+                  className="text-lg py-4 min-h-[120px] text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold resize-none hover:text-white"
                 />
               </div>
             )}
@@ -276,18 +281,18 @@ const FormStep: React.FC<FormStepProps> = ({
     
     case 7: // Industry (only if paid traffic is true)
       return (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
+        <div className="space-y-4 w-full px-4 sm:px-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual seu ramo de atuação?</h2>
           <Controller
             name="industry"
             control={control}
             render={({ field }) => (
-              <div className="max-w-md mx-auto">
+              <div className="max-w-md mx-auto w-full">
                 <Textarea
                   {...field}
                   autoFocus
                   placeholder="Descreva o ramo de atuação da sua empresa"
-                  className="text-lg py-4 min-h-[120px] text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold resize-none"
+                  className="text-lg py-4 min-h-[120px] text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold resize-none hover:text-white"
                 />
               </div>
             )}

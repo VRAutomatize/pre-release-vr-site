@@ -3,6 +3,7 @@ import React from "react";
 import { ArrowRight, Calculator } from "lucide-react";
 import PageHero from "@/components/shared/PageHero";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface HeroSectionProps {
   calendarLink: string;
@@ -12,6 +13,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ calendarLink, webhookUrl, openModal }: HeroSectionProps) => {
   const isMobile = useIsMobile();
+  const isSmallScreen = useMediaQuery("(max-width: 640px)");
   
   return (
     <>
@@ -32,10 +34,10 @@ const HeroSection = ({ calendarLink, webhookUrl, openModal }: HeroSectionProps) 
           }}>
             <button 
               onClick={openModal}
-              className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-4"
+              className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background px-4 sm:px-8 py-3 sm:py-4 w-full sm:w-auto"
             >
               <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
-              <span className="text-sm sm:text-lg">
+              <span className={isSmallScreen ? "text-sm" : "text-base"}>
                 {isMobile ? "Calcule sua economia" : "Cálculo estimado da sua economia anual com automação"}
               </span>
               <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />

@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2, Link } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CalProvider, getCalApi } from "@calcom/embed-react";
+import { useCalendarInitializer } from "./hooks/useCalendarInitializer";
 
 interface SimpleCalendarEmbedProps {
   isOpen: boolean;
@@ -17,98 +18,24 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
   onFallback 
 }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState(false);
   
-  // Reset loading state when modal opens
+  const { initializeCalendar, loadError } = useCalendarInitializer({
+    elementId: "cal-embed-area",
+    calLink: "vrautomatize/call",
+    onLoaded: () => setIsLoading(false),
+    onError: () => {
+      if (onFallback) onFallback();
+    },
+    isOpen
+  });
+  
+  // Initialize calendar when modal opens
   useEffect(() => {
     if (isOpen) {
       setIsLoading(true);
-      setLoadError(false);
-    }
-  }, [isOpen]);
-  
-  // Use Cal.com's official embed API
-  useEffect(() => {
-    if (!isOpen) return;
-    
-    let timeoutId: number;
-    
-    const initializeCalendar = async () => {
-      try {
-        console.log("Initializing Cal.com API");
-        const cal = await getCalApi();
-        
-        // Clear any previous instance
-        cal.destroy();
-        
-        // Configure Cal.com with options
-        cal("init", {
-          debug: true, // Enable debug mode for development
-          calLink: "vrautomatize/call",
-          elementOrSelector: "#cal-embed-area",
-          config: {
-            layout: "month_view",
-            theme: "dark",
-          }
-        });
-        
-        // Add event listeners for monitoring
-        cal("on", {
-          action: "loaded",
-          callback: () => {
-            console.log("Cal.com calendar loaded successfully");
-            setIsLoading(false);
-          }
-        });
-        
-        cal("on", {
-          action: "error",
-          callback: (error: any) => {
-            console.error("Cal.com calendar error:", error);
-            setLoadError(true);
-            if (onFallback) onFallback();
-          }
-        });
-        
-        // Set a timeout to detect loading issues
-        timeoutId = window.setTimeout(() => {
-          if (isLoading) {
-            console.error("Calendar loading timed out after 15 seconds");
-            setLoadError(true);
-            toast({
-              title: "Problema ao carregar calendário",
-              description: "Estamos alternando para um método alternativo",
-              variant: "destructive",
-            });
-            if (onFallback) onFallback();
-          }
-        }, 15000); // 15 second timeout
-        
-      } catch (error) {
-        console.error("Cal.com initialization error:", error);
-        setLoadError(true);
-        if (onFallback) onFallback();
-      }
-    };
-    
-    // Initialize calendar with a small delay to ensure DOM is ready
-    const initTimeout = setTimeout(() => {
       initializeCalendar();
-    }, 300);
-    
-    // Cleanup function
-    return () => {
-      clearTimeout(initTimeout);
-      if (timeoutId) clearTimeout(timeoutId);
-      
-      // Clean up Cal.com instance when component unmounts
-      try {
-        getCalApi().then(cal => cal?.destroy());
-      } catch (e) {
-        console.log("Cal.com cleanup error:", e);
-      }
-    };
-  }, [isOpen, isLoading, onFallback]);
+    }
+  }, [isOpen, initializeCalendar]);
   
   if (!isOpen) return null;
   
@@ -120,8 +47,6 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
         {/* Header */}
         <div className="p-4 border-b border-gold/20 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gold">Agende sua consulta</h2>
-          
-          {/* Close button */}
           <button 
             onClick={onClose}
             className="rounded-full p-2 hover:bg-black/40 text-gold hover:text-white transition-colors"
@@ -155,7 +80,6 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
                 onClick={onFallback}
                 className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center"
               >
-                <Link className="mr-2 h-4 w-4" />
                 Tentar método alternativo
               </button>
             </div>

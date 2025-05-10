@@ -1,7 +1,6 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useTypeformLogic } from "./typeform/useTypeformLogic";
-import { useCalendarEmbed } from "./typeform/useCalendarEmbed";
 import FormView from "./typeform/FormView";
 import CalendarView from "./typeform/CalendarView";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
@@ -24,12 +23,13 @@ export function TypeformModal({
   showCalendar = false,
   onShowCalendar 
 }: TypeformModalProps) {
-  // Access the useTypeformModal hook
+  // Access the useTypeformModal hook for calendar view methods
   const { 
     calendarViewMethod, 
     switchCalendarMethod
   } = useTypeformModal();
   
+  // Form handling logic
   const {
     control,
     errors,
@@ -52,26 +52,8 @@ export function TypeformModal({
     showCalendar
   });
 
-  // Setup calendar embedding with error handling
-  const { calendarLoadFailed } = useCalendarEmbed({
-    showCalendar,
-    isOpen,
-    setCalendarLoaded
-  });
-
-  // Handle calendar load failure by switching to fallback
-  useEffect(() => {
-    if (calendarLoadFailed && showCalendar && calendarViewMethod === 'default') {
-      console.log("Calendar loading failed in default view, switching to simple view");
-      setTimeout(() => {
-        switchCalendarMethod('simple');
-      }, 500);
-    }
-  }, [calendarLoadFailed, showCalendar, calendarViewMethod, switchCalendarMethod]);
-
-  // If showing calendar view
+  // If showing calendar view, select the appropriate method
   if (showCalendar) {
-    // Use the appropriate calendar component based on the selected method
     switch (calendarViewMethod) {
       case 'simple':
         return (

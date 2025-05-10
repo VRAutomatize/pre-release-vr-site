@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+
+import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
 import CTASection from "@/components/digital-employees/CTASection";
@@ -12,8 +13,6 @@ import { ArrowLeft, MessageSquare } from "lucide-react";
 import { TypeformModal } from "@/components/form/TypeformModal";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
-import SimpleCalendarEmbed from "@/components/form/typeform/SimpleCalendarEmbed";
-import CalendarIframeView from "@/components/form/typeform/CalendarIframeView";
 
 // Add type definition for Window with Cal property
 declare global {
@@ -42,53 +41,14 @@ const DigitalEmployees = () => {
   
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
-  // Single instance of the typeform modal state with enhanced fallback options
+  // Modal state
   const { 
     isOpen, 
-    showCalendar, 
-    calendarViewMethod,
-    calendarLoadAttempts,
+    showCalendar,
     openModal, 
     closeModal, 
     showCalendarView,
-    switchCalendarMethod
   } = useTypeformModal();
-
-  // Smooth scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('.reveal-section');
-      
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = (rect.top <= window.innerHeight * 0.8);
-        
-        if (isVisible) {
-          section.classList.add('is-visible');
-        }
-      });
-    };
-    
-    // Initial check
-    setTimeout(handleScroll, 100);
-    
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Enhanced calendar view logging
-  useEffect(() => {
-    if (showCalendar) {
-      console.log("Calendar view requested:", {
-        method: calendarViewMethod,
-        loadAttempts: calendarLoadAttempts
-      });
-    }
-  }, [showCalendar, calendarViewMethod, calendarLoadAttempts]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -177,7 +137,7 @@ const DigitalEmployees = () => {
         </motion.div>
       </div>
 
-      {/* New simplified calendar flow with fallbacks */}
+      {/* Form/Calendar Modal */}
       {isOpen && (
         <TypeformModal 
           isOpen={isOpen} 

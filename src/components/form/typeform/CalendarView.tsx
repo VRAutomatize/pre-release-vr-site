@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2, Calendar as CalendarIcon, RefreshCw } from "lucide-react";
+import { X, Loader2, RefreshCw } from "lucide-react";
 
 interface CalendarViewProps {
   isOpen: boolean;
@@ -18,16 +18,17 @@ const CalendarView: React.FC<CalendarViewProps> = ({
   calendarError,
   onSwitchToFallback
 }) => {
+  if (!isOpen) return null;
+  
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={() => onClose()}>
       <DialogContent 
         className="max-w-5xl h-[95vh] w-[95vw] sm:w-[95vw] bg-background/80 border-gold/20 p-0 overflow-hidden backdrop-blur-lg"
       >
-        {/* Header with simple title */}
+        {/* Header */}
         <div className="p-4 border-b border-gold/20 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gold">Agende sua consulta</h2>
           
-          {/* Close button */}
           <button 
             onClick={onClose}
             className="rounded-full p-2 hover:bg-black/40 text-gold hover:text-white transition-colors"
@@ -37,7 +38,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({
           </button>
         </div>
         
-        {/* Simplified loading indicator */}
+        {/* Loading indicator */}
         {!calendarLoaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
             <Loader2 className="h-12 w-12 text-gold animate-spin" />
@@ -48,7 +49,6 @@ const CalendarView: React.FC<CalendarViewProps> = ({
         {/* Error state with fallback option */}
         {calendarError && calendarLoaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
-            <CalendarIcon className="h-16 w-16 text-gold/50 mb-4" />
             <h3 className="text-xl font-semibold text-gold mb-2">Não foi possível carregar o calendário</h3>
             <p className="text-white/70 mb-6 text-center max-w-md">
               Estamos com dificuldades para carregar o calendário neste momento.
@@ -75,7 +75,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({
           </div>
         )}
         
-        {/* Direct inline embed container */}
+        {/* Calendar container */}
         <div 
           id="my-cal-inline" 
           className="w-full h-full overflow-auto" 

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Loader2, Check, ArrowRight } from "lucide-react";
 import FormStep from "./FormStep";
@@ -39,7 +39,12 @@ const FormView: React.FC<FormViewProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         className="max-w-5xl w-[95vw] h-[95vh] bg-background border-gold/20 p-0 overflow-hidden"
+        // Remove the default close button by providing an empty onClose
+        onInteractOutside={(e) => e.preventDefault()}
       >
+        {/* Visually hidden title for accessibility */}
+        <DialogTitle className="sr-only">Calculadora de Economia</DialogTitle>
+        
         {/* Progress bar */}
         <div className="w-full h-1.5 bg-gray-200">
           <div 

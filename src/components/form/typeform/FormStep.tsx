@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AlertCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -178,7 +177,7 @@ const FormStep: React.FC<FormStepProps> = ({
         </div>
       );
     
-    case 5: // Paid Traffic
+    case 5: // Paid Traffic - Changed to radio button selection
       return (
         <div className="space-y-4 w-full px-4 sm:px-0">
           <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Você já investe em tráfego pago?</h2>
@@ -186,25 +185,31 @@ const FormStep: React.FC<FormStepProps> = ({
             name="paidTraffic"
             control={control}
             render={({ field }) => (
-              <div className="space-y-4 max-w-md mx-auto w-full">
+              <RadioGroup
+                onValueChange={(value) => field.onChange(value === "true")}
+                defaultValue={field.value ? "true" : "false"}
+                className="space-y-3 max-w-md mx-auto w-full"
+              >
                 {[
-                  { value: true, label: "Sim" },
-                  { value: false, label: "Não" }
-                ].map((option) => (
-                  <div 
-                    key={String(option.value)}
-                    className="flex items-center justify-between p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors"
-                    onClick={() => field.onChange(option.value)}
+                  { value: "true", label: "Sim" },
+                  { value: "false", label: "Não" }
+                ].map((option, index) => (
+                  <label 
+                    key={option.value}
+                    className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700 hover:border-gold/50 cursor-pointer transition-colors backdrop-blur-sm"
+                    htmlFor={`pt${index+1}`}
                   >
-                    <label className="cursor-pointer w-full">{option.label}</label>
-                    <Switch
-                      checked={field.value === option.value}
-                      onCheckedChange={() => field.onChange(option.value)}
-                      className="data-[state=checked]:bg-gold"
-                    />
-                  </div>
+                    <div className="flex items-center h-5">
+                      <RadioGroupItem 
+                        value={option.value} 
+                        id={`pt${index+1}`}
+                        className="border-gold"
+                      />
+                    </div>
+                    <div className="text-sm sm:text-base">{option.label}</div>
+                  </label>
                 ))}
-              </div>
+              </RadioGroup>
             )}
           />
         </div>

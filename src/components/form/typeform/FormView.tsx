@@ -64,7 +64,7 @@ const FormView: React.FC<FormViewProps> = ({
           </button>
           
           {/* Step content */}
-          <div className="flex-1 flex flex-col justify-center">
+          <div className="flex-1 flex flex-col justify-center items-center">
             {/* Current step content with animation */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -73,7 +73,7 @@ const FormView: React.FC<FormViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="mb-8"
+                className="mb-8 w-full max-w-md mx-auto"
               >
                 <FormStep 
                   currentStep={currentStep} 
@@ -87,13 +87,13 @@ const FormView: React.FC<FormViewProps> = ({
           </div>
           
           {/* Navigation buttons */}
-          <div className="mt-auto flex justify-between">
+          <div className="mt-auto flex justify-between max-w-md w-full mx-auto">
             {currentStep > 0 && (
               <Button
                 variant="outline"
                 onClick={() => setCurrentStep(currentStep - 1)}
                 disabled={isSubmitting}
-                className="text-base"
+                className="text-base border-gold/20 hover:bg-gold/5 hover:text-white"
               >
                 Voltar
               </Button>

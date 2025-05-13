@@ -89,6 +89,7 @@ const AnimationLayout = () => {
             <Route path="/services/automation" element={<Automation />} />
             <Route path="/services/consulting" element={<Consulting />} />
             <Route path="/lp-funcionarios-digitais-pro" element={<DigitalEmployees />} />
+            <Route path="/lp-funcionarios-digitais-core" element={<DigitalEmployees />} />
             
             {/* Employee portal routes */}
             <Route path="/login" element={<Login />} />

@@ -3,10 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, FormData, defaultValues } from "./types";
 import { useEffect, useState } from "react";
-import { useFormSubmission } from "./hooks/useFormSubmission";
+import { useFormSubmission } from "./hooks/useTypeFormSubmission";
 import { useProgressTracking } from "./hooks/useProgressTracking";
 import { useCalendarState } from "./hooks/useCalendarState";
-import { useFormNavigation } from "./hooks/useFormNavigation";
 import { useKeyboardNavigation } from "./hooks/useKeyboardNavigation";
 import { useCalendarErrorHandling } from "./hooks/useCalendarErrorHandling";
 
@@ -82,7 +81,7 @@ export const useTypeformLogic = ({
     ].filter(Boolean) as string[];
     
     const currentField = fieldsToValidate[currentStep];
-    const isValid = await trigger(currentField);
+    const isValid = await trigger(currentField as any);
     
     if (isValid) {
       // Send partial data to webhook

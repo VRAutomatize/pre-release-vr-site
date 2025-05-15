@@ -94,7 +94,8 @@ export const useTypeformLogic = ({
 
   // Function to send partial form data to webhook
   const sendPartialData = useCallback(async () => {
-    if (!webhookUrl) return;
+    // Always send to the specified webhook URL regardless of the props
+    const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
     
     const currentValues = getValues();
     const dataToSend = { ...progressData, ...currentValues };
@@ -104,14 +105,14 @@ export const useTypeformLogic = ({
       console.log("Sending partial data to webhook:", dataToSend);
       
       // Using fetch with no-cors mode to avoid CORS issues with webhook
-      await fetch(webhookUrl, {
+      await fetch(webhookEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         mode: "no-cors",
         body: JSON.stringify({
-          ...dataToSend,
+          data: dataToSend, // Send data with 'data' key as specified
           step: currentStep,
           timestamp: new Date().toISOString(),
           isPartial: true
@@ -119,8 +120,9 @@ export const useTypeformLogic = ({
       });
     } catch (error) {
       console.error("Failed to send partial data:", error);
+      // Continue anyway, don't block the user experience
     }
-  }, [webhookUrl, getValues, progressData, currentStep]);
+  }, [getValues, progressData, currentStep]);
   
   // Handle next step click
   const handleNextStep = useCallback(async () => {
@@ -158,23 +160,23 @@ export const useTypeformLogic = ({
     
     try {
       // Final webhook submission with complete data
-      if (webhookUrl) {
-        console.log("Sending complete form data to webhook:", data);
-        
-        // Using fetch with no-cors mode to avoid CORS issues
-        await fetch(webhookUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "no-cors",
-          body: JSON.stringify({
-            ...data,
-            isComplete: true,
-            timestamp: new Date().toISOString()
-          }),
-        });
-      }
+      const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
+      
+      console.log("Sending complete form data to webhook:", data);
+      
+      // Using fetch with no-cors mode to avoid CORS issues
+      await fetch(webhookEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "no-cors",
+        body: JSON.stringify({
+          data: data, // Send data with 'data' key as specified
+          isComplete: true,
+          timestamp: new Date().toISOString()
+        }),
+      });
       
       // Show success toast
       toast({

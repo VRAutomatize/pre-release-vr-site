@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Loader2, Check, ArrowRight } from "lucide-react";
 import FormStep from "./FormStep";
@@ -44,6 +44,9 @@ const FormView: React.FC<FormViewProps> = ({
       >
         {/* Visually hidden title for accessibility */}
         <DialogTitle className="sr-only">Calculadora de Economia</DialogTitle>
+        <DialogDescription className="sr-only">
+          Formulário para cálculo de economia com funcionários digitais
+        </DialogDescription>
         
         {/* Progress bar */}
         <div className="w-full h-1.5 bg-gray-200">

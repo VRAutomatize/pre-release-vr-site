@@ -1,9 +1,14 @@
 
-import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
 import { formSchema, FormData, defaultValues } from "./types";
+import { useEffect, useState } from "react";
+import { useFormSubmission } from "./hooks/useFormSubmission";
+import { useProgressTracking } from "./hooks/useProgressTracking";
+import { useCalendarState } from "./hooks/useCalendarState";
+import { useFormNavigation } from "./hooks/useFormNavigation";
+import { useKeyboardNavigation } from "./hooks/useKeyboardNavigation";
+import { useCalendarErrorHandling } from "./hooks/useCalendarErrorHandling";
 
 interface UseTypeformLogicProps {
   isOpen: boolean;
@@ -16,118 +21,56 @@ interface UseTypeformLogicProps {
 export const useTypeformLogic = ({
   isOpen,
   onClose,
-  webhookUrl,
   onShowCalendar,
   showCalendar = false,
 }: UseTypeformLogicProps) => {
-  const { toast } = useToast();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [progressData, setProgressData] = useState<Partial<FormData>>({});
-  const [calendarLoaded, setCalendarLoaded] = useState(false);
-  const [calendarError, setCalendarError] = useState(false);
-  
-  const { control, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isValid }, reset } = useForm<FormData>({
+  // Set up form with validation
+  const { 
+    control, 
+    handleSubmit, 
+    watch, 
+    trigger, 
+    getValues, 
+    setValue, 
+    formState: { errors, isValid }, 
+    reset 
+  } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues,
     mode: "onChange",
   });
   
+  // Initialize current step state
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  // Get the paid traffic value to determine total steps
   const paidTraffic = watch("paidTraffic");
   
   // Total number of steps
   const totalSteps = paidTraffic ? 8 : 7;
   
-  // Reset form when modal is closed
-  useEffect(() => {
-    if (!isOpen) {
-      setCurrentStep(0);
-      reset(defaultValues);
-      setCalendarLoaded(false);
-      setCalendarError(false);
-    }
-  }, [isOpen, reset]);
-
-  // Set up listener for Cal.com errors
-  useEffect(() => {
-    if (showCalendar) {
-      const handleCalError = () => {
-        console.error("Cal.com error detected");
-        setCalendarError(true);
-      };
-      
-      // Listen for errors from Cal.com (custom event we could dispatch)
-      window.addEventListener('cal:error', handleCalError);
-      
-      // Set a timeout to detect if calendar hasn't loaded
-      const timeout = setTimeout(() => {
-        if (!calendarLoaded) {
-          console.log("Calendar loading timeout triggered");
-          setCalendarError(true);
-          setCalendarLoaded(true); // Stop the loading indicator
-        }
-      }, 12000); // 12 second timeout
-      
-      return () => {
-        window.removeEventListener('cal:error', handleCalError);
-        clearTimeout(timeout);
-      };
-    }
-  }, [showCalendar, calendarLoaded]);
-
-  // Handle key press for form navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
-      
-      if (e.key === 'Enter' && !isSubmitting && !showCalendar) {
-        e.preventDefault();
-        handleNextStep();
-      } else if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isSubmitting, currentStep, showCalendar]);
-
-  // Function to send partial form data to webhook
-  const sendPartialData = useCallback(async () => {
-    // Always send to the specified webhook URL regardless of the props
-    const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
-    
-    const currentValues = getValues();
-    const dataToSend = { ...progressData, ...currentValues };
-    setProgressData(dataToSend);
-    
-    try {
-      console.log("Sending partial data to webhook:", dataToSend);
-      
-      // Using fetch with no-cors mode to avoid CORS issues with webhook
-      await fetch(webhookEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
-        body: JSON.stringify({
-          data: dataToSend, // Send data with 'data' key as specified
-          step: currentStep,
-          timestamp: new Date().toISOString(),
-          isPartial: true
-        }),
-      });
-    } catch (error) {
-      console.error("Failed to send partial data:", error);
-      // Continue anyway, don't block the user experience
-    }
-  }, [getValues, progressData, currentStep]);
+  // Progress tracking logic
+  const { progressData, sendPartialData } = useProgressTracking({
+    getValues,
+    currentStep
+  });
   
-  // Handle next step click
-  const handleNextStep = useCallback(async () => {
+  // Form submission logic
+  const { isSubmitting, submitForm } = useFormSubmission({ 
+    onShowCalendar,
+    getValues
+  });
+  
+  // Calculate progress percentage
+  const progress = Math.round((currentStep / (totalSteps - 1)) * 100);
+  
+  // Calendar state logic
+  const { calendarLoaded, setCalendarLoaded, calendarError, setCalendarError } = useCalendarState();
+  
+  // Form navigation logic - we need to create a wrapper for handleNextStep
+  const handleNextStep = async () => {
     // Validate current field before proceeding
-    const fieldsToValidate: (keyof FormData)[] = [
+    const fieldsToValidate: string[] = [
       "fullName", 
       "phone", 
       "email", 
@@ -136,7 +79,7 @@ export const useTypeformLogic = ({
       "paidTraffic",
       paidTraffic ? "trafficInvestment" : undefined, 
       "industry"
-    ].filter(Boolean) as (keyof FormData)[];
+    ].filter(Boolean) as string[];
     
     const currentField = fieldsToValidate[currentStep];
     const isValid = await trigger(currentField);
@@ -149,66 +92,37 @@ export const useTypeformLogic = ({
       if (currentStep < totalSteps - 1) {
         setCurrentStep(prev => prev + 1);
       } else {
-        await onSubmitForm(getValues());
+        await submitForm(getValues());
       }
-    }
-  }, [currentStep, totalSteps, sendPartialData, trigger, getValues, paidTraffic]);
-  
-  // Modified form submission to better handle calendar transition
-  const onSubmitForm = async (data: FormData) => {
-    setIsSubmitting(true);
-    
-    try {
-      // Final webhook submission with complete data
-      const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
-      
-      console.log("Sending complete form data to webhook:", data);
-      
-      // Using fetch with no-cors mode to avoid CORS issues
-      await fetch(webhookEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
-        body: JSON.stringify({
-          data: data, // Send data with 'data' key as specified
-          isComplete: true,
-          timestamp: new Date().toISOString()
-        }),
-      });
-      
-      // Show success toast
-      toast({
-        title: "Formulário enviado com sucesso!",
-        description: "Preparando calendário...",
-        duration: 3000,
-      });
-      
-      // Reset calendar error state before showing calendar
-      setCalendarError(false);
-      
-      // Show calendar after a short delay
-      setTimeout(() => {
-        if (onShowCalendar) {
-          onShowCalendar();
-        }
-      }, 500);
-      
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast({
-        title: "Erro ao enviar formulário",
-        description: "Por favor, tente novamente",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
     }
   };
   
-  // Progress calculation
-  const progress = Math.round((currentStep / (totalSteps - 1)) * 100);
+  // Keyboard navigation logic
+  useKeyboardNavigation({
+    isOpen,
+    isSubmitting,
+    showCalendar,
+    onClose,
+    handleNextStep
+  });
+  
+  // Calendar error handling
+  useCalendarErrorHandling({
+    showCalendar,
+    calendarLoaded,
+    setCalendarLoaded,
+    setCalendarError
+  });
+  
+  // Reset form when modal is closed
+  useEffect(() => {
+    if (!isOpen) {
+      setCurrentStep(0);
+      reset(defaultValues);
+      setCalendarLoaded(false);
+      setCalendarError(false);
+    }
+  }, [isOpen, reset]);
 
   return {
     control,

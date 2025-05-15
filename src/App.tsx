@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,6 +7,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
 import { AuthProvider } from "./contexts/AuthContext";
+import { TypeformProvider } from "./contexts/TypeformContext";
+import { GlobalTypeformModal } from "./components/form/GlobalTypeformModal";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -154,16 +155,27 @@ const App = React.memo(() => {
     };
   }, []);
 
+  // Default calendar and webhook configuration
+  const defaultCalendarLink = "https://cal.com/vrautomatize/call";
+  const defaultWebhookUrl = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AnimationLayout />
-          </BrowserRouter>
-        </TooltipProvider>
+        <TypeformProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AnimationLayout />
+              {/* Global Typeform Modal that can be triggered from anywhere */}
+              <GlobalTypeformModal 
+                calendarLink={defaultCalendarLink} 
+                webhookUrl={defaultWebhookUrl} 
+              />
+            </BrowserRouter>
+          </TooltipProvider>
+        </TypeformProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

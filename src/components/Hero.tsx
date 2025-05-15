@@ -2,11 +2,12 @@
 import React, { lazy, Suspense, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import HeroTag from "./shared/HeroTag";
 import HeroTitle from "./shared/HeroTitle";
 import HeroDescription from "./shared/HeroDescription";
 import HeroActions from "./shared/HeroActions";
+import { TypeformButton } from "@/components/form/TypeformButton";
 
 // Componente Hero otimizado com memoização para evitar renderizações desnecessárias
 const Hero = React.memo(() => {
@@ -76,14 +77,13 @@ const Hero = React.memo(() => {
               </p>
             </div>
             <HeroActions>
-              <Button 
+              <TypeformButton
                 className="bg-gold hover:bg-gold-light text-background px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 animate-fade-up"
                 style={{ animationDelay: "1.5s" }}
-                onClick={handleWhatsAppClick}
               >
                 Assessoria Gratuita
                 <ArrowRight className="ml-2 animate-pulse" size={20} />
-              </Button>
+              </TypeformButton>
               <Button 
                 variant="outline" 
                 className="px-8 py-6 text-lg hover:bg-gold/10 transition-all duration-300 animate-fade-up"

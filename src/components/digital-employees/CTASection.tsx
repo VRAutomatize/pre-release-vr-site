@@ -1,16 +1,11 @@
 
 import React from "react";
-import { CheckCircle, ArrowRight, Calculator } from "lucide-react";
+import { CheckCircle, Calculator } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { TypeformButton } from "@/components/form/TypeformButton";
 
-interface CTASectionProps {
-  calendarLink: string;
-  webhookUrl?: string;
-  openModal: () => void;
-}
-
-const CTASection = ({ calendarLink, webhookUrl, openModal }: CTASectionProps) => {
+const CTASection = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -42,16 +37,14 @@ const CTASection = ({ calendarLink, webhookUrl, openModal }: CTASectionProps) =>
                 ))}
               </ul>
               <div className="mt-8 hidden md:block">
-                <button 
-                  onClick={openModal} 
+                <TypeformButton
+                  icon={Calculator} 
                   className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-6"
                 >
-                  <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
                   <span className="text-sm sm:text-lg">
                     {isMobile ? "Calcule sua economia" : "Cálculo estimado da sua economia anual com automação"}
                   </span>
-                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-                </button>
+                </TypeformButton>
               </div>
             </div>
             <div className="flex-1 flex justify-center">
@@ -59,14 +52,12 @@ const CTASection = ({ calendarLink, webhookUrl, openModal }: CTASectionProps) =>
             </div>
           </div>
           <div className="mt-8 md:hidden">
-            <button 
-              onClick={openModal} 
+            <TypeformButton
+              icon={Calculator}
               className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 py-3 w-full"
             >
-              <Calculator className="mr-2 h-5 w-5 flex-shrink-0" /> 
               <span className="text-sm">Calcule sua economia</span>
-              <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-            </button>
+            </TypeformButton>
           </div>
         </div>
       </Card>

@@ -10,8 +10,6 @@ import IdealForSection from "@/components/digital-employees/IdealForSection";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
-import { TypeformModal } from "@/components/form/TypeformModal";
-import { useTypeformModal } from "@/hooks/useTypeformModal";
 import { motion } from "framer-motion";
 
 // Animation variants for scroll reveal
@@ -28,20 +26,8 @@ const sectionVariants = {
 };
 
 const DigitalEmployees = () => {
-  // Configuration settings
-  const calendarLink = "https://cal.com/vrautomatize/call"; 
-  const webhookUrl = "https://webhook.site/your-webhook";
-  
+  // Whatsapp link function
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
-
-  // Modal state
-  const { 
-    isOpen, 
-    showCalendar,
-    openModal, 
-    closeModal, 
-    showCalendarView,
-  } = useTypeformModal();
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -71,7 +57,7 @@ const DigitalEmployees = () => {
           variants={sectionVariants}
           className="mb-24 md:mb-32"
         >
-          <HeroSection calendarLink={calendarLink} webhookUrl={webhookUrl} openModal={openModal} />
+          <HeroSection />
         </motion.div>
         
         {/* Use Cases Section */}
@@ -126,21 +112,9 @@ const DigitalEmployees = () => {
           variants={sectionVariants}
           className="reveal-section mb-16"
         >
-          <CTASection calendarLink={calendarLink} webhookUrl={webhookUrl} openModal={openModal} />
+          <CTASection />
         </motion.div>
       </div>
-
-      {/* Form/Calendar Modal */}
-      {isOpen && (
-        <TypeformModal 
-          isOpen={isOpen} 
-          onClose={closeModal} 
-          calendarLink={calendarLink}
-          webhookUrl={webhookUrl}
-          showCalendar={showCalendar}
-          onShowCalendar={showCalendarView}
-        />
-      )}
 
       <Footer />
     </div>

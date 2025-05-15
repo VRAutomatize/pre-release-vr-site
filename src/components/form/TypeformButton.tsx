@@ -11,6 +11,7 @@ interface TypeformButtonProps {
   size?: "default" | "sm" | "lg" | "icon";
   children: React.ReactNode;
   icon?: LucideIcon;
+  style?: React.CSSProperties; // Add support for style prop
 }
 
 export function TypeformButton({ 
@@ -18,7 +19,8 @@ export function TypeformButton({
   variant = "default", 
   size = "default",
   children,
-  icon: Icon
+  icon: Icon,
+  style // Add style to the destructured props
 }: TypeformButtonProps) {
   const { openModal } = useTypeform();
   
@@ -28,6 +30,7 @@ export function TypeformButton({
       onClick={openModal}
       variant={variant}
       size={size}
+      style={style} // Pass the style prop to the Button component
     >
       {Icon && <Icon className="mr-2 h-5 w-5 flex-shrink-0" />}
       {children}

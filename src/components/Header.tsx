@@ -3,8 +3,6 @@ import React, { useMemo } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useHeaderScroll } from "@/hooks/useHeaderScroll";
 import HeaderLogo from "./header/HeaderLogo";
-import DesktopNavigation from "./header/DesktopNavigation";
-import MobileNavigation from "./header/MobileNavigation";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -31,14 +29,9 @@ const Header = React.memo(({ children }: HeaderProps) => {
   return (
     <header className={headerClasses}>
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <HeaderLogo />
-          </div>
-
-          {children || <DesktopNavigation />}
-          <MobileNavigation />
-        </nav>
+        <div className="flex items-center justify-center h-16">
+          <HeaderLogo />
+        </div>
       </div>
     </header>
   );

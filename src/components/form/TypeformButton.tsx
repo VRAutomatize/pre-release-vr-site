@@ -62,15 +62,17 @@ export function TypeformButton({
   };
   
   return (
-    <Button 
-      className={cn(className)} 
-      onClick={handleClick}
-      variant={variant}
-      size={size}
-      style={style}
-    >
-      {Icon && <Icon className="mr-2 h-5 w-5 flex-shrink-0" />}
-      {children}
-    </Button>
+    <div className="w-full max-w-md mx-auto">
+      <Button 
+        className={cn("w-full", className)} 
+        onClick={handleClick}
+        variant={variant}
+        size={size}
+        style={style}
+      >
+        {Icon && <Icon className="mr-2 h-5 w-5 flex-shrink-0" />}
+        {children}
+      </Button>
+    </div>
   );
 }

@@ -22,7 +22,7 @@ const condensedFormSchema = z.object({
   industry: z.string().min(3, "Ramo de atuação é obrigatório"),
   email: z.string().email("Email inválido").optional(),
   paidTraffic: z.boolean().optional(),
-  trafficInvestment: z.string().optional(),
+  trafficInvestment: z.enum(["0-1000", "1001-3000", "3001-5000", "5001-10000", "10000+"]).optional(),
 });
 
 type CondensedFormData = z.infer<typeof condensedFormSchema>;
@@ -34,7 +34,7 @@ const defaultValues: CondensedFormData = {
   industry: "",
   email: "",
   paidTraffic: false,
-  trafficInvestment: "",
+  trafficInvestment: undefined,
 };
 
 interface UseCondensedFormLogicProps {
@@ -77,7 +77,7 @@ export const useCondensedFormLogic = ({
         ...data,
         paidTraffic: data.paidTraffic || false,
         instagram: "",
-        trafficInvestment: data.trafficInvestment || "",
+        trafficInvestment: data.trafficInvestment,
       };
     }
   });

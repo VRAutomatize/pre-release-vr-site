@@ -52,20 +52,20 @@ const QuickSocialProof = () => {
   ];
 
   return (
-    <section className="py-8 md:py-12">
-      <div className="container mx-auto px-4">
+    <section className="section-spacing">
+      <div className="mobile-container-tight">
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="mobile-card-grid-4 mb-8">
           {stats.map((stat, index) => (
             <div 
               key={index}
-              className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg p-4 text-center hover:border-gold/30 transition-colors"
+              className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg mobile-card-compact text-center hover:border-gold/30 transition-colors"
             >
-              <stat.icon className={`h-6 w-6 ${stat.color} mx-auto mb-2`} />
-              <div className={`text-xl md:text-2xl font-bold ${stat.color}`}>
+              <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.color} mx-auto mb-2`} />
+              <div className={`text-lg md:text-xl lg:text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm text-foreground/70">
+              <div className="text-xs md:text-sm text-foreground/70 leading-tight">
                 {stat.label}
               </div>
             </div>
@@ -78,11 +78,11 @@ const QuickSocialProof = () => {
             {isMobile ? "O que nossos clientes dizem:" : "Resultados reais de empresários como você:"}
           </h3>
           
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="mobile-card-grid gap-4">
             {testimonials.map((testimonial, index) => (
               <div 
                 key={index}
-                className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg p-4 hover:border-gold/30 transition-colors"
+                className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg mobile-card-compact hover:border-gold/30 transition-colors"
               >
                 <div className="flex items-center gap-1 mb-2">
                   {[...Array(testimonial.rating)].map((_, i) => (

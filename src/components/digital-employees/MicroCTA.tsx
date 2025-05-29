@@ -50,48 +50,46 @@ const MicroCTA = ({
   const config = variants[variant];
 
   return (
-    <div className={`my-8 md:my-12 ${className}`}>
-      <div className={`${config.bgColor} ${config.borderColor} border rounded-xl p-4 md:p-6 text-center backdrop-blur-sm mx-2 md:mx-0`}>
-        <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
-          {config.title}
-        </h3>
-        <p className="text-foreground/70 mb-4 text-sm md:text-base">
-          {config.description}
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-          {variant === "executive" ? (
-            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-              <ExecutiveButton
-                icon={Calendar}
-                variant="calendar"
-                trackingId={`micro_cta_${variant}_calendar`}
-                trackingSection="micro_cta"
-                className="text-sm px-4 py-2 w-full sm:w-auto"
-              >
-                {isMobile ? "Agendar" : "Reunião Executiva"}
-              </ExecutiveButton>
-              <ExecutiveButton
-                icon={MessageSquare}
-                variant="whatsapp"
-                trackingId={`micro_cta_${variant}_whatsapp`}
-                trackingSection="micro_cta"
-                className="text-sm px-4 py-2 w-full sm:w-auto"
-              >
-                {isMobile ? "WhatsApp" : "Falar no WhatsApp"}
-              </ExecutiveButton>
-            </div>
-          ) : (
-            <TypeformButton
-              className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2 w-full sm:w-auto max-w-none"
-              trackingId={`micro_cta_${variant}`}
+    <div className={`${config.bgColor} ${config.borderColor} border rounded-xl mobile-card-compact text-center backdrop-blur-sm ${className}`}>
+      <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2 text-foreground">
+        {config.title}
+      </h3>
+      <p className="text-foreground/70 mb-4 text-sm md:text-base">
+        {config.description}
+      </p>
+      
+      <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+        {variant === "executive" ? (
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <ExecutiveButton
+              icon={Calendar}
+              variant="calendar"
+              trackingId={`micro_cta_${variant}_calendar`}
               trackingSection="micro_cta"
+              className="text-sm px-4 py-2 w-full sm:w-auto"
             >
-              {variant === "urgency" ? "Garantir Vaga" : variant === "calculator" ? "Calcular Economia" : "Começar"}
-              <ArrowRight className="h-4 w-4" />
-            </TypeformButton>
-          )}
-        </div>
+              {isMobile ? "Agendar" : "Reunião Executiva"}
+            </ExecutiveButton>
+            <ExecutiveButton
+              icon={MessageSquare}
+              variant="whatsapp"
+              trackingId={`micro_cta_${variant}_whatsapp`}
+              trackingSection="micro_cta"
+              className="text-sm px-4 py-2 w-full sm:w-auto"
+            >
+              {isMobile ? "WhatsApp" : "Falar no WhatsApp"}
+            </ExecutiveButton>
+          </div>
+        ) : (
+          <TypeformButton
+            className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2 w-full sm:w-auto max-w-none"
+            trackingId={`micro_cta_${variant}`}
+            trackingSection="micro_cta"
+          >
+            {variant === "urgency" ? "Garantir Vaga" : variant === "calculator" ? "Calcular Economia" : "Começar"}
+            <ArrowRight className="h-4 w-4" />
+          </TypeformButton>
+        )}
       </div>
     </div>
   );

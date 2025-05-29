@@ -22,7 +22,7 @@
   /* Enhance spacing between sections on mobile */
   @media (max-width: 768px) {
     section {
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
   }
 
@@ -37,25 +37,67 @@
 }
 
 @layer utilities {
-  /* Mobile specific utilities - Otimizados para ocupar mais espaço */
-  .mobile-full {
-    @apply md:p-6 p-1 w-full min-h-[100vh];
+  /* Full width system - Mobile first */
+  .mobile-full-width {
+    @apply w-full px-0 md:container md:mx-auto md:px-4;
   }
   
-  .mobile-container {
-    @apply px-2 md:px-6 w-full;
-  }
-
   .mobile-container-full {
     @apply px-0 w-full;
   }
 
+  .mobile-container-tight {
+    @apply px-3 md:px-6 w-full;
+  }
+  
+  .mobile-container {
+    @apply px-4 md:px-6 w-full;
+  }
+
   .mobile-container-minimal {
-    @apply px-1 md:px-4 lg:px-6 w-full;
+    @apply px-2 md:px-4 lg:px-6 w-full;
   }
   
   .mobile-dialog {
     @apply rounded-none md:rounded-lg fixed inset-0 w-full h-full md:h-auto md:max-w-lg md:mx-auto;
+  }
+
+  /* Responsive spacing system */
+  .section-spacing {
+    @apply py-8 md:py-12 lg:py-16;
+  }
+
+  .section-spacing-large {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+
+  .section-spacing-small {
+    @apply py-6 md:py-8 lg:py-12;
+  }
+
+  .micro-cta-spacing {
+    @apply my-6 md:my-8 lg:my-12;
+  }
+
+  /* Card system improvements */
+  .mobile-card-grid {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6;
+  }
+
+  .mobile-card-grid-2 {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6;
+  }
+
+  .mobile-card-grid-4 {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 md:gap-6;
+  }
+
+  .mobile-card-padding {
+    @apply p-4 md:p-6 lg:p-8;
+  }
+
+  .mobile-card-compact {
+    @apply p-3 md:p-4 lg:p-6;
   }
 
   /* Safe area padding for mobile devices with notch/dynamic island */
@@ -141,6 +183,21 @@
   .animate-slide-right {
     animation: slide-right 0.3s ease-out forwards;
   }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out forwards;
+  }
 }
 
 /* Custom switch styles */
@@ -176,14 +233,5 @@
   /* Ensure mobile header doesn't interfere with content */
   .mobile-header-spacing {
     padding-bottom: env(safe-area-inset-bottom, 80px);
-  }
-
-  /* Better card layouts for mobile */
-  .mobile-card-grid {
-    @apply grid-cols-1 gap-3 md:grid-cols-2 md:gap-6;
-  }
-
-  .mobile-card-padding {
-    @apply p-4 md:p-6 lg:p-8;
   }
 }

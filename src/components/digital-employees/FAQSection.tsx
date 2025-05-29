@@ -51,16 +51,16 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-12">
+    <section className="section-spacing">
+      <div className="mobile-container-tight max-w-4xl mx-auto">
+        <div className="text-center mb-8 md:mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <HelpCircle className="h-6 w-6 text-gold" />
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
+            <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
               Perguntas Frequentes
             </h2>
           </div>
-          <p className="text-xl text-foreground/80">
+          <p className="text-lg md:text-xl text-foreground/80">
             Esclarecemos as principais dúvidas de empresários como você
           </p>
         </div>
@@ -70,22 +70,22 @@ const FAQSection = () => {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="border border-gold/20 rounded-lg px-6 bg-black/20 backdrop-blur-lg"
+              className="border border-gold/20 rounded-lg mobile-card-compact bg-black/20 backdrop-blur-lg"
             >
               <AccordionTrigger 
-                className="text-left hover:text-gold transition-colors py-6"
+                className="text-left hover:text-gold transition-colors py-4 md:py-6"
                 onClick={() => handleFAQClick(faq.question)}
               >
-                <span className="text-lg font-medium">{faq.question}</span>
+                <span className="text-base md:text-lg font-medium pr-4">{faq.question}</span>
               </AccordionTrigger>
-              <AccordionContent className="text-foreground/80 pb-6 text-base leading-relaxed">
+              <AccordionContent className="text-foreground/80 pb-4 md:pb-6 text-sm md:text-base leading-relaxed">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-8 md:mt-12">
           <p className="text-foreground/60 mb-4">
             Ainda tem dúvidas? Fale direto com nossos especialistas
           </p>

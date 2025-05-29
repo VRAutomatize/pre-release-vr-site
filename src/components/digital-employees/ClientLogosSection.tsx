@@ -5,8 +5,8 @@ import { Building2 } from "lucide-react";
 
 const ClientLogosSection = () => {
   return (
-    <section className="py-12 border-b border-gold/10">
-      <div className="container mx-auto px-4">
+    <section className="section-spacing border-b border-gold/10">
+      <div className="mobile-container-tight">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Building2 className="h-5 w-5 text-gold" />
@@ -18,8 +18,8 @@ const ClientLogosSection = () => {
             Mais de 200 empresas já economizam 6 dígitos com nossos funcionários digitais
           </p>
         </div>
-        <ClientLogos />
       </div>
+      <ClientLogos />
     </section>
   );
 };

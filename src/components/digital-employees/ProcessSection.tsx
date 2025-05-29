@@ -56,28 +56,37 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section className="relative py-16">
-      <motion.div className="max-w-5xl mx-auto" initial="hidden" whileInView="show" viewport={{
-        once: true,
-        amount: 0.3
-      }} variants={containerVariants}>
-        <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold mb-20 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
+    <section className="relative">
+      <motion.div 
+        className="max-w-5xl mx-auto" 
+        initial="hidden" 
+        whileInView="show" 
+        viewport={{
+          once: true,
+          amount: 0.3
+        }} 
+        variants={containerVariants}
+      >
+        <motion.h2 
+          variants={itemVariants} 
+          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-12 md:mb-16 lg:mb-20 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light"
+        >
           Como funciona nosso processo:
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        <div className="mobile-card-grid-4">
           {steps.map((step, index) => (
             <motion.div 
               key={index} 
               variants={itemVariants} 
-              className="floating-card p-8 flex flex-col items-center text-center hover:border-gold/40 transition-all duration-300 relative h-full rounded-lg hover:-translate-y-2"
+              className="floating-card mobile-card-compact flex flex-col items-center text-center hover:border-gold/40 transition-all duration-300 relative h-full rounded-lg hover:-translate-y-2 min-h-[180px] md:min-h-[200px]"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent"></div>
-              <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mb-8">
-                <step.icon className="h-8 w-8 text-gold" />
+              <div className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-gold/10 flex items-center justify-center mb-4 md:mb-6">
+                <step.icon className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-gold" />
               </div>
-              <span className="text-gold font-bold text-6xl absolute -top-12 -left-3 opacity-10">0{index + 1}</span>
-              <p className="text-lg">{step.title}</p>
+              <span className="text-gold font-bold text-4xl md:text-5xl lg:text-6xl absolute -top-8 md:-top-12 -left-2 md:-left-3 opacity-10">0{index + 1}</span>
+              <p className="text-sm md:text-base lg:text-lg leading-tight">{step.title}</p>
             </motion.div>
           ))}
         </div>

@@ -1,3 +1,4 @@
+
 import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -84,13 +85,13 @@ const DigitalEmployees = () => {
         </div>
       </Header>
 
-      <div className="min-h-screen bg-background overflow-x-hidden px-0 md:container md:mx-auto md:px-4 pt-20 md:pt-12 pb-24 md:pb-12">
+      <div className="min-h-screen bg-background overflow-x-hidden mobile-full-width pt-20 md:pt-12 pb-24 md:pb-12">
         {/* Hero Section */}
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={sectionVariants}
-          className="mb-16 md:mb-24"
+          className="section-spacing-large"
         >
           <HeroSection />
         </motion.div>
@@ -101,7 +102,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-12 mobile-container md:px-0"
+          className="reveal-section section-spacing mobile-container-full"
         >
           <QuickSocialProof />
         </motion.div>
@@ -112,14 +113,16 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-12 mobile-container md:px-0"
+          className="reveal-section section-spacing mobile-container-full"
         >
           <ClientLogosSection />
         </motion.div>
 
         {/* Micro CTA - Urgency */}
-        <div className="mobile-container md:px-0">
-          <MicroCTA variant="urgency" />
+        <div className="mobile-container-tight">
+          <div className="micro-cta-spacing">
+            <MicroCTA variant="urgency" />
+          </div>
         </div>
 
         {/* ROI Chart Section */}
@@ -128,15 +131,17 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="roi-chart-section"
         >
           <ROIChart />
         </motion.div>
         
         {/* Micro CTA - Calculator */}
-        <div className="mobile-container md:px-0">
-          <MicroCTA variant="calculator" />
+        <div className="mobile-container-tight">
+          <div className="micro-cta-spacing">
+            <MicroCTA variant="calculator" />
+          </div>
         </div>
 
         {/* Use Cases Section */}
@@ -145,15 +150,17 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="use-cases-section"
         >
           <UseCasesSection />
         </motion.div>
 
         {/* Micro CTA - Executive */}
-        <div className="mobile-container md:px-0">
-          <MicroCTA variant="executive" />
+        <div className="mobile-container-tight">
+          <div className="micro-cta-spacing">
+            <MicroCTA variant="executive" />
+          </div>
         </div>
         
         {/* Premium Social Proof Section */}
@@ -162,7 +169,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="premium-social-proof"
         >
           <PremiumSocialProof />
@@ -174,7 +181,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="process-section"
         >
           <ProcessSection />
@@ -186,15 +193,17 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="comparison-section"
         >
           <ComparisonSection />
         </motion.div>
 
         {/* Micro CTA - Default */}
-        <div className="mobile-container md:px-0">
-          <MicroCTA variant="default" />
+        <div className="mobile-container-tight">
+          <div className="micro-cta-spacing">
+            <MicroCTA variant="default" />
+          </div>
         </div>
         
         {/* FAQ Section - Moved higher up */}
@@ -203,7 +212,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="faq-section"
         >
           <FAQSection />
@@ -215,7 +224,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 md:mb-24 mobile-container md:px-0"
+          className="reveal-section section-spacing-large mobile-container-tight"
           id="ideal-for-section"
         >
           <IdealForSection />
@@ -227,7 +236,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16 mobile-container md:px-0"
+          className="reveal-section section-spacing mobile-container-tight"
         >
           <CTASection />
         </motion.div>

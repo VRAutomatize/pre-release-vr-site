@@ -15,7 +15,7 @@ const MobileStickyCTA = () => {
   const ctaVariants = [
     {
       text: "Começar agora",
-      subtitle: "Análise gratuita",
+      subtitle: "",
       icon: MessageSquare,
       bgGradient: "from-gold to-gold-light",
       textColor: "text-background" // Dark text for gold background
@@ -124,7 +124,7 @@ const MobileStickyCTA = () => {
               trackingId="mobile_standard_flow"
               trackingSection="mobile_sticky"
             >
-              Análise Gratuita (15min)
+              Começar (15min)
             </TypeformButton>
           </div>
           
@@ -143,12 +143,12 @@ const MobileStickyCTA = () => {
       <div className="fixed bottom-3 left-3 right-3 z-40">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-2.5 px-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
+          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-2 px-3 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
         >
           <currentVariant.icon className="h-4 w-4" />
           <div className="text-center">
             <div>{showOptions ? "Fechar" : currentVariant.text}</div>
-            {!showOptions && (
+            {!showOptions && currentVariant.subtitle && (
               <div className="text-xs opacity-90">{currentVariant.subtitle}</div>
             )}
           </div>

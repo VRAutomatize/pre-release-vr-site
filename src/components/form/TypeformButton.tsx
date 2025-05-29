@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
+import { useTypeform } from "@/contexts/TypeformContext";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
@@ -29,6 +30,7 @@ export function TypeformButton({
   trackingMetadata = {}
 }: TypeformButtonProps) {
   const { trackEvent } = useConversionAnalytics();
+  const { openModal } = useTypeform();
   
   const handleClick = () => {
     // Track the CTA click
@@ -42,13 +44,14 @@ export function TypeformButton({
         variant,
         size,
         hasIcon: !!Icon,
-        directCalendar: true,
+        directCalendar: false,
+        usesForm: true,
         ...trackingMetadata
       }
     );
 
-    // Open calendar directly
-    window.open('https://cal.com/vrautomatize/call', '_blank');
+    // Open the form modal
+    openModal();
   };
   
   return (

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
+import { useTypeform } from "@/contexts/TypeformContext";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ExitIntentAlert = () => {
@@ -10,6 +11,7 @@ const ExitIntentAlert = () => {
   const [hasTriggered, setHasTriggered] = useState(false);
   const [pageLoadTime] = useState(Date.now());
   const { trackEvent } = useConversionAnalytics();
+  const { openModal } = useTypeform();
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -43,9 +45,13 @@ const ExitIntentAlert = () => {
 
   const handleCTAClick = () => {
     trackEvent('exit_intent_cta_click', 'click', 'cta_button', 'exit_intent', {
-      actionTaken: 'executive_meeting'
+      actionTaken: 'form_modal',
+      usesForm: true
     });
-    // Don't close automatically, let user navigate
+    
+    // Close the alert and open the form modal
+    setShowAlert(false);
+    openModal();
   };
 
   return (
@@ -112,10 +118,7 @@ const ExitIntentAlert = () => {
                   </p>
                   
                   <div className={`flex gap-3 ${isMobile ? "flex-col" : "flex-col sm:flex-row"}`}>
-                    <a
-                      href="https://cal.com/vrautomatize/call"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
                       onClick={handleCTAClick}
                       className={`bg-gold hover:bg-gold-light text-background rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
                         isMobile ? "px-6 py-4 text-lg" : "px-6 py-3 text-lg"
@@ -123,7 +126,7 @@ const ExitIntentAlert = () => {
                     >
                       <Calendar className="h-5 w-5" />
                       Agendar Reunião Agora
-                    </a>
+                    </button>
                     <button
                       onClick={handleClose}
                       className={`text-foreground/80 hover:text-gold transition-colors text-sm ${

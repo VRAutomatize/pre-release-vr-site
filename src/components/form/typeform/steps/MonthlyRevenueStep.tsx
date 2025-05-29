@@ -15,16 +15,13 @@ const MonthlyRevenueStep: React.FC<MonthlyRevenueStepProps> = ({ control }) => {
     { value: "100001-300000", label: "R$ 100.001 - R$ 300.000", tier: "growth" },
     { value: "300001-500000", label: "R$ 300.001 - R$ 500.000", tier: "premium" },
     { value: "500001-1000000", label: "R$ 500.001 - R$ 1.000.000", tier: "executive" },
-    { value: "1000001-5000000", label: "R$ 1.000.001 - R$ 5.000.000", tier: "executive" },
-    { value: "5000000+", label: "Acima de R$ 5.000.000", tier: "vip" }
+    { value: "1000001-5000000", label: "R$ 1.000.001 - R$ 5.000.000", tier: "executive" }
   ];
 
   const getTierStyles = (tier: string) => {
     switch (tier) {
       case "executive":
         return "border-yellow-400 bg-gradient-to-r from-yellow-900/20 to-amber-900/20 hover:border-yellow-300";
-      case "vip":
-        return "border-purple-400 bg-gradient-to-r from-purple-900/20 to-violet-900/20 hover:border-purple-300";
       case "premium":
         return "border-orange-400 bg-gradient-to-r from-orange-900/20 to-red-900/20 hover:border-orange-300";
       case "growth":
@@ -58,29 +55,24 @@ const MonthlyRevenueStep: React.FC<MonthlyRevenueStepProps> = ({ control }) => {
             {revenueOptions.map((option, index) => (
               <label 
                 key={option.value}
-                className={`flex items-center space-x-3 p-3 sm:p-4 rounded-lg cursor-pointer transition-all backdrop-blur-sm ${getTierStyles(option.tier)}`}
+                className={`flex items-center space-x-3 p-3 sm:p-4 rounded-lg cursor-pointer transition-all backdrop-blur-sm touch-manipulation min-h-[3.5rem] ${getTierStyles(option.tier)}`}
                 htmlFor={`r${index+1}`}
               >
                 <div className="flex items-center h-5">
                   <RadioGroupItem 
                     value={option.value} 
                     id={`r${index+1}`}
-                    className={option.tier === "executive" || option.tier === "vip" ? "border-yellow-400" : "border-gold"}
+                    className={option.tier === "executive" ? "border-yellow-400" : "border-gold"}
                   />
                 </div>
                 <div className="flex items-center gap-2 text-sm sm:text-base">
-                  {(option.tier === "executive" || option.tier === "vip") && (
+                  {option.tier === "executive" && (
                     <Crown className="h-4 w-4 text-yellow-400" />
                   )}
                   <span>{option.label}</span>
                   {option.tier === "executive" && (
                     <span className="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded-full ml-auto">
                       Executivo
-                    </span>
-                  )}
-                  {option.tier === "vip" && (
-                    <span className="text-xs bg-purple-400/20 text-purple-400 px-2 py-1 rounded-full ml-auto">
-                      VIP
                     </span>
                   )}
                 </div>

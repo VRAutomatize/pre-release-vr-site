@@ -16,8 +16,7 @@ const condensedFormSchema = z.object({
     "100001-300000", 
     "300001-500000", 
     "500001-1000000", 
-    "1000001-5000000", 
-    "5000000+"
+    "1000001-5000000"
   ]),
   industry: z.string().min(3, "Ramo de atuação é obrigatório"),
   email: z.string().email("Email inválido").optional(),

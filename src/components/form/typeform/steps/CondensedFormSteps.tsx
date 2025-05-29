@@ -97,7 +97,7 @@ export const CondensedPhoneStep: React.FC<StepProps & { showExpressFlow?: boolea
   );
 };
 
-// Step 3: Revenue - Simplified options
+// Step 3: Revenue - Simplified options (sem "Acima de R$ 5M")
 export const CondensedRevenueStep: React.FC<StepProps> = ({ control }) => {
   const revenueOptions = [
     { value: "0-50000", label: "Até R$ 50k" },
@@ -105,8 +105,7 @@ export const CondensedRevenueStep: React.FC<StepProps> = ({ control }) => {
     { value: "100001-300000", label: "R$ 100k - 300k" },
     { value: "300001-500000", label: "R$ 300k - 500k" },
     { value: "500001-1000000", label: "R$ 500k - 1M" },
-    { value: "1000001-5000000", label: "R$ 1M - 5M" },
-    { value: "5000000+", label: "Acima de R$ 5M" }
+    { value: "1000001-5000000", label: "R$ 1M - 5M" }
   ];
 
   return (
@@ -129,15 +128,15 @@ export const CondensedRevenueStep: React.FC<StepProps> = ({ control }) => {
             {revenueOptions.map((option, index) => (
               <label 
                 key={option.value}
-                className="flex items-center p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700/70 hover:border-gold/50 cursor-pointer transition-colors"
+                className="flex items-center p-4 rounded-lg border border-gold/20 bg-gray-800/30 hover:bg-gray-700/70 hover:border-gold/50 cursor-pointer transition-colors touch-manipulation min-h-[3.5rem]"
                 htmlFor={`r${index+1}`}
               >
                 <RadioGroupItem 
                   value={option.value} 
                   id={`r${index+1}`}
-                  className="border-gold mr-3"
+                  className="border-gold mr-3 flex-shrink-0"
                 />
-                <span className="font-medium">{option.label}</span>
+                <span className="font-medium text-left flex-1">{option.label}</span>
               </label>
             ))}
           </RadioGroup>

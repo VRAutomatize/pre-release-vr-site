@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Loader2, Check, ArrowRight, ArrowLeft, Clock } from "lucide-react";
+import { useKeyboardDetection } from "@/hooks/useKeyboardDetection";
 import { 
   CondensedNameStep, 
   CondensedPhoneStep, 
@@ -40,6 +41,8 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
   control,
   errors
 }) => {
+  const { isKeyboardOpen } = useKeyboardDetection();
+
   const renderStep = () => {
     switch (currentStep) {
       case 0:
@@ -70,7 +73,11 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-lg w-[95vw] h-[85vh] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg flex flex-col"
+        className={`max-w-lg w-[95vw] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg flex flex-col transition-all duration-300 ${
+          isKeyboardOpen 
+            ? 'h-[70vh] justify-start pt-4' 
+            : 'h-[85vh] justify-center'
+        }`}
         onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogTitle className="sr-only">Análise Gratuita</DialogTitle>
@@ -78,22 +85,21 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           Formulário para análise gratuita
         </DialogDescription>
         
-        {/* Simplified Progress Bar */}
-        <div className="relative w-full h-1 bg-gray-800/50">
+        {/* Enhanced Progress Bar - More Visible */}
+        <div className="relative w-full h-3 bg-gray-800/40 rounded-full overflow-hidden">
           <div 
-            className="h-1 bg-gold transition-all duration-500 ease-out"
+            className="h-full bg-gradient-to-r from-gold to-gold-light transition-all duration-700 ease-out rounded-full shadow-sm"
             style={{ width: `${progress}%` }}
           />
         </div>
         
-        {/* Minimal header with urgency */}
+        {/* Simplified header - Remove step counter */}
         <div className="bg-red-500/10 border-b border-red-500/20 px-4 py-2">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center">
             <div className="flex items-center gap-2 text-red-400 text-sm">
               <Clock className="h-4 w-4" />
               <span>5 vagas restantes</span>
             </div>
-            <span className="text-xs text-gold">{currentStep + 1}/{totalSteps}</span>
           </div>
         </div>
         
@@ -107,9 +113,9 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           <X className="h-4 w-4" />
         </button>
         
-        {/* Main Content - More space for form */}
-        <div className="flex-1 flex flex-col justify-center p-6">
-          <div className="flex-1 flex items-center justify-center min-h-0">
+        {/* Main Content - Adjusted for keyboard */}
+        <div className={`flex-1 flex flex-col ${isKeyboardOpen ? 'justify-start pt-2' : 'justify-center'} p-6`}>
+          <div className={`flex-1 flex items-center justify-center ${isKeyboardOpen ? 'min-h-0' : ''}`}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentStep}
@@ -124,8 +130,8 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
             </AnimatePresence>
           </div>
           
-          {/* Simplified Navigation */}
-          <div className="mt-6 flex justify-between items-center">
+          {/* Navigation - Compact when keyboard is open */}
+          <div className={`${isKeyboardOpen ? 'mt-3' : 'mt-6'} flex justify-between items-center`}>
             {showPrevButton ? (
               <Button
                 variant="outline"
@@ -143,7 +149,9 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
             <Button
               onClick={onNextStep}
               disabled={isSubmitting}
-              className="bg-gold hover:bg-gold/90 text-black font-medium px-8 py-3 min-w-[140px]"
+              className={`bg-gold hover:bg-gold/90 text-black font-medium ${
+                isKeyboardOpen ? 'px-6 py-2' : 'px-8 py-3'
+              } min-w-[140px]`}
             >
               {isSubmitting ? (
                 <>
@@ -165,12 +173,14 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           </div>
         </div>
 
-        {/* Minimal Footer */}
-        <div className="bg-gray-800/20 px-4 py-2 border-t border-gold/10">
-          <div className="flex justify-center text-xs text-foreground/60">
-            <span>🔒 Dados protegidos</span>
+        {/* Footer - Hide when keyboard is open to save space */}
+        {!isKeyboardOpen && (
+          <div className="bg-gray-800/20 px-4 py-2 border-t border-gold/10">
+            <div className="flex justify-center text-xs text-foreground/60">
+              <span>🔒 Dados protegidos</span>
+            </div>
           </div>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );

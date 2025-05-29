@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -14,19 +13,34 @@ const Header = React.memo(({ children }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
 
-  // Handler de scroll otimizado com throttle
+  // Handler de scroll otimizado com throttle e detecção de direção
   useEffect(() => {
-    let lastScrollY = window.scrollY;
     let ticking = false;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          const currentScrollY = window.scrollY;
+          
+          // Atualiza estado de scroll
+          setIsScrolled(currentScrollY > 20);
+          
+          // Detecta direção do scroll
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Scrolling down - hide navbar
+            setIsVisible(false);
+          } else {
+            // Scrolling up - show navbar
+            setIsVisible(true);
+          }
+          
+          setLastScrollY(currentScrollY);
           ticking = false;
         });
         ticking = true;
@@ -42,7 +56,7 @@ const Header = React.memo(({ children }: HeaderProps) => {
       window.removeEventListener("scroll", handleScroll);
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [lastScrollY]);
 
   // Handlers memorizados para evitar recriações
   const handleLogoClick = useCallback(() => {
@@ -90,17 +104,20 @@ const Header = React.memo(({ children }: HeaderProps) => {
     }
   }, [location.pathname, navigate, isMenuOpen]);
 
-  // Classes memorizadas - Header fixo no mobile, com margem no desktop
+  // Classes memorizadas - Header fixo no mobile, com margem no desktop + visibilidade
   const headerClasses = useMemo(() => {
+    const baseTransition = "transition-all duration-300";
+    const visibilityClass = isVisible ? "translate-y-0" : "-translate-y-full";
+    
     if (isMobile) {
-      return `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      return `fixed top-0 left-0 right-0 z-50 ${baseTransition} ${visibilityClass} ${
         isScrolled ? "glass-blur shadow-lg" : "bg-background/80 backdrop-blur-sm"
       }`;
     }
-    return `fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
+    return `fixed top-4 left-4 right-4 z-50 ${baseTransition} ${visibilityClass} ${
       isScrolled ? "glass shadow-lg" : ""
     } rounded-xl mx-4`;
-  }, [isScrolled, isMobile]);
+  }, [isScrolled, isMobile, isVisible]);
 
   const logoClasses = useMemo(() => `flex items-center gap-2 transition-all duration-500 ${
     isLogoVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'

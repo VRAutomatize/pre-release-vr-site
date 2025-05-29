@@ -5,13 +5,14 @@ import PageHero from "@/components/shared/PageHero";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { TypeformButton } from "@/components/form/TypeformButton";
+import OptimizedBackground from "@/components/shared/OptimizedBackground";
 
 const HeroSection = () => {
   const isMobile = useIsMobile();
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
   
   return (
-    <>
+    <OptimizedBackground variant="hero">
       <PageHero 
         title="Funcionários Digitais" 
         subtitle="Reduza em até 6 dígitos seus custos fixos. Sistemas que trabalham 24/7 — sem pausas ou oscilações, substituindo processos operacionais." 
@@ -38,7 +39,7 @@ const HeroSection = () => {
           </div>
         </div>
       </PageHero>
-    </>
+    </OptimizedBackground>
   );
 };
 

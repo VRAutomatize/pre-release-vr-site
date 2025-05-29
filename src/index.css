@@ -86,6 +86,11 @@
   .mobile-dialog {
     @apply rounded-none md:rounded-lg fixed inset-0 w-full h-full md:h-auto md:max-w-lg md:mx-auto;
   }
+
+  /* Safe area padding for mobile devices */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
   
   @keyframes float-fade {
     0% {
@@ -219,6 +224,15 @@
   @media (max-width: 768px) {
     section {
       margin-bottom: 4rem;
+    }
+  }
+
+  /* Performance optimizations for mobile */
+  @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-pulse-slow,
+    .animate-fade-up {
+      animation: none !important;
     }
   }
 }

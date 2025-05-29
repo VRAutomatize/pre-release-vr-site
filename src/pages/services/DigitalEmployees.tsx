@@ -1,4 +1,3 @@
-
 import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -11,6 +10,7 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
+import MobileStickyCTA from "@/components/digital-employees/MobileStickyCTA";
 
 // Animation variants for scroll reveal
 const sectionVariants = {
@@ -49,7 +49,7 @@ const DigitalEmployees = () => {
         </div>
       </Header>
 
-      <div className="container mx-auto px-4 pt-12">
+      <div className="container mx-auto px-4 pt-12 pb-20 md:pb-12">
         {/* Hero Section */}
         <motion.div 
           initial="hidden"
@@ -115,6 +115,9 @@ const DigitalEmployees = () => {
           <CTASection />
         </motion.div>
       </div>
+
+      {/* Mobile Sticky CTA */}
+      <MobileStickyCTA />
 
       <Footer />
     </div>

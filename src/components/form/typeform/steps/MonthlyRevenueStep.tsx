@@ -48,8 +48,11 @@ const MonthlyRevenueStep: React.FC<MonthlyRevenueStepProps> = ({ control }) => {
         control={control}
         render={({ field }) => (
           <RadioGroup
-            onValueChange={field.onChange}
-            defaultValue={field.value}
+            onValueChange={(value) => {
+              console.log('Monthly revenue selected:', value);
+              field.onChange(value);
+            }}
+            value={field.value}
             className="space-y-3 max-w-md mx-auto w-full"
           >
             {revenueOptions.map((option, index) => (

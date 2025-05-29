@@ -47,7 +47,9 @@ export const useFormValidation = ({ trigger }: UseFormValidationProps) => {
     if (fieldsToValidate.length === 0) return true;
     
     try {
-      return await trigger(fieldsToValidate);
+      const result = await trigger(fieldsToValidate);
+      console.log(`Validation for step ${currentStep}, fields:`, fieldsToValidate, 'result:', result);
+      return result;
     } catch (error) {
       console.error('Validation error:', error);
       return false;

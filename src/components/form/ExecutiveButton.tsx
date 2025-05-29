@@ -47,10 +47,10 @@ export function ExecutiveButton({
     );
 
     if (variant === "calendar") {
-      // Open calendar modal
+      // Only open calendar modal for calendar variant
       setShowCalendar(true);
-    } else {
-      // Open WhatsApp with updated number
+    } else if (variant === "whatsapp") {
+      // Only open WhatsApp for whatsapp variant
       const whatsappUrl = href || "https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês.";
       window.open(whatsappUrl, '_blank');
     }
@@ -69,11 +69,13 @@ export function ExecutiveButton({
         {children}
       </Button>
 
-      {/* Executive Calendar Modal */}
-      <ExecutiveCalendarModal
-        isOpen={showCalendar}
-        onClose={() => setShowCalendar(false)}
-      />
+      {/* Executive Calendar Modal - only show for calendar variant */}
+      {variant === "calendar" && (
+        <ExecutiveCalendarModal
+          isOpen={showCalendar}
+          onClose={() => setShowCalendar(false)}
+        />
+      )}
     </>
   );
 }

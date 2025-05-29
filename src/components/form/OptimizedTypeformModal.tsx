@@ -13,6 +13,7 @@ interface OptimizedTypeformModalProps {
   webhookUrl?: string;
   showCalendar?: boolean;
   onShowCalendar?: () => void;
+  calendarLink?: string;
 }
 
 export function OptimizedTypeformModal({ 
@@ -20,7 +21,8 @@ export function OptimizedTypeformModal({
   onClose, 
   webhookUrl = "",
   showCalendar = false,
-  onShowCalendar 
+  onShowCalendar,
+  calendarLink = "vrautomatize/call"
 }: OptimizedTypeformModalProps) {
   // Access the useTypeformModal hook for calendar view methods
   const { 
@@ -59,6 +61,7 @@ export function OptimizedTypeformModal({
           <DynamicCalendarEmbed 
             isOpen={isOpen} 
             onClose={onClose}
+            calLink={calendarLink}
             onFallback={() => switchCalendarMethod('iframe')}
           />
         );
@@ -77,6 +80,7 @@ export function OptimizedTypeformModal({
           <DynamicCalendarEmbed 
             isOpen={isOpen} 
             onClose={onClose}
+            calLink={calendarLink}
             onFallback={() => switchCalendarMethod('simple')}
           />
         );

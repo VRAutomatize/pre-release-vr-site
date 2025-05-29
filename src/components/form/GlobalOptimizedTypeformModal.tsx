@@ -22,6 +22,7 @@ export function GlobalOptimizedTypeformModal({ webhookUrl, calendarLink }: Globa
       webhookUrl={webhookUrl}
       showCalendar={showCalendar}
       onShowCalendar={handleShowCalendar}
+      calendarLink="vrautomatize/call"
     />
   );
 }

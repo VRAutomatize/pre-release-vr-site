@@ -27,7 +27,7 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
     retryCount 
   } = useCalendarInitializer({
     elementId: "executive-cal-embed",
-    calLink: "vrautomatize/meet",
+    calLink: "vrautomatize/call",
     onLoaded: () => setIsLoading(false),
     onError: () => {
       setIsLoading(false);

@@ -96,20 +96,38 @@ const ClientLogos = () => {
     };
   }, [api]);
 
-  // Calculate total slides for indicators
-  const totalSlides = Math.ceil(clients.length / (isMobile ? 2 : 6));
+  // Calculate items per slide and total slides
+  const itemsPerSlide = isMobile ? 2 : 6;
+  const totalSlides = Math.ceil(clients.length / itemsPerSlide);
 
   // Function to handle indicator click
   const handleIndicatorClick = React.useCallback((slideIndex: number) => {
     if (!api) return;
     
-    // Calculate the actual slide position based on items per slide
-    const itemsPerSlide = isMobile ? 2 : 6;
-    const targetSlide = slideIndex * itemsPerSlide;
+    console.log('Clicking indicator:', slideIndex, 'current index:', currentIndex);
     
-    console.log('Clicking indicator:', slideIndex, 'targeting slide:', targetSlide);
+    // Since we have duplicated items, we need to find the closest slide
+    // that corresponds to the desired group of logos
+    const targetSlideInOriginalSet = slideIndex * itemsPerSlide;
+    const totalItemsInSet = clients.length;
+    
+    // Get current position to determine which direction to go
+    const currentSlideInSet = currentIndex % totalItemsInSet;
+    
+    // Calculate the best target slide considering the infinite loop
+    let targetSlide = targetSlideInOriginalSet;
+    
+    // If we're in the second set of items, adjust accordingly
+    if (currentIndex >= totalItemsInSet) {
+      targetSlide = targetSlideInOriginalSet + totalItemsInSet;
+    }
+    
+    console.log('Targeting slide:', targetSlide, 'items per slide:', itemsPerSlide);
     api.scrollTo(targetSlide);
-  }, [api, isMobile]);
+  }, [api, currentIndex, itemsPerSlide]);
+
+  // Calculate which indicator should be active
+  const activeIndicator = Math.floor((currentIndex % clients.length) / itemsPerSlide);
 
   return (
     <section className="relative mt-16 md:mt-24 z-10">
@@ -171,7 +189,7 @@ const ClientLogos = () => {
               <button
                 key={index}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === Math.floor(currentIndex / (isMobile ? 2 : 6))
+                  index === activeIndicator
                     ? "bg-gold w-6"
                     : "bg-white/30"
                 }`}
@@ -189,7 +207,7 @@ const ClientLogos = () => {
               <div 
                 className="h-full bg-gradient-to-r from-gold/50 to-gold transition-all duration-1000 ease-out"
                 style={{
-                  width: `${((currentIndex % totalSlides + 1) / totalSlides) * 100}%`
+                  width: `${((activeIndicator + 1) / totalSlides) * 100}%`
                 }}
               />
             </div>

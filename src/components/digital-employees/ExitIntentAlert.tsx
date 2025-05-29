@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ExitIntentAlert = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
   const [pageLoadTime] = useState(Date.now());
   const { trackEvent } = useConversionAnalytics();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -59,56 +61,78 @@ const ExitIntentAlert = () => {
             onClick={handleClose}
           />
           
-          {/* Centered Modal */}
+          {/* Mobile-optimized Modal */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
+            initial={isMobile ? { y: "100%" } : { scale: 0.8, opacity: 0 }}
+            animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }}
+            exit={isMobile ? { y: "100%" } : { scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className={`fixed z-50 ${
+              isMobile 
+                ? "bottom-0 left-0 right-0 rounded-t-3xl max-h-[90vh] overflow-y-auto" 
+                : "inset-0 flex items-center justify-center p-4"
+            }`}
           >
-            <div className="bg-gradient-to-r from-background/95 to-secondary/95 backdrop-blur-lg text-foreground shadow-2xl border border-gold/20 rounded-lg max-w-2xl w-full mx-auto">
-              <div className="p-6">
+            <div className={`bg-gradient-to-r from-background/95 to-secondary/95 backdrop-blur-lg text-foreground shadow-2xl border border-gold/20 ${
+              isMobile 
+                ? "w-full rounded-t-3xl" 
+                : "rounded-lg max-w-2xl w-full mx-auto"
+            }`}>
+              <div className={isMobile ? "p-6 pb-8 safe-area-pb" : "p-6"}>
+                {/* Mobile handle indicator */}
+                {isMobile && (
+                  <div className="w-12 h-1 bg-foreground/30 rounded-full mx-auto mb-4" />
+                )}
+                
                 <div className="flex items-start gap-4">
-                  <AlertTriangle className="h-8 w-8 text-gold flex-shrink-0 mt-1" />
-                  <div className="flex-1">
-                    <h3 className="font-bold text-xl mb-2 text-gold">
-                      🚨 Oportunidade única!
-                    </h3>
-                    <p className="text-lg mb-3">
-                      Você está perdendo a chance de virar o jogo na sua empresa
-                    </p>
-                    <p className="text-sm opacity-90 mb-6">
-                      Empresários que agem agora economizam em média <span className="text-gold font-semibold">R$ 283k/ano</span>
-                    </p>
-                    
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <a
-                        href="https://cal.com/vrautomatize/reuniao-executiva"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={handleCTAClick}
-                        className="bg-gold hover:bg-gold-light text-background px-6 py-3 rounded-lg font-bold text-lg transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Calendar className="h-5 w-5" />
-                        Agendar Reunião Agora
-                      </a>
-                      <button
-                        onClick={handleClose}
-                        className="text-foreground/80 hover:text-gold transition-colors px-4 py-2 text-sm"
-                      >
-                        Talvez depois
-                      </button>
+                  <div className="flex items-center gap-3 flex-1">
+                    <AlertTriangle className={`text-gold flex-shrink-0 ${isMobile ? "h-6 w-6" : "h-8 w-8"}`} />
+                    <div className="flex-1">
+                      <h3 className={`font-bold text-gold mb-2 ${isMobile ? "text-lg" : "text-xl"}`}>
+                        🚨 Oportunidade única!
+                      </h3>
                     </div>
                   </div>
                   
                   <button
                     onClick={handleClose}
-                    className="text-foreground/80 hover:text-gold transition-colors p-1 ml-2"
+                    className="text-foreground/80 hover:text-gold transition-colors p-1"
                     aria-label="Fechar"
                   >
                     <X className="h-6 w-6" />
                   </button>
+                </div>
+
+                <div className="mt-4">
+                  <p className={`mb-3 ${isMobile ? "text-base" : "text-lg"}`}>
+                    Você está perdendo a chance de virar o jogo na sua empresa
+                  </p>
+                  <p className={`opacity-90 mb-6 ${isMobile ? "text-sm" : "text-sm"}`}>
+                    Empresários que agem agora economizam em média <span className="text-gold font-semibold">R$ 283k/ano</span>
+                  </p>
+                  
+                  <div className={`flex gap-3 ${isMobile ? "flex-col" : "flex-col sm:flex-row"}`}>
+                    <a
+                      href="https://cal.com/vrautomatize/call"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleCTAClick}
+                      className={`bg-gold hover:bg-gold-light text-background rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
+                        isMobile ? "px-6 py-4 text-lg" : "px-6 py-3 text-lg"
+                      }`}
+                    >
+                      <Calendar className="h-5 w-5" />
+                      Agendar Reunião Agora
+                    </a>
+                    <button
+                      onClick={handleClose}
+                      className={`text-foreground/80 hover:text-gold transition-colors text-sm ${
+                        isMobile ? "py-3" : "px-4 py-2"
+                      }`}
+                    >
+                      Talvez depois
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

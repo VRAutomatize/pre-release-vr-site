@@ -60,7 +60,7 @@ export function ExecutiveButton({
     <>
       <Button 
         className={cn(
-          "bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-bold border-2 border-yellow-300 shadow-lg transform hover:scale-105 transition-all duration-300",
+          "bg-gold hover:bg-gold-light text-background font-bold border border-gold/30 shadow-lg transform hover:scale-105 transition-all duration-300",
           className
         )} 
         onClick={handleClick}

@@ -25,11 +25,17 @@ export const useCalendarInitializer = ({
   // Network check before attempting to load Cal.com
   const checkCalNetwork = useCallback(async () => {
     try {
+      // Use AbortController for timeout instead of fetch timeout option
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
       const response = await fetch('https://app.cal.com/status', { 
         method: 'HEAD',
         mode: 'no-cors',
-        timeout: 5000
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       return true;
     } catch (error) {
       console.error('Cal.com network check failed:', error);

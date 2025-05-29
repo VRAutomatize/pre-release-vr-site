@@ -22,7 +22,7 @@
   /* Enhance spacing between sections on mobile */
   @media (max-width: 768px) {
     section {
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
   }
 
@@ -43,7 +43,7 @@
   }
   
   .mobile-container {
-    @apply px-1 md:px-6 w-full;
+    @apply px-2 md:px-6 w-full;
   }
 
   .mobile-container-full {
@@ -51,7 +51,7 @@
   }
 
   .mobile-container-minimal {
-    @apply px-2 md:px-6 w-full;
+    @apply px-1 md:px-4 lg:px-6 w-full;
   }
   
   .mobile-dialog {
@@ -87,6 +87,15 @@
 
   .mobile-max-w-none {
     @apply max-w-none md:max-w-md;
+  }
+
+  /* Better text handling on mobile */
+  .mobile-text-wrap {
+    @apply break-words hyphens-auto;
+  }
+
+  .mobile-leading-tight {
+    @apply leading-tight md:leading-normal;
   }
 
   /* Mobile animations and transitions */
@@ -167,5 +176,14 @@
   /* Ensure mobile header doesn't interfere with content */
   .mobile-header-spacing {
     padding-bottom: env(safe-area-inset-bottom, 80px);
+  }
+
+  /* Better card layouts for mobile */
+  .mobile-card-grid {
+    @apply grid-cols-1 gap-3 md:grid-cols-2 md:gap-6;
+  }
+
+  .mobile-card-padding {
+    @apply p-4 md:p-6 lg:p-8;
   }
 }

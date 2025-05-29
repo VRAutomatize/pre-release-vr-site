@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Crown, Calendar, MessageSquare } from "lucide-react";
+import { Crown, Calendar } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ExecutiveButton } from "@/components/form/ExecutiveButton";
 import { TypeformButton } from "@/components/form/TypeformButton";
@@ -18,7 +18,7 @@ const PremiumSegmentCTA = () => {
           Para empresários com faturamento acima de <span className="font-bold text-yellow-400">R$ 500k/mês</span>:
           Reunião estratégica personalizada com nossos especialistas seniores.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex justify-center">
           <ExecutiveButton
             icon={Calendar}
             trackingId="executive_calendar"
@@ -29,24 +29,9 @@ const PremiumSegmentCTA = () => {
               priority: "high"
             }}
             variant="calendar"
-            className="flex-1"
+            className="px-8 py-3"
           >
             Reunião Executiva
-          </ExecutiveButton>
-          <ExecutiveButton
-            icon={MessageSquare}
-            trackingId="executive_whatsapp"
-            trackingSection="premium_segment"
-            trackingMetadata={{
-              leadType: "premium",
-              expectedRevenue: "500k+",
-              channel: "whatsapp"
-            }}
-            variant="whatsapp"
-            href="https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês."
-            className="flex-1"
-          >
-            WhatsApp Direto
           </ExecutiveButton>
         </div>
       </Card>

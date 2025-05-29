@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { MessageSquare, Calendar, TrendingUp, Users } from "lucide-react";
+import { Calendar, TrendingUp, Users } from "lucide-react";
 import { ExecutiveButton } from "@/components/form/ExecutiveButton";
 import { TypeformButton } from "@/components/form/TypeformButton";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -16,30 +16,30 @@ const MobileStickyCTA = () => {
     {
       text: "Começar agora",
       subtitle: "",
-      icon: MessageSquare,
+      icon: Calendar,
       bgGradient: "from-gold to-gold-light",
-      textColor: "text-background" // Dark text for gold background
+      textColor: "text-background"
     },
     {
       text: "Economizar agora", 
       subtitle: "Média: R$ 283k/ano",
       icon: TrendingUp,
       bgGradient: "from-green-500 to-green-600",
-      textColor: "text-white" // White text for green background
+      textColor: "text-white"
     },
     {
       text: "Juntar-se a 200+",
       subtitle: "Empresas que economizam",
       icon: Users,
       bgGradient: "from-blue-500 to-blue-600",
-      textColor: "text-white" // White text for blue background
+      textColor: "text-white"
     },
     {
       text: "Última chance",
       subtitle: "5 vagas restantes",
       icon: Calendar,
       bgGradient: "from-red-500 to-red-600",
-      textColor: "text-white" // White text for red background
+      textColor: "text-white"
     }
   ];
 
@@ -89,47 +89,36 @@ const MobileStickyCTA = () => {
 
       {/* Options Panel - Mais compacto e otimizado */}
       {showOptions && (
-        <div className="fixed bottom-16 safe-area-px left-1 right-1 glass-blur border border-gold/20 rounded-lg p-3 z-50 space-y-2 animate-slide-up">
-          <h3 className="text-base font-semibold text-gold mb-2">Como prefere começar?</h3>
+        <div className="fixed bottom-16 safe-area-px left-1 right-1 glass-blur border border-gold/20 rounded-lg p-4 z-50 space-y-3 animate-slide-up">
+          <h3 className="text-base font-semibold text-gold mb-3 text-center">Como prefere começar?</h3>
           
-          {/* Executive Options */}
-          <div className="space-y-1">
-            <p className="text-xs text-foreground/70">Para empresários (R$ 500k+/mês):</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              <ExecutiveButton
-                icon={Calendar}
-                variant="calendar"
-                trackingId="mobile_executive_calendar"
-                trackingSection="mobile_sticky"
-                className="text-xs py-1.5 px-2"
-              >
-                Reunião VIP
-              </ExecutiveButton>
-              <ExecutiveButton
-                icon={MessageSquare}
-                variant="whatsapp"
-                trackingId="mobile_executive_whatsapp"
-                trackingSection="mobile_sticky"
-                className="text-xs py-1.5 px-2"
-              >
-                WhatsApp VIP
-              </ExecutiveButton>
-            </div>
+          {/* Executive Option */}
+          <div className="space-y-2">
+            <p className="text-xs text-foreground/70 text-center">Para empresários (R$ 500k+/mês):</p>
+            <ExecutiveButton
+              icon={Calendar}
+              variant="calendar"
+              trackingId="mobile_executive_calendar"
+              trackingSection="mobile_sticky"
+              className="w-full py-3 text-sm"
+            >
+              Reunião Executiva
+            </ExecutiveButton>
           </div>
 
           {/* Standard Option */}
-          <div className="pt-1.5 border-t border-gold/20">
+          <div className="pt-2 border-t border-gold/20">
             <TypeformButton
-              className="w-full bg-gold hover:bg-gold-light text-background py-2 text-sm"
+              className="w-full bg-gold hover:bg-gold-light text-background py-3 text-sm"
               trackingId="mobile_standard_flow"
               trackingSection="mobile_sticky"
             >
-              Começar (15min)
+              Agendar Consulta Gratuita
             </TypeformButton>
           </div>
           
           {/* Quick stats */}
-          <div className="pt-1.5 border-t border-gold/20">
+          <div className="pt-2 border-t border-gold/20">
             <div className="flex justify-between text-xs text-foreground/60">
               <span>200+ empresas</span>
               <span>R$ 283k economia média</span>
@@ -139,11 +128,11 @@ const MobileStickyCTA = () => {
         </div>
       )}
 
-      {/* Main CTA Button - Dinâmico baseado no scroll - Ocupa mais espaço */}
+      {/* Main CTA Button - Dinâmico baseado no scroll */}
       <div className="fixed bottom-3 safe-area-px safe-area-pb left-1 right-1 z-40">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-2 px-3 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
+          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
         >
           <currentVariant.icon className="h-4 w-4" />
           <div className="text-center">

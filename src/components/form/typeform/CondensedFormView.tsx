@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -69,16 +68,27 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
   const isLastStep = currentStep === totalSteps - 1;
   const showPrevButton = currentStep > 0;
 
+  // Dynamic height calculation based on step content
+  const getModalHeight = () => {
+    if (isKeyboardOpen) {
+      return 'h-[70vh]';
+    }
+    
+    // Revenue step needs more height due to 6 options
+    if (currentStep === 2) {
+      return 'h-[90vh] max-h-[700px]';
+    }
+    
+    // Other steps can use standard height
+    return 'h-[85vh] max-h-[600px]';
+  };
+
   if (!isOpen) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className={`max-w-lg w-[95vw] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg flex flex-col transition-all duration-300 ${
-          isKeyboardOpen 
-            ? 'h-[70vh] justify-start pt-2' 
-            : 'h-[85vh] max-h-[600px] justify-center'
-        }`}
+        className={`max-w-lg w-[95vw] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg flex flex-col transition-all duration-300 ${getModalHeight()}`}
         onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogTitle className="sr-only">Análise Gratuita</DialogTitle>
@@ -95,7 +105,7 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
         </div>
         
         {/* Minimalist Badge */}
-        <div className={`flex justify-center ${isKeyboardOpen ? 'py-2' : 'py-3'}`}>
+        <div className={`flex justify-center ${isKeyboardOpen ? 'py-1' : 'py-2'}`}>
           <Badge 
             variant="outline" 
             className={`bg-red-500/10 border-red-500/30 text-red-400 rounded-full ${
@@ -119,25 +129,28 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           <X className={isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'} />
         </button>
         
-        {/* Main Content - Dynamically sized */}
-        <div className={`flex-1 flex flex-col ${isKeyboardOpen ? 'justify-start pt-1' : 'justify-center'} ${isKeyboardOpen ? 'px-3 pb-3' : 'p-6'}`}>
-          <div className={`flex-1 flex items-center justify-center ${isKeyboardOpen ? 'min-h-0' : ''}`}>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-                className="w-full max-w-md mx-auto"
-              >
-                {renderStep()}
-              </motion.div>
-            </AnimatePresence>
+        {/* Main Content Container - Fixed height distribution */}
+        <div className={`flex-1 flex flex-col min-h-0 ${isKeyboardOpen ? 'px-2 pb-2' : 'px-4 pb-4'}`}>
+          {/* Content Area - Scrollable if needed */}
+          <div className={`flex-1 overflow-y-auto ${isKeyboardOpen ? 'min-h-0' : ''}`}>
+            <div className={`min-h-full flex items-center justify-center ${isKeyboardOpen ? 'py-2' : 'py-4'}`}>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="w-full max-w-md mx-auto"
+                >
+                  {renderStep()}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
           
-          {/* Navigation - Compact when keyboard is open */}
-          <div className={`${isKeyboardOpen ? 'mt-2' : 'mt-6'} flex justify-between items-center gap-3`}>
+          {/* Navigation - Fixed at bottom */}
+          <div className={`flex-shrink-0 ${isKeyboardOpen ? 'mt-2 pt-2' : 'mt-4 pt-4'} flex justify-between items-center gap-3 border-t border-gray-800/20`}>
             {showPrevButton ? (
               <Button
                 variant="outline"
@@ -183,7 +196,7 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
 
         {/* Footer - Hide when keyboard is open to save space */}
         {!isKeyboardOpen && (
-          <div className="bg-gray-800/20 px-4 py-2 border-t border-gold/10">
+          <div className="flex-shrink-0 bg-gray-800/20 px-4 py-2 border-t border-gold/10">
             <div className="flex justify-center text-xs text-foreground/60">
               <span>🔒 Dados protegidos</span>
             </div>

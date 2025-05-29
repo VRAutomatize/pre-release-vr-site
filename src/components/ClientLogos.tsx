@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import {
   Carousel,
@@ -6,6 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const clients = [
   {
@@ -63,21 +65,44 @@ const clients = [
 ];
 
 const ClientLogos = () => {
+  const isMobile = useIsMobile();
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [api, setApi] = React.useState<any>();
+
   const plugin = React.useMemo(
     () =>
       Autoplay({
-        delay: 0,
-        stopOnInteraction: false,
-        stopOnMouseEnter: false,
+        delay: isMobile ? 3000 : 2000, // Velocidade mais lenta no mobile
+        stopOnInteraction: true,
+        stopOnMouseEnter: true,
         playOnInit: true,
       }),
-    []
+    [isMobile]
   );
 
+  // Track current slide for indicators
+  React.useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => {
+      setCurrentIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+    onSelect();
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  // Calculate total slides for indicators
+  const totalSlides = Math.ceil(clients.length / (isMobile ? 2 : 6));
+
   return (
-    <section className="relative mt-24 z-10">
+    <section className="relative mt-16 md:mt-24 z-10">
       <div className="container mx-auto px-4">
-        <p className="text-center text-sm text-foreground/60 mb-8">
+        <p className="text-center text-sm text-foreground/60 mb-6 md:mb-8">
           Empresas que confiam em nossas soluções
         </p>
         
@@ -86,28 +111,78 @@ const ClientLogos = () => {
             align: "start",
             loop: true,
             dragFree: true,
-            duration: 14000,
+            duration: isMobile ? 20000 : 14000, // Duração mais lenta no mobile
           }}
           plugins={[plugin]}
           className="w-full"
+          setApi={setApi}
         >
-          <CarouselContent className="-ml-2 md:-ml-4">
+          <CarouselContent className={isMobile ? "-ml-3" : "-ml-2 md:-ml-4"}>
             {[...clients, ...clients].map((client, index) => (
               <CarouselItem 
                 key={index} 
-                className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/6"
+                className={`${
+                  isMobile 
+                    ? "pl-3 basis-1/2" 
+                    : "pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/6"
+                }`}
               >
-                <Card className="h-24 flex items-center justify-center glass hover:bg-white/10 transition-all duration-300">
+                <Card className={`${
+                  isMobile 
+                    ? "h-32 p-4" 
+                    : "h-24"
+                } flex items-center justify-center glass hover:bg-white/10 transition-all duration-300 backdrop-blur-sm border-white/10`}>
                   <img 
                     src={client.logo} 
                     alt={client.name}
-                    className="h-12 w-auto object-contain opacity-50 hover:opacity-80 transition-opacity duration-300"
+                    className={`${
+                      isMobile 
+                        ? "h-16 w-auto" 
+                        : "h-12 w-auto"
+                    } object-contain opacity-60 hover:opacity-90 transition-opacity duration-300`}
+                    loading="lazy"
+                    onError={(e) => {
+                      console.log(`Failed to load logo for ${client.name}`);
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 </Card>
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
+
+        {/* Mobile Indicators */}
+        {isMobile && (
+          <div className="flex justify-center mt-6 space-x-2">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex % totalSlides
+                    ? "bg-gold w-6"
+                    : "bg-white/30"
+                }`}
+                onClick={() => api?.scrollTo(index)}
+                aria-label={`Ir para slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Desktop subtle progress indicator */}
+        {!isMobile && (
+          <div className="flex justify-center mt-4">
+            <div className="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-gold/50 to-gold transition-all duration-1000 ease-out"
+                style={{
+                  width: `${((currentIndex % totalSlides + 1) / totalSlides) * 100}%`
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

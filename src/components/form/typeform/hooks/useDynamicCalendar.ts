@@ -10,12 +10,6 @@ interface UseDynamicCalendarProps {
   onError?: () => void;
 }
 
-declare global {
-  interface Window {
-    Cal: any;
-  }
-}
-
 export const useDynamicCalendar = ({
   elementId,
   calLink,

@@ -84,7 +84,7 @@ const DigitalEmployees = () => {
         </div>
       </Header>
 
-      <div className="min-h-screen bg-background overflow-x-hidden px-2.5 md:container md:mx-auto pt-20 md:pt-12 pb-24 md:pb-12">
+      <div className="min-h-screen bg-background overflow-x-hidden px-0 md:container md:mx-auto md:px-4 pt-20 md:pt-12 pb-24 md:pb-12">
         {/* Hero Section */}
         <motion.div 
           initial="hidden"

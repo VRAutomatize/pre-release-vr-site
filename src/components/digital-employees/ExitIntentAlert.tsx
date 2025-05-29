@@ -49,47 +49,71 @@ const ExitIntentAlert = () => {
   return (
     <AnimatePresence>
       {showAlert && (
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -100, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background/95 to-secondary/95 backdrop-blur-lg text-foreground shadow-lg border-b border-gold/20"
-        >
-          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-3 flex-1">
-              <AlertTriangle className="h-5 w-5 text-gold flex-shrink-0" />
-              <div className="flex-1">
-                <p className="font-medium text-sm md:text-base">
-                  🚨 <strong className="text-gold">Oportunidade única!</strong> Você está perdendo a chance de virar o jogo na sua empresa
-                </p>
-                <p className="text-xs md:text-sm opacity-90 mt-1">
-                  Empresários que agem agora economizam em média <span className="text-gold font-semibold">R$ 283k/ano</span>
-                </p>
+        <>
+          {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            onClick={handleClose}
+          />
+          
+          {/* Centered Modal */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          >
+            <div className="bg-gradient-to-r from-background/95 to-secondary/95 backdrop-blur-lg text-foreground shadow-2xl border border-gold/20 rounded-lg max-w-2xl w-full mx-auto">
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <AlertTriangle className="h-8 w-8 text-gold flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="font-bold text-xl mb-2 text-gold">
+                      🚨 Oportunidade única!
+                    </h3>
+                    <p className="text-lg mb-3">
+                      Você está perdendo a chance de virar o jogo na sua empresa
+                    </p>
+                    <p className="text-sm opacity-90 mb-6">
+                      Empresários que agem agora economizam em média <span className="text-gold font-semibold">R$ 283k/ano</span>
+                    </p>
+                    
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <a
+                        href="https://cal.com/vrautomatize/reuniao-executiva"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleCTAClick}
+                        className="bg-gold hover:bg-gold-light text-background px-6 py-3 rounded-lg font-bold text-lg transition-colors flex items-center justify-center gap-2"
+                      >
+                        <Calendar className="h-5 w-5" />
+                        Agendar Reunião Agora
+                      </a>
+                      <button
+                        onClick={handleClose}
+                        className="text-foreground/80 hover:text-gold transition-colors px-4 py-2 text-sm"
+                      >
+                        Talvez depois
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={handleClose}
+                    className="text-foreground/80 hover:text-gold transition-colors p-1 ml-2"
+                    aria-label="Fechar"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
               </div>
             </div>
-            
-            <div className="flex items-center gap-3 ml-4">
-              <a
-                href="https://cal.com/vrautomatize/reuniao-executiva"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleCTAClick}
-                className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-lg font-medium text-sm transition-colors flex items-center gap-2 whitespace-nowrap"
-              >
-                <Calendar className="h-4 w-4" />
-                Agendar Agora
-              </a>
-              <button
-                onClick={handleClose}
-                className="text-foreground/80 hover:text-gold transition-colors p-1"
-                aria-label="Fechar"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

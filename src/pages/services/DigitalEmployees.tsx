@@ -1,3 +1,4 @@
+
 import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -10,6 +11,7 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
+import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
 import MobileStickyCTA from "@/components/digital-employees/MobileStickyCTA";
 
 // Animation variants for scroll reveal
@@ -26,26 +28,45 @@ const sectionVariants = {
 };
 
 const DigitalEmployees = () => {
-  // Whatsapp link function
+  const { trackEvent } = useConversionAnalytics();
+
+  // Whatsapp link function with tracking
   const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
+
+  const handleWhatsAppClick = React.useCallback(() => {
+    trackEvent('whatsapp_click', 'click', 'header_whatsapp', 'header', {
+      buttonText: 'Entre em contato',
+      source: 'header_navigation',
+    });
+    window.open(whatsappLink(), '_blank');
+  }, [trackEvent, whatsappLink]);
+
+  const handleHomeClick = React.useCallback(() => {
+    trackEvent('navigation_click', 'click', 'home_link', 'header', {
+      destination: 'home',
+      source: 'header_navigation',
+    });
+  }, [trackEvent]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Header>
         <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2 hover:text-gold transition-colors">
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 hover:text-gold transition-colors"
+            onClick={handleHomeClick}
+          >
             <ArrowLeft className="h-4 w-4" />
             Home
           </Link>
-          <a 
-            href={whatsappLink()} 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <button
+            onClick={handleWhatsAppClick}
             className="bg-gold hover:bg-gold-light text-background rounded-md px-4 py-2 flex items-center gap-2"
           >
             <MessageSquare className="h-4 w-4 mr-2" />
             Entre em contato
-          </a>
+          </button>
         </div>
       </Header>
 
@@ -67,6 +88,7 @@ const DigitalEmployees = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
           className="reveal-section mb-24 md:mb-32"
+          id="use-cases-section"
         >
           <UseCasesSection />
         </motion.div>
@@ -78,6 +100,7 @@ const DigitalEmployees = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
           className="reveal-section mb-24 md:mb-32"
+          id="process-section"
         >
           <ProcessSection />
         </motion.div>
@@ -89,6 +112,7 @@ const DigitalEmployees = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
           className="reveal-section mb-24 md:mb-32"
+          id="comparison-section"
         >
           <ComparisonSection />
         </motion.div>
@@ -100,6 +124,7 @@ const DigitalEmployees = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
           className="reveal-section mb-24 md:mb-32"
+          id="ideal-for-section"
         >
           <IdealForSection />
         </motion.div>

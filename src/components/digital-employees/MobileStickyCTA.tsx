@@ -14,6 +14,12 @@ const MobileStickyCTA = () => {
       <TypeformButton
         icon={Calculator}
         className="w-full bg-gold hover:bg-gold-light text-background py-4 text-lg font-semibold shadow-lg"
+        trackingId="mobile_sticky_cta"
+        trackingSection="mobile_sticky"
+        trackingMetadata={{
+          position: "bottom_fixed",
+          type: "mobile_only"
+        }}
       >
         Calcule sua Economia Grátis
       </TypeformButton>

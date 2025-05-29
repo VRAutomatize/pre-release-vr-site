@@ -1,17 +1,25 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { CheckCircle, Calculator } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 import { TypeformButton } from "@/components/form/TypeformButton";
 import OptimizedBackground from "@/components/shared/OptimizedBackground";
 
 const CTASection = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const { trackSectionView } = useScrollTracking();
+
+  useEffect(() => {
+    // Track CTA section view
+    const cleanup = trackSectionView('cta-section', 'cta');
+    return cleanup;
+  }, [trackSectionView]);
 
   return (
     <OptimizedBackground variant="section">
-      <section className="relative py-20">
+      <section className="relative py-20" id="cta-section">
         <Card className="max-w-5xl mx-auto border-gold/30 relative overflow-hidden bg-black/30 backdrop-blur-lg rounded-lg">
           <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent"></div>
           <div className="p-8 md:p-12 relative z-10">
@@ -35,6 +43,13 @@ const CTASection = () => {
                   <TypeformButton
                     icon={Calculator} 
                     className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 sm:px-8 py-3 sm:py-6"
+                    trackingId="cta_section_desktop"
+                    trackingSection="cta"
+                    trackingMetadata={{
+                      position: "section_middle",
+                      type: "secondary_cta",
+                      device: "desktop_only"
+                    }}
                   >
                     <span className="text-sm sm:text-lg">
                       {isMobile ? "Calcule sua economia" : "Cálculo estimado da sua economia anual com automação"}
@@ -50,6 +65,13 @@ const CTASection = () => {
               <TypeformButton
                 icon={Calculator}
                 className="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gold hover:bg-gold-light text-background text-lg px-4 py-3 w-full"
+                trackingId="cta_section_mobile"
+                trackingSection="cta"
+                trackingMetadata={{
+                  position: "section_middle",
+                  type: "secondary_cta",
+                  device: "mobile_only"
+                }}
               >
                 <span className="text-sm">Calcule sua economia</span>
               </TypeformButton>

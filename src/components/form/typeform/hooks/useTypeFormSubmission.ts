@@ -17,24 +17,31 @@ export const useFormSubmission = ({ onShowCalendar, getValues }: UseFormSubmissi
     setIsSubmitting(true);
     
     try {
-      // Final webhook submission with complete data
       const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
       
-      console.log("Sending complete form data to webhook:", data);
+      console.log("Sending complete form data to webhook:", {
+        data: data,
+        isComplete: true,
+        timestamp: new Date().toISOString()
+      });
       
-      // Using fetch with no-cors mode to avoid CORS issues
-      await fetch(webhookEndpoint, {
+      const response = await fetch(webhookEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        mode: "no-cors",
         body: JSON.stringify({
-          data: data, // Send data with 'data' key as specified
+          data: data,
           isComplete: true,
           timestamp: new Date().toISOString()
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      console.log("Form submitted successfully");
       
       // Show success toast
       toast({

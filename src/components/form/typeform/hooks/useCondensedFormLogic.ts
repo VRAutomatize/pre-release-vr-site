@@ -1,40 +1,14 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { formSchema, FormData, defaultValues } from "../types";
 import { useEffect, useState } from "react";
 import { useFormSubmission } from "./useTypeFormSubmission";
+import { useProgressTracking } from "./useProgressTracking";
+import { useCalendarState } from "./useCalendarState";
+import { useKeyboardNavigation } from "./useKeyboardNavigation";
+import { useCalendarErrorHandling } from "./useCalendarErrorHandling";
 import { useFormTracking } from "@/hooks/useFormTracking";
-
-// Condensed form schema - only essential fields
-const condensedFormSchema = z.object({
-  fullName: z.string().min(2, "Nome é obrigatório"),
-  phone: z.string().min(10, "WhatsApp é obrigatório"),
-  monthlyRevenue: z.enum([
-    "0-50000", 
-    "50001-100000", 
-    "100001-300000", 
-    "300001-500000", 
-    "500001-1000000", 
-    "1000001-5000000"
-  ]),
-  industry: z.string().min(3, "Ramo de atuação é obrigatório"),
-  email: z.string().email("Email inválido").optional(),
-  paidTraffic: z.boolean().optional(),
-  trafficInvestment: z.enum(["0-1000", "1001-3000", "3001-5000", "5001-10000", "10000+"]).optional(),
-});
-
-type CondensedFormData = z.infer<typeof condensedFormSchema>;
-
-const defaultValues: CondensedFormData = {
-  fullName: "",
-  phone: "",
-  monthlyRevenue: "0-50000",
-  industry: "",
-  email: "",
-  paidTraffic: false,
-  trafficInvestment: undefined,
-};
 
 interface UseCondensedFormLogicProps {
   isOpen: boolean;
@@ -49,112 +23,197 @@ export const useCondensedFormLogic = ({
   onShowCalendar,
   showCalendar = false,
 }: UseCondensedFormLogicProps) => {
-  const { trackFormStart, trackFormStep, trackFormComplete } = useFormTracking();
+  const { trackFormStart, trackFormStep, trackFormComplete, trackFormAbandon } = useFormTracking();
 
-  const form = useForm<CondensedFormData>({
-    resolver: zodResolver(condensedFormSchema),
+  // Set up form with validation
+  const { 
+    control, 
+    handleSubmit, 
+    watch, 
+    trigger, 
+    getValues, 
+    setValue, 
+    formState: { errors }, 
+    reset 
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues,
     mode: "onChange",
   });
-
-  const { control, handleSubmit, watch, trigger, getValues, setValue, formState: { errors }, reset } = form;
-
+  
+  // Initialize current step state
   const [currentStep, setCurrentStep] = useState(0);
-  const [showExpressFlow, setShowExpressFlow] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Only 4 essential steps
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  // Total number of steps for condensed form (4 steps: name, phone, revenue, industry)
   const totalSteps = 4;
-  const stepNames = ["fullName", "phone", "monthlyRevenue", "industry"];
-
-  const { submitForm } = useFormSubmission({ 
-    onShowCalendar,
-    getValues: () => {
-      const data = getValues();
-      // Convert to original format for compatibility
-      return {
-        ...data,
-        paidTraffic: data.paidTraffic || false,
-        instagram: "",
-        trafficInvestment: data.trafficInvestment,
-      };
-    }
+  
+  // Progress tracking logic
+  const { sendPartialData } = useProgressTracking({
+    getValues,
+    currentStep
   });
-
+  
+  // Form submission logic
+  const { isSubmitting, submitForm } = useFormSubmission({ 
+    onShowCalendar,
+    getValues
+  });
+  
+  // Calculate progress percentage
   const progress = Math.round((currentStep / (totalSteps - 1)) * 100);
+  
+  // Calendar state logic
+  const { calendarLoaded, setCalendarLoaded, calendarError, setCalendarError } = useCalendarState();
+  
+  // Show express flow after phone step
+  const showExpressFlow = currentStep === 1;
+  
+  // Express flow handler (WhatsApp direct contact)
+  const handleExpressFlow = () => {
+    const currentData = getValues();
+    const message = `Olá! Vim do site da VR Automatize.
 
-  const handleNextStep = async () => {
-    const currentField = stepNames[currentStep];
+Nome: ${currentData.fullName}
+WhatsApp: ${currentData.phone}
+
+Gostaria de falar sobre automação empresarial.`;
     
-    // Skip validation for optional fields or proceed directly
-    if (currentStep === 1) {
-      // After phone step, show express flow option
-      setShowExpressFlow(true);
+    const whatsappUrl = `https://wa.me/5547992666367?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    // Track express flow
+    trackFormStep(currentStep, totalSteps, 'express_whatsapp');
+    onClose();
+  };
+  
+  // Validate current step
+  const validateCurrentStep = async (): Promise<boolean> => {
+    const fieldsToValidate = ["fullName", "phone", "monthlyRevenue", "industry"];
+    const currentField = fieldsToValidate[currentStep];
+    
+    if (!currentField) return true;
+    
+    try {
+      const isValid = await trigger(currentField as keyof FormData);
+      return isValid;
+    } catch (error) {
+      console.error("Validation error:", error);
+      return false;
     }
+  };
+  
+  // Optimized form navigation logic
+  const handleNextStep = async () => {
+    if (isSubmitting || isProcessing) return;
     
-    const isValid = await trigger(currentField as any);
+    setIsProcessing(true);
     
-    if (isValid) {
+    try {
+      // Validate current step
+      const isValid = await validateCurrentStep();
+      
+      if (!isValid) {
+        setIsProcessing(false);
+        return;
+      }
+      
+      // Track step completion
+      const fieldsToValidate = ["fullName", "phone", "monthlyRevenue", "industry"];
+      const currentField = fieldsToValidate[currentStep];
       trackFormStep(currentStep + 1, totalSteps, currentField);
       
+      // Send partial data to webhook
+      await sendPartialData();
+      
+      // Move to next step or submit
       if (currentStep < totalSteps - 1) {
         setCurrentStep(prev => prev + 1);
       } else {
-        setIsSubmitting(true);
-        await submitForm(getValues());
+        // Final submission
+        const formData = getValues();
+        console.log("Final form submission:", formData);
         trackFormComplete(totalSteps, Date.now());
+        await submitForm(formData);
       }
+    } catch (error) {
+      console.error("Error in handleNextStep:", error);
+    } finally {
+      setIsProcessing(false);
     }
   };
-
-  const handleExpressFlow = async () => {
-    const { fullName, phone } = getValues();
-    if (fullName && phone) {
-      // Send minimal data and redirect to WhatsApp
-      const whatsappMessage = `Olá! Sou ${fullName}. Quero uma análise gratuita de economia com Funcionários Digitais. Meu WhatsApp: ${phone}`;
-      const whatsappUrl = `https://wa.me/554792666367?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
-      onClose();
-    }
-  };
-
+  
+  // Previous step handler
   const handlePrevStep = () => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && !isSubmitting && !isProcessing) {
       setCurrentStep(prev => prev - 1);
-      setShowExpressFlow(false);
     }
   };
-
-  // Track form start
+  
+  // Keyboard navigation logic
+  useKeyboardNavigation({
+    isOpen,
+    isSubmitting: isSubmitting || isProcessing,
+    showCalendar,
+    onClose,
+    handleNextStep
+  });
+  
+  // Calendar error handling
+  useCalendarErrorHandling({
+    showCalendar,
+    calendarLoaded,
+    setCalendarLoaded,
+    setCalendarError
+  });
+  
+  // Track form start when opened
   useEffect(() => {
     if (isOpen) {
       trackFormStart();
     }
   }, [isOpen, trackFormStart]);
-
-  // Reset form when closed
+  
+  // Reset form when modal is closed
   useEffect(() => {
     if (!isOpen) {
       setCurrentStep(0);
-      setShowExpressFlow(false);
-      setIsSubmitting(false);
       reset(defaultValues);
+      setCalendarLoaded(false);
+      setCalendarError(false);
     }
-  }, [isOpen, reset]);
+  }, [isOpen, reset, setCalendarLoaded, setCalendarError]);
+
+  // Handle form abandonment
+  useEffect(() => {
+    return () => {
+      if (isOpen && currentStep > 0) {
+        trackFormAbandon(currentStep, totalSteps, 'component_unmount');
+      }
+    };
+  }, [isOpen, currentStep, totalSteps, trackFormAbandon]);
 
   return {
     control,
+    handleSubmit,
+    watch,
+    getValues,
+    setValue,
     errors,
+    reset,
     currentStep,
+    setCurrentStep,
     totalSteps,
-    progress,
     isSubmitting,
+    isProcessing,
+    progress,
     showExpressFlow,
     handleNextStep,
     handlePrevStep,
     handleExpressFlow,
-    setValue,
-    watch,
-    getValues,
+    calendarLoaded,
+    setCalendarLoaded,
+    calendarError,
+    setCalendarError,
   };
 };

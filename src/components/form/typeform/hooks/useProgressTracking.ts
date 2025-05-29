@@ -12,30 +12,39 @@ export const useProgressTracking = ({ getValues, currentStep }: UseProgressTrack
   
   // Function to send partial form data to webhook
   const sendPartialData = useCallback(async () => {
-    // Always send to the specified webhook URL regardless of the props
     const webhookEndpoint = "https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/form-webhook";
     
-    const currentValues = getValues();
-    const dataToSend = { ...progressData, ...currentValues };
-    setProgressData(dataToSend);
-    
     try {
-      console.log("Sending partial data to webhook:", dataToSend);
+      const currentValues = getValues();
+      const dataToSend = { ...progressData, ...currentValues };
+      setProgressData(dataToSend);
       
-      // Using fetch with no-cors mode to avoid CORS issues with webhook
-      await fetch(webhookEndpoint, {
+      console.log("Sending partial data to webhook:", {
+        data: dataToSend,
+        step: currentStep + 1,
+        isPartial: true,
+        timestamp: new Date().toISOString()
+      });
+      
+      const response = await fetch(webhookEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        mode: "no-cors",
         body: JSON.stringify({
-          data: dataToSend, // Send data with 'data' key as specified
-          step: currentStep,
+          data: dataToSend,
+          step: currentStep + 1,
           timestamp: new Date().toISOString(),
           isPartial: true
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      console.log("Partial data sent successfully");
+      
     } catch (error) {
       console.error("Failed to send partial data:", error);
       // Continue anyway, don't block the user experience

@@ -10,7 +10,7 @@ export const usePerformanceTracking = () => {
       
       if (navigation) {
         const loadTime = navigation.loadEventEnd - navigation.loadEventStart;
-        const domComplete = navigation.domComplete - navigation.domLoading;
+        const domComplete = navigation.domComplete - navigation.domContentLoadedEventStart;
         const firstContentfulPaint = performance.getEntriesByName('first-contentful-paint')[0];
         
         // Calculate score based on load times
@@ -46,7 +46,7 @@ export const usePerformanceTracking = () => {
       return {
         perceived_page_speed_score: performanceScore,
         load_time: navigation ? Math.round(navigation.loadEventEnd - navigation.loadEventStart) : 0,
-        dom_complete_time: navigation ? Math.round(navigation.domComplete - navigation.domLoading) : 0,
+        dom_complete_time: navigation ? Math.round(navigation.domComplete - navigation.domContentLoadedEventStart) : 0,
         first_contentful_paint: performance.getEntriesByName('first-contentful-paint')[0]?.startTime || 0,
         connection_type: (navigator as any).connection?.effectiveType || 'unknown'
       };

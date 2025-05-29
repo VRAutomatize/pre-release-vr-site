@@ -6,9 +6,6 @@ import { ExecutiveButton } from "@/components/form/ExecutiveButton";
 import { TypeformButton } from "@/components/form/TypeformButton";
 
 const PremiumSegmentCTA = () => {
-  const executiveWhatsApp = "https://wa.me/554788558257?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês.";
-  const executiveCalendar = "https://calendly.com/vr-automatize/reuniao-executiva";
-
   return (
     <div className="space-y-6">
       {/* Premium Call-to-Action for High-Value Leads */}
@@ -31,7 +28,7 @@ const PremiumSegmentCTA = () => {
               expectedRevenue: "500k+",
               priority: "high"
             }}
-            href={executiveCalendar}
+            variant="calendar"
             className="flex-1"
           >
             Reunião Executiva
@@ -45,7 +42,8 @@ const PremiumSegmentCTA = () => {
               expectedRevenue: "500k+",
               channel: "whatsapp"
             }}
-            href={executiveWhatsApp}
+            variant="whatsapp"
+            href="https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês."
             className="flex-1"
           >
             WhatsApp Direto

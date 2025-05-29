@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import ExecutiveCalendarModal from "./ExecutiveCalendarModal";
 
 interface ExecutiveButtonProps {
   className?: string;
@@ -13,6 +14,7 @@ interface ExecutiveButtonProps {
   trackingSection?: string;
   trackingMetadata?: Record<string, any>;
   href?: string;
+  variant?: "calendar" | "whatsapp";
 }
 
 export function ExecutiveButton({ 
@@ -22,9 +24,11 @@ export function ExecutiveButton({
   trackingId = "executive_button",
   trackingSection = "unknown",
   trackingMetadata = {},
-  href
+  href,
+  variant = "calendar"
 }: ExecutiveButtonProps) {
   const { trackEvent } = useConversionAnalytics();
+  const [showCalendar, setShowCalendar] = useState(false);
   
   const handleClick = () => {
     // Track the executive CTA click
@@ -37,26 +41,39 @@ export function ExecutiveButton({
         buttonText: typeof children === 'string' ? children : 'executive_button',
         targetUrl: href,
         isVipFlow: true,
+        variant,
         ...trackingMetadata
       }
     );
 
-    // Open executive calendar or WhatsApp
-    if (href) {
-      window.open(href, '_blank');
+    if (variant === "calendar") {
+      // Open calendar modal
+      setShowCalendar(true);
+    } else {
+      // Open WhatsApp with updated number
+      const whatsappUrl = href || "https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês.";
+      window.open(whatsappUrl, '_blank');
     }
   };
   
   return (
-    <Button 
-      className={cn(
-        "bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-bold border-2 border-yellow-300 shadow-lg transform hover:scale-105 transition-all duration-300",
-        className
-      )} 
-      onClick={handleClick}
-    >
-      {Icon && <Icon className="mr-2 h-5 w-5 flex-shrink-0" />}
-      {children}
-    </Button>
+    <>
+      <Button 
+        className={cn(
+          "bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-bold border-2 border-yellow-300 shadow-lg transform hover:scale-105 transition-all duration-300",
+          className
+        )} 
+        onClick={handleClick}
+      >
+        {Icon && <Icon className="mr-2 h-5 w-5 flex-shrink-0" />}
+        {children}
+      </Button>
+
+      {/* Executive Calendar Modal */}
+      <ExecutiveCalendarModal
+        isOpen={showCalendar}
+        onClose={() => setShowCalendar(false)}
+      />
+    </>
   );
 }

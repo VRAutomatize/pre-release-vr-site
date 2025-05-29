@@ -31,8 +31,8 @@ const sectionVariants = {
 const DigitalEmployees = () => {
   const { trackEvent } = useConversionAnalytics();
 
-  // Whatsapp link function with tracking
-  const whatsappLink = React.useCallback(() => "https://wa.me/554788558257?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
+  // Updated WhatsApp link with new number
+  const whatsappLink = React.useCallback(() => "https://wa.me/554792666367?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
 
   const handleWhatsAppClick = React.useCallback(() => {
     trackEvent('whatsapp_click', 'click', 'header_whatsapp', 'header', {

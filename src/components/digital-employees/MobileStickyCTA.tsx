@@ -17,25 +17,29 @@ const MobileStickyCTA = () => {
       text: "Começar agora",
       subtitle: "Análise gratuita",
       icon: MessageSquare,
-      bgGradient: "from-gold to-gold-light"
+      bgGradient: "from-gold to-gold-light",
+      textColor: "text-background" // Dark text for gold background
     },
     {
       text: "Economizar agora", 
       subtitle: "Média: R$ 283k/ano",
       icon: TrendingUp,
-      bgGradient: "from-green-500 to-green-600"
+      bgGradient: "from-green-500 to-green-600",
+      textColor: "text-white" // White text for green background
     },
     {
       text: "Juntar-se a 200+",
       subtitle: "Empresas que economizam",
       icon: Users,
-      bgGradient: "from-blue-500 to-blue-600"
+      bgGradient: "from-blue-500 to-blue-600",
+      textColor: "text-white" // White text for blue background
     },
     {
       text: "Última chance",
       subtitle: "5 vagas restantes",
       icon: Calendar,
-      bgGradient: "from-red-500 to-red-600"
+      bgGradient: "from-red-500 to-red-600",
+      textColor: "text-white" // White text for red background
     }
   ];
 
@@ -139,7 +143,7 @@ const MobileStickyCTA = () => {
       <div className="fixed bottom-3 left-3 right-3 z-40">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} text-white font-semibold py-2.5 px-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
+          className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-2.5 px-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}
         >
           <currentVariant.icon className="h-4 w-4" />
           <div className="text-center">

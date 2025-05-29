@@ -66,7 +66,7 @@ export const useTypeformLogic = ({
   // Calendar state logic
   const { calendarLoaded, setCalendarLoaded, calendarError, setCalendarError } = useCalendarState();
   
-  // Form navigation logic - we need to create a wrapper for handleNextStep
+  // Optimized form navigation logic
   const handleNextStep = async () => {
     // Validate current field before proceeding
     const fieldsToValidate: string[] = [
@@ -81,6 +81,21 @@ export const useTypeformLogic = ({
     ].filter(Boolean) as string[];
     
     const currentField = fieldsToValidate[currentStep];
+    
+    // Skip validation for optional fields
+    if (currentField === "instagram" || currentStep === 5) {
+      // Send partial data to webhook
+      await sendPartialData();
+      
+      // Move to next step or submit
+      if (currentStep < totalSteps - 1) {
+        setCurrentStep(prev => prev + 1);
+      } else {
+        await submitForm(getValues());
+      }
+      return;
+    }
+    
     const isValid = await trigger(currentField as any);
     
     if (isValid) {

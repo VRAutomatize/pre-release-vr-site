@@ -2,7 +2,7 @@
 import React from "react";
 import { useOptimizedTypeformLogic } from "./typeform/OptimizedTypeformLogic";
 import OptimizedFormView from "./typeform/OptimizedFormView";
-import CalendarView from "./typeform/CalendarView";
+import DynamicCalendarEmbed from "./typeform/DynamicCalendarEmbed";
 import { useTypeformModal } from "@/hooks/useTypeformModal";
 import SimpleCalendarEmbed from "./typeform/SimpleCalendarEmbed";
 import CalendarIframeView from "./typeform/CalendarIframeView";
@@ -51,12 +51,12 @@ export function OptimizedTypeformModal({
     showCalendar
   });
 
-  // Calendar view selection
+  // Calendar view selection with dynamic calendar as default
   if (showCalendar) {
     switch (calendarViewMethod) {
       case 'simple':
         return (
-          <SimpleCalendarEmbed 
+          <DynamicCalendarEmbed 
             isOpen={isOpen} 
             onClose={onClose}
             onFallback={() => switchCalendarMethod('iframe')}
@@ -74,12 +74,10 @@ export function OptimizedTypeformModal({
       case 'default':
       default:
         return (
-          <CalendarView 
+          <DynamicCalendarEmbed 
             isOpen={isOpen} 
-            onClose={onClose} 
-            calendarLoaded={calendarLoaded}
-            calendarError={calendarError}
-            onSwitchToFallback={() => switchCalendarMethod('simple')}
+            onClose={onClose}
+            onFallback={() => switchCalendarMethod('simple')}
           />
         );
     }

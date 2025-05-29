@@ -7,6 +7,7 @@ import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
 const ExitIntentAlert = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
+  const [pageLoadTime] = useState(Date.now());
   const { trackEvent } = useConversionAnalytics();
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const ExitIntentAlert = () => {
         setShowAlert(true);
         setHasTriggered(true);
         trackEvent('exit_intent_triggered', 'mouse_leave', 'exit_alert', 'exit_intent', {
-          timeOnPage: Date.now() - performance.navigation.domContentLoadedEventEnd,
+          timeOnPage: Date.now() - pageLoadTime,
           triggerLocation: 'top_exit'
         });
       }
@@ -31,7 +32,7 @@ const ExitIntentAlert = () => {
       clearTimeout(timer);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [hasTriggered, showAlert, trackEvent]);
+  }, [hasTriggered, showAlert, trackEvent, pageLoadTime]);
 
   const handleClose = () => {
     setShowAlert(false);

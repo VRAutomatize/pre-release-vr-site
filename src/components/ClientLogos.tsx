@@ -99,6 +99,18 @@ const ClientLogos = () => {
   // Calculate total slides for indicators
   const totalSlides = Math.ceil(clients.length / (isMobile ? 2 : 6));
 
+  // Function to handle indicator click
+  const handleIndicatorClick = React.useCallback((slideIndex: number) => {
+    if (!api) return;
+    
+    // Calculate the actual slide position based on items per slide
+    const itemsPerSlide = isMobile ? 2 : 6;
+    const targetSlide = slideIndex * itemsPerSlide;
+    
+    console.log('Clicking indicator:', slideIndex, 'targeting slide:', targetSlide);
+    api.scrollTo(targetSlide);
+  }, [api, isMobile]);
+
   return (
     <section className="relative mt-16 md:mt-24 z-10">
       <div className="container mx-auto px-4">
@@ -159,11 +171,11 @@ const ClientLogos = () => {
               <button
                 key={index}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex % totalSlides
+                  index === Math.floor(currentIndex / (isMobile ? 2 : 6))
                     ? "bg-gold w-6"
                     : "bg-white/30"
                 }`}
-                onClick={() => api?.scrollTo(index)}
+                onClick={() => handleIndicatorClick(index)}
                 aria-label={`Ir para slide ${index + 1}`}
               />
             ))}

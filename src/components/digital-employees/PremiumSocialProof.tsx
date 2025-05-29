@@ -2,8 +2,26 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Quote, Star, TrendingUp } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const PremiumSocialProof = () => {
+  const plugin = React.useMemo(
+    () =>
+      Autoplay({
+        delay: 4000,
+        stopOnInteraction: true,
+        stopOnMouseEnter: true,
+      }),
+    []
+  );
+
   const testimonials = [
     {
       company: "Empresa de E-commerce",
@@ -28,6 +46,30 @@ const PremiumSocialProof = () => {
       quote: "ROI de 400% em 8 meses. Melhor investimento que fizemos.",
       author: "Sócio-fundador",
       rating: 5
+    },
+    {
+      company: "Rede de Franquias",
+      revenue: "R$ 3.5M/mês",
+      savings: "R$ 320k/ano",
+      quote: "Padronizamos processos em 45 lojas. Eficiência operacional aumentou 300%.",
+      author: "Diretor de Expansão",
+      rating: 5
+    },
+    {
+      company: "Distribuidora Nacional",
+      revenue: "R$ 8M/mês",
+      savings: "R$ 680k/ano",
+      quote: "Integração com fornecedores automatizada. Zero retrabalho na logística.",
+      author: "Gerente Comercial",
+      rating: 5
+    },
+    {
+      company: "Consultoria Empresarial",
+      revenue: "R$ 900k/mês",
+      savings: "R$ 150k/ano",
+      quote: "Relatórios que levavam dias agora são gerados em minutos.",
+      author: "Sócia-fundadora",
+      rating: 5
     }
   ];
 
@@ -42,31 +84,47 @@ const PremiumSocialProof = () => {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {testimonials.map((testimonial, index) => (
-          <Card key={index} className="p-6 border-gold/20 bg-black/30 backdrop-blur-lg hover:border-gold/40 transition-all">
-            <div className="flex items-center gap-2 mb-4">
-              {[...Array(testimonial.rating)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            
-            <Quote className="h-6 w-6 text-gold/60 mb-3" />
-            <p className="text-foreground/90 mb-4 italic">"{testimonial.quote}"</p>
-            
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-green-400" />
-                <span className="text-green-400 font-semibold">Economia: {testimonial.savings}</span>
-              </div>
-              <div className="text-sm text-foreground/70">
-                <p className="font-medium">{testimonial.company}</p>
-                <p>Faturamento: {testimonial.revenue}</p>
-                <p>{testimonial.author}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
+      <div className="max-w-7xl mx-auto px-4">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+            dragFree: true,
+          }}
+          plugins={[plugin]}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4">
+            {testimonials.map((testimonial, index) => (
+              <CarouselItem key={index} className="pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                <Card className="p-6 border-gold/20 bg-black/30 backdrop-blur-lg hover:border-gold/40 transition-all h-full">
+                  <div className="flex items-center gap-2 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  
+                  <Quote className="h-6 w-6 text-gold/60 mb-3" />
+                  <p className="text-foreground/90 mb-4 italic">"{testimonial.quote}"</p>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                      <span className="text-green-400 font-semibold">Economia: {testimonial.savings}</span>
+                    </div>
+                    <div className="text-sm text-foreground/70">
+                      <p className="font-medium">{testimonial.company}</p>
+                      <p>Faturamento: {testimonial.revenue}</p>
+                      <p>{testimonial.author}</p>
+                    </div>
+                  </div>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex -left-12" />
+          <CarouselNext className="hidden md:flex -right-12" />
+        </Carousel>
       </div>
 
       <div className="text-center mt-12">

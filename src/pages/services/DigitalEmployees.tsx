@@ -2,12 +2,16 @@
 import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
+import ClientLogosSection from "@/components/digital-employees/ClientLogosSection";
 import CTASection from "@/components/digital-employees/CTASection";
 import UseCasesSection from "@/components/digital-employees/UseCasesSection";
 import ProcessSection from "@/components/digital-employees/ProcessSection";
 import ComparisonSection from "@/components/digital-employees/ComparisonSection";
 import IdealForSection from "@/components/digital-employees/IdealForSection";
 import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProof";
+import ROIChart from "@/components/digital-employees/ROIChart";
+import FAQSection from "@/components/digital-employees/FAQSection";
+import ExitIntentAlert from "@/components/digital-employees/ExitIntentAlert";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
@@ -51,6 +55,9 @@ const DigitalEmployees = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Exit Intent Alert */}
+      <ExitIntentAlert />
+      
       <Header>
         <div className="hidden md:flex items-center gap-8">
           <Link 
@@ -82,6 +89,17 @@ const DigitalEmployees = () => {
           <HeroSection />
         </motion.div>
 
+        {/* Client Logos Section */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-16"
+        >
+          <ClientLogosSection />
+        </motion.div>
+
         {/* Premium Social Proof Section */}
         <motion.div 
           initial="hidden"
@@ -92,6 +110,18 @@ const DigitalEmployees = () => {
           id="premium-social-proof"
         >
           <PremiumSocialProof />
+        </motion.div>
+
+        {/* ROI Chart Section */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-24 md:mb-32"
+          id="roi-chart-section"
+        >
+          <ROIChart />
         </motion.div>
         
         {/* Use Cases Section */}
@@ -140,6 +170,18 @@ const DigitalEmployees = () => {
           id="ideal-for-section"
         >
           <IdealForSection />
+        </motion.div>
+
+        {/* FAQ Section */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-24 md:mb-32"
+          id="faq-section"
+        >
+          <FAQSection />
         </motion.div>
         
         {/* CTA Section */}

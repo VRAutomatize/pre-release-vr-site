@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
 import { useTypeform } from "@/contexts/TypeformContext";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
@@ -16,6 +17,7 @@ interface TypeformButtonProps {
   trackingId?: string;
   trackingSection?: string;
   trackingMetadata?: Record<string, any>;
+  useCondensedForm?: boolean;
 }
 
 export function TypeformButton({ 
@@ -27,13 +29,15 @@ export function TypeformButton({
   style,
   trackingId = "typeform_button",
   trackingSection = "unknown",
-  trackingMetadata = {}
+  trackingMetadata = {},
+  useCondensedForm = true
 }: TypeformButtonProps) {
   const { trackEvent } = useConversionAnalytics();
   const { openModal } = useTypeform();
+  const isMobile = useIsMobile();
   
   const handleClick = () => {
-    // Track the CTA click
+    // Track the CTA click with mobile optimization info
     trackEvent(
       'cta_click',
       'click',
@@ -46,6 +50,9 @@ export function TypeformButton({
         hasIcon: !!Icon,
         directCalendar: false,
         usesForm: true,
+        isMobile,
+        useCondensedForm: useCondensedForm && isMobile,
+        formType: useCondensedForm && isMobile ? 'condensed' : 'standard',
         ...trackingMetadata
       }
     );

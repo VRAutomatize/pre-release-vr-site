@@ -3,6 +3,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { X, Loader2, Check, ArrowRight, ArrowLeft, Clock } from "lucide-react";
 import { useKeyboardDetection } from "@/hooks/useKeyboardDetection";
 import { 
@@ -85,7 +86,7 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           Formulário para análise gratuita
         </DialogDescription>
         
-        {/* Enhanced Progress Bar - More Visible */}
+        {/* Enhanced Progress Bar */}
         <div className="relative w-full h-3 bg-gray-800/40 rounded-full overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-gold to-gold-light transition-all duration-700 ease-out rounded-full shadow-sm"
@@ -93,14 +94,15 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           />
         </div>
         
-        {/* Simplified header - Remove step counter */}
-        <div className="bg-red-500/10 border-b border-red-500/20 px-4 py-2">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-2 text-red-400 text-sm">
-              <Clock className="h-4 w-4" />
-              <span>5 vagas restantes</span>
-            </div>
-          </div>
+        {/* Minimalist Badge */}
+        <div className="flex justify-center py-3">
+          <Badge 
+            variant="outline" 
+            className="bg-red-500/10 border-red-500/30 text-red-400 text-xs px-3 py-1 rounded-full"
+          >
+            <Clock className="h-3 w-3 mr-1" />
+            5 vagas restantes
+          </Badge>
         </div>
         
         {/* Close Button */}

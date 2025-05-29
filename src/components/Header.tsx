@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ const Header = React.memo(({ children }: HeaderProps) => {
   const [isLogoVisible, setIsLogoVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   // Handler de scroll otimizado com throttle
   useEffect(() => {
@@ -88,10 +90,17 @@ const Header = React.memo(({ children }: HeaderProps) => {
     }
   }, [location.pathname, navigate, isMenuOpen]);
 
-  // Classes memorizadas
-  const headerClasses = useMemo(() => `fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
-    isScrolled ? "glass shadow-lg" : ""
-  } rounded-xl mx-4`, [isScrolled]);
+  // Classes memorizadas - Header fixo no mobile, com margem no desktop
+  const headerClasses = useMemo(() => {
+    if (isMobile) {
+      return `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "glass-blur shadow-lg" : "bg-background/80 backdrop-blur-sm"
+      }`;
+    }
+    return `fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
+      isScrolled ? "glass shadow-lg" : ""
+    } rounded-xl mx-4`;
+  }, [isScrolled, isMobile]);
 
   const logoClasses = useMemo(() => `flex items-center gap-2 transition-all duration-500 ${
     isLogoVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
@@ -153,7 +162,7 @@ const Header = React.memo(({ children }: HeaderProps) => {
             </div>
           )}
 
-          {/* Mobile Menu Button - Otimizado para evitar renderizações desnecessárias */}
+          {/* Mobile Menu Button */}
           <button
             className="md:hidden text-foreground"
             onClick={() => setIsMenuOpen(prev => !prev)}
@@ -163,9 +172,9 @@ const Header = React.memo(({ children }: HeaderProps) => {
           </button>
         </nav>
 
-        {/* Mobile Navigation - Renderização condicional otimizada */}
+        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden glass mt-4 rounded-lg p-4 flex flex-col gap-4">
+          <div className="md:hidden glass-blur mt-4 rounded-lg p-4 flex flex-col gap-4 border border-gold/20">
             <button
               onClick={() => scrollToSection('services')}
               className="hover:text-gold transition-colors duration-300 text-left relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-1/2"

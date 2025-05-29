@@ -1,7 +1,7 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+    @apply bg-background/30 backdrop-blur-lg border border-gold/10;
   }
   
   .glass-gold {
@@ -16,7 +16,7 @@
     @apply backdrop-blur-md bg-background/30 border border-gold/10 shadow-lg hover:bg-background/40 transition-all duration-300;
   }
   
-  /* Enhanced glassmorphism */
+  /* Enhanced glassmorphism - Uniformizado */
   .glass-blur {
     @apply backdrop-blur-xl bg-background/40 border border-gold/20 shadow-lg;
   }
@@ -94,5 +94,34 @@
   
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
+  }
+
+  /* Gold theme utilities */
+  .text-gold {
+    color: #FFD700;
+  }
+  
+  .bg-gold {
+    background-color: #FFD700;
+  }
+  
+  .border-gold {
+    border-color: #FFD700;
+  }
+  
+  .hover\:text-gold:hover {
+    color: #FFD700;
+  }
+  
+  .hover\:bg-gold:hover {
+    background-color: #FFD700;
+  }
+  
+  .bg-gold-light {
+    background-color: #FFED4A;
+  }
+  
+  .hover\:bg-gold-light:hover {
+    background-color: #FFED4A;
   }
 }

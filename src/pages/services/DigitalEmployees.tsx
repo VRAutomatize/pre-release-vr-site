@@ -18,6 +18,7 @@ import { ArrowLeft, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { useConversionAnalytics } from "@/hooks/useConversionAnalytics";
 import MobileStickyCTA from "@/components/digital-employees/MobileStickyCTA";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Animation variants for scroll reveal
 const sectionVariants = {
@@ -34,6 +35,7 @@ const sectionVariants = {
 
 const DigitalEmployees = () => {
   const { trackEvent } = useConversionAnalytics();
+  const isMobile = useIsMobile();
 
   // Updated WhatsApp link with new number
   const whatsappLink = React.useCallback(() => "https://wa.me/554792666367?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!", []);
@@ -53,8 +55,11 @@ const DigitalEmployees = () => {
     });
   }, [trackEvent]);
 
+  // Scroll padding dinâmico baseado no dispositivo
+  const scrollPaddingClass = isMobile ? "scroll-pt-16" : "scroll-pt-24";
+
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className={`min-h-screen bg-background overflow-x-hidden ${scrollPaddingClass}`}>
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       
@@ -78,7 +83,7 @@ const DigitalEmployees = () => {
         </div>
       </Header>
 
-      <div className="container mx-auto px-4 pt-12 pb-20 md:pb-12">
+      <div className="container mx-auto px-4 pt-20 md:pt-12 pb-24 md:pb-12">
         {/* Hero Section */}
         <motion.div 
           initial="hidden"

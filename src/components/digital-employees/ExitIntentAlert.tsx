@@ -54,17 +54,17 @@ const ExitIntentAlert = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-red-600/90 to-orange-600/90 backdrop-blur-lg text-white shadow-lg"
+          className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background/95 to-secondary/95 backdrop-blur-lg text-foreground shadow-lg border-b border-gold/20"
         >
           <div className="container mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1">
-              <AlertTriangle className="h-5 w-5 text-yellow-300 flex-shrink-0" />
+              <AlertTriangle className="h-5 w-5 text-gold flex-shrink-0" />
               <div className="flex-1">
                 <p className="font-medium text-sm md:text-base">
-                  🚨 <strong>Oportunidade única!</strong> Você está perdendo a chance de virar o jogo na sua empresa
+                  🚨 <strong className="text-gold">Oportunidade única!</strong> Você está perdendo a chance de virar o jogo na sua empresa
                 </p>
                 <p className="text-xs md:text-sm opacity-90 mt-1">
-                  Empresários que agem agora economizam em média R$ 283k/ano
+                  Empresários que agem agora economizam em média <span className="text-gold font-semibold">R$ 283k/ano</span>
                 </p>
               </div>
             </div>
@@ -75,14 +75,14 @@ const ExitIntentAlert = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleCTAClick}
-                className="bg-white text-red-600 px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 whitespace-nowrap"
+                className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-lg font-medium text-sm transition-colors flex items-center gap-2 whitespace-nowrap"
               >
                 <Calendar className="h-4 w-4" />
                 Agendar Agora
               </a>
               <button
                 onClick={handleClose}
-                className="text-white/80 hover:text-white transition-colors p-1"
+                className="text-foreground/80 hover:text-gold transition-colors p-1"
                 aria-label="Fechar"
               >
                 <X className="h-5 w-5" />

@@ -6,6 +6,8 @@
       width: 100%;
       overflow-x: hidden;
       position: relative;
+      /* Ajuste de scroll padding para header fixo no mobile */
+      scroll-padding-top: 64px;
     }
     
     /* Estilos específicos para o modo mobile quando o formulário está aberto */
@@ -126,5 +128,10 @@
     height: 100vh !important;
     max-height: 100vh !important;
     border-radius: 0 !important;
+  }
+
+  /* Ensure mobile header doesn't interfere with content */
+  .mobile-header-spacing {
+    padding-bottom: env(safe-area-inset-bottom, 80px);
   }
 }

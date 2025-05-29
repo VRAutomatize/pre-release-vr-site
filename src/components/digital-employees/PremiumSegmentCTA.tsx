@@ -65,7 +65,7 @@ const PremiumSegmentCTA = () => {
             afterPremiumOffer: true
           }}
         >
-          Análise Gratuita Personalizada
+          Agendar Consulta Gratuita
         </TypeformButton>
       </div>
     </div>

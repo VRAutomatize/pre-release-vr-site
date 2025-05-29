@@ -54,27 +54,27 @@ const ROIChart = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-black/20 to-gold/5">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <TrendingUp className="h-6 w-6 text-gold" />
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
+    <section className="py-8 md:py-16 bg-gradient-to-br from-black/20 to-gold/5">
+      <div className="container mx-auto px-3 md:px-4 max-w-6xl">
+        <div className="text-center mb-8 md:mb-12">
+          <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 md:mb-4">
+            <TrendingUp className="h-5 w-5 md:h-6 md:w-6 text-gold flex-shrink-0" />
+            <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light leading-tight">
               ROI Real dos Nossos Clientes
             </h2>
           </div>
-          <p className="text-xl text-foreground/80 mb-2">
+          <p className="text-lg md:text-xl text-foreground/80 mb-2 px-2">
             Veja como o investimento se transforma em economia exponencial
           </p>
-          <p className="text-gold font-medium">
+          <p className="text-gold font-medium text-sm md:text-base px-2">
             Baseado na média de empresas com faturamento de R$ 500k+ mensais
           </p>
         </div>
 
-        <Card className="p-8 border-gold/20 bg-black/30 backdrop-blur-lg">
-          <div className="h-96 w-full">
+        <Card className="p-4 md:p-8 border-gold/20 bg-black/30 backdrop-blur-lg">
+          <div className="h-64 md:h-96 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={roiData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <LineChart data={roiData} margin={{ top: 10, right: 15, left: 10, bottom: 10 }}>
                 <defs>
                   <linearGradient id="roiGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#FFD700" stopOpacity={0.3}/>
@@ -85,11 +85,14 @@ const ROIChart = () => {
                 <XAxis 
                   dataKey="month" 
                   stroke="#ffffff60"
-                  fontSize={12}
+                  fontSize={10}
+                  className="md:text-xs"
+                  interval="preserveStartEnd"
                 />
                 <YAxis 
                   stroke="#ffffff60"
-                  fontSize={12}
+                  fontSize={10}
+                  className="md:text-xs"
                   tickFormatter={(value) => `${value}%`}
                 />
                 <Tooltip content={<CustomTooltip />} />
@@ -97,36 +100,37 @@ const ROIChart = () => {
                   type="monotone"
                   dataKey="roi"
                   stroke="#FFD700"
-                  strokeWidth={3}
-                  dot={{ fill: "#FFD700", strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: "#FFD700", strokeWidth: 2, fill: "#ffffff" }}
+                  strokeWidth={2}
+                  dot={{ fill: "#FFD700", strokeWidth: 1, r: 4 }}
+                  activeDot={{ r: 6, stroke: "#FFD700", strokeWidth: 2, fill: "#ffffff" }}
                   animationDuration={2000}
                   animationBegin={0}
+                  className="md:stroke-[3px]"
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mt-8 pt-8 border-t border-gold/20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gold/20">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gold mb-2">720%</div>
-              <div className="text-foreground/70">ROI em 12 meses</div>
+              <div className="text-xl md:text-2xl font-bold text-gold mb-1 md:mb-2">720%</div>
+              <div className="text-foreground/70 text-sm md:text-base">ROI em 12 meses</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gold mb-2">R$ 820k</div>
-              <div className="text-foreground/70">Economia anual média</div>
+              <div className="text-xl md:text-2xl font-bold text-gold mb-1 md:mb-2">R$ 820k</div>
+              <div className="text-foreground/70 text-sm md:text-base">Economia anual média</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gold-light mb-2">3-4 meses</div>
-              <div className="text-foreground/70">Payback médio</div>
+              <div className="text-xl md:text-2xl font-bold text-gold-light mb-1 md:mb-2">3-4 meses</div>
+              <div className="text-foreground/70 text-sm md:text-base">Payback médio</div>
             </div>
           </div>
         </Card>
 
-        <div className="text-center mt-8">
-          <div className="inline-flex items-center gap-2 bg-gold/10 px-6 py-3 rounded-full">
-            <Calculator className="h-5 w-5 text-gold" />
-            <span className="text-gold font-medium">
+        <div className="text-center mt-6 md:mt-8">
+          <div className="inline-flex flex-col md:flex-row items-center gap-2 bg-gold/10 px-4 md:px-6 py-3 rounded-full">
+            <Calculator className="h-4 w-4 md:h-5 md:w-5 text-gold flex-shrink-0" />
+            <span className="text-gold font-medium text-sm md:text-base text-center leading-tight">
               Quer calcular o ROI específico da sua empresa? Agende uma reunião executiva
             </span>
           </div>

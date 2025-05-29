@@ -1,4 +1,3 @@
-
 import React from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -85,7 +84,7 @@ const DigitalEmployees = () => {
         </div>
       </Header>
 
-      <div className="mobile-container-full md:container mx-auto pt-20 md:pt-12 pb-24 md:pb-12">
+      <div className="min-h-screen bg-background overflow-x-hidden px-2.5 md:container md:mx-auto pt-20 md:pt-12 pb-24 md:pb-12">
         {/* Hero Section */}
         <motion.div 
           initial="hidden"

@@ -1,0 +1,98 @@
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+  
+  .glass-gold {
+    @apply bg-gold/5 backdrop-blur-lg border border-gold/20;
+  }
+  
+  .floating-card {
+    @apply glass transition-all duration-300 ease-out;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-background/30 border border-gold/10 shadow-lg hover:bg-background/40 transition-all duration-300;
+  }
+  
+  /* Enhanced glassmorphism */
+  .glass-blur {
+    @apply backdrop-blur-xl bg-background/40 border border-gold/20 shadow-lg;
+  }
+  
+  .glass-menu {
+    @apply backdrop-blur-2xl bg-background/60 border-r border-gold/20;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-1 active:translate-y-0;
+  }
+
+  /* Scroll reveal animation */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animations */
+  @keyframes float-fade {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+  
+  .animate-float-fade {
+    animation: float-fade 1.5s ease-out forwards;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  /* Form animations */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+}

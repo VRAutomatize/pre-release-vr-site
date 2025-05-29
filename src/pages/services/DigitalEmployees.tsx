@@ -7,6 +7,7 @@ import UseCasesSection from "@/components/digital-employees/UseCasesSection";
 import ProcessSection from "@/components/digital-employees/ProcessSection";
 import ComparisonSection from "@/components/digital-employees/ComparisonSection";
 import IdealForSection from "@/components/digital-employees/IdealForSection";
+import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProof";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
@@ -79,6 +80,18 @@ const DigitalEmployees = () => {
           className="mb-24 md:mb-32"
         >
           <HeroSection />
+        </motion.div>
+
+        {/* Premium Social Proof Section */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-24 md:mb-32"
+          id="premium-social-proof"
+        >
+          <PremiumSocialProof />
         </motion.div>
         
         {/* Use Cases Section */}

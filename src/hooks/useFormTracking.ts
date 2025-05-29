@@ -44,11 +44,23 @@ export const useFormTracking = () => {
     });
   }, [trackEvent]);
 
+  const trackPremiumLead = useCallback((revenue: string, leadType: 'standard' | 'growth' | 'premium' | 'executive' | 'vip') => {
+    trackEvent('premium_lead_identified', 'identify', 'revenue_step', 'form', {
+      revenueRange: revenue,
+      leadType,
+      isPremium: ['premium', 'executive', 'vip'].includes(leadType),
+      isExecutive: ['executive', 'vip'].includes(leadType),
+      isVip: leadType === 'vip',
+      identifiedAt: new Date().toISOString(),
+    });
+  }, [trackEvent]);
+
   return {
     trackFormStart,
     trackFormStep,
     trackFormAbandon,
     trackFormComplete,
     trackCalendarView,
+    trackPremiumLead,
   };
 };

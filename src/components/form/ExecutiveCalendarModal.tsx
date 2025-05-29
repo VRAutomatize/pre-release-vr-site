@@ -27,7 +27,7 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
     retryCount 
   } = useCalendarInitializer({
     elementId: "executive-cal-embed",
-    calLink: "vrautomatize/reuniao-executiva",
+    calLink: "vrautomatize/meet",
     onLoaded: () => setIsLoading(false),
     onError: () => {
       setIsLoading(false);
@@ -125,7 +125,7 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
                 
                 <button
                   onClick={handleWhatsAppFallback}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2"
+                  className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="h-4 w-4" />
                   Continuar via WhatsApp

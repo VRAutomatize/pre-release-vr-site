@@ -21,7 +21,7 @@ const SimpleCalendarEmbed: React.FC<SimpleCalendarEmbedProps> = ({
   
   const { initializeCalendar, loadError } = useCalendarInitializer({
     elementId: "cal-embed-area",
-    calLink: "vrautomatize/call",
+    calLink: "vrautomatize/meet",
     onLoaded: () => setIsLoading(false),
     onError: () => {
       if (onFallback) onFallback();

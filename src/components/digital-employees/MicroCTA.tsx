@@ -23,7 +23,7 @@ const MicroCTA = ({
   const variants = {
     default: {
       title: title || (isMobile ? "Quer economizar assim também?" : "Interessado em economizar centenas de milhares?"),
-      description: description || (isMobile ? "Análise gratuita em 15min" : "Agende uma análise gratuita e descubra seu potencial de economia"),
+      description: description || (isMobile ? "Começar agora" : "Agende uma análise gratuita e descubra seu potencial de economia"),
       bgColor: "bg-gold/5",
       borderColor: "border-gold/20"
     },
@@ -51,7 +51,7 @@ const MicroCTA = ({
 
   return (
     <div className={`my-8 md:my-12 ${className}`}>
-      <div className={`${config.bgColor} ${config.borderColor} border rounded-xl p-4 md:p-6 text-center backdrop-blur-sm`}>
+      <div className={`${config.bgColor} ${config.borderColor} border rounded-xl p-4 md:p-6 text-center backdrop-blur-sm mx-2 md:mx-0`}>
         <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
           {config.title}
         </h3>
@@ -61,13 +61,13 @@ const MicroCTA = ({
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           {variant === "executive" ? (
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <ExecutiveButton
                 icon={Calendar}
                 variant="calendar"
                 trackingId={`micro_cta_${variant}_calendar`}
                 trackingSection="micro_cta"
-                className="text-sm px-4 py-2"
+                className="text-sm px-4 py-2 w-full sm:w-auto"
               >
                 {isMobile ? "Agendar" : "Reunião Executiva"}
               </ExecutiveButton>
@@ -76,18 +76,18 @@ const MicroCTA = ({
                 variant="whatsapp"
                 trackingId={`micro_cta_${variant}_whatsapp`}
                 trackingSection="micro_cta"
-                className="text-sm px-4 py-2"
+                className="text-sm px-4 py-2 w-full sm:w-auto"
               >
                 {isMobile ? "WhatsApp" : "Falar no WhatsApp"}
               </ExecutiveButton>
             </div>
           ) : (
             <TypeformButton
-              className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2"
+              className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2 w-full sm:w-auto max-w-none"
               trackingId={`micro_cta_${variant}`}
               trackingSection="micro_cta"
             >
-              {variant === "urgency" ? "Garantir Vaga" : variant === "calculator" ? "Calcular Economia" : "Análise Gratuita"}
+              {variant === "urgency" ? "Garantir Vaga" : variant === "calculator" ? "Calcular Economia" : "Começar"}
               <ArrowRight className="h-4 w-4" />
             </TypeformButton>
           )}

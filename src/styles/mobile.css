@@ -37,22 +37,56 @@
 }
 
 @layer utilities {
-  /* Mobile specific utilities */
+  /* Mobile specific utilities - Otimizados para ocupar mais espaço */
   .mobile-full {
-    @apply md:p-6 p-3 w-full min-h-[100vh];
+    @apply md:p-6 p-1 w-full min-h-[100vh];
   }
   
   .mobile-container {
-    @apply px-3 md:px-6 w-full;
+    @apply px-1 md:px-6 w-full;
+  }
+
+  .mobile-container-full {
+    @apply px-0 w-full;
+  }
+
+  .mobile-container-minimal {
+    @apply px-2 md:px-6 w-full;
   }
   
   .mobile-dialog {
     @apply rounded-none md:rounded-lg fixed inset-0 w-full h-full md:h-auto md:max-w-lg md:mx-auto;
   }
 
-  /* Safe area padding for mobile devices */
+  /* Safe area padding for mobile devices with notch/dynamic island */
   .safe-area-pb {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-pl {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-pr {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .safe-area-pt {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-px {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Mobile full width utilities */
+  .mobile-w-full {
+    @apply w-full md:w-auto;
+  }
+
+  .mobile-max-w-none {
+    @apply max-w-none md:max-w-md;
   }
 
   /* Mobile animations and transitions */

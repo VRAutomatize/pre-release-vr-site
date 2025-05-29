@@ -89,7 +89,7 @@ const MobileStickyCTA = () => {
 
       {/* Options Panel - Mais compacto e otimizado */}
       {showOptions && (
-        <div className="fixed bottom-16 left-3 right-3 glass-blur border border-gold/20 rounded-lg p-3 z-50 space-y-2 animate-slide-up">
+        <div className="fixed bottom-16 safe-area-px left-1 right-1 glass-blur border border-gold/20 rounded-lg p-3 z-50 space-y-2 animate-slide-up">
           <h3 className="text-base font-semibold text-gold mb-2">Como prefere começar?</h3>
           
           {/* Executive Options */}
@@ -139,8 +139,8 @@ const MobileStickyCTA = () => {
         </div>
       )}
 
-      {/* Main CTA Button - Dinâmico baseado no scroll */}
-      <div className="fixed bottom-3 left-3 right-3 z-40">
+      {/* Main CTA Button - Dinâmico baseado no scroll - Ocupa mais espaço */}
+      <div className="fixed bottom-3 safe-area-px safe-area-pb left-1 right-1 z-40">
         <button
           onClick={() => setShowOptions(!showOptions)}
           className={`w-full bg-gradient-to-r ${currentVariant.bgGradient} ${currentVariant.textColor} font-semibold py-2 px-3 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-500 transform ${showOptions ? 'scale-95' : 'hover:scale-105'}`}

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Calculator, TrendingUp, Users } from "lucide-react";
 import PageHero from "@/components/shared/PageHero";
@@ -22,7 +23,7 @@ const HeroSection = () => {
     <OptimizedBackground variant="hero">
       <div id="hero-section">
         <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-8 md:mt-4">
-          <div className="w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 relative z-10">
+          <div className="w-full max-w-7xl mx-auto mobile-container-minimal md:px-8 lg:px-12 relative z-10">
             <div className="flex flex-col md:flex-row items-center justify-between">
               {/* Content Column - Otimizado para mobile */}
               <div className="w-full lg:w-1/2 md:pr-8 text-center md:text-left">

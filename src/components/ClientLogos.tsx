@@ -66,68 +66,17 @@ const clients = [
 
 const ClientLogos = () => {
   const isMobile = useIsMobile();
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [api, setApi] = React.useState<any>();
 
   const plugin = React.useMemo(
     () =>
       Autoplay({
-        delay: isMobile ? 3000 : 2000, // Velocidade mais lenta no mobile
+        delay: isMobile ? 3000 : 2000,
         stopOnInteraction: true,
         stopOnMouseEnter: true,
         playOnInit: true,
       }),
     [isMobile]
   );
-
-  // Track current slide for indicators
-  React.useEffect(() => {
-    if (!api) return;
-
-    const onSelect = () => {
-      setCurrentIndex(api.selectedScrollSnap());
-    };
-
-    api.on("select", onSelect);
-    onSelect();
-
-    return () => {
-      api.off("select", onSelect);
-    };
-  }, [api]);
-
-  // Calculate items per slide and total slides
-  const itemsPerSlide = isMobile ? 2 : 6;
-  const totalSlides = Math.ceil(clients.length / itemsPerSlide);
-
-  // Function to handle indicator click
-  const handleIndicatorClick = React.useCallback((slideIndex: number) => {
-    if (!api) return;
-    
-    console.log('Clicking indicator:', slideIndex, 'current index:', currentIndex);
-    
-    // Since we have duplicated items, we need to find the closest slide
-    // that corresponds to the desired group of logos
-    const targetSlideInOriginalSet = slideIndex * itemsPerSlide;
-    const totalItemsInSet = clients.length;
-    
-    // Get current position to determine which direction to go
-    const currentSlideInSet = currentIndex % totalItemsInSet;
-    
-    // Calculate the best target slide considering the infinite loop
-    let targetSlide = targetSlideInOriginalSet;
-    
-    // If we're in the second set of items, adjust accordingly
-    if (currentIndex >= totalItemsInSet) {
-      targetSlide = targetSlideInOriginalSet + totalItemsInSet;
-    }
-    
-    console.log('Targeting slide:', targetSlide, 'items per slide:', itemsPerSlide);
-    api.scrollTo(targetSlide);
-  }, [api, currentIndex, itemsPerSlide]);
-
-  // Calculate which indicator should be active
-  const activeIndicator = Math.floor((currentIndex % clients.length) / itemsPerSlide);
 
   return (
     <section className="relative mt-16 md:mt-24 z-10">
@@ -141,11 +90,10 @@ const ClientLogos = () => {
             align: "start",
             loop: true,
             dragFree: true,
-            duration: isMobile ? 20000 : 14000, // Duração mais lenta no mobile
+            duration: isMobile ? 20000 : 14000,
           }}
           plugins={[plugin]}
           className="w-full"
-          setApi={setApi}
         >
           <CarouselContent className={isMobile ? "-ml-3" : "-ml-2 md:-ml-4"}>
             {[...clients, ...clients].map((client, index) => (
@@ -181,38 +129,6 @@ const ClientLogos = () => {
             ))}
           </CarouselContent>
         </Carousel>
-
-        {/* Mobile Indicators */}
-        {isMobile && (
-          <div className="flex justify-center mt-6 space-x-2">
-            {Array.from({ length: totalSlides }).map((_, index) => (
-              <button
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeIndicator
-                    ? "bg-gold w-6"
-                    : "bg-white/30"
-                }`}
-                onClick={() => handleIndicatorClick(index)}
-                aria-label={`Ir para slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Desktop subtle progress indicator */}
-        {!isMobile && (
-          <div className="flex justify-center mt-4">
-            <div className="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-gold/50 to-gold transition-all duration-1000 ease-out"
-                style={{
-                  width: `${((activeIndicator + 1) / totalSlides) * 100}%`
-                }}
-              />
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

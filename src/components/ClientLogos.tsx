@@ -80,8 +80,8 @@ const ClientLogos = () => {
 
   return (
     <section className="relative mt-16 md:mt-24 z-10">
-      <div className="container mx-auto px-4">
-        <p className="text-center text-sm text-foreground/60 mb-6 md:mb-8">
+      <div className={`${isMobile ? "mobile-container-full" : "container mx-auto px-4"}`}>
+        <p className={`text-center text-sm text-foreground/60 mb-6 md:mb-8 ${isMobile ? "px-4" : ""}`}>
           Empresas que confiam em nossas soluções
         </p>
         
@@ -95,19 +95,19 @@ const ClientLogos = () => {
           plugins={[plugin]}
           className="w-full"
         >
-          <CarouselContent className={isMobile ? "-ml-3" : "-ml-2 md:-ml-4"}>
+          <CarouselContent className={isMobile ? "-ml-2" : "-ml-2 md:-ml-4"}>
             {[...clients, ...clients].map((client, index) => (
               <CarouselItem 
                 key={index} 
                 className={`${
                   isMobile 
-                    ? "pl-3 basis-1/2" 
+                    ? "pl-2 basis-1/3" 
                     : "pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/6"
                 }`}
               >
                 <Card className={`${
                   isMobile 
-                    ? "h-32 p-4" 
+                    ? "h-20 p-2" 
                     : "h-24"
                 } flex items-center justify-center glass hover:bg-white/10 transition-all duration-300 backdrop-blur-sm border-white/10`}>
                   <img 
@@ -115,7 +115,7 @@ const ClientLogos = () => {
                     alt={client.name}
                     className={`${
                       isMobile 
-                        ? "h-16 w-auto" 
+                        ? "h-10 w-auto max-w-full" 
                         : "h-12 w-auto"
                     } object-contain opacity-60 hover:opacity-90 transition-opacity duration-300`}
                     loading="lazy"

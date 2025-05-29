@@ -41,7 +41,7 @@ const ROIChart = () => {
       return (
         <div className="bg-background/95 backdrop-blur-lg border border-gold/20 rounded-lg p-3 shadow-lg">
           <p className="text-gold font-medium">{label}</p>
-          <p className="text-green-400">
+          <p className="text-gold">
             ROI: <span className="font-bold">{payload[0].value}%</span>
           </p>
           <p className="text-foreground/70 text-sm">
@@ -58,8 +58,8 @@ const ROIChart = () => {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <TrendingUp className="h-6 w-6 text-green-400" />
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-gold">
+            <TrendingUp className="h-6 w-6 text-gold" />
+            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
               ROI Real dos Nossos Clientes
             </h2>
           </div>
@@ -77,8 +77,8 @@ const ROIChart = () => {
               <LineChart data={roiData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                 <defs>
                   <linearGradient id="roiGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#FFD700" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#FFD700" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
@@ -96,10 +96,10 @@ const ROIChart = () => {
                 <Line
                   type="monotone"
                   dataKey="roi"
-                  stroke="#10b981"
+                  stroke="#FFD700"
                   strokeWidth={3}
-                  dot={{ fill: "#10b981", strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: "#10b981", strokeWidth: 2, fill: "#ffffff" }}
+                  dot={{ fill: "#FFD700", strokeWidth: 2, r: 6 }}
+                  activeDot={{ r: 8, stroke: "#FFD700", strokeWidth: 2, fill: "#ffffff" }}
                   animationDuration={2000}
                   animationBegin={0}
                 />
@@ -109,7 +109,7 @@ const ROIChart = () => {
 
           <div className="grid md:grid-cols-3 gap-6 mt-8 pt-8 border-t border-gold/20">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-2">720%</div>
+              <div className="text-2xl font-bold text-gold mb-2">720%</div>
               <div className="text-foreground/70">ROI em 12 meses</div>
             </div>
             <div className="text-center">
@@ -117,7 +117,7 @@ const ROIChart = () => {
               <div className="text-foreground/70">Economia anual média</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400 mb-2">3-4 meses</div>
+              <div className="text-2xl font-bold text-gold-light mb-2">3-4 meses</div>
               <div className="text-foreground/70">Payback médio</div>
             </div>
           </div>

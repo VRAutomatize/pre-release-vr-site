@@ -76,8 +76,8 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
       <DialogContent 
         className={`max-w-lg w-[95vw] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg flex flex-col transition-all duration-300 ${
           isKeyboardOpen 
-            ? 'h-[70vh] justify-start pt-4' 
-            : 'h-[85vh] justify-center'
+            ? 'h-[70vh] justify-start pt-2' 
+            : 'h-[85vh] max-h-[600px] justify-center'
         }`}
         onInteractOutside={(e) => e.preventDefault()}
       >
@@ -87,7 +87,7 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
         </DialogDescription>
         
         {/* Enhanced Progress Bar */}
-        <div className="relative w-full h-3 bg-gray-800/40 rounded-full overflow-hidden">
+        <div className={`relative w-full bg-gray-800/40 rounded-full overflow-hidden ${isKeyboardOpen ? 'h-2' : 'h-3'}`}>
           <div 
             className="h-full bg-gradient-to-r from-gold to-gold-light transition-all duration-700 ease-out rounded-full shadow-sm"
             style={{ width: `${progress}%` }}
@@ -95,12 +95,14 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
         </div>
         
         {/* Minimalist Badge */}
-        <div className="flex justify-center py-3">
+        <div className={`flex justify-center ${isKeyboardOpen ? 'py-2' : 'py-3'}`}>
           <Badge 
             variant="outline" 
-            className="bg-red-500/10 border-red-500/30 text-red-400 text-xs px-3 py-1 rounded-full"
+            className={`bg-red-500/10 border-red-500/30 text-red-400 rounded-full ${
+              isKeyboardOpen ? 'text-xs px-2 py-0.5' : 'text-xs px-3 py-1'
+            }`}
           >
-            <Clock className="h-3 w-3 mr-1" />
+            <Clock className={`mr-1 ${isKeyboardOpen ? 'h-2.5 w-2.5' : 'h-3 w-3'}`} />
             5 vagas restantes
           </Badge>
         </div>
@@ -108,15 +110,17 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-3 right-3 rounded-full p-2 hover:bg-gray-800/60 transition-colors z-50 text-gray-400 hover:text-white"
+          className={`absolute top-2 right-2 rounded-full p-1.5 hover:bg-gray-800/60 transition-colors z-50 text-gray-400 hover:text-white ${
+            isKeyboardOpen ? 'p-1' : 'p-1.5'
+          }`}
           aria-label="Fechar"
           disabled={isSubmitting}
         >
-          <X className="h-4 w-4" />
+          <X className={isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'} />
         </button>
         
-        {/* Main Content - Adjusted for keyboard */}
-        <div className={`flex-1 flex flex-col ${isKeyboardOpen ? 'justify-start pt-2' : 'justify-center'} p-6`}>
+        {/* Main Content - Dynamically sized */}
+        <div className={`flex-1 flex flex-col ${isKeyboardOpen ? 'justify-start pt-1' : 'justify-center'} ${isKeyboardOpen ? 'px-3 pb-3' : 'p-6'}`}>
           <div className={`flex-1 flex items-center justify-center ${isKeyboardOpen ? 'min-h-0' : ''}`}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -133,15 +137,17 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
           </div>
           
           {/* Navigation - Compact when keyboard is open */}
-          <div className={`${isKeyboardOpen ? 'mt-3' : 'mt-6'} flex justify-between items-center`}>
+          <div className={`${isKeyboardOpen ? 'mt-2' : 'mt-6'} flex justify-between items-center gap-3`}>
             {showPrevButton ? (
               <Button
                 variant="outline"
                 onClick={onPrevStep}
                 disabled={isSubmitting}
-                className="text-gold border-gold/30 hover:bg-gold/10 hover:border-gold"
+                className={`text-gold border-gold/30 hover:bg-gold/10 hover:border-gold ${
+                  isKeyboardOpen ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'
+                }`}
               >
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className={`mr-1 ${isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'}`} />
                 Voltar
               </Button>
             ) : (
@@ -152,23 +158,23 @@ const CondensedFormView: React.FC<CondensedFormViewProps> = ({
               onClick={onNextStep}
               disabled={isSubmitting}
               className={`bg-gold hover:bg-gold/90 text-black font-medium ${
-                isKeyboardOpen ? 'px-6 py-2' : 'px-8 py-3'
-              } min-w-[140px]`}
+                isKeyboardOpen ? 'px-4 py-1.5 text-sm min-w-[100px]' : 'px-8 py-3 min-w-[140px]'
+              }`}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
-                  Enviando...
+                  <Loader2 className={`mr-1 animate-spin ${isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'}`} /> 
+                  {isKeyboardOpen ? 'Enviando...' : 'Enviando...'}
                 </>
               ) : isLastStep ? (
                 <>
-                  <Check className="mr-2 h-4 w-4" />
+                  <Check className={`mr-1 ${isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'}`} />
                   Finalizar
                 </>
               ) : (
                 <>
                   Continuar
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className={`ml-1 ${isKeyboardOpen ? 'h-3 w-3' : 'h-4 w-4'}`} />
                 </>
               )}
             </Button>

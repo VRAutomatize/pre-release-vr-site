@@ -19,13 +19,16 @@ export const useCalendarInitializer = ({
   isOpen
 }: UseCalendarInitializerProps) => {
   const [loadError, setLoadError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [isInitializing, setIsInitializing] = useState(false);
 
   // Network check before attempting to load Cal.com
   const checkCalNetwork = useCallback(async () => {
     try {
       const response = await fetch('https://app.cal.com/status', { 
         method: 'HEAD',
-        mode: 'no-cors' 
+        mode: 'no-cors',
+        timeout: 5000
       });
       return true;
     } catch (error) {
@@ -34,10 +37,25 @@ export const useCalendarInitializer = ({
     }
   }, []);
 
-  // Calendar initialization function
+  // Retry initialization function
+  const retryInitialization = useCallback(() => {
+    if (retryCount < 3) {
+      setLoadError(false);
+      setRetryCount(prev => prev + 1);
+      console.log(`Retrying Cal.com initialization (attempt ${retryCount + 1})`);
+      initializeCalendar();
+    } else {
+      console.error('Max retry attempts reached for Cal.com');
+      setLoadError(true);
+      if (onError) onError();
+    }
+  }, [retryCount]);
+
+  // Calendar initialization function with better error handling
   const initializeCalendar = useCallback(async () => {
-    if (!isOpen) return;
+    if (!isOpen || isInitializing) return;
     
+    setIsInitializing(true);
     setLoadError(false);
     
     // Check network connectivity first
@@ -45,7 +63,7 @@ export const useCalendarInitializer = ({
     if (!networkAvailable) {
       console.error('Cal.com network unavailable');
       setLoadError(true);
-      if (onError) onError();
+      setIsInitializing(false);
       return;
     }
     
@@ -53,8 +71,20 @@ export const useCalendarInitializer = ({
       console.log("Initializing Cal.com API");
       const cal = await getCalApi();
       
-      // Clear any previous instance
-      cal.destroy();
+      // Ensure cal object is properly loaded before calling methods
+      if (!cal || typeof cal !== 'function') {
+        throw new Error('Cal API not properly loaded');
+      }
+      
+      // Only destroy if it exists and is a function
+      if (cal.destroy && typeof cal.destroy === 'function') {
+        try {
+          cal.destroy();
+        } catch (destroyError) {
+          console.warn('Cal.com destroy method failed:', destroyError);
+          // Continue with initialization even if destroy fails
+        }
+      }
       
       // Configure Cal.com with options
       cal("init", {
@@ -72,6 +102,8 @@ export const useCalendarInitializer = ({
         action: "loaded",
         callback: () => {
           console.log("Cal.com calendar loaded successfully");
+          setIsInitializing(false);
+          setRetryCount(0); // Reset retry count on success
           if (onLoaded) onLoaded();
         }
       });
@@ -80,30 +112,33 @@ export const useCalendarInitializer = ({
         action: "error",
         callback: (error: any) => {
           console.error("Cal.com calendar error:", error);
-          setLoadError(true);
-          if (onError) onError();
+          setIsInitializing(false);
+          // Don't immediately fail, try retry first
+          setTimeout(() => {
+            retryInitialization();
+          }, 2000);
         }
       });
       
     } catch (error) {
       console.error("Cal.com initialization error:", error);
-      setLoadError(true);
-      if (onError) onError();
-      toast({
-        title: "Problema ao carregar calendário",
-        description: "Estamos alternando para um método alternativo",
-        variant: "destructive",
-      });
+      setIsInitializing(false);
+      // Don't immediately fail, try retry first
+      setTimeout(() => {
+        retryInitialization();
+      }, 2000);
     }
-  }, [isOpen, elementId, calLink, onLoaded, onError, checkCalNetwork]);
+  }, [isOpen, elementId, calLink, onLoaded, checkCalNetwork, retryCount, isInitializing]);
 
-  // Cleanup function
+  // Cleanup function with better error handling
   const cleanupCalendar = useCallback(async () => {
     try {
       const cal = await getCalApi();
-      cal.destroy();
+      if (cal && cal.destroy && typeof cal.destroy === 'function') {
+        cal.destroy();
+      }
     } catch (e) {
-      console.log("Cal.com cleanup error:", e);
+      console.log("Cal.com cleanup error (non-critical):", e);
     }
   }, []);
 
@@ -112,6 +147,8 @@ export const useCalendarInitializer = ({
     return () => {
       if (!isOpen) {
         cleanupCalendar();
+        setRetryCount(0);
+        setIsInitializing(false);
       }
     };
   }, [isOpen, cleanupCalendar]);
@@ -120,6 +157,9 @@ export const useCalendarInitializer = ({
     initializeCalendar,
     loadError,
     setLoadError,
-    cleanupCalendar
+    cleanupCalendar,
+    retryInitialization,
+    isInitializing,
+    retryCount
   };
 };

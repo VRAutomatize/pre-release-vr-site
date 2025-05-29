@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, Loader2 } from "lucide-react";
+import { X, Loader2, RefreshCw, MessageSquare } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CalProvider, getCalApi } from "@calcom/embed-react";
 import { useCalendarInitializer } from "./typeform/hooks/useCalendarInitializer";
@@ -19,23 +19,28 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   
-  const { initializeCalendar, loadError } = useCalendarInitializer({
+  const { 
+    initializeCalendar, 
+    loadError, 
+    retryInitialization, 
+    isInitializing, 
+    retryCount 
+  } = useCalendarInitializer({
     elementId: "executive-cal-embed",
     calLink: "vrautomatize/reuniao-executiva",
     onLoaded: () => setIsLoading(false),
     onError: () => {
-      if (onFallback) {
-        onFallback();
-      } else {
-        // Fallback to WhatsApp
-        const whatsappUrl = "https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês.";
-        window.open(whatsappUrl, '_blank');
-        onClose();
-      }
+      setIsLoading(false);
+      // Don't automatically fallback to WhatsApp anymore
+      toast({
+        title: "Problema ao carregar calendário",
+        description: "Não foi possível conectar ao calendário. Tente novamente ou use WhatsApp.",
+        variant: "destructive",
+      });
     },
     isOpen
   });
-  
+
   // Initialize calendar when modal opens
   useEffect(() => {
     if (isOpen) {
@@ -43,6 +48,19 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
       initializeCalendar();
     }
   }, [isOpen, initializeCalendar]);
+  
+  // Handle manual retry
+  const handleRetry = () => {
+    setIsLoading(true);
+    retryInitialization();
+  };
+
+  // Handle WhatsApp fallback (manual only)
+  const handleWhatsAppFallback = () => {
+    const whatsappUrl = "https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês.";
+    window.open(whatsappUrl, '_blank');
+    onClose();
+  };
   
   if (!isOpen) return null;
   
@@ -64,10 +82,13 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
         </div>
         
         {/* Loading indicator */}
-        {isLoading && (
+        {(isLoading || isInitializing) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
             <Loader2 className="h-12 w-12 text-gold animate-spin" />
-            <p className="mt-4 text-gold font-medium">Carregando calendário executivo...</p>
+            <p className="mt-4 text-gold font-medium">
+              Carregando calendário executivo...
+              {retryCount > 0 && ` (Tentativa ${retryCount + 1})`}
+            </p>
           </div>
         )}
         
@@ -78,20 +99,45 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
           style={{ minHeight: "600px" }}
         />
         
-        {/* Error state backup link */}
-        {loadError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm z-50">
-            <p className="text-destructive text-lg mb-4">Não foi possível carregar o calendário</p>
-            <div className="space-y-4">
-              <a
-                href="https://wa.me/554792666367?text=Olá!%20Sou%20empresário%20e%20gostaria%20de%20uma%20reunião%20executiva%20sobre%20Funcionários%20Digitais.%20Meu%20faturamento%20é%20superior%20a%20R$%20500k/mês."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center"
-                onClick={onClose}
-              >
-                Continuar via WhatsApp
-              </a>
+        {/* Error state with manual options */}
+        {loadError && !isLoading && !isInitializing && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm z-50 p-8">
+            <div className="text-center space-y-4 max-w-md">
+              <p className="text-destructive text-lg font-semibold">
+                Problema ao carregar o calendário
+              </p>
+              <p className="text-foreground/70 text-sm">
+                Não foi possível conectar ao sistema de agendamento.
+                {retryCount > 0 && ` Tentativas realizadas: ${retryCount}`}
+              </p>
+              
+              <div className="flex flex-col gap-3 mt-6">
+                {retryCount < 3 && (
+                  <button
+                    onClick={handleRetry}
+                    disabled={isInitializing}
+                    className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-md flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                    Tentar novamente
+                  </button>
+                )}
+                
+                <button
+                  onClick={handleWhatsAppFallback}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  Continuar via WhatsApp
+                </button>
+                
+                <button
+                  onClick={onClose}
+                  className="text-foreground/70 hover:text-foreground px-4 py-2 text-sm"
+                >
+                  Fechar
+                </button>
+              </div>
             </div>
           </div>
         )}

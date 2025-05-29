@@ -12,6 +12,8 @@ import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProo
 import ROIChart from "@/components/digital-employees/ROIChart";
 import FAQSection from "@/components/digital-employees/FAQSection";
 import ExitIntentAlert from "@/components/digital-employees/ExitIntentAlert";
+import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
+import MicroCTA from "@/components/digital-employees/MicroCTA";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MessageSquare } from "lucide-react";
@@ -89,9 +91,20 @@ const DigitalEmployees = () => {
           initial="hidden"
           animate="visible"
           variants={sectionVariants}
-          className="mb-24 md:mb-32"
+          className="mb-16 md:mb-24"
         >
           <HeroSection />
+        </motion.div>
+
+        {/* Quick Social Proof - Right after hero */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-12"
+        >
+          <QuickSocialProof />
         </motion.div>
 
         {/* Client Logos Section */}
@@ -100,22 +113,13 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-16"
+          className="reveal-section mb-12"
         >
           <ClientLogosSection />
         </motion.div>
 
-        {/* Premium Social Proof Section */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
-          id="premium-social-proof"
-        >
-          <PremiumSocialProof />
-        </motion.div>
+        {/* Micro CTA - Urgency */}
+        <MicroCTA variant="urgency" />
 
         {/* ROI Chart Section */}
         <motion.div 
@@ -123,22 +127,40 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
+          className="reveal-section mb-16 md:mb-24"
           id="roi-chart-section"
         >
           <ROIChart />
         </motion.div>
         
+        {/* Micro CTA - Calculator */}
+        <MicroCTA variant="calculator" />
+
         {/* Use Cases Section */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
+          className="reveal-section mb-16 md:mb-24"
           id="use-cases-section"
         >
           <UseCasesSection />
+        </motion.div>
+
+        {/* Micro CTA - Executive */}
+        <MicroCTA variant="executive" />
+        
+        {/* Premium Social Proof Section */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-16 md:mb-24"
+          id="premium-social-proof"
+        >
+          <PremiumSocialProof />
         </motion.div>
         
         {/* Process Section */}
@@ -147,7 +169,7 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
+          className="reveal-section mb-16 md:mb-24"
           id="process-section"
         >
           <ProcessSection />
@@ -159,10 +181,25 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
+          className="reveal-section mb-16 md:mb-24"
           id="comparison-section"
         >
           <ComparisonSection />
+        </motion.div>
+
+        {/* Micro CTA - Default */}
+        <MicroCTA variant="default" />
+        
+        {/* FAQ Section - Moved higher up */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="reveal-section mb-16 md:mb-24"
+          id="faq-section"
+        >
+          <FAQSection />
         </motion.div>
         
         {/* Ideal For Section */}
@@ -171,25 +208,13 @@ const DigitalEmployees = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
+          className="reveal-section mb-16 md:mb-24"
           id="ideal-for-section"
         >
           <IdealForSection />
         </motion.div>
-
-        {/* FAQ Section */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={sectionVariants}
-          className="reveal-section mb-24 md:mb-32"
-          id="faq-section"
-        >
-          <FAQSection />
-        </motion.div>
         
-        {/* CTA Section */}
+        {/* Final CTA Section */}
         <motion.div 
           initial="hidden"
           whileInView="visible"

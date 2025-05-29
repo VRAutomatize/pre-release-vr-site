@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useHeaderScroll } from "@/hooks/useHeaderScroll";
+import { MessageSquare } from "lucide-react";
 import HeaderLogo from "./header/HeaderLogo";
 
 interface HeaderProps {
@@ -26,11 +27,29 @@ const Header = React.memo(({ children }: HeaderProps) => {
     } rounded-xl mx-4`;
   }, [isScrolled, isMobile, isVisible]);
 
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/554792666367?text=Olá!%20Tenho%20interesse%20em%20Funcionários%20Digitais!', '_blank');
+  };
+
   return (
     <header className={headerClasses}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center h-16">
+        <div className="flex items-center justify-between h-16">
           <HeaderLogo />
+          
+          {/* Mobile WhatsApp CTA */}
+          {isMobile && (
+            <button
+              onClick={handleWhatsAppClick}
+              className="bg-gold hover:bg-gold-light text-background rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium transition-all duration-300"
+            >
+              <MessageSquare className="h-4 w-4" />
+              Falar Agora
+            </button>
+          )}
+          
+          {/* Desktop content */}
+          {!isMobile && children}
         </div>
       </div>
     </header>

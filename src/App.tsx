@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,7 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
 import { AuthProvider } from "./contexts/AuthContext";
 import { TypeformProvider } from "./contexts/TypeformContext";
-import { GlobalTypeformModal } from "./components/form/GlobalTypeformModal";
+import { GlobalOptimizedTypeformModal } from "./components/form/GlobalOptimizedTypeformModal";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -168,8 +169,8 @@ const App = React.memo(() => {
             <Sonner />
             <BrowserRouter>
               <AnimationLayout />
-              {/* Global Typeform Modal that can be triggered from anywhere */}
-              <GlobalTypeformModal 
+              {/* Global Optimized Typeform Modal that can be triggered from anywhere */}
+              <GlobalOptimizedTypeformModal 
                 calendarLink={defaultCalendarLink} 
                 webhookUrl={defaultWebhookUrl} 
               />

@@ -22,17 +22,26 @@ export const useDynamicCalendar = ({
   const [isInitialized, setIsInitialized] = useState(false);
   const initTimeoutRef = useRef<number>();
   const scriptLoadedRef = useRef(false);
+  const retryCountRef = useRef(0);
+
+  // Check if Cal.com script is already loaded
+  const isCalScriptLoaded = useCallback(() => {
+    return !!(window as any).Cal;
+  }, []);
 
   // Cleanup function
   const cleanup = useCallback(() => {
+    console.log("Cleaning up Dynamic Calendar");
+    
     if (initTimeoutRef.current) {
       clearTimeout(initTimeoutRef.current);
     }
     
     // Clean up Cal instance if it exists
     try {
-      if (window.Cal && window.Cal.ns && window.Cal.ns.call) {
-        window.Cal.ns.call("destroy");
+      if ((window as any).Cal && (window as any).Cal.ns && (window as any).Cal.ns.call) {
+        (window as any).Cal.ns.call("destroy");
+        console.log("Cal instance destroyed");
       }
     } catch (error) {
       console.log("Cal cleanup error (non-critical):", error);
@@ -45,13 +54,26 @@ export const useDynamicCalendar = ({
 
   // Initialize Cal.com calendar
   const initializeCalendar = useCallback(() => {
-    if (!isOpen || isInitialized) return;
+    if (!isOpen || isInitialized) {
+      console.log("Skipping calendar init:", { isOpen, isInitialized });
+      return;
+    }
 
+    console.log(`Initializing Dynamic Calendar (attempt ${retryCountRef.current + 1})`);
     setIsLoading(true);
     setHasError(false);
 
     try {
-      // Cal.com initialization script (adapted from your provided code)
+      // Check if Cal is already available
+      if (isCalScriptLoaded()) {
+        console.log("Cal script already loaded, initializing directly");
+        initializeCalWithExistingScript();
+        return;
+      }
+
+      console.log("Loading Cal script from CDN");
+      
+      // Cal.com initialization script
       (function (C: any, A: string, L: string) {
         let p = function (a: any, ar: any) { a.q.push(ar); };
         let d = C.document;
@@ -61,7 +83,22 @@ export const useDynamicCalendar = ({
           if (!cal.loaded) {
             cal.ns = {};
             cal.q = cal.q || [];
-            d.head.appendChild(d.createElement("script")).src = A;
+            
+            // Create script element with error handling
+            const script = d.createElement("script");
+            script.src = A;
+            script.onload = () => {
+              console.log("Cal script loaded successfully");
+              scriptLoadedRef.current = true;
+              // Wait a bit for the script to initialize, then setup calendar
+              setTimeout(initializeCalWithExistingScript, 1000);
+            };
+            script.onerror = () => {
+              console.error("Failed to load Cal script from CDN");
+              handleInitError();
+            };
+            
+            d.head.appendChild(script);
             cal.loaded = true;
           }
           if (ar[0] === L) {
@@ -79,11 +116,22 @@ export const useDynamicCalendar = ({
         };
       })(window, "https://app.cal.com/embed/embed.js", "init");
 
+    } catch (error) {
+      console.error("Error in calendar initialization:", error);
+      handleInitError();
+    }
+  }, [isOpen, elementId, calLink, isInitialized]);
+
+  // Initialize Cal with existing script
+  const initializeCalWithExistingScript = useCallback(() => {
+    try {
+      console.log("Setting up Cal with existing script");
+      
       // Initialize Cal
-      window.Cal("init", "call", { origin: "https://cal.com" });
+      (window as any).Cal("init", "call", { origin: "https://cal.com" });
 
       // Setup inline calendar
-      window.Cal.ns.call("inline", {
+      (window as any).Cal.ns.call("inline", {
         elementOrSelector: `#${elementId}`,
         config: { 
           layout: "month_view",
@@ -93,7 +141,7 @@ export const useDynamicCalendar = ({
       });
 
       // Apply custom styling
-      window.Cal.ns.call("ui", {
+      (window as any).Cal.ns.call("ui", {
         cssVarsPerTheme: {
           light: { "cal-brand": "#292929" },
           dark: { "cal-brand": "#FFD700" }
@@ -102,50 +150,85 @@ export const useDynamicCalendar = ({
         layout: "month_view"
       });
 
-      // Set timeout to detect successful loading
+      // Set longer timeout for calendar to render
       initTimeoutRef.current = window.setTimeout(() => {
-        setIsLoading(false);
-        setIsInitialized(true);
-        if (onLoaded) onLoaded();
-        console.log("Dynamic Cal.com calendar initialized successfully");
-      }, 2000);
+        const calElement = document.getElementById(elementId);
+        if (calElement && calElement.children.length > 0) {
+          console.log("Dynamic Cal.com calendar initialized successfully");
+          setIsLoading(false);
+          setIsInitialized(true);
+          if (onLoaded) onLoaded();
+          retryCountRef.current = 0;
+        } else {
+          console.warn("Calendar element found but no content loaded");
+          handleInitError();
+        }
+      }, 5000); // Increased timeout to 5 seconds
 
     } catch (error) {
-      console.error("Error initializing dynamic calendar:", error);
-      setHasError(true);
-      setIsLoading(false);
-      if (onError) onError();
-      toast({
-        title: "Erro no calendário",
-        description: "Não foi possível carregar o calendário",
-        variant: "destructive",
-      });
+      console.error("Error setting up Cal with existing script:", error);
+      handleInitError();
     }
-  }, [isOpen, elementId, calLink, onLoaded, onError, isInitialized]);
+  }, [elementId, calLink, onLoaded]);
+
+  // Handle initialization errors
+  const handleInitError = useCallback(() => {
+    console.error("Calendar initialization failed");
+    setHasError(true);
+    setIsLoading(false);
+    retryCountRef.current += 1;
+    
+    if (onError) onError();
+    
+    toast({
+      title: "Erro no calendário",
+      description: "Não foi possível carregar o calendário. Tentando método alternativo...",
+      variant: "destructive",
+    });
+  }, [onError]);
+
+  // Retry function
+  const retry = useCallback(() => {
+    console.log("Retrying calendar initialization");
+    cleanup();
+    setTimeout(() => {
+      initializeCalendar();
+    }, 1000);
+  }, [cleanup, initializeCalendar]);
 
   // Initialize when component mounts and is open
   useEffect(() => {
-    if (isOpen && !scriptLoadedRef.current) {
-      scriptLoadedRef.current = true;
-      initializeCalendar();
+    if (isOpen && !isInitialized) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        initializeCalendar();
+      }, 500);
+      
+      return () => clearTimeout(timer);
     }
-  }, [isOpen, initializeCalendar]);
+  }, [isOpen, initializeCalendar, isInitialized]);
 
   // Cleanup on unmount or when closed
   useEffect(() => {
-    return () => {
-      if (!isOpen) {
-        cleanup();
-        scriptLoadedRef.current = false;
-      }
-    };
+    if (!isOpen) {
+      cleanup();
+      scriptLoadedRef.current = false;
+      retryCountRef.current = 0;
+    }
   }, [isOpen, cleanup]);
+
+  // Cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   return {
     isLoading,
     hasError,
     isInitialized,
     cleanup,
-    retry: initializeCalendar
+    retry
   };
 };

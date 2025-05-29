@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, Loader2, RefreshCw, MessageSquare } from "lucide-react";
 import { useDynamicCalendar } from "./hooks/useDynamicCalendar";
 
@@ -28,8 +28,17 @@ const DynamicCalendarEmbed: React.FC<DynamicCalendarEmbedProps> = ({
     elementId,
     calLink,
     isOpen,
-    onLoaded: () => console.log("Dynamic calendar loaded"),
-    onError: () => console.error("Dynamic calendar error")
+    onLoaded: () => console.log("Dynamic calendar loaded successfully"),
+    onError: () => {
+      console.error("Dynamic calendar failed to load");
+      // Auto fallback after 10 seconds if onFallback is available
+      if (onFallback) {
+        setTimeout(() => {
+          console.log("Auto-switching to fallback method");
+          onFallback();
+        }, 10000);
+      }
+    }
   });
 
   const handleWhatsAppFallback = () => {
@@ -44,6 +53,10 @@ const DynamicCalendarEmbed: React.FC<DynamicCalendarEmbedProps> = ({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl h-[90vh] w-[95vw] bg-background/95 border-gold/20 p-0 overflow-hidden backdrop-blur-lg">
         
+        <DialogTitle className="sr-only">
+          Calendário de Agendamento - Funcionários Digitais
+        </DialogTitle>
+
         {/* Header */}
         <div className="p-4 border-b border-gold/20 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gold">Agendar Reunião - Funcionários Digitais</h2>
@@ -61,6 +74,7 @@ const DynamicCalendarEmbed: React.FC<DynamicCalendarEmbedProps> = ({
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-40">
             <Loader2 className="h-12 w-12 text-gold animate-spin" />
             <p className="mt-4 text-gold font-medium">Carregando calendário...</p>
+            <p className="mt-2 text-sm text-foreground/60">Conectando com Cal.com</p>
           </div>
         )}
 
@@ -81,7 +95,7 @@ const DynamicCalendarEmbed: React.FC<DynamicCalendarEmbedProps> = ({
                 Problema ao carregar o calendário
               </p>
               <p className="text-foreground/70 text-sm">
-                Não foi possível conectar ao sistema de agendamento.
+                Não foi possível conectar ao sistema de agendamento Cal.com.
               </p>
               
               <div className="flex flex-col gap-3 mt-6">

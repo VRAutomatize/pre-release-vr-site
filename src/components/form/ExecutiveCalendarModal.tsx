@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, Loader2, RefreshCw, MessageSquare } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CalProvider, getCalApi } from "@calcom/embed-react";
@@ -31,7 +31,6 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
     onLoaded: () => setIsLoading(false),
     onError: () => {
       setIsLoading(false);
-      // Don't automatically fallback to WhatsApp anymore
       toast({
         title: "Problema ao carregar calendário",
         description: "Não foi possível conectar ao calendário. Tente novamente ou use WhatsApp.",
@@ -69,6 +68,10 @@ const ExecutiveCalendarModal: React.FC<ExecutiveCalendarModalProps> = ({
       <DialogContent 
         className="max-w-5xl h-[95vh] w-[95vw] sm:w-[95vw] bg-background/80 border-gold/20 p-0 overflow-hidden backdrop-blur-lg"
       >
+        <DialogTitle className="sr-only">
+          Calendário de Reunião Executiva - Funcionários Digitais
+        </DialogTitle>
+
         {/* Header */}
         <div className="p-4 border-b border-gold/20 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gold">Reunião Executiva - Funcionários Digitais</h2>

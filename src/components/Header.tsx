@@ -16,7 +16,7 @@ const Header = React.memo(({ children }: HeaderProps) => {
 
   const headerClasses = useMemo(() => {
     const baseTransition = "transition-all duration-300";
-    const visibilityClass = isVisible ? "translate-y-0" : "-translate-y-full";
+    const visibilityClass = isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0";
     
     if (isMobile) {
       return `fixed top-0 left-0 right-0 z-50 ${baseTransition} ${visibilityClass} ${

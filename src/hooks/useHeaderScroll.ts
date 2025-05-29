@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 export const useHeaderScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -17,16 +16,14 @@ export const useHeaderScroll = () => {
           // Atualiza estado de scroll
           setIsScrolled(currentScrollY > 20);
           
-          // Detecta direção do scroll
-          if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            // Scrolling down - hide navbar
+          // A navbar só é visível quando está próximo do topo (hero section)
+          // Esconde a navbar quando o usuário rola para baixo além do hero
+          if (currentScrollY > window.innerHeight * 0.8) {
             setIsVisible(false);
           } else {
-            // Scrolling up - show navbar
             setIsVisible(true);
           }
           
-          setLastScrollY(currentScrollY);
           ticking = false;
         });
         ticking = true;
@@ -38,7 +35,7 @@ export const useHeaderScroll = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   return { isScrolled, isVisible };
 };

@@ -22,8 +22,8 @@ const HeroSection = () => {
   return (
     <OptimizedBackground variant="hero">
       <div id="hero-section">
-        <section className={`${isMobile ? 'min-h-screen pt-20' : 'min-h-[80vh] pt-24'} flex items-center relative overflow-hidden`}>
-          <div className={`w-full ${isMobile ? 'px-2' : 'max-w-7xl mx-auto px-4 md:px-6 lg:px-8'} relative z-10`}>
+        <section className={`${isMobile ? 'min-h-screen pt-16 flex items-start justify-center' : 'min-h-[80vh] pt-24 flex items-center'} relative overflow-hidden`}>
+          <div className="w-full px-2 md:max-w-7xl md:mx-auto md:px-4 lg:px-8 relative z-10">
             <div className="flex flex-col items-center justify-center">
               {/* Content Column */}
               <div className={`w-full ${isMobile ? '' : 'max-w-5xl'} text-center`}>
@@ -66,15 +66,15 @@ const HeroSection = () => {
 
                 {/* Social Proof Stats - Mobile Optimized */}
                 <div className="animate-fade-up mb-6 md:mb-8 lg:mb-10" style={{ animationDelay: "1.0s" }}>
-                  <div className={`${isMobile ? 'flex flex-col gap-3' : 'grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10 max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto'}`}>
-                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-4' : 'p-6 md:p-8 lg:p-10'} border border-gold/10 hover:border-gold/30 transition-all duration-300 hover:scale-105`}>
+                  <div className={`${isMobile ? 'w-full space-y-2' : 'grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10 max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto'}`}>
+                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-3 w-full' : 'p-6 md:p-8 lg:p-10'} border border-gold/10 hover:border-gold/30 transition-all duration-300 hover:scale-105`}>
                       {isMobile ? (
                         <>
                           <div className="flex items-center gap-3">
-                            <Users className="h-6 w-6 text-gold" />
+                            <Users className="h-5 w-5 text-gold" />
                             <span className="text-sm text-foreground/70">Empresas</span>
                           </div>
-                          <span className="text-2xl font-bold text-gold">200+</span>
+                          <span className="text-xl font-bold text-gold">200+</span>
                         </>
                       ) : (
                         <div className="flex flex-col items-center mb-3 md:mb-4">
@@ -84,14 +84,14 @@ const HeroSection = () => {
                         </div>
                       )}
                     </div>
-                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-4' : 'p-6 md:p-8 lg:p-10'} border border-green-400/10 hover:border-green-400/30 transition-all duration-300 hover:scale-105`}>
+                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-3 w-full' : 'p-6 md:p-8 lg:p-10'} border border-green-400/10 hover:border-green-400/30 transition-all duration-300 hover:scale-105`}>
                       {isMobile ? (
                         <>
                           <div className="flex items-center gap-3">
-                            <TrendingUp className="h-6 w-6 text-green-400" />
+                            <TrendingUp className="h-5 w-5 text-green-400" />
                             <span className="text-sm text-foreground/70">Economia/ano</span>
                           </div>
-                          <span className="text-2xl font-bold text-green-400">R$ 283k</span>
+                          <span className="text-xl font-bold text-green-400">R$ 283k</span>
                         </>
                       ) : (
                         <div className="flex flex-col items-center mb-3 md:mb-4">
@@ -101,14 +101,14 @@ const HeroSection = () => {
                         </div>
                       )}
                     </div>
-                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-4' : 'p-6 md:p-8 lg:p-10'} border border-blue-400/10 hover:border-blue-400/30 transition-all duration-300 hover:scale-105`}>
+                    <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-3 w-full' : 'p-6 md:p-8 lg:p-10'} border border-blue-400/10 hover:border-blue-400/30 transition-all duration-300 hover:scale-105`}>
                       {isMobile ? (
                         <>
                           <div className="flex items-center gap-3">
-                            <Calculator className="h-6 w-6 text-blue-400" />
+                            <Calculator className="h-5 w-5 text-blue-400" />
                             <span className="text-sm text-foreground/70">ROI médio</span>
                           </div>
-                          <span className="text-2xl font-bold text-blue-400">380%</span>
+                          <span className="text-xl font-bold text-blue-400">380%</span>
                         </>
                       ) : (
                         <div className="flex flex-col items-center mb-3 md:mb-4">

@@ -16,9 +16,9 @@ export const useHeaderScroll = () => {
           // Atualiza estado de scroll
           setIsScrolled(currentScrollY > 20);
           
-          // A navbar só é visível quando está próximo do topo (hero section)
-          // Esconde a navbar quando o usuário rola para baixo além do hero
-          if (currentScrollY > window.innerHeight * 0.8) {
+          // A navbar só é visível quando está na seção hero (primeiros 90vh)
+          // Quando o usuário rola além disso, ela desaparece
+          if (currentScrollY > window.innerHeight * 0.85) {
             setIsVisible(false);
           } else {
             setIsVisible(true);

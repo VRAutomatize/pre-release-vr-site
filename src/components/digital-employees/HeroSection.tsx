@@ -24,9 +24,9 @@ const HeroSection = () => {
       <div id="hero-section">
         <section className="min-h-[85vh] flex items-center relative overflow-hidden mt-8 md:mt-4">
           <div className="w-full max-w-7xl mx-auto mobile-container-minimal relative z-10">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              {/* Content Column - Otimizado para mobile */}
-              <div className="w-full lg:w-1/2 md:pr-8 text-center md:text-left">
+            <div className="flex flex-col items-center justify-center">
+              {/* Content Column - Centralizado */}
+              <div className="w-full max-w-4xl text-center">
                 <div className="animate-fade-up" style={{ animationDuration: "0.5s" }}>
                   <span className="inline-block px-3 py-1 rounded-full text-sm bg-gold/10 text-gold mb-4">
                     A Automação Definitiva
@@ -67,7 +67,7 @@ const HeroSection = () => {
 
                 {/* Social Proof Stats - Mobile First com melhor organização */}
                 <div className="animate-fade-up mb-6 px-2 md:px-0" style={{ animationDelay: "1.0s" }}>
-                  <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6 max-w-md mx-auto md:mx-0">
+                  <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6 max-w-md mx-auto">
                     <div className="text-center bg-background/30 backdrop-blur-sm rounded-lg p-3 md:p-4 border border-gold/10">
                       <div className="flex flex-col items-center gap-1 mb-1">
                         <Users className="h-4 w-4 md:h-5 md:w-5 text-gold" />
@@ -113,17 +113,6 @@ const HeroSection = () => {
                     {isMobile ? "Apenas 5 vagas este mês" : "Vagas limitadas para consultoria executiva"}
                   </div>
                 </div>
-              </div>
-              
-              {/* Image Column - Hidden on mobile, visible on desktop */}
-              <div className="hidden lg:flex lg:justify-end lg:w-1/2 animate-fade-up" style={{ animationDuration: "1.7s" }}>
-                <img 
-                  src="/lovable-uploads/feb0a32a-fd43-4f11-a6eb-b9c493b7e77e.png"
-                  alt="Profissional com laptop"
-                  className="w-2/3 h-auto object-contain"
-                  loading="eager"
-                  decoding="async"
-                />
               </div>
             </div>
           </div>

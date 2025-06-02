@@ -65,14 +65,14 @@ const LoginPage = () => {
   console.log("LoginPage - about to render JSX");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center m-0 p-0 overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-400/5 rounded-full filter blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-400/3 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 w-full max-w-md px-4">
         <div className="animate-fade-in">
           {/* Header */}
           <div className="text-center mb-8">

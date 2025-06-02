@@ -84,7 +84,9 @@ const MobileProcessSteps = () => {
           className={`${steps[activeStep].bgColor} border border-gold/20 rounded-lg p-6 text-center`}
         >
           <div className={`w-16 h-16 rounded-full ${steps[activeStep].bgColor} flex items-center justify-center mx-auto mb-4`}>
-            <steps[activeStep].icon className={`h-8 w-8 ${steps[activeStep].color}`} />
+            {React.createElement(steps[activeStep].icon, {
+              className: `h-8 w-8 ${steps[activeStep].color}`
+            })}
           </div>
           
           <span className={`text-3xl font-bold ${steps[activeStep].color} block mb-2`}>

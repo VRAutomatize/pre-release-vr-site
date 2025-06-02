@@ -1,12 +1,12 @@
 
 import React from "react";
 import DigitalEmployeesLayout from "@/components/digital-employees/DigitalEmployeesLayout";
-import ConversionOptimizedContent from "@/components/digital-employees/ConversionOptimizedContent";
+import PremiumConversionContent from "@/components/digital-employees/PremiumConversionContent";
 
 const DigitalEmployees = () => {
   return (
     <DigitalEmployeesLayout>
-      <ConversionOptimizedContent />
+      <PremiumConversionContent />
     </DigitalEmployeesLayout>
   );
 };

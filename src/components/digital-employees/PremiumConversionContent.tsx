@@ -10,7 +10,7 @@ import ComparisonSection from "./ComparisonSection";
 import ProcessSection from "./ProcessSection";
 import FAQSection from "./FAQSection";
 import CTASection from "./CTASection";
-import MobileStickyCTA from "./MobileStickyCTA";
+import PremiumMobileStickyCTA from "./PremiumMobileStickyCTA";
 import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 
 const PremiumConversionContent = React.memo(() => {
@@ -90,8 +90,8 @@ const PremiumConversionContent = React.memo(() => {
         <CTASection />
       </MotionWrapper>
 
-      {/* Mobile Sticky CTA - Premium Version */}
-      <MobileStickyCTA />
+      {/* Premium Mobile Sticky CTA */}
+      <PremiumMobileStickyCTA />
     </div>
   );
 });

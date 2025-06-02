@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
-import MobileLayout from "@/components/mobile/MobileLayout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Form schema
@@ -60,7 +59,7 @@ const LoginPage = () => {
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const LoginContent = () => (
-    <div className={`${isMobile ? 'mobile-container min-h-screen flex items-center justify-center' : 'min-h-[80vh] flex items-center justify-center relative overflow-hidden mt-4'}`}>
+    <div className={`${isMobile ? 'mobile-full-width min-h-screen flex items-center justify-center bg-background' : 'min-h-[80vh] flex items-center justify-center relative overflow-hidden mt-4'}`}>
       {/* Background Effects - only for desktop */}
       {!isMobile && (
         <div className="absolute inset-0 z-0">
@@ -69,20 +68,18 @@ const LoginPage = () => {
         </div>
       )}
 
-      <div className={`${isMobile ? 'w-full' : 'container max-w-md'} z-10`}>
+      <div className={`${isMobile ? 'w-full px-4' : 'container max-w-md'} z-10`}>
         <div className="animate-fade-up" style={{ animationDuration: "0.7s" }}>
           <Card className={`${isMobile ? 'border-0 shadow-none bg-transparent' : 'glass border-gold/20 shadow-xl'}`}>
             <CardHeader className="space-y-2">
-              {isMobile && (
-                <div className="flex justify-center mb-6">
-                  <img 
-                    src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
-                    alt="VR Link" 
-                    className="h-16 w-16 object-contain"
-                  />
-                </div>
-              )}
-              <CardTitle className={`text-2xl text-center text-gold ${isMobile ? 'text-3xl' : ''}`}>
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
+                  alt="VR Link" 
+                  className={`object-contain ${isMobile ? 'h-20 w-20' : 'h-16 w-16'}`}
+                />
+              </div>
+              <CardTitle className={`text-center text-gold ${isMobile ? 'text-2xl' : 'text-2xl'}`}>
                 Portal do Colaborador
               </CardTitle>
               <CardDescription className="text-center">
@@ -165,14 +162,12 @@ const LoginPage = () => {
     </div>
   );
 
+  // Mobile renders without header/navbar
   if (isMobile) {
-    return (
-      <MobileLayout title="Login">
-        <LoginContent />
-      </MobileLayout>
-    );
+    return <LoginContent />;
   }
 
+  // Desktop includes header
   return (
     <>
       <Header />

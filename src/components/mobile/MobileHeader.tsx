@@ -16,8 +16,8 @@ const MobileHeader = ({ title, showBackButton = false, actions }: MobileHeaderPr
   const { user } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-gold/10 safe-area-pt">
-      <div className="flex items-center justify-between px-3 py-2 h-12">
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-gold/10 safe-area-pt w-full">
+      <div className="flex items-center justify-between px-2 py-2 h-12 w-full">
         {/* Left Side */}
         <div className="flex items-center gap-2 flex-1 min-w-0">
           {showBackButton ? (

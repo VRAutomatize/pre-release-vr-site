@@ -60,11 +60,11 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Mobile Dashboard Content - Redesigned edge-to-edge
+  // Mobile Dashboard Content - Completely Edge-to-Edge
   const renderMobileDashboard = () => (
-    <div className="mobile-full-width">
-      {/* Welcome Section - Compact */}
-      <div className="mobile-section px-3">
+    <div className="w-full">
+      {/* Welcome Section - Edge to edge with minimal internal padding */}
+      <div className="py-3 px-2 border-b border-gold/5">
         <h1 className="text-xl font-bold text-gold mb-1">
           Olá, {user?.name?.split(' ')[0] || "Colaborador"}! 👋
         </h1>
@@ -85,9 +85,9 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      {/* Metrics Grid - Edge to edge with internal padding */}
-      <div className="mobile-section px-2">
-        <div className="mobile-grid-1">
+      {/* Metrics Grid - Completely edge to edge */}
+      <div className="py-3 border-b border-gold/5">
+        <div className="px-1 space-y-2">
           <MobileMetricsCard
             title="Total de Vendas"
             value="R$ 0,00"
@@ -124,8 +124,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Quick Actions - Full width */}
-      <div className="mobile-section px-3">
+      {/* Quick Actions - Edge to edge */}
+      <div className="py-3 px-2 border-b border-gold/5">
         <h3 className="text-sm font-medium text-gold mb-2">Ações Rápidas</h3>
         <div className="grid grid-cols-2 gap-2">
           <Button 
@@ -148,7 +148,7 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity - Edge to edge */}
-      <div className="px-3 pb-4">
+      <div className="py-3 px-2">
         <h3 className="text-sm font-medium text-gold mb-2">Atividade Recente</h3>
         <div className="space-y-1">
           <MobileHistoryCard
@@ -168,31 +168,31 @@ const Dashboard = () => {
     </div>
   );
 
-  // Mobile Resources Content - Optimized
+  // Mobile Resources Content - Edge to edge
   const renderMobileResources = () => (
-    <div className="mobile-full-width">
-      <div className="mobile-section px-3">
+    <div className="w-full">
+      <div className="py-3 px-2 border-b border-gold/5">
         <h2 className="text-xl font-bold text-gold mb-1">Recursos</h2>
         <p className="text-sm text-muted-foreground">
           Materiais e ferramentas para suas vendas
         </p>
       </div>
-      <div className="px-3">
+      <div className="p-2">
         <ResourcesPanel />
       </div>
     </div>
   );
 
-  // Mobile Commissions Content - Optimized
+  // Mobile Commissions Content - Edge to edge
   const renderMobileCommissions = () => (
-    <div className="mobile-full-width">
-      <div className="mobile-section px-3">
+    <div className="w-full">
+      <div className="py-3 px-2 border-b border-gold/5">
         <h2 className="text-xl font-bold text-gold mb-1">Comissões</h2>
         <p className="text-sm text-muted-foreground">
           Acompanhe suas comissões e solicite saques
         </p>
       </div>
-      <div className="px-3">
+      <div className="p-2">
         <CommissionsPanel />
       </div>
     </div>

@@ -47,7 +47,7 @@ const LoginPage = () => {
     try {
       const success = await login(data.username, data.password);
       if (success) {
-        navigate("/dashboard");
+        navigate("/employee/dashboard");
       }
     } finally {
       setIsLoading(false);

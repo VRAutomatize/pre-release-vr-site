@@ -20,10 +20,10 @@ export const PremiumCard: React.FC<PremiumCardProps> = ({
   const baseClasses = "transition-all duration-350 ease-out";
   const variantClasses = {
     glass: "premium-card-glass",
-    solid: "bg-gray-800/90 border border-premium-gold/20 rounded-2xl shadow-executive-lg",
-    gradient: "bg-gradient-to-br from-premium-gold/10 to-premium-blue/10 border border-premium-gold/30 rounded-2xl shadow-executive-lg backdrop-blur-lg"
+    solid: "bg-gray-800/90 border border-yellow-400/20 rounded-2xl shadow-lg",
+    gradient: "bg-gradient-to-br from-yellow-400/10 to-blue-600/10 border border-yellow-400/30 rounded-2xl shadow-lg backdrop-blur-lg"
   };
-  const hoverClasses = hover ? "hover:scale-[1.02] hover:shadow-executive-xl" : "";
+  const hoverClasses = hover ? "hover:scale-[1.02] hover:shadow-xl" : "";
 
   return (
     <Card className={`${baseClasses} ${variantClasses[variant]} ${hoverClasses} ${className}`}>
@@ -49,12 +49,12 @@ export const PremiumButton: React.FC<PremiumButtonProps> = ({
   onClick,
   disabled = false
 }) => {
-  const baseClasses = "font-executive-body font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-3 focus:ring-premium-gold/20 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseClasses = "font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-3 focus:ring-yellow-400/20 disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variantClasses = {
     primary: "premium-button-primary",
     secondary: "premium-button-secondary", 
-    ghost: "bg-transparent text-premium-gold hover:bg-premium-gold/10 border border-transparent hover:border-premium-gold/20 rounded-xl"
+    ghost: "bg-transparent text-yellow-400 hover:bg-yellow-400/10 border border-transparent hover:border-yellow-400/20 rounded-xl"
   };
   
   const sizeClasses = {
@@ -88,9 +88,9 @@ export const PremiumBadge: React.FC<PremiumBadgeProps> = ({
   icon: Icon
 }) => {
   const variantClasses = {
-    gold: "bg-premium-gold/15 border-premium-gold/30 text-premium-gold",
-    blue: "bg-premium-blue/15 border-premium-blue/30 text-premium-blue-light",
-    green: "bg-premium-green/15 border-premium-green/30 text-premium-green-light",
+    gold: "bg-yellow-400/15 border-yellow-400/30 text-yellow-400",
+    blue: "bg-blue-600/15 border-blue-600/30 text-blue-400",
+    green: "bg-green-600/15 border-green-600/30 text-green-400",
     gray: "bg-gray-700/50 border-gray-600/30 text-gray-300"
   };
   
@@ -126,10 +126,10 @@ export const PremiumMetricCard: React.FC<PremiumMetricCardProps> = ({
   return (
     <PremiumCard 
       variant={highlight ? 'gradient' : 'glass'}
-      className={`p-6 text-center ${highlight ? 'ring-1 ring-premium-gold/40' : ''}`}
+      className={`p-6 text-center ${highlight ? 'ring-1 ring-yellow-400/40' : ''}`}
     >
-      <Icon className={`w-10 h-10 mx-auto mb-4 ${highlight ? 'text-premium-gold' : 'text-premium-blue-light'}`} />
-      <div className={`text-3xl md:text-4xl font-bold mb-2 executive-display-medium ${highlight ? 'text-premium-gold' : 'text-white'}`}>
+      <Icon className={`w-10 h-10 mx-auto mb-4 ${highlight ? 'text-yellow-400' : 'text-blue-400'}`} />
+      <div className={`text-3xl md:text-4xl font-bold mb-2 executive-display-medium ${highlight ? 'text-yellow-400' : 'text-white'}`}>
         {value}
       </div>
       <div className="executive-body-small text-white/80 mb-2">
@@ -188,12 +188,12 @@ export const PremiumSection: React.FC<PremiumSectionProps> = ({
 }) => {
   const backgroundClasses = {
     default: "",
-    gradient: "bg-gradient-to-b from-transparent via-premium-gold/5 to-transparent",
+    gradient: "bg-gradient-to-b from-transparent via-yellow-400/5 to-transparent",
     pattern: "relative"
   };
 
   return (
-    <section className={`${compact ? 'premium-section-compact' : 'premium-section'} ${backgroundClasses[background]} ${className}`}>
+    <section className={`${compact ? 'py-16' : 'py-24'} ${backgroundClasses[background]} ${className}`}>
       {background === 'pattern' && (
         <div className="absolute inset-0 opacity-5">
           <div className="h-full w-full" style={{
@@ -211,6 +211,6 @@ export const PremiumSection: React.FC<PremiumSectionProps> = ({
 
 export const PremiumDivider: React.FC<{ className?: string }> = ({ className = "" }) => {
   return (
-    <div className={`h-px bg-gradient-to-r from-transparent via-premium-gold/30 to-transparent ${className}`} />
+    <div className={`h-px bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent ${className}`} />
   );
 };

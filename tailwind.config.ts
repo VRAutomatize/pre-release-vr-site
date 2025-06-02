@@ -53,59 +53,11 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // VR Automatize Gold Theme
-        gold: {
-          DEFAULT: "#FFD700",
-          light: "#FFED4A",
-          dark: "#FFC107",
-        },
-        // Override all problematic colors to force white/gold
-        gray: {
-          50: "#ffffff",
-          100: "#ffffff", 
-          200: "#ffffff",
-          300: "#ffffff",
-          400: "#FFD700",
-          500: "#FFD700",
-          600: "#FFD700",
-          700: "#FFD700",
-          800: "#FFD700",
-          900: "#FFD700",
-          950: "#FFD700",
-        },
-        slate: {
-          50: "#ffffff",
-          100: "#ffffff",
-          200: "#ffffff", 
-          300: "#ffffff",
-          400: "#FFD700",
-          500: "#FFD700",
-          600: "#FFD700",
-          700: "#FFD700",
-          800: "#FFD700",
-          900: "#FFD700",
-          950: "#FFD700",
-        },
-        neutral: {
-          50: "#ffffff",
-          100: "#ffffff",
-          200: "#ffffff",
-          300: "#ffffff", 
-          400: "#FFD700",
-          500: "#FFD700",
-          600: "#FFD700",
-          700: "#FFD700",
-          800: "#FFD700",
-          900: "#FFD700",
-          950: "#FFD700",
-        },
-        black: "#ffffff", // Force black to be white
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        DEFAULT: "0.75rem", // VR Automatize padrão
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
@@ -163,10 +115,6 @@ const config = {
       },
       backdropBlur: {
         xs: '2px',
-      },
-      boxShadow: {
-        'vr': '0 4px 20px rgba(255, 215, 0, 0.1)',
-        'vr-lg': '0 10px 40px rgba(255, 215, 0, 0.15)',
       },
     },
   },

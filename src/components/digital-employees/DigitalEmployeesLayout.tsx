@@ -3,24 +3,27 @@ import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import UniversalPageTransition from "@/components/animations/UniversalPageTransition";
+
+// Importar estilos premium apenas para esta seção
+import "@/styles/premium-optional.css";
 
 interface DigitalEmployeesLayoutProps {
   children: React.ReactNode;
 }
 
-const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
-  const isMobile = useIsMobile();
-
+const DigitalEmployeesLayout: React.FC<DigitalEmployeesLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Header />
-      <main className={`${isMobile ? 'pt-0' : 'pt-0'}`}>
-        {children}
-      </main>
-      <Footer />
-      <BackToTop />
-    </div>
+    <UniversalPageTransition>
+      <div className="premium-theme min-h-screen bg-gray-900 text-white">
+        <Header />
+        <main className="pt-16">
+          {children}
+        </main>
+        <Footer />
+        <BackToTop />
+      </div>
+    </UniversalPageTransition>
   );
 };
 

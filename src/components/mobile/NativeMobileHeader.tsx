@@ -4,6 +4,7 @@ import { ArrowLeft, Bell, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { NativeButton } from "@/components/ui/native-button";
+import UserProfileMenu from "./UserProfileMenu";
 
 interface NativeMobileHeaderProps {
   title?: string;
@@ -49,7 +50,7 @@ const NativeMobileHeader = ({
               <img 
                 src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
                 alt="VR Link" 
-                className="h-8 w-8 object-contain"
+                className="h-12 w-12 object-contain"
               />
               {title && (
                 <div className="flex flex-col min-w-0">
@@ -80,11 +81,13 @@ const NativeMobileHeader = ({
                 <div className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full border-2 border-gray-900" />
               </NativeButton>
               
-              <div className="h-8 w-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-                <span className="text-sm font-semibold text-gray-900">
-                  {user?.name?.charAt(0) || "U"}
-                </span>
-              </div>
+              <UserProfileMenu>
+                <div className="h-8 w-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center cursor-pointer">
+                  <span className="text-sm font-semibold text-gray-900">
+                    {user?.name?.charAt(0) || "U"}
+                  </span>
+                </div>
+              </UserProfileMenu>
             </>
           )}
         </div>

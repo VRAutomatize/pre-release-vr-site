@@ -5,11 +5,10 @@ import {
   LayoutDashboard, 
   FileText, 
   CreditCard, 
-  BookOpen,
-  LogOut
+  Play,
+  Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
 
 interface NavItemProps {
   icon: React.ElementType;
@@ -17,21 +16,24 @@ interface NavItemProps {
   href: string;
   active: boolean;
   badge?: number;
+  featured?: boolean;
 }
 
-const NavItem = ({ icon: Icon, label, href, active, badge }: NavItemProps) => {
+const NavItem = ({ icon: Icon, label, href, active, badge, featured }: NavItemProps) => {
   return (
     <Link
       to={href}
       className={cn(
         "flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 native-touch native-press min-h-[56px] relative",
-        active 
-          ? "bg-yellow-400/20 text-yellow-400" 
-          : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10"
+        featured 
+          ? "bg-yellow-400/20 text-yellow-400 scale-110" 
+          : active 
+            ? "bg-yellow-400/20 text-yellow-400" 
+            : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10"
       )}
     >
       <div className="relative">
-        <Icon className="h-6 w-6 mb-1" />
+        <Icon className={cn("mb-1", featured ? "h-7 w-7" : "h-6 w-6")} />
         {badge && badge > 0 && (
           <div className="absolute -top-2 -right-2 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
             <span className="text-xs font-semibold text-white">
@@ -40,7 +42,9 @@ const NavItem = ({ icon: Icon, label, href, active, badge }: NavItemProps) => {
           </div>
         )}
       </div>
-      <span className="text-xs font-medium leading-none">{label}</span>
+      <span className={cn("font-medium leading-none", featured ? "text-xs font-semibold" : "text-xs")}>
+        {label}
+      </span>
       
       {/* Active indicator */}
       {active && (
@@ -52,7 +56,6 @@ const NavItem = ({ icon: Icon, label, href, active, badge }: NavItemProps) => {
 
 const NativeBottomNavigation = () => {
   const location = useLocation();
-  const { logout } = useAuth();
   const currentPath = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const currentTab = searchParams.get("tab");
@@ -73,6 +76,14 @@ const NativeBottomNavigation = () => {
       badge: 0
     },
     {
+      icon: Play,
+      label: "Recursos",
+      href: "/employee/dashboard?tab=resources",
+      active: currentTab === "resources",
+      badge: 2,
+      featured: true
+    },
+    {
       icon: FileText,
       label: "Relatórios",
       href: "/employee/reports", 
@@ -80,11 +91,11 @@ const NativeBottomNavigation = () => {
       badge: 0
     },
     {
-      icon: BookOpen,
-      label: "Recursos",
-      href: "/employee/dashboard?tab=resources",
-      active: currentTab === "resources",
-      badge: 2
+      icon: Users,
+      label: "Devs",
+      href: "/employee/devs",
+      active: currentPath === "/employee/devs",
+      badge: 0
     }
   ];
 
@@ -97,14 +108,6 @@ const NativeBottomNavigation = () => {
         {navItems.map((item) => (
           <NavItem key={item.label} {...item} />
         ))}
-        
-        <button
-          onClick={() => logout()}
-          className="flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 text-red-400 hover:bg-red-400/10 native-touch native-press min-h-[56px]"
-        >
-          <LogOut className="h-6 w-6 mb-1" />
-          <span className="text-xs font-medium leading-none">Sair</span>
-        </button>
       </div>
     </div>
   );

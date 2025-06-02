@@ -4,6 +4,7 @@ import { ArrowLeft, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import UserProfileMenu from "./UserProfileMenu";
 
 interface MobileHeaderProps {
   title?: string;
@@ -33,7 +34,7 @@ const MobileHeader = ({ title, showBackButton = false, actions }: MobileHeaderPr
             <img 
               src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
               alt="VR Link" 
-              className="h-6 w-6 object-contain flex-shrink-0"
+              className="h-8 w-8 object-contain flex-shrink-0"
             />
           )}
           
@@ -51,11 +52,13 @@ const MobileHeader = ({ title, showBackButton = false, actions }: MobileHeaderPr
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <Bell className="h-4 w-4" />
               </Button>
-              <div className="w-6 h-6 bg-gold/20 rounded-full flex items-center justify-center ml-1">
-                <span className="text-xs font-medium text-gold">
-                  {user?.name?.charAt(0) || "U"}
-                </span>
-              </div>
+              <UserProfileMenu>
+                <div className="w-6 h-6 bg-gold/20 rounded-full flex items-center justify-center ml-1 cursor-pointer">
+                  <span className="text-xs font-medium text-gold">
+                    {user?.name?.charAt(0) || "U"}
+                  </span>
+                </div>
+              </UserProfileMenu>
             </>
           )}
         </div>

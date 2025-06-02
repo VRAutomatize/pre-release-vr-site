@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EyeIcon, EyeOffIcon, LogInIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LogInIcon, Smartphone } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { NativeButton } from "@/components/ui/native-button";
+import { NativeInput } from "@/components/ui/native-input";
+import { NativeCard } from "@/components/ui/native-card";
 import {
   Form,
   FormControl,
@@ -17,8 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Header from "@/components/Header";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Form schema
@@ -31,7 +30,6 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -56,125 +54,103 @@ const LoginPage = () => {
     }
   };
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-400/5 rounded-full filter blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-400/3 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+      </div>
 
-  const LoginContent = () => (
-    <div className={`${isMobile ? 'mobile-full-width min-h-screen flex items-center justify-center bg-background' : 'min-h-[80vh] flex items-center justify-center relative overflow-hidden mt-4'}`}>
-      {/* Background Effects - only for desktop */}
-      {!isMobile && (
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-20 right-20 w-48 h-48 bg-gold/10 rounded-full filter blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-20 w-48 h-48 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "1s" }} />
-        </div>
-      )}
+      <div className="relative z-10 w-full max-w-md">
+        <div className="animate-fade-in">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="mb-6">
+              <img 
+                src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
+                alt="VR Link" 
+                className="h-20 w-20 object-contain mx-auto"
+              />
+            </div>
+            <h1 className="text-3xl font-bold text-yellow-400 mb-2">
+              Portal do Colaborador
+            </h1>
+            <p className="text-gray-400 text-sm">
+              Entre com suas credenciais para acessar
+            </p>
+          </div>
 
-      <div className={`${isMobile ? 'w-full px-4' : 'container max-w-md'} z-10`}>
-        <div className="animate-fade-up" style={{ animationDuration: "0.7s" }}>
-          <Card className={`${isMobile ? 'border-0 shadow-none bg-transparent' : 'glass border-gold/20 shadow-xl'}`}>
-            <CardHeader className="space-y-2">
-              <div className="flex justify-center mb-6">
-                <img 
-                  src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
-                  alt="VR Link" 
-                  className={`object-contain ${isMobile ? 'h-20 w-20' : 'h-16 w-16'}`}
+          {/* Login Form */}
+          <NativeCard variant="elevated" padding="lg" className="mb-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-200">Usuário</FormLabel>
+                      <FormControl>
+                        <NativeInput 
+                          {...field} 
+                          placeholder="Digite seu usuário"
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <CardTitle className={`text-center text-gold ${isMobile ? 'text-2xl' : 'text-2xl'}`}>
-                Portal do Colaborador
-              </CardTitle>
-              <CardDescription className="text-center">
-                Entre com suas credenciais para acessar
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Usuário</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            autoComplete="username" 
-                            disabled={isLoading}
-                            className={isMobile ? 'h-12 text-base' : ''}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              {...field}
-                              type={showPassword ? "text" : "password"}
-                              autoComplete="current-password" 
-                              disabled={isLoading}
-                              className={isMobile ? 'h-12 text-base pr-12' : 'pr-12'}
-                            />
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              className="absolute right-0 top-0 h-full px-3"
-                              onClick={togglePasswordVisibility}
-                            >
-                              {showPassword ? 
-                                <EyeOffIcon className="h-4 w-4" /> : 
-                                <EyeIcon className="h-4 w-4" />
-                              }
-                            </Button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <Button 
-                    type="submit" 
-                    className={`w-full bg-gold hover:bg-gold-light text-background ${isMobile ? 'h-12 text-base' : ''}`}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Entrando..." : "Entrar"}
-                    {!isLoading && <LogInIcon className="ml-2 h-4 w-4" />}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-            <CardFooter className="flex justify-center text-sm text-muted-foreground">
-              <p>VR Automatize © {new Date().getFullYear()}</p>
-            </CardFooter>
-          </Card>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-200">Senha</FormLabel>
+                      <FormControl>
+                        <NativeInput
+                          {...field}
+                          type="password"
+                          placeholder="Digite sua senha"
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <NativeButton 
+                  type="submit" 
+                  variant="primary"
+                  fullWidth
+                  loading={isLoading}
+                  className="mt-8"
+                >
+                  {isLoading ? "Entrando..." : "Entrar"}
+                  {!isLoading && <LogInIcon className="ml-2 h-5 w-5" />}
+                </NativeButton>
+              </form>
+            </Form>
+          </NativeCard>
+
+          {/* Features */}
+          <NativeCard variant="glass" padding="md" className="mb-6">
+            <div className="flex items-center gap-3 text-sm text-gray-300">
+              <Smartphone className="h-5 w-5 text-yellow-400" />
+              <span>Interface otimizada para mobile</span>
+            </div>
+          </NativeCard>
+
+          {/* Footer */}
+          <div className="text-center text-sm text-gray-500">
+            <p>VR Automatize © {new Date().getFullYear()}</p>
+          </div>
         </div>
       </div>
     </div>
-  );
-
-  // Mobile renders without header/navbar
-  if (isMobile) {
-    return <LoginContent />;
-  }
-
-  // Desktop includes header
-  return (
-    <>
-      <Header />
-      <section>
-        <LoginContent />
-      </section>
-    </>
   );
 };
 

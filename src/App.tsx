@@ -1,11 +1,14 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TypeformProvider } from "@/contexts/TypeformContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { GlobalCondensedTypeformModal } from "@/components/form/GlobalCondensedTypeformModal";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { AnimatePresence } from "framer-motion";
+import NativePageTransition from "@/components/mobile/NativePageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import DigitalEmployees from "./pages/services/DigitalEmployees";
@@ -32,6 +35,24 @@ const queryClient = new QueryClient({
   },
 });
 
+// Wrapper component to handle mobile transitions
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+  const isMobile = useIsMobile();
+  const location = useLocation();
+  
+  if (isMobile && location.pathname.startsWith('/employee/')) {
+    return (
+      <AnimatePresence mode="wait" initial={false}>
+        <NativePageTransition key={location.pathname + location.search}>
+          {children}
+        </NativePageTransition>
+      </AnimatePresence>
+    );
+  }
+  
+  return <>{children}</>;
+};
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -49,26 +70,38 @@ function App() {
                   <Route path="/consultoria" element={<Consulting />} />
                   <Route path="/chatbots" element={<Chatbots />} />
                   <Route path="/captura-leads" element={<LeadCapture />} />
-                  <Route path="/employee/login" element={<Login />} />
+                  <Route path="/employee/login" element={
+                    <PageWrapper>
+                      <Login />
+                    </PageWrapper>
+                  } />
                   <Route path="/employee/dashboard" element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
+                    <PageWrapper>
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    </PageWrapper>
                   } />
                   <Route path="/employee/reports" element={
-                    <ProtectedRoute>
-                      <Reports />
-                    </ProtectedRoute>
+                    <PageWrapper>
+                      <ProtectedRoute>
+                        <Reports />
+                      </ProtectedRoute>
+                    </PageWrapper>
                   } />
                   <Route path="/employee/links" element={
-                    <ProtectedRoute>
-                      <PaymentLinks />
-                    </ProtectedRoute>
+                    <PageWrapper>
+                      <ProtectedRoute>
+                        <PaymentLinks />
+                      </ProtectedRoute>
+                    </PageWrapper>
                   } />
                   <Route path="/employee/devs" element={
-                    <ProtectedRoute>
-                      <Devs />
-                    </ProtectedRoute>
+                    <PageWrapper>
+                      <ProtectedRoute>
+                        <Devs />
+                      </ProtectedRoute>
+                    </PageWrapper>
                   } />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" replace />} />

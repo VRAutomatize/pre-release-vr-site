@@ -41,9 +41,9 @@ const PaymentLinks = () => {
   const PaymentContent = () => {
     const contentComponents = [
       // Header Section
-      <div key="header" className="px-4 py-3">
+      <div key="header" className={isMobile ? "px-4 py-3" : "px-4 py-3"}>
         <motion.h2 
-          className="text-2xl font-bold text-yellow-400 mb-2"
+          className={`font-bold text-yellow-400 mb-2 ${isMobile ? 'text-xl' : 'text-2xl'}`}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -51,7 +51,7 @@ const PaymentLinks = () => {
           Links de Pagamento
         </motion.h2>
         <motion.p 
-          className="text-sm text-gray-200"
+          className={`text-gray-200 ${isMobile ? 'text-sm' : 'text-sm'}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -61,20 +61,20 @@ const PaymentLinks = () => {
       </div>,
 
       // Progress Steps
-      <div key="progress" className="px-4">
+      <div key="progress" className={isMobile ? "px-4" : "px-4"}>
         <InteractionFeedback type="gentle">
-          <NativeCard variant="elevated" padding="md">
+          <NativeCard variant="elevated" padding={isMobile ? "sm" : "md"}>
             <ProgressSteps currentStep={step} />
           </NativeCard>
         </InteractionFeedback>
       </div>,
 
       // Step Content with animations
-      <div key="content" className="px-4">
+      <div key="content" className={isMobile ? "px-4" : "px-4"}>
         <TabTransition tabKey={step.toString()} direction="vertical">
           {step === Step.CheckCNPJ && (
             <InteractionFeedback type="gentle">
-              <NativeCard variant="elevated" padding="lg">
+              <NativeCard variant="elevated" padding={isMobile ? "none" : "lg"}>
                 <CheckCNPJStep 
                   onCheckCNPJ={handleCheckCNPJ}
                   loading={loading}
@@ -85,7 +85,7 @@ const PaymentLinks = () => {
           
           {step === Step.RegisterClient && (
             <InteractionFeedback type="gentle">
-              <NativeCard variant="elevated" padding="lg">
+              <NativeCard variant="elevated" padding={isMobile ? "none" : "lg"}>
                 <RegisterClientStep 
                   currentCNPJ={currentCNPJ}
                   onRegister={handleRegisterClient}
@@ -98,7 +98,7 @@ const PaymentLinks = () => {
           
           {step === Step.CreatePayment && client && (
             <InteractionFeedback type="gentle">
-              <NativeCard variant="elevated" padding="lg">
+              <NativeCard variant="elevated" padding={isMobile ? "none" : "lg"}>
                 <CreatePaymentStep 
                   client={client}
                   products={products}
@@ -112,7 +112,7 @@ const PaymentLinks = () => {
 
           {step === Step.PaymentResult && paymentResult && (
             <InteractionFeedback type="gentle">
-              <NativeCard variant="elevated" padding="lg">
+              <NativeCard variant="elevated" padding={isMobile ? "none" : "lg"}>
                 <PaymentResultStep 
                   result={paymentResult}
                   onBack={() => resetForms()}
@@ -145,7 +145,7 @@ const PaymentLinks = () => {
     }
 
     return (
-      <div className="w-full space-y-6">
+      <div className={`w-full ${isMobile ? 'space-y-4' : 'space-y-6'}`}>
         <StaggeredFade delay={0.1}>
           {contentComponents}
         </StaggeredFade>

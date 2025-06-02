@@ -9,6 +9,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import ClientInfoForm from "./forms/ClientInfoForm";
 import AddressForm from "./forms/AddressForm";
 import FormActions from "./forms/FormActions";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Client Registration Schema
 export const clientRegistrationSchema = z.object({
@@ -43,6 +44,7 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
   const [addressLoading, setAddressLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState<ClientFormData | null>(null);
+  const isMobile = useIsMobile();
   
   // Initialize with the correct shape - all fields set to false initially
   const [autoFilledFields, setAutoFilledFields] = useState<Record<FormFieldName, boolean>>({
@@ -149,8 +151,8 @@ const ClientRegistrationForm: React.FC<ClientRegistrationFormProps> = ({ cnpj, o
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleShowConfirmation)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={form.handleSubmit(handleShowConfirmation)} className={`${isMobile ? 'space-y-4' : 'space-y-6'}`}>
+          <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'md:grid-cols-2 gap-6'}`}>
             <ClientInfoForm form={form} />
             <AddressForm 
               form={form} 

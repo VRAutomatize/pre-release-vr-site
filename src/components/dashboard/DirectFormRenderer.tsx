@@ -12,6 +12,7 @@ import { useFormSubmission } from "./vendas-form/useFormSubmission";
 import { useFormNavigation } from "./vendas-form/useFormNavigation";
 import { ConfirmationDialog } from "./vendas-form/ConfirmationDialog";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { Form } from "@/components/ui/form";
 
 interface DirectFormRendererProps {
   formUrl: string;
@@ -119,45 +120,47 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
             <FormProgress currentStep={currentStep} totalSteps={3} />
           </div>
           
-          {/* Form Content */}
+          {/* Form Content - Wrapped with Form Provider */}
           <div className={isMobile ? 'p-4' : 'p-6'}>
             {/* Seller tag indicator */}
             <SellerInfo user={user} getSellerTag={getSellerTag} />
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Step 1: Company Information */}
-              {currentStep === 1 && <CompanyInfoStep form={form} />}
-              
-              {/* Step 2: Client Information */}
-              {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
-              
-              {/* Step 3: Service Options or Lead Info */}
-              {currentStep === 3 && (
-                <>
-                  {isGerarVendaForm ? (
-                    <ServiceOptionsStep form={form} />
-                  ) : (
-                    <LeadInfoStep form={form} />
-                  )}
-                  
-                  {formError && (
-                    <div className="p-4 bg-red-900/20 border border-red-900/30 rounded-lg text-sm text-red-400">
-                      {formError}
-                    </div>
-                  )}
-                </>
-              )}
-              
-              {/* Navigation buttons */}
-              <FormNavigation 
-                currentStep={currentStep}
-                totalSteps={3}
-                onNext={handleNextStep}
-                onPrev={handlePrevStep}
-                onCancel={onClose}
-                isSubmitting={isSubmitting}
-              />
-            </form>
+            <Form {...form}>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Step 1: Company Information */}
+                {currentStep === 1 && <CompanyInfoStep form={form} />}
+                
+                {/* Step 2: Client Information */}
+                {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
+                
+                {/* Step 3: Service Options or Lead Info */}
+                {currentStep === 3 && (
+                  <>
+                    {isGerarVendaForm ? (
+                      <ServiceOptionsStep form={form} />
+                    ) : (
+                      <LeadInfoStep form={form} />
+                    )}
+                    
+                    {formError && (
+                      <div className="p-4 bg-red-900/20 border border-red-900/30 rounded-lg text-sm text-red-400">
+                        {formError}
+                      </div>
+                    )}
+                  </>
+                )}
+                
+                {/* Navigation buttons */}
+                <FormNavigation 
+                  currentStep={currentStep}
+                  totalSteps={3}
+                  onNext={handleNextStep}
+                  onPrev={handlePrevStep}
+                  onCancel={onClose}
+                  isSubmitting={isSubmitting}
+                />
+              </form>
+            </Form>
           </div>
         </div>
       </div>

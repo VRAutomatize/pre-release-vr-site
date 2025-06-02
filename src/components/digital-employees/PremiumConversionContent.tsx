@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import PremiumExecutiveHero from "./PremiumExecutiveHero";
+import PremiumExecutiveHeroRedesign from "./PremiumExecutiveHeroRedesign";
 import ElevatedBenefitsSection from "./ElevatedBenefitsSection";
 import ExecutiveROICalculator from "./ExecutiveROICalculator";
 import UltraPremiumSocialProof from "./UltraPremiumSocialProof";
@@ -16,7 +16,7 @@ import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 const PremiumConversionContent = React.memo(() => {
   const { shouldReduceMotion, animationConfig } = useOptimizedMotion();
 
-  // Variantes otimizadas para premium
+  // Variantes premium otimizadas
   const premiumSectionVariants = shouldReduceMotion ? {} : {
     hidden: { opacity: 0, y: 30 },
     visible: { 
@@ -28,7 +28,7 @@ const PremiumConversionContent = React.memo(() => {
 
   const MotionWrapper = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
     if (shouldReduceMotion) {
-      return <div className={className}>{children}</div>;
+      return <div className={`premium-animate-on-scroll ${className}`}>{children}</div>;
     }
     
     return (
@@ -47,8 +47,8 @@ const PremiumConversionContent = React.memo(() => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       
-      {/* Premium Hero - Sem animação para carregamento mais rápido */}
-      <PremiumExecutiveHero />
+      {/* Premium Executive Hero - Nova versão reformulada */}
+      <PremiumExecutiveHeroRedesign />
 
       {/* Executive Benefits */}
       <MotionWrapper>

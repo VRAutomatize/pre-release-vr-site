@@ -1,0 +1,148 @@
+
+/* Integration of Premium Design System with existing VR Automatize styles */
+
+@import './premium-design-system.css';
+
+/* Override existing classes with premium versions */
+@layer base {
+  /* Enhanced gold colors */
+  .text-gold {
+    color: var(--premium-gold) !important;
+  }
+  
+  .text-gold-light {
+    color: var(--premium-gold-light) !important;
+  }
+  
+  .bg-gold {
+    background-color: var(--premium-gold) !important;
+  }
+  
+  .bg-gold-light {
+    background-color: var(--premium-gold-light) !important;
+  }
+  
+  .border-gold {
+    border-color: var(--premium-gold) !important;
+  }
+  
+  /* Premium color utilities */
+  .text-premium-blue {
+    color: var(--premium-blue-light) !important;
+  }
+  
+  .text-premium-green {
+    color: var(--premium-green-light) !important;
+  }
+  
+  .bg-premium-blue {
+    background-color: var(--premium-blue) !important;
+  }
+  
+  .bg-premium-green {
+    background-color: var(--premium-green) !important;
+  }
+  
+  .border-premium-blue {
+    border-color: var(--premium-blue-light) !important;
+  }
+  
+  .border-premium-green {
+    border-color: var(--premium-green-light) !important;
+  }
+}
+
+/* Enhanced component integration */
+@layer components {
+  /* Override existing card classes */
+  .vr-card {
+    @apply premium-card-glass;
+  }
+  
+  .vr-card-elevated {
+    @apply premium-card-glass;
+    box-shadow: var(--shadow-executive-xl);
+  }
+  
+  /* Override existing button classes */
+  .vr-btn-primary {
+    @apply premium-button-primary;
+  }
+  
+  .vr-btn-secondary {
+    @apply premium-button-secondary;
+  }
+  
+  /* Override existing input classes */
+  .vr-input {
+    @apply premium-input;
+  }
+  
+  /* Override existing typography */
+  .vr-heading-1 {
+    @apply executive-display-large;
+  }
+  
+  .vr-heading-2 {
+    @apply executive-display-medium;
+  }
+  
+  .vr-text-body {
+    @apply executive-body-medium;
+  }
+  
+  /* Enhanced layout classes */
+  .vr-container {
+    @apply premium-container;
+  }
+  
+  .vr-section {
+    @apply premium-section;
+  }
+}
+
+/* Premium mobile overrides */
+@media (max-width: 768px) {
+  .premium-button-primary,
+  .premium-button-secondary {
+    @apply w-full text-center;
+  }
+  
+  .executive-display-hero {
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  
+  .premium-grid-2,
+  .premium-grid-3 {
+    grid-template-columns: 1fr;
+    gap: var(--space-executive-md);
+  }
+}
+
+/* Premium animation triggers */
+@layer utilities {
+  .premium-animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all var(--timing-executive-slow) var(--easing-executive);
+  }
+  
+  .premium-animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .premium-stagger > * {
+    animation-delay: calc(var(--stagger-delay, 0.1s) * var(--index, 0));
+  }
+  
+  .premium-hover-lift {
+    transition: all var(--timing-executive-medium) var(--easing-executive);
+  }
+  
+  .premium-hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-executive-xl);
+  }
+}

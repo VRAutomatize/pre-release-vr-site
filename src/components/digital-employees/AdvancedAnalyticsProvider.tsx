@@ -64,7 +64,7 @@ export const AdvancedAnalyticsProvider: React.FC<Props> = ({ children }) => {
     const bounceAnalytics = getBounceAnalytics();
     const sectionTimes = getSectionTimes();
     
-    const timeScore = Math.min(bounceAnalytics.total_time_on_page / 180000, 1) * 30; // Max 30 points for 3+ minutes
+    const timeScore = Math.min(bounceAnalytics.time_on_page / 180000, 1) * 30; // Max 30 points for 3+ minutes
     const scrollScore = bounceAnalytics.max_scroll_depth * 0.25; // Max 25 points for 100% scroll
     const sectionScore = Object.keys(sectionTimes).length * 5; // 5 points per section viewed
     const interactionScore = bounceAnalytics.interaction_count * 2; // 2 points per interaction

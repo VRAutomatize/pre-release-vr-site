@@ -37,4 +37,21 @@
   .text-vr-company {
     @apply text-gold/90;
   }
+
+  /* Override problematic classes */
+  .text-muted-foreground {
+    @apply text-gold/80 !important;
+  }
+  
+  .text-foreground\/60 {
+    @apply text-gold/80 !important;
+  }
+  
+  .text-foreground\/70 {
+    @apply text-gold/85 !important;
+  }
+  
+  .text-foreground\/80 {
+    @apply text-gold/90 !important;
+  }
 }

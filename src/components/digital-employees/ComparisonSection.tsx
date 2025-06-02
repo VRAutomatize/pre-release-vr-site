@@ -72,17 +72,17 @@ const ComparisonSection = () => {
             <div className="space-y-4 relative z-10">
               <div className="flex items-start gap-3">
                 <DollarSign className="w-5 h-5 text-red-400 shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Custo fixo mensal: <span className="font-semibold text-red-400">R$2.500+</span></p>
+                <p className="text-sm md:text-base text-gold/90">Custo fixo mensal: <span className="font-semibold text-red-400">R$2.500+</span></p>
               </div>
 
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Ausência, erro humano, limitação de horário</p>
+                <p className="text-sm md:text-base text-gold/90">Ausência, erro humano, limitação de horário</p>
               </div>
 
               <div className="flex items-start gap-3">
                 <LineChart className="w-5 h-5 text-red-400 shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Baixa escalabilidade</p>
+                <p className="text-sm md:text-base text-gold/90">Baixa escalabilidade</p>
               </div>
             </div>
           </motion.div>
@@ -99,17 +99,17 @@ const ComparisonSection = () => {
             <div className="space-y-4 relative z-10">
               <div className="flex items-start gap-3">
                 <DollarSign className="w-5 h-5 text-gold shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Custo único de implementação</p>
+                <p className="text-sm md:text-base text-gold/90">Custo único de implementação</p>
               </div>
 
               <div className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-gold shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Trabalha 24h/dia, sem erro ou pausa</p>
+                <p className="text-sm md:text-base text-gold/90">Trabalha 24h/dia, sem erro ou pausa</p>
               </div>
 
               <div className="flex items-start gap-3">
                 <LineChart className="w-5 h-5 text-gold shrink-0 mt-1" />
-                <p className="text-sm md:text-base text-foreground/90">Escala ilimitada, sem dor de cabeça</p>
+                <p className="text-sm md:text-base text-gold/90">Escala ilimitada, sem dor de cabeça</p>
               </div>
             </div>
           </motion.div>

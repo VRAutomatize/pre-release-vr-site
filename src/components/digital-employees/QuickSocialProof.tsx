@@ -65,7 +65,7 @@ const QuickSocialProof = () => {
               <div className={`text-lg md:text-xl lg:text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm text-foreground/80 leading-tight">
+              <div className="text-xs md:text-sm text-gold/80 leading-tight">
                 {stat.label}
               </div>
             </div>
@@ -89,10 +89,10 @@ const QuickSocialProof = () => {
                     <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-sm text-foreground/90 mb-2 italic">
+                <p className="text-sm text-gold/90 mb-2 italic">
                   "{testimonial.text}"
                 </p>
-                <p className="text-xs text-foreground/70">
+                <p className="text-xs text-gold/70">
                   {testimonial.company}
                 </p>
               </div>

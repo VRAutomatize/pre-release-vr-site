@@ -28,14 +28,14 @@ const CTASection = () => {
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
                   Vamos analisar sua operação gratuitamente.
                 </h2>
-                <p className="text-base md:text-lg lg:text-xl text-foreground/90 mb-6 md:mb-8">
+                <p className="text-base md:text-lg lg:text-xl text-gold/90 mb-6 md:mb-8">
                   Receba um diagnóstico completo com:
                 </p>
                 <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                   {["Cálculo estimado da sua economia anual com automação", "Sugestão de processos para automatizar", "Roadmap de implementação"].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <CheckCircle className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base text-foreground/90">{item}</span>
+                      <span className="text-sm md:text-base text-gold/90">{item}</span>
                     </li>
                   ))}
                 </ul>

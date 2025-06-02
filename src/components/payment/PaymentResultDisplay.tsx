@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,7 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
     <Card className="glass-blur border-gold/20">
       <CardHeader>
         <CardTitle className="text-gold">Pagamento Gerado</CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-200">
           {result.paymentMethod === 'pix' 
             ? 'Escaneie o QR Code abaixo para realizar o pagamento via PIX'
             : 'Escaneie o QR Code ou use o link abaixo para realizar o pagamento com cartão de crédito'}
@@ -79,7 +80,7 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
               </div>
             </div>
             <div className="text-center">
-              <p className="font-semibold">{result.productName}</p>
+              <p className="font-semibold text-gray-100">{result.productName}</p>
               <p className="text-xl font-bold text-gold">
                 {formatCurrency(result.value)}
               </p>
@@ -101,7 +102,7 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
 
         {/* Error message if neither QR code nor link is available */}
         {!result.qrCodeImage && !result.paymentLink && (
-          <div className="text-red-500 text-center p-4">
+          <div className="text-red-400 text-center p-4">
             <p>Erro ao gerar o pagamento. Por favor, tente novamente.</p>
           </div>
         )}

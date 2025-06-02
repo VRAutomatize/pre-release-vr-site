@@ -51,7 +51,7 @@ const PaymentLinks = () => {
           Links de Pagamento
         </motion.h2>
         <motion.p 
-          className="text-sm text-gray-400"
+          className="text-sm text-gray-200"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -134,7 +134,7 @@ const PaymentLinks = () => {
                 <h4 className="text-sm font-semibold text-gray-100 mb-2">
                   💡 Dica
                 </h4>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-200">
                   Use links de pagamento para facilitar o processo de compra dos seus clientes e aumentar a taxa de conversão
                 </p>
               </div>
@@ -191,7 +191,7 @@ const PaymentLinks = () => {
                 <h1 className="font-bold text-gold text-xl md:text-2xl">
                   Gerenciador de Links de Pagamento
                 </h1>
-                <p className="text-muted-foreground text-sm md:text-base">
+                <p className="text-gray-200 text-sm md:text-base">
                   Crie e gerencie links de pagamento para seus clientes.
                 </p>
               </div>,

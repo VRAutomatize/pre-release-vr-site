@@ -74,7 +74,7 @@ const CNPJCheckForm: React.FC<CNPJCheckFormProps> = ({ onCheckCNPJ, loading }) =
           name="cnpj"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>CNPJ do Cliente</FormLabel>
+              <FormLabel className="text-gray-100">CNPJ do Cliente</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="00.000.000/0000-00" 

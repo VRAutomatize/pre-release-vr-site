@@ -26,7 +26,7 @@ const NavItem = ({ icon: Icon, label, href, active }: NavItemProps) => {
         "flex flex-col items-center justify-center py-1 px-2 rounded-lg transition-all duration-200 min-h-[44px]",
         active 
           ? "bg-gold/20 text-gold" 
-          : "text-muted-foreground hover:text-gold hover:bg-gold/10"
+          : "text-gray-300 hover:text-gold hover:bg-gold/10"
       )}
     >
       <Icon className="h-5 w-5 mb-0.5" />
@@ -77,7 +77,7 @@ const BottomNavigation = () => {
         ))}
         <button
           onClick={() => logout()}
-          className="flex flex-col items-center justify-center py-1 px-2 rounded-lg transition-all duration-200 text-red-500 hover:bg-red-500/10 min-h-[44px]"
+          className="flex flex-col items-center justify-center py-1 px-2 rounded-lg transition-all duration-200 text-red-400 hover:bg-red-500/10 min-h-[44px]"
         >
           <LogOut className="h-5 w-5 mb-0.5" />
           <span className="text-xs font-medium leading-none">Sair</span>

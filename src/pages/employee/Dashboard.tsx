@@ -60,21 +60,6 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Mobile Resources Content - Optimized
-  const renderMobileResources = () => (
-    <div className="mobile-full-width">
-      <div className="mobile-section px-3">
-        <h2 className="text-xl font-bold text-gold mb-1">Recursos</h2>
-        <p className="text-sm text-muted-foreground">
-          Materiais e ferramentas para suas vendas
-        </p>
-      </div>
-      <div className="px-3">
-        <ResourcesPanel />
-      </div>
-    </div>
-  );
-
   // Mobile Dashboard Content - Redesigned edge-to-edge
   const renderMobileDashboard = () => (
     <div className="mobile-full-width">
@@ -179,6 +164,21 @@ const Dashboard = () => {
             statusColor="warning"
           />
         </div>
+      </div>
+    </div>
+  );
+
+  // Mobile Resources Content - Optimized
+  const renderMobileResources = () => (
+    <div className="mobile-full-width">
+      <div className="mobile-section px-3">
+        <h2 className="text-xl font-bold text-gold mb-1">Recursos</h2>
+        <p className="text-sm text-muted-foreground">
+          Materiais e ferramentas para suas vendas
+        </p>
+      </div>
+      <div className="px-3">
+        <ResourcesPanel />
       </div>
     </div>
   );

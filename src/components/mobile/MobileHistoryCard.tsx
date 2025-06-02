@@ -1,78 +1,70 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface MobileHistoryCardProps {
   title: string;
   subtitle?: string;
-  value?: string;
-  status?: string;
-  date?: string;
-  statusColor?: "default" | "success" | "warning" | "error";
+  status: string;
+  statusColor?: "success" | "warning" | "error" | "info";
+  timestamp?: string;
+  icon?: React.ReactNode;
   onClick?: () => void;
 }
 
 const MobileHistoryCard = ({
   title,
   subtitle,
-  value,
   status,
-  date,
-  statusColor = "default",
+  statusColor = "info",
+  timestamp,
+  icon,
   onClick
 }: MobileHistoryCardProps) => {
   const getStatusColor = () => {
     switch (statusColor) {
-      case "success": return "bg-green-500/10 text-green-400 border-green-500/20";
-      case "warning": return "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
-      case "error": return "bg-red-500/10 text-red-400 border-red-500/20";
-      default: return "bg-gold/10 text-gold border-gold/20";
+      case "success": return "text-green-400 bg-green-400/10";
+      case "warning": return "text-yellow-400 bg-yellow-400/10";
+      case "error": return "text-red-400 bg-red-400/10";
+      default: return "text-blue-400 bg-blue-400/10";
     }
   };
 
   return (
     <Card 
-      className="glass-blur border-gold/20 mb-3 cursor-pointer hover:bg-background/50 transition-all duration-200"
+      className={cn(
+        "glass-blur border-gold/10 shadow-sm",
+        onClick && "cursor-pointer hover:bg-gold/5 transition-colors"
+      )}
       onClick={onClick}
     >
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between">
+      <CardContent className="p-3">
+        <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
-            {/* Título principal */}
-            <h3 className="font-medium text-foreground truncate mb-1">
-              {title}
-            </h3>
+            <div className="flex items-center gap-2 mb-1">
+              {icon && (
+                <div className="text-gold flex-shrink-0">
+                  {icon}
+                </div>
+              )}
+              <h4 className="text-sm font-medium text-gold truncate">{title}</h4>
+            </div>
             
-            {/* Subtítulo */}
             {subtitle && (
-              <p className="text-sm text-muted-foreground truncate mb-2">
-                {subtitle}
-              </p>
+              <p className="text-xs text-gold/60 mb-2 leading-tight">{subtitle}</p>
             )}
             
-            {/* Footer com data e valor */}
-            <div className="flex items-center gap-3">
-              {date && (
-                <span className="text-xs text-gold/70">{date}</span>
-              )}
-              {value && (
-                <span className="text-sm font-medium text-gold">
-                  {value}
-                </span>
-              )}
-            </div>
+            {timestamp && (
+              <p className="text-xs text-gold/50">{timestamp}</p>
+            )}
           </div>
           
-          {/* Status e seta */}
-          <div className="flex items-center gap-2 ml-3">
-            {status && (
-              <Badge className={getStatusColor()}>
-                {status}
-              </Badge>
-            )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          <div className={cn(
+            "px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ml-2",
+            getStatusColor()
+          )}>
+            {status}
           </div>
         </div>
       </CardContent>

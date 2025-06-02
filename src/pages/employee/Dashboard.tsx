@@ -8,9 +8,9 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import DesktopDashboard from "@/components/dashboard/DesktopDashboard";
 
-// Mobile components
-import MobileLayout from "@/components/mobile/MobileLayout";
-import MobileDashboardOverview from "@/components/mobile/dashboard/MobileDashboardOverview";
+// Native Mobile components
+import NativeMobileLayout from "@/components/mobile/NativeMobileLayout";
+import NativeMobileDashboard from "@/components/mobile/dashboard/NativeMobileDashboard";
 import MobileResourcesView from "@/components/mobile/dashboard/MobileResourcesView";
 import MobileCommissionsView from "@/components/mobile/dashboard/MobileCommissionsView";
 
@@ -36,15 +36,15 @@ const Dashboard = () => {
     }
   }, [location.search]);
 
-  const refreshData = () => {
+  const refreshData = async () => {
     setIsRefreshing(true);
-    toast.info("Atualizando dados do dashboard...");
+    toast.info("Atualizando dados...");
     
-    // Simulate API call with timeout
-    setTimeout(() => {
-      setIsRefreshing(false);
-      toast.success("Dados atualizados com sucesso!");
-    }, 1500);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsRefreshing(false);
+    toast.success("Dados atualizados!");
   };
 
   // Handle tab change
@@ -61,7 +61,7 @@ const Dashboard = () => {
       return <MobileCommissionsView />;
     }
     return (
-      <MobileDashboardOverview
+      <NativeMobileDashboard
         isRefreshing={isRefreshing}
         onRefresh={refreshData}
         onNavigateToCommissions={() => handleTabChange("commissions")}
@@ -70,18 +70,29 @@ const Dashboard = () => {
     );
   };
 
+  // Get page title and subtitle based on active tab
+  const getPageInfo = () => {
+    switch (activeTab) {
+      case "resources":
+        return { title: "Recursos", subtitle: "Materiais para vendas" };
+      case "commissions":
+        return { title: "Comissões", subtitle: "Acompanhe seus ganhos" };
+      default:
+        return { title: "Dashboard", subtitle: "Visão geral do desempenho" };
+    }
+  };
+
   // Mobile Layout
   if (isMobile) {
+    const { title, subtitle } = getPageInfo();
+    
     return (
-      <MobileLayout 
-        title={
-          activeTab === "resources" ? "Recursos" :
-          activeTab === "commissions" ? "Comissões" :
-          "Dashboard"
-        }
+      <NativeMobileLayout 
+        title={title}
+        subtitle={subtitle}
       >
         {renderMobileContent()}
-      </MobileLayout>
+      </NativeMobileLayout>
     );
   }
 

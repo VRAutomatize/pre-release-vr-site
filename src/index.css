@@ -1,5 +1,55 @@
 
-@import url('./styles/base.css');
-@import url('./styles/utilities.css');
-@import url('./styles/scrollbar.css');
-@import url('./styles/mobile.css');
+@import './styles/design-system.css';
+@import './styles/base.css';
+@import './styles/utilities.css';
+@import './styles/mobile.css';
+@import './styles/scrollbar.css';
+
+/* Native app-like improvements */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  body {
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Hide scrollbars on mobile for native feel */
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+}
+
+/* Performance optimizations */
+@layer utilities {
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-scroll {
+    will-change: scroll-position;
+  }
+}

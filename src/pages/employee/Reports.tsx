@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Send, TrendingUp, BarChart } from "lucide-react";
 import EmployeeSidebar from "@/components/EmployeeSidebar";
@@ -58,130 +59,138 @@ const Reports = () => {
   }, [isMobile]);
 
   const ReportsContent = () => (
-    <div className="w-full space-y-6">
-      {/* Header Section */}
-      <div className="px-4 py-3">
-        <h2 className="text-2xl font-bold text-yellow-400 mb-2">
+    <div className="w-full space-y-8">
+      {/* Header Section - Mobile Optimized */}
+      <div className="px-6 py-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 mb-3">
           Gerar Relatórios
         </h2>
-        <p className="text-sm text-gray-400">
+        <p className="text-base text-gray-200 leading-relaxed">
           Registre vendas e envie leads para maximizar suas comissões
         </p>
       </div>
 
-      {/* Quick Stats */}
+      {/* Quick Stats - Enhanced Mobile Layout */}
       {isMobile && (
-        <div className="px-4">
-          <div className="grid grid-cols-2 gap-3">
-            <NativeCard variant="elevated" padding="sm" className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">30%</div>
-              <div className="text-xs text-gray-400">Venda Direta</div>
+        <div className="px-6">
+          <div className="grid grid-cols-2 gap-4">
+            <NativeCard variant="elevated" padding="lg" className="text-center">
+              <div className="text-3xl font-bold text-green-400 mb-2">30%</div>
+              <div className="text-sm text-gray-200 font-medium">Venda Direta</div>
             </NativeCard>
             
-            <NativeCard variant="elevated" padding="sm" className="text-center">
-              <div className="text-2xl font-bold text-blue-400 mb-1">10%</div>
-              <div className="text-xs text-gray-400">Lead Qualificado</div>
+            <NativeCard variant="elevated" padding="lg" className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">10%</div>
+              <div className="text-sm text-gray-200 font-medium">Lead Qualificado</div>
             </NativeCard>
           </div>
         </div>
       )}
 
-      {/* Report Options */}
-      <div className="px-4 space-y-4">
-        <h3 className="text-lg font-semibold text-gray-100 mb-3">
+      {/* Report Options - Mobile First */}
+      <div className="px-6 space-y-6">
+        <h3 className="text-xl font-semibold text-gray-100 mb-4">
           Opções de Relatório
         </h3>
 
-        <NativeCard variant="elevated" padding="lg" className="overflow-hidden">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="flex-shrink-0 p-4 bg-green-400/10 rounded-xl">
-              <FileText className="h-6 w-6 text-green-400" />
-            </div>
-            
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl font-bold text-green-400 mb-2">
-                Gerar Venda Direta
-              </h4>
-              <p className="text-sm text-gray-400 mb-3">
-                Registre uma venda fechada diretamente por você. 
-              </p>
-              
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center gap-1 px-3 py-1 bg-green-400/20 rounded-full">
-                  <TrendingUp className="h-4 w-4 text-green-400" />
-                  <span className="text-sm font-medium text-green-400">30% Comissão</span>
-                </div>
+        {/* Direct Sale Card - Enhanced Mobile */}
+        <NativeCard variant="elevated" padding="none" className="overflow-hidden">
+          <div className="p-6 space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 p-4 bg-green-400/10 rounded-xl">
+                <FileText className="h-8 w-8 text-green-400" />
               </div>
               
-              <p className="text-xs text-gray-500 mb-4">
-                • Comissão: 30% do valor da venda<br/>
-                • Pagamento em até 7 dias úteis<br/>
-                • Requer validação da equipe comercial
-              </p>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-xl font-bold text-green-400 mb-3">
+                  Gerar Venda Direta
+                </h4>
+                <p className="text-base text-gray-200 mb-4 leading-relaxed">
+                  Registre uma venda fechada diretamente por você para ganhar comissão máxima.
+                </p>
+                
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-green-400/20 rounded-full">
+                    <TrendingUp className="h-5 w-5 text-green-400" />
+                    <span className="text-base font-semibold text-green-400">30% Comissão</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-6">
+                  <p className="text-sm text-gray-300">• Comissão: 30% do valor da venda</p>
+                  <p className="text-sm text-gray-300">• Pagamento em até 7 dias úteis</p>
+                  <p className="text-sm text-gray-300">• Requer validação da equipe comercial</p>
+                </div>
+              </div>
             </div>
+            
+            <NativeButton 
+              onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} 
+              variant="primary"
+              fullWidth
+              size="lg"
+              className="h-14 text-lg font-semibold"
+            >
+              Registrar Venda
+            </NativeButton>
           </div>
-          
-          <NativeButton 
-            onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} 
-            variant="primary"
-            fullWidth
-            className="h-12"
-          >
-            Registrar Venda
-          </NativeButton>
         </NativeCard>
 
-        <NativeCard variant="elevated" padding="lg" className="overflow-hidden">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="flex-shrink-0 p-4 bg-blue-400/10 rounded-xl">
-              <Send className="h-6 w-6 text-blue-400" />
-            </div>
-            
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl font-bold text-blue-400 mb-2">
-                Enviar Lead Qualificado
-              </h4>
-              <p className="text-sm text-gray-400 mb-3">
-                Notifique o time comercial sobre um lead qualificado.
-              </p>
-              
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center gap-1 px-3 py-1 bg-blue-400/20 rounded-full">
-                  <BarChart className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-medium text-blue-400">10% Comissão</span>
-                </div>
+        {/* Lead Card - Enhanced Mobile */}
+        <NativeCard variant="elevated" padding="none" className="overflow-hidden">
+          <div className="p-6 space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 p-4 bg-blue-400/10 rounded-xl">
+                <Send className="h-8 w-8 text-blue-400" />
               </div>
               
-              <p className="text-xs text-gray-500 mb-4">
-                • Comissão: 10% se o time fechar a venda<br/>
-                • Lead deve estar qualificado<br/>
-                • Acompanhamento em tempo real
-              </p>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-xl font-bold text-blue-400 mb-3">
+                  Enviar Lead Qualificado
+                </h4>
+                <p className="text-base text-gray-200 mb-4 leading-relaxed">
+                  Notifique o time comercial sobre um lead qualificado e ganhe comissão se fecharem.
+                </p>
+                
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-blue-400/20 rounded-full">
+                    <BarChart className="h-5 w-5 text-blue-400" />
+                    <span className="text-base font-semibold text-blue-400">10% Comissão</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 mb-6">
+                  <p className="text-sm text-gray-300">• Comissão: 10% se o time fechar a venda</p>
+                  <p className="text-sm text-gray-300">• Lead deve estar qualificado</p>
+                  <p className="text-sm text-gray-300">• Acompanhamento em tempo real</p>
+                </div>
+              </div>
             </div>
+            
+            <NativeButton 
+              onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial", "Notificar Time Comercial", "Envie uma notificação importante para o time comercial")} 
+              variant="secondary"
+              fullWidth
+              size="lg"
+              className="h-14 text-lg font-semibold"
+            >
+              Enviar Lead
+            </NativeButton>
           </div>
-          
-          <NativeButton 
-            onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial", "Notificar Time Comercial", "Envie uma notificação importante para o time comercial")} 
-            variant="secondary"
-            fullWidth
-            className="h-12"
-          >
-            Enviar Lead
-          </NativeButton>
         </NativeCard>
       </div>
 
-      {/* Tips Section */}
-      <div className="px-4 pb-6">
+      {/* Tips Section - Mobile Optimized */}
+      <div className="px-6 pb-8">
         <NativeCard variant="glass" padding="lg">
-          <div className="text-center mb-4">
-            <div className="h-16 w-16 bg-yellow-400/10 rounded-full flex items-center justify-center mx-auto mb-3">
-              <TrendingUp className="h-8 w-8 text-yellow-400" />
+          <div className="text-center space-y-6">
+            <div className="h-20 w-20 bg-yellow-400/10 rounded-full flex items-center justify-center mx-auto">
+              <TrendingUp className="h-10 w-10 text-yellow-400" />
             </div>
-            <h4 className="text-lg font-semibold text-gray-100 mb-2">
+            <h4 className="text-xl font-semibold text-gray-100">
               Dicas para Maximizar Comissões
             </h4>
-            <div className="text-sm text-gray-400 text-left space-y-2">
+            <div className="text-base text-gray-200 text-left space-y-3">
               <p>• Qualifique bem os leads antes de enviar</p>
               <p>• Mantenha relacionamento pós-venda</p>
               <p>• Use os materiais de apoio disponíveis</p>
@@ -251,7 +260,7 @@ const Reports = () => {
               <CardContent>
                 <Button 
                   onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} 
-                  className={`w-full bg-gold hover:bg-gold/90 text-background ${isMobile ? 'h-12' : ''}`}
+                  className="w-full bg-gold hover:bg-gold/90 text-background h-12"
                 >
                   Abrir Formulário
                 </Button>
@@ -273,7 +282,7 @@ const Reports = () => {
               <CardContent>
                 <Button 
                   onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial", "Notificar Time Comercial", "Envie uma notificação importante para o time comercial")} 
-                  className={`w-full bg-gold hover:bg-gold/90 text-background ${isMobile ? 'h-12' : ''}`}
+                  className="w-full bg-gold hover:bg-gold/90 text-background h-12"
                 >
                   Abrir Formulário
                 </Button>

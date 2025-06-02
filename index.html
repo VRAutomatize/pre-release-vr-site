@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="margin: 0; padding: 0; width: 100%; height: 100%;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
@@ -11,9 +11,26 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
     <title>VR Automatize - Portal do Colaborador</title>
+    <style>
+      /* Critical CSS to prevent white borders */
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow-x: hidden !important;
+      }
+      #root {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        overflow-x: hidden !important;
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
+  <body style="margin: 0; padding: 0; width: 100%; height: 100%;">
+    <div id="root" style="margin: 0; padding: 0; width: 100%; height: 100vh;"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

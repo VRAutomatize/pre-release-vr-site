@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { motion } from "framer-motion";
+import TabTransition from "@/components/animations/TabTransition";
 
 // Desktop components
 import EmployeeSidebar from "@/components/EmployeeSidebar";
@@ -54,24 +55,10 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Page transition variants for tab content only
-  const pageVariants = {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 }
-  };
-
-  // Mobile render based on active tab with transitions only for tab content
+  // Mobile render with new tab transitions
   const renderMobileContent = () => {
     return (
-      <motion.div
-        key={activeTab}
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-      >
+      <TabTransition tabKey={activeTab} direction="horizontal">
         {activeTab === "resources" && <MobileResourcesView />}
         {activeTab === "commissions" && <MobileCommissionsView />}
         {(!activeTab || activeTab === "metrics") && (
@@ -82,7 +69,7 @@ const Dashboard = () => {
             onNavigateToReports={() => navigate("/employee/reports")}
           />
         )}
-      </motion.div>
+      </TabTransition>
     );
   };
 
@@ -112,15 +99,18 @@ const Dashboard = () => {
     );
   }
 
-  // Desktop Layout with transitions
+  // Desktop Layout with enhanced animations
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
       <motion.main 
         className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94] 
+        }}
       >
         {/* Gold blurred background image */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">

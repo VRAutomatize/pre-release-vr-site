@@ -1,55 +1,86 @@
 
-@import './styles/design-system.css';
-@import './styles/base.css';
-@import './styles/utilities.css';
-@import './styles/mobile.css';
-@import './styles/scrollbar.css';
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Native app-like improvements */
+/* Import all style modules */
+@import './styles/base.css';
+@import './styles/design-system.css';
+@import './styles/utilities.css';
+@import './styles/scrollbar.css';
+@import './styles/mobile.css';
+@import './styles/animations.css';
+
+/* Base styles with professional defaults */
 @layer base {
   * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-    text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
+    @apply border-border;
   }
   
   body {
-    overscroll-behavior: none;
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Enable smooth scrolling globally */
+    scroll-behavior: smooth;
+    /* Improve text rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Optimize for animations */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
-  
-  /* Hide scrollbars on mobile for native feel */
-  @media (max-width: 768px) {
-    ::-webkit-scrollbar {
-      display: none;
-    }
-    
-    * {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+
+  /* Enhanced focus states for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-gold/40 ring-offset-2 ring-offset-background;
+  }
+
+  /* Smooth transitions for interactive elements */
+  button, a, input, textarea, select {
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Optimize scroll performance */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }
 
-/* Performance optimizations */
-@layer utilities {
-  .gpu-accelerated {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
+/* Professional component defaults */
+@layer components {
+  .btn-primary {
+    @apply bg-gold text-gray-900 font-semibold px-4 py-2 rounded-lg;
+    @apply hover:bg-gold-light active:scale-[0.98];
+    @apply transition-all duration-200 ease-smooth;
+    @apply focus-visible:ring-2 focus-visible:ring-gold/40;
   }
-  
-  .will-change-transform {
-    will-change: transform;
+
+  .card-elevated {
+    @apply bg-background/80 backdrop-blur-lg border border-gold/10;
+    @apply shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply hover:border-gold/20;
   }
-  
-  .will-change-scroll {
-    will-change: scroll-position;
+
+  .page-container {
+    @apply min-h-screen w-full relative overflow-hidden;
+  }
+
+  .content-wrapper {
+    @apply relative z-10 w-full h-full;
   }
 }

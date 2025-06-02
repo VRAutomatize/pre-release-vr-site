@@ -7,8 +7,7 @@ import { TypeformProvider } from "@/contexts/TypeformContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { GlobalCondensedTypeformModal } from "@/components/form/GlobalCondensedTypeformModal";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { AnimatePresence } from "framer-motion";
-import NativePageTransition from "@/components/mobile/NativePageTransition";
+import UniversalPageTransition from "@/components/animations/UniversalPageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import DigitalEmployees from "./pages/services/DigitalEmployees";
@@ -35,22 +34,45 @@ const queryClient = new QueryClient({
   },
 });
 
-// Enhanced wrapper component to handle mobile transitions for all employee routes
-const EmployeePageWrapper = ({ children }: { children: React.ReactNode }) => {
-  const isMobile = useIsMobile();
+// Enhanced wrapper component with professional animations
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
+  const isMobile = useIsMobile();
   
-  if (isMobile && location.pathname.startsWith('/employee/')) {
+  // Apply different animation strategies based on route type
+  const isEmployeeRoute = location.pathname.startsWith('/employee/');
+  const isServiceRoute = location.pathname.includes('/lp-') || 
+                         location.pathname.includes('/atendentes-') ||
+                         location.pathname.includes('/automacao') ||
+                         location.pathname.includes('/crm') ||
+                         location.pathname.includes('/consultoria') ||
+                         location.pathname.includes('/chatbots') ||
+                         location.pathname.includes('/captura-');
+  
+  // Employee routes get enhanced mobile transitions
+  if (isEmployeeRoute) {
     return (
-      <AnimatePresence mode="wait" initial={false}>
-        <NativePageTransition key={location.pathname}>
-          {children}
-        </NativePageTransition>
-      </AnimatePresence>
+      <UniversalPageTransition className="min-h-screen">
+        {children}
+      </UniversalPageTransition>
     );
   }
   
-  return <>{children}</>;
+  // Service pages get smooth desktop + mobile transitions
+  if (isServiceRoute || location.pathname === '/') {
+    return (
+      <UniversalPageTransition className="min-h-screen">
+        {children}
+      </UniversalPageTransition>
+    );
+  }
+  
+  // Default pages (404, etc.) get simple transitions
+  return (
+    <UniversalPageTransition>
+      {children}
+    </UniversalPageTransition>
+  );
 };
 
 function App() {
@@ -61,7 +83,7 @@ function App() {
           <TypeformProvider>
             <Router>
               <div className="min-h-screen bg-background text-foreground">
-                <EmployeePageWrapper>
+                <PageWrapper>
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/lp-funcionarios-digitais-pro" element={<DigitalEmployees />} />
@@ -95,7 +117,7 @@ function App() {
                     <Route path="/404" element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/404" replace />} />
                   </Routes>
-                </EmployeePageWrapper>
+                </PageWrapper>
                 
                 {/* Global Condensed Form Modal */}
                 <GlobalCondensedTypeformModal />

@@ -62,14 +62,14 @@ const Dashboard = () => {
 
   // Mobile Resources Content - optimized for single scroll
   const renderMobileResources = () => (
-    <div className="mobile-no-scroll">
-      <div className="px-4 pt-4 pb-2">
-        <h2 className="text-xl font-bold text-gold mb-2">Recursos</h2>
+    <div className="w-full">
+      <div className="px-2 pt-2 pb-1">
+        <h2 className="text-xl font-bold text-gold mb-1">Recursos</h2>
         <p className="text-sm text-muted-foreground">
           Materiais e ferramentas para suas vendas
         </p>
       </div>
-      <div className="px-4">
+      <div className="px-2">
         <ResourcesPanel />
       </div>
     </div>
@@ -77,9 +77,9 @@ const Dashboard = () => {
 
   // Mobile Dashboard Content - optimized for single scroll
   const renderMobileDashboard = () => (
-    <div className="mobile-no-scroll">
+    <div className="w-full">
       {/* Welcome Section */}
-      <div className="px-4 pt-4 pb-2">
+      <div className="px-2 pt-2 pb-1">
         <h1 className="text-xl font-bold text-gold mb-1">
           Olá, {user?.name?.split(' ')[0] || "Colaborador"}! 👋
         </h1>
@@ -89,7 +89,7 @@ const Dashboard = () => {
       </div>
 
       {/* Pull to Refresh Indicator */}
-      <div className="flex justify-center px-4 pb-4">
+      <div className="flex justify-center px-2 pb-2">
         <Button 
           onClick={refreshData} 
           variant="outline" 
@@ -102,45 +102,45 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      {/* Metrics Cards Grid */}
-      <div className="px-4 pb-4">
-        <div className="grid gap-4">
+      {/* Metrics Cards Grid - Full width with minimal gaps */}
+      <div className="px-1 pb-2">
+        <div className="grid gap-2">
           <MobileMetricsCard
             title="Total de Vendas"
             value="R$ 0,00"
             description="Mês atual"
-            icon={<BarChart className="h-5 w-5" />}
+            icon={<BarChart className="h-6 w-6" />}
             trend="neutral"
           />
           <MobileMetricsCard
             title="Leads Captados" 
             value="0"
             description="Últimos 30 dias"
-            icon={<Users className="h-5 w-5" />}
+            icon={<Users className="h-6 w-6" />}
             trend="neutral"
           />
           <MobileMetricsCard
             title="Taxa de Conversão"
             value="0,0%"
             description="Leads → Vendas"
-            icon={<Calendar className="h-5 w-5" />}
+            icon={<Calendar className="h-6 w-6" />}
             trend="neutral"
           />
           <MobileMetricsCard
             title="Comissões"
             value="R$ 0,00"
             description="Disponível para solicitação"
-            icon={<DollarSign className="h-5 w-5" />}
+            icon={<DollarSign className="h-6 w-6" />}
             trend="neutral"
           />
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="px-4 pb-4">
-        <div className="bg-background/30 backdrop-blur-sm rounded-lg p-4 border border-gold/10">
-          <h3 className="text-sm font-medium text-gold mb-3">Ações Rápidas</h3>
-          <div className="grid grid-cols-2 gap-3">
+      {/* Quick Actions - Full width */}
+      <div className="px-1 pb-2">
+        <div className="bg-background/30 backdrop-blur-sm rounded-lg p-3 border border-gold/10">
+          <h3 className="text-sm font-medium text-gold mb-2">Ações Rápidas</h3>
+          <div className="grid grid-cols-2 gap-2">
             <Button 
               variant="outline" 
               className="border-gold/20 text-gold hover:bg-gold/10 h-12"
@@ -161,10 +161,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Recent Activity */}
-      <div className="px-4 pb-4">
-        <h3 className="text-sm font-medium text-gold mb-3">Atividade Recente</h3>
-        <div className="space-y-2">
+      {/* Recent Activity - Full width */}
+      <div className="px-1 pb-2">
+        <h3 className="text-sm font-medium text-gold mb-2 px-1">Atividade Recente</h3>
+        <div className="space-y-1">
           <MobileHistoryCard
             title="Nenhuma venda registrada"
             subtitle="Suas vendas aparecerão aqui"
@@ -184,14 +184,14 @@ const Dashboard = () => {
 
   // Mobile Commissions Content - optimized for single scroll
   const renderMobileCommissions = () => (
-    <div className="mobile-no-scroll">
-      <div className="px-4 pt-4 pb-2">
-        <h2 className="text-xl font-bold text-gold mb-2">Comissões</h2>
+    <div className="w-full">
+      <div className="px-2 pt-2 pb-1">
+        <h2 className="text-xl font-bold text-gold mb-1">Comissões</h2>
         <p className="text-sm text-muted-foreground">
           Acompanhe suas comissões e solicite saques
         </p>
       </div>
-      <div className="px-4">
+      <div className="px-2">
         <CommissionsPanel />
       </div>
     </div>

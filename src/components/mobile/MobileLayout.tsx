@@ -33,9 +33,9 @@ const MobileLayout = ({
         actions={headerActions}
       />
       
-      {/* Main Content Area - Single scroll container */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="pb-20 safe-area-pb">
+      {/* Main Content Area - Full width, single scroll container */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden w-full">
+        <div className="pb-20 safe-area-pb w-full">
           {children}
         </div>
       </main>

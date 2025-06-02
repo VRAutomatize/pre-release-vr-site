@@ -27,7 +27,7 @@
   /* Enhanced mobile spacing */
   @media (max-width: 768px) {
     section {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
   }
 
@@ -64,13 +64,13 @@
     padding-right: env(safe-area-inset-right);
   }
 
-  /* Mobile-first responsive containers */
+  /* Mobile-first responsive containers - minimal padding */
   .mobile-container {
-    @apply px-4 w-full mx-auto;
+    @apply px-1 w-full mx-auto;
   }
 
   .mobile-container-tight {
-    @apply px-3 w-full mx-auto;
+    @apply px-1 w-full mx-auto;
   }
   
   .mobile-container-full {
@@ -78,20 +78,20 @@
   }
 
   .mobile-container-minimal {
-    @apply px-2 w-full mx-auto;
+    @apply px-1 w-full mx-auto;
   }
   
-  /* Mobile optimized spacing */
+  /* Mobile optimized spacing - more compact */
   .mobile-spacing {
-    @apply space-y-4;
-  }
-
-  .mobile-spacing-tight {
     @apply space-y-2;
   }
 
+  .mobile-spacing-tight {
+    @apply space-y-1;
+  }
+
   .mobile-spacing-loose {
-    @apply space-y-6;
+    @apply space-y-3;
   }
 
   /* Touch-friendly interactive elements */
@@ -103,26 +103,26 @@
     @apply min-h-[56px] min-w-[56px] flex items-center justify-center;
   }
 
-  /* Mobile card layouts */
+  /* Mobile card layouts - edge to edge */
   .mobile-card {
-    @apply rounded-lg p-4 bg-background/40 backdrop-blur-sm border border-gold/10;
+    @apply rounded-lg p-3 bg-background/40 backdrop-blur-sm border border-gold/10 mx-1;
   }
 
   .mobile-card-compact {
-    @apply rounded-lg p-3 bg-background/40 backdrop-blur-sm border border-gold/10;
+    @apply rounded-lg p-2 bg-background/40 backdrop-blur-sm border border-gold/10 mx-1;
   }
 
-  /* Mobile grid systems */
+  /* Mobile grid systems - minimal gaps */
   .mobile-grid-2 {
-    @apply grid grid-cols-2 gap-3;
+    @apply grid grid-cols-2 gap-2;
   }
 
   .mobile-grid-3 {
-    @apply grid grid-cols-3 gap-2;
+    @apply grid grid-cols-3 gap-1;
   }
 
   .mobile-grid-auto {
-    @apply grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3;
+    @apply grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-2;
   }
 
   /* Mobile typography optimizations */
@@ -243,6 +243,16 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
   }
+
+  /* Full width mobile content - no side margins */
+  .mobile-full-width {
+    @apply w-full px-0;
+  }
+
+  /* Edge to edge content */
+  .mobile-edge-to-edge {
+    @apply mx-0 px-0 w-full;
+  }
 }
 
 /* Mobile-specific component overrides */
@@ -286,12 +296,19 @@
   .mobile-no-scroll {
     overflow: visible;
   }
+
+  /* Override default card margins for full width */
+  .mobile-card,
+  .mobile-card-compact {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* Landscape mode optimizations */
 @media (max-width: 768px) and (orientation: landscape) {
   .mobile-landscape-compact {
-    @apply py-2;
+    @apply py-1;
   }
   
   .mobile-header-landscape {

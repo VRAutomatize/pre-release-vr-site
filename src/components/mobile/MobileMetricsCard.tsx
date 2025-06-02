@@ -39,25 +39,25 @@ const MobileMetricsCard = ({
   };
 
   return (
-    <Card className={`glass-blur border-gold/20 card-hover shadow-md ${className}`}>
-      <CardContent className="p-4">
+    <Card className={`glass-blur border-gold/20 card-hover shadow-md min-h-[100px] ${className}`}>
+      <CardContent className="p-4 h-full flex flex-col justify-between">
         {/* Header com ícone e título */}
-        <div className="flex items-start justify-between mb-3">
+        <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
-            <p className="text-sm font-medium text-gold/80 mb-1">{title}</p>
-            <div className="text-2xl font-bold text-gold mb-1">{value}</div>
+            <p className="text-sm font-medium text-gold/80 mb-1 leading-tight">{title}</p>
+            <div className="text-2xl font-bold text-gold mb-1 leading-none">{value}</div>
           </div>
           {icon && (
-            <div className="text-gold p-2 bg-gold/10 rounded-lg shadow-inner">
+            <div className="text-gold p-2 bg-gold/10 rounded-lg shadow-inner flex-shrink-0">
               {icon}
             </div>
           )}
         </div>
 
         {/* Footer com descrição e trend */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           {description && (
-            <p className="text-xs text-gold/70 flex-1">{description}</p>
+            <p className="text-xs text-gold/70 flex-1 leading-tight">{description}</p>
           )}
           
           {trendValue && (

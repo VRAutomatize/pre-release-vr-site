@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
@@ -241,8 +240,7 @@ const UltraPremiumSocialProofAdvanced = () => {
                       
                       {testimonial.featured && (
                         <PremiumBadge 
-                          variant="gold" 
-                          className="absolute top-4 right-4"
+                          variant="gold"
                         >
                           Destaque
                         </PremiumBadge>
@@ -430,12 +428,11 @@ const UltraPremiumSocialProofAdvanced = () => {
                 <credential.icon className="w-10 h-10 text-premium-gold mx-auto mb-4" />
                 <PremiumBadge 
                   variant="gold" 
-                  size="sm" 
-                  className="mb-3"
+                  size="sm"
                 >
                   {credential.badge}
                 </PremiumBadge>
-                <h4 className="text-white font-semibold mb-2">
+                <h4 className="text-white font-semibold mb-2 mt-3">
                   {credential.title}
                 </h4>
                 <p className="text-white/70 text-sm">

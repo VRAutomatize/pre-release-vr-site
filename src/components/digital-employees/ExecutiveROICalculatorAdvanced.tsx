@@ -1,9 +1,8 @@
-
 import React, { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Calculator, TrendingUp, Building, Users, DollarSign, FileText, BarChart3, Download, Target, PieChart } from "lucide-react";
 import { PremiumCard, PremiumButton, PremiumInput, PremiumSection, PremiumMetricCard } from "./PremiumComponents";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, BarChart, Bar } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, BarChart, Bar, Pie } from "recharts";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useDebounce } from "@/hooks/useDebounce";
 

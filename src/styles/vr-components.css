@@ -1,0 +1,319 @@
+
+/* VR Automatize - Componentes Padronizados */
+@layer components {
+  /* SISTEMA DE CARDS VR AUTOMATIZE */
+  .vr-card-base {
+    @apply bg-card/80 backdrop-blur-lg border border-gold/20 rounded-xl;
+    @apply transition-all duration-300 ease-out;
+    color: white !important;
+  }
+  
+  .vr-card {
+    @apply vr-card-base p-6 hover:border-gold/40 hover:shadow-vr;
+  }
+  
+  .vr-card-compact {
+    @apply vr-card-base p-4 hover:border-gold/30;
+  }
+  
+  .vr-card-large {
+    @apply vr-card-base p-8 md:p-12 hover:border-gold/50 hover:shadow-vr-lg;
+  }
+  
+  .vr-card-interactive {
+    @apply vr-card hover:-translate-y-2 hover:scale-[1.02] cursor-pointer;
+  }
+  
+  .vr-card-glass {
+    @apply bg-card/60 backdrop-blur-xl border border-gold/10 rounded-xl p-6;
+    @apply hover:bg-card/80 hover:border-gold/30 transition-all duration-300;
+    color: white !important;
+  }
+  
+  /* SISTEMA DE BOTÕES VR AUTOMATIZE */
+  .vr-btn-base {
+    @apply font-semibold rounded-xl transition-all duration-300 ease-out;
+    @apply focus-visible:ring-2 focus-visible:ring-gold/40 focus-visible:ring-offset-2;
+    @apply active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .vr-btn-primary {
+    @apply vr-btn-base bg-gold hover:bg-gold-light text-background px-6 py-3;
+    @apply hover:shadow-vr;
+    color: #101418 !important;
+  }
+  
+  .vr-btn-secondary {
+    @apply vr-btn-base bg-transparent border-2 border-gold text-gold px-6 py-3;
+    @apply hover:bg-gold hover:text-background;
+  }
+  
+  .vr-btn-ghost {
+    @apply vr-btn-base bg-transparent text-gold hover:bg-gold/10 px-6 py-3;
+  }
+  
+  .vr-btn-outline {
+    @apply vr-btn-base bg-transparent border border-gold/40 text-gold px-6 py-3;
+    @apply hover:border-gold hover:bg-gold/10;
+  }
+  
+  .vr-btn-small {
+    @apply text-sm px-4 py-2;
+  }
+  
+  .vr-btn-large {
+    @apply text-lg px-8 py-4;
+  }
+  
+  .vr-btn-full {
+    @apply w-full;
+  }
+  
+  /* SISTEMA DE INPUTS VR AUTOMATIZE */
+  .vr-input-base {
+    @apply bg-input border rounded-lg transition-all duration-200;
+    @apply focus:ring-2 focus:ring-gold/20 focus:border-gold;
+    color: white !important;
+  }
+  
+  .vr-input {
+    @apply vr-input-base border-gold/20 px-4 py-3;
+    @apply placeholder:text-gold/60;
+  }
+  
+  .vr-input-small {
+    @apply vr-input-base border-gold/20 px-3 py-2 text-sm;
+  }
+  
+  .vr-input-large {
+    @apply vr-input-base border-gold/20 px-6 py-4 text-lg;
+  }
+  
+  .vr-textarea {
+    @apply vr-input min-h-[120px] resize-vertical;
+  }
+  
+  /* SISTEMA DE LAYOUT VR AUTOMATIZE */
+  .vr-container {
+    @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
+  }
+  
+  .vr-container-tight {
+    @apply max-w-5xl mx-auto px-4 md:px-6;
+  }
+  
+  .vr-container-wide {
+    @apply max-w-8xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12;
+  }
+  
+  .vr-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  .vr-section-compact {
+    @apply py-8 md:py-12;
+  }
+  
+  .vr-section-large {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+  
+  /* SISTEMA DE GRID VR AUTOMATIZE */
+  .vr-grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+  
+  .vr-grid-3 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+  
+  .vr-grid-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+  
+  .vr-grid-auto {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6;
+  }
+  
+  /* SISTEMA DE TIPOGRAFIA VR AUTOMATIZE */
+  .vr-heading-hero {
+    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight;
+    color: white !important;
+  }
+  
+  .vr-heading-1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-tight;
+    color: white !important;
+  }
+  
+  .vr-heading-2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold leading-tight;
+    color: white !important;
+  }
+  
+  .vr-heading-3 {
+    @apply text-xl md:text-2xl lg:text-3xl font-semibold leading-tight;
+    color: white !important;
+  }
+  
+  .vr-heading-4 {
+    @apply text-lg md:text-xl lg:text-2xl font-semibold;
+    color: white !important;
+  }
+  
+  .vr-text-lead {
+    @apply text-lg md:text-xl lg:text-2xl leading-relaxed;
+    color: white !important;
+  }
+  
+  .vr-text-body {
+    @apply text-base md:text-lg leading-relaxed;
+    color: white !important;
+  }
+  
+  .vr-text-small {
+    @apply text-sm leading-relaxed;
+    color: white !important;
+  }
+  
+  .vr-text-tiny {
+    @apply text-xs leading-relaxed;
+    color: white !important;
+  }
+  
+  /* CORES DE TEXTO VR AUTOMATIZE */
+  .vr-text-white {
+    color: white !important;
+  }
+  
+  .vr-text-gold {
+    color: #FFD700 !important;
+  }
+  
+  .vr-text-gold-light {
+    color: #FFED4A !important;
+  }
+  
+  .vr-text-gold-muted {
+    color: rgba(255, 215, 0, 0.8) !important;
+  }
+  
+  .vr-text-gold-subtle {
+    color: rgba(255, 215, 0, 0.6) !important;
+  }
+  
+  .vr-text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light;
+  }
+  
+  .vr-text-gradient-reverse {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-light to-gold;
+  }
+  
+  /* SISTEMA DE SOMBRAS VR AUTOMATIZE */
+  .vr-shadow {
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+  }
+  
+  .vr-shadow-lg {
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+  }
+  
+  .vr-shadow-xl {
+    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+  }
+  
+  /* SISTEMA DE ANIMAÇÕES VR AUTOMATIZE */
+  .vr-hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-vr-lg;
+  }
+  
+  .vr-hover-scale {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  .vr-hover-glow {
+    @apply transition-all duration-300 hover:shadow-vr hover:shadow-gold/20;
+  }
+  
+  .vr-interactive {
+    @apply cursor-pointer transition-all duration-300 ease-out;
+    @apply hover:scale-105 active:scale-95;
+  }
+  
+  /* SISTEMA DE BACKGROUNDS VR AUTOMATIZE */
+  .vr-bg-primary {
+    @apply bg-background;
+  }
+  
+  .vr-bg-secondary {
+    @apply bg-card;
+  }
+  
+  .vr-bg-glass {
+    @apply bg-card/60 backdrop-blur-xl;
+  }
+  
+  .vr-bg-gradient {
+    @apply bg-gradient-to-br from-background to-card;
+  }
+  
+  .vr-bg-gradient-gold {
+    @apply bg-gradient-to-br from-gold/10 to-transparent;
+  }
+  
+  /* SISTEMA DE BORDAS VR AUTOMATIZE */
+  .vr-border {
+    @apply border border-gold/20;
+  }
+  
+  .vr-border-strong {
+    @apply border border-gold/40;
+  }
+  
+  .vr-border-gold {
+    @apply border border-gold;
+  }
+  
+  .vr-border-radius {
+    @apply rounded-xl;
+  }
+  
+  .vr-border-radius-sm {
+    @apply rounded-lg;
+  }
+  
+  .vr-border-radius-lg {
+    @apply rounded-2xl;
+  }
+  
+  /* SISTEMA DE ESPAÇAMENTO VR AUTOMATIZE */
+  .vr-space-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  .vr-space-component {
+    @apply p-6 md:p-8;
+  }
+  
+  .vr-space-element {
+    @apply p-4 md:p-6;
+  }
+  
+  /* SISTEMA DE RESPONSIVE VR AUTOMATIZE */
+  .vr-mobile-hidden {
+    @apply hidden md:block;
+  }
+  
+  .vr-mobile-only {
+    @apply block md:hidden;
+  }
+  
+  .vr-tablet-hidden {
+    @apply hidden lg:block;
+  }
+  
+  .vr-desktop-only {
+    @apply hidden lg:block;
+  }
+}

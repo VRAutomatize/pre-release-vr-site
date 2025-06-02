@@ -6,19 +6,40 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import style modules na ordem correta */
+/* Import VR Automatize Design System na ordem correta */
 @import './styles/base.css';
+@import './styles/text-colors.css';
+@import './styles/vr-components.css';
 @import './styles/design-system.css';
 @import './styles/utilities.css';
-@import './styles/text-colors.css';
 @import './styles/scrollbar.css';
 @import './styles/mobile.css';
 @import './styles/animations.css';
 
-/* Base styles with VR Automatize theme */
+/* VR Automatize Global Override - FORÇA TODOS OS TEXTOS */
 @layer base {
-  * {
+  /* OVERRIDE ABSOLUTO - IMPOSSÍVEL TEXTO PRETO */
+  *, *::before, *::after {
     @apply border-border;
+    color: white !important; /* FORÇA GLOBAL */
+  }
+  
+  /* Exceções específicas para elementos com fundo dourado */
+  .bg-gold, .bg-gold *, 
+  .bg-primary, .bg-primary *, 
+  .bg-accent, .bg-accent *,
+  .bg-yellow-400, .bg-yellow-400 *,
+  .bg-yellow-500, .bg-yellow-500 * {
+    color: #101418 !important;
+  }
+  
+  /* Classes específicas de cor */
+  .text-gold, .text-gold *, .vr-text-gold, .vr-text-gold * {
+    color: #FFD700 !important;
+  }
+  
+  .text-gold-light, .text-gold-light *, .vr-text-gold-light, .vr-text-gold-light * {
+    color: #FFED4A !important;
   }
   
   body {
@@ -34,6 +55,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    color: white !important; /* FORÇA CORPO */
   }
 
   /* Enhanced focus states for accessibility */
@@ -44,6 +66,13 @@
   /* Smooth transitions for interactive elements */
   button, a, input, textarea, select {
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    color: white !important; /* FORÇA ELEMENTOS INTERATIVOS */
+  }
+
+  /* Buttons com fundo dourado têm texto escuro */
+  button.bg-gold, button.bg-primary, button.bg-accent,
+  button[class*="bg-gold"], button[class*="bg-primary"], button[class*="bg-accent"] {
+    color: #101418 !important;
   }
 
   /* Optimize scroll performance */
@@ -63,28 +92,118 @@
       scroll-behavior: auto !important;
     }
   }
+  
+  /* FORÇA ELEMENTOS HTML ESPECÍFICOS */
+  h1, h2, h3, h4, h5, h6 {
+    color: white !important;
+  }
+  
+  p, span, div, a, label, td, th, li, dt, dd {
+    color: white !important;
+  }
+  
+  /* FORÇA INPUTS */
+  input, textarea, select, option {
+    color: white !important;
+    background-color: rgba(30, 35, 42, 1) !important;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: rgba(255, 215, 0, 0.6) !important;
+  }
 }
 
 /* VR Automatize component defaults */
 @layer components {
   .btn-primary {
-    @apply bg-gold text-gray-900 font-semibold px-4 py-2 rounded-lg;
-    @apply hover:bg-gold-light active:scale-[0.98];
-    @apply transition-all duration-200 ease-smooth;
-    @apply focus-visible:ring-2 focus-visible:ring-gold/40;
+    @apply vr-btn-primary;
   }
 
   .card-elevated {
-    @apply bg-card/80 backdrop-blur-lg border border-gold/10;
-    @apply shadow-lg hover:shadow-xl transition-all duration-300;
-    @apply hover:border-gold/20 rounded-lg;
+    @apply vr-card-interactive;
   }
 
   .page-container {
-    @apply min-h-screen w-full relative overflow-hidden;
+    @apply vr-page;
   }
 
   .content-wrapper {
     @apply relative z-10 w-full h-full;
+    color: white !important;
+  }
+  
+  /* FORÇA COMPONENTES SHADCN/UI */
+  .dropdown-menu-content,
+  .popover-content,
+  .dialog-content,
+  .sheet-content,
+  .tooltip-content {
+    @apply bg-card border-gold/20 text-white;
+    color: white !important;
+  }
+  
+  .dropdown-menu-item,
+  .menu-item,
+  .select-item {
+    color: white !important;
+  }
+  
+  .dropdown-menu-item:hover,
+  .menu-item:hover,
+  .select-item:hover {
+    @apply bg-gold/10 text-gold;
+  }
+}
+
+/* OVERRIDE FINAL ABSOLUTO */
+@layer utilities {
+  /* Força todos os elementos filhos */
+  .force-white-text * {
+    color: white !important;
+  }
+  
+  .force-gold-text * {
+    color: #FFD700 !important;
+  }
+  
+  /* Classes específicas para casos especiais */
+  .text-on-gold-bg {
+    color: #101418 !important;
+  }
+  
+  .text-white-always {
+    color: white !important;
+  }
+  
+  .text-gold-always {
+    color: #FFD700 !important;
+  }
+  
+  /* Override para qualquer elemento que escape */
+  [class*="text-gray"],
+  [class*="text-slate"], 
+  [class*="text-neutral"],
+  [class*="text-stone"],
+  [class*="text-zinc"] {
+    color: #FFD700 !important;
+  }
+  
+  [class*="text-black"] {
+    color: white !important;
+  }
+  
+  /* GARANTIA ABSOLUTA FINAL */
+  #root, #root *, .app, .app *, main, main *, section, section * {
+    color: white !important;
+  }
+  
+  /* Exceção apenas para fundos dourados */
+  #root .bg-gold *, 
+  #root .bg-primary *, 
+  #root .bg-accent *,
+  .app .bg-gold *, 
+  .app .bg-primary *, 
+  .app .bg-accent * {
+    color: #101418 !important;
   }
 }

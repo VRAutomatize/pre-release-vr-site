@@ -29,10 +29,14 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
+  console.log("LoginPage rendering...");
+  
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+
+  console.log("LoginPage - isMobile:", isMobile);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -42,10 +46,14 @@ const LoginPage = () => {
     },
   });
 
+  console.log("LoginPage - form initialized");
+
   const onSubmit = async (data: LoginFormValues) => {
+    console.log("LoginPage - onSubmit called with:", data);
     setIsLoading(true);
     try {
       const success = await login(data.username, data.password);
+      console.log("LoginPage - login result:", success);
       if (success) {
         navigate("/employee/dashboard");
       }
@@ -53,6 +61,8 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+
+  console.log("LoginPage - about to render JSX");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">

@@ -51,8 +51,8 @@ const useFormField = () => {
     throw new Error("useFormField should be used within <FormField>")
   }
 
-  // Handle case where itemContext might be undefined
-  const { id } = itemContext || { id: React.useId() }
+  // Generate a unique ID if itemContext is not available
+  const id = itemContext?.id || React.useId()
 
   return {
     id,
@@ -68,8 +68,8 @@ type FormItemContextValue = {
   id: string
 }
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+const FormItemContext = React.createContext<FormItemContextValue | undefined>(
+  undefined
 )
 
 const FormItem = React.forwardRef<

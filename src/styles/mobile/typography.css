@@ -1,0 +1,28 @@
+
+@layer utilities {
+  /* Mobile typography - Optimized for readability */
+  .mobile-heading {
+    @apply text-lg font-semibold leading-tight;
+  }
+
+  .mobile-subheading {
+    @apply text-base font-medium leading-snug;
+  }
+
+  .mobile-body {
+    @apply text-sm leading-relaxed;
+  }
+
+  .mobile-caption {
+    @apply text-xs leading-normal;
+  }
+
+  /* Mobile interaction feedback */
+  .mobile-touch-feedback {
+    @apply active:scale-95 transition-transform duration-100;
+  }
+
+  .mobile-tap-highlight {
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.1);
+  }
+}

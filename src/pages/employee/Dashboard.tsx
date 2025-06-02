@@ -60,110 +60,111 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Mobile Resources Content - optimized for single scroll
+  // Mobile Resources Content - Optimized
   const renderMobileResources = () => (
-    <div className="w-full">
-      <div className="px-2 pt-2 pb-1">
+    <div className="mobile-full-width">
+      <div className="mobile-section px-3">
         <h2 className="text-xl font-bold text-gold mb-1">Recursos</h2>
         <p className="text-sm text-muted-foreground">
           Materiais e ferramentas para suas vendas
         </p>
       </div>
-      <div className="px-2">
+      <div className="px-3">
         <ResourcesPanel />
       </div>
     </div>
   );
 
-  // Mobile Dashboard Content - optimized for single scroll
+  // Mobile Dashboard Content - Redesigned edge-to-edge
   const renderMobileDashboard = () => (
-    <div className="w-full">
-      {/* Welcome Section */}
-      <div className="px-2 pt-2 pb-1">
+    <div className="mobile-full-width">
+      {/* Welcome Section - Compact */}
+      <div className="mobile-section px-3">
         <h1 className="text-xl font-bold text-gold mb-1">
           Olá, {user?.name?.split(' ')[0] || "Colaborador"}! 👋
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mb-3">
           Aqui está um resumo dos seus dados
         </p>
-      </div>
 
-      {/* Pull to Refresh Indicator */}
-      <div className="flex justify-center px-2 pb-2">
+        {/* Quick Refresh */}
         <Button 
           onClick={refreshData} 
           variant="outline" 
           size="sm"
-          className="border-gold/20 text-gold hover:bg-gold/10"
+          className="border-gold/20 text-gold hover:bg-gold/10 w-full"
           disabled={isRefreshing}
         >
           <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
-          {isRefreshing ? "Atualizando..." : "Atualizar"}
+          {isRefreshing ? "Atualizando..." : "Atualizar Dados"}
         </Button>
       </div>
 
-      {/* Metrics Cards Grid - Full width with minimal gaps */}
-      <div className="px-1 pb-2">
-        <div className="grid gap-2">
+      {/* Metrics Grid - Edge to edge with internal padding */}
+      <div className="mobile-section px-2">
+        <div className="mobile-grid-1">
           <MobileMetricsCard
             title="Total de Vendas"
             value="R$ 0,00"
             description="Mês atual"
-            icon={<BarChart className="h-6 w-6" />}
+            icon={<BarChart className="h-5 w-5" />}
             trend="neutral"
+            layout="horizontal"
           />
           <MobileMetricsCard
             title="Leads Captados" 
             value="0"
             description="Últimos 30 dias"
-            icon={<Users className="h-6 w-6" />}
+            icon={<Users className="h-5 w-5" />}
             trend="neutral"
+            layout="horizontal"
           />
           <MobileMetricsCard
             title="Taxa de Conversão"
             value="0,0%"
             description="Leads → Vendas"
-            icon={<Calendar className="h-6 w-6" />}
+            icon={<Calendar className="h-5 w-5" />}
             trend="neutral"
+            layout="horizontal"
           />
           <MobileMetricsCard
-            title="Comissões"
+            title="Comissões Disponíveis"
             value="R$ 0,00"
-            description="Disponível para solicitação"
-            icon={<DollarSign className="h-6 w-6" />}
+            description="Pronto para solicitação"
+            icon={<DollarSign className="h-5 w-5" />}
             trend="neutral"
+            layout="vertical"
+            className="bg-gold/5"
           />
         </div>
       </div>
 
       {/* Quick Actions - Full width */}
-      <div className="px-1 pb-2">
-        <div className="bg-background/30 backdrop-blur-sm rounded-lg p-3 border border-gold/10">
-          <h3 className="text-sm font-medium text-gold mb-2">Ações Rápidas</h3>
-          <div className="grid grid-cols-2 gap-2">
-            <Button 
-              variant="outline" 
-              className="border-gold/20 text-gold hover:bg-gold/10 h-12"
-              onClick={() => handleTabChange("commissions")}
-            >
-              <Wallet className="h-4 w-4 mr-2" />
-              Comissões
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-gold/20 text-gold hover:bg-gold/10 h-12"
-              onClick={() => navigate("/employee/reports")}
-            >
-              <BarChart className="h-4 w-4 mr-2" />
-              Relatórios
-            </Button>
-          </div>
+      <div className="mobile-section px-3">
+        <h3 className="text-sm font-medium text-gold mb-2">Ações Rápidas</h3>
+        <div className="grid grid-cols-2 gap-2">
+          <Button 
+            variant="outline" 
+            className="border-gold/20 text-gold hover:bg-gold/10 h-12 text-sm"
+            onClick={() => handleTabChange("commissions")}
+          >
+            <Wallet className="h-4 w-4 mr-2" />
+            Comissões
+          </Button>
+          <Button 
+            variant="outline" 
+            className="border-gold/20 text-gold hover:bg-gold/10 h-12 text-sm"
+            onClick={() => navigate("/employee/reports")}
+          >
+            <BarChart className="h-4 w-4 mr-2" />
+            Relatórios
+          </Button>
         </div>
       </div>
 
-      {/* Recent Activity - Full width */}
-      <div className="px-1 pb-2">
-        <h3 className="text-sm font-medium text-gold mb-2 px-1">Atividade Recente</h3>
+      {/* Recent Activity - Edge to edge */}
+      <div className="px-3 pb-4">
+        <h3 className="text-sm font-medium text-gold mb-2">Atividade Recente</h3>
         <div className="space-y-1">
           <MobileHistoryCard
             title="Nenhuma venda registrada"
@@ -182,16 +183,16 @@ const Dashboard = () => {
     </div>
   );
 
-  // Mobile Commissions Content - optimized for single scroll
+  // Mobile Commissions Content - Optimized
   const renderMobileCommissions = () => (
-    <div className="w-full">
-      <div className="px-2 pt-2 pb-1">
+    <div className="mobile-full-width">
+      <div className="mobile-section px-3">
         <h2 className="text-xl font-bold text-gold mb-1">Comissões</h2>
         <p className="text-sm text-muted-foreground">
           Acompanhe suas comissões e solicite saques
         </p>
       </div>
-      <div className="px-2">
+      <div className="px-3">
         <CommissionsPanel />
       </div>
     </div>

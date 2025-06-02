@@ -20,27 +20,26 @@ const MobileLayout = ({
   const isMobile = useIsMobile();
 
   if (!isMobile) {
-    // Desktop fallback - render children without mobile layout
     return <>{children}</>;
   }
 
   return (
     <div className="flex flex-col h-screen bg-background overflow-hidden">
-      {/* Mobile Header */}
+      {/* Mobile Header - Compact */}
       <MobileHeader 
         title={title}
         showBackButton={showBackButton}
         actions={headerActions}
       />
       
-      {/* Main Content Area - Full width, single scroll container */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden w-full">
-        <div className="pb-20 safe-area-pb w-full">
+      {/* Main Content Area - Edge to Edge, Single Scroll */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="pb-16 min-h-full">
           {children}
         </div>
       </main>
       
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - Compact */}
       <BottomNavigation />
     </div>
   );

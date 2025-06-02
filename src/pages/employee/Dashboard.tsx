@@ -4,6 +4,9 @@ import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+// Desktop components
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import MetricsCard from "@/components/dashboard/MetricsCard";
 import SalesHistory from "@/components/dashboard/SalesHistory";
@@ -12,10 +15,16 @@ import CommissionsPanel from "@/components/dashboard/CommissionsPanel";
 import ResourcesPanel from "@/components/dashboard/ResourcesPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+// Mobile components
+import MobileLayout from "@/components/mobile/MobileLayout";
+import MobileMetricsCard from "@/components/mobile/MobileMetricsCard";
+import MobileHistoryCard from "@/components/mobile/MobileHistoryCard";
+
 const Dashboard = () => {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [isRefreshing, setIsRefreshing] = useState(false);
   
   // Get tab from URL query parameter or default to "metrics"
@@ -51,7 +60,161 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Render different content based on active tab
+  // Mobile Resources Content
+  const renderMobileResources = () => (
+    <div className="p-4 space-y-4">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gold mb-2">Recursos</h2>
+        <p className="text-sm text-muted-foreground">
+          Materiais e ferramentas para suas vendas
+        </p>
+      </div>
+      <ResourcesPanel />
+    </div>
+  );
+
+  // Mobile Dashboard Content
+  const renderMobileDashboard = () => (
+    <div className="p-4 space-y-6">
+      {/* Welcome Section */}
+      <div className="text-center mb-6">
+        <h1 className="text-xl font-bold text-gold mb-1">
+          Olá, {user?.name?.split(' ')[0] || "Colaborador"}! 👋
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Aqui está um resumo dos seus dados
+        </p>
+      </div>
+
+      {/* Pull to Refresh Indicator */}
+      <div className="flex justify-center mb-4">
+        <Button 
+          onClick={refreshData} 
+          variant="outline" 
+          size="sm"
+          className="border-gold/20 text-gold hover:bg-gold/10"
+          disabled={isRefreshing}
+        >
+          <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
+          {isRefreshing ? "Atualizando..." : "Atualizar"}
+        </Button>
+      </div>
+
+      {/* Metrics Cards Grid */}
+      <div className="grid gap-4">
+        <MobileMetricsCard
+          title="Total de Vendas"
+          value="R$ 0,00"
+          description="Mês atual"
+          icon={<BarChart className="h-5 w-5" />}
+          trend="neutral"
+        />
+        <MobileMetricsCard
+          title="Leads Captados" 
+          value="0"
+          description="Últimos 30 dias"
+          icon={<Users className="h-5 w-5" />}
+          trend="neutral"
+        />
+        <MobileMetricsCard
+          title="Taxa de Conversão"
+          value="0,0%"
+          description="Leads → Vendas"
+          icon={<Calendar className="h-5 w-5" />}
+          trend="neutral"
+        />
+        <MobileMetricsCard
+          title="Comissões"
+          value="R$ 0,00"
+          description="Disponível para solicitação"
+          icon={<DollarSign className="h-5 w-5" />}
+          trend="neutral"
+        />
+      </div>
+
+      {/* Quick Actions */}
+      <div className="bg-background/30 backdrop-blur-sm rounded-lg p-4 border border-gold/10">
+        <h3 className="text-sm font-medium text-gold mb-3">Ações Rápidas</h3>
+        <div className="grid grid-cols-2 gap-3">
+          <Button 
+            variant="outline" 
+            className="border-gold/20 text-gold hover:bg-gold/10 h-12"
+            onClick={() => handleTabChange("commissions")}
+          >
+            <Wallet className="h-4 w-4 mr-2" />
+            Comissões
+          </Button>
+          <Button 
+            variant="outline" 
+            className="border-gold/20 text-gold hover:bg-gold/10 h-12"
+            onClick={() => navigate("/employee/reports")}
+          >
+            <BarChart className="h-4 w-4 mr-2" />
+            Relatórios
+          </Button>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div>
+        <h3 className="text-sm font-medium text-gold mb-3">Atividade Recente</h3>
+        <div className="space-y-2">
+          <MobileHistoryCard
+            title="Nenhuma venda registrada"
+            subtitle="Suas vendas aparecerão aqui"
+            status="Aguardando"
+            statusColor="warning"
+          />
+          <MobileHistoryCard
+            title="Nenhum lead captado"
+            subtitle="Seus leads aparecerão aqui"
+            status="Aguardando"
+            statusColor="warning"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+  // Mobile Commissions Content
+  const renderMobileCommissions = () => (
+    <div className="p-4">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gold mb-2">Comissões</h2>
+        <p className="text-sm text-muted-foreground">
+          Acompanhe suas comissões e solicite saques
+        </p>
+      </div>
+      <CommissionsPanel />
+    </div>
+  );
+
+  // Mobile render based on active tab
+  const renderMobileContent = () => {
+    if (activeTab === "resources") {
+      return renderMobileResources();
+    } else if (activeTab === "commissions") {
+      return renderMobileCommissions();
+    }
+    return renderMobileDashboard();
+  };
+
+  // Mobile Layout
+  if (isMobile) {
+    return (
+      <MobileLayout 
+        title={
+          activeTab === "resources" ? "Recursos" :
+          activeTab === "commissions" ? "Comissões" :
+          "Dashboard"
+        }
+      >
+        {renderMobileContent()}
+      </MobileLayout>
+    );
+  }
+
+  // Desktop Layout (unchanged)
   const renderTabContent = () => {
     if (activeTab === "resources") {
       return (

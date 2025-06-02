@@ -41,6 +41,14 @@
     @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6;
   }
 
+  .mobile-card-grid-4 {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6;
+  }
+
+  .mobile-card-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6;
+  }
+
   .floating-card {
     @apply bg-card/80 backdrop-blur-lg border border-gold/20 hover:border-gold/40 transition-all duration-300;
   }

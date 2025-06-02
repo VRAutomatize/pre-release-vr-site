@@ -15,32 +15,21 @@ interface NavItemProps {
   label: string;
   href: string;
   active: boolean;
-  badge?: number;
-  featured?: boolean;
 }
 
-const NavItem = ({ icon: Icon, label, href, active, badge, featured }: NavItemProps) => {
+const NavItem = ({ icon: Icon, label, href, active }: NavItemProps) => {
   return (
     <Link
       to={href}
       className={cn(
         "flex flex-1 flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-300 native-touch native-press min-h-[48px] relative group",
-        featured 
-          ? "bg-yellow-400/20 text-yellow-400 shadow-lg ring-1 ring-yellow-400/30" 
-          : active 
-            ? "bg-yellow-400/20 text-yellow-400 transform scale-105" 
-            : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10 hover:scale-105"
+        active 
+          ? "bg-yellow-400/20 text-yellow-400 transform scale-105" 
+          : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10 hover:scale-105"
       )}
     >
       <div className="relative transition-transform duration-200 group-active:scale-95">
         <Icon className="h-5 w-5 mb-1 transition-all duration-200" />
-        {badge && badge > 0 && (
-          <div className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center animate-bounce">
-            <span className="text-[10px] font-bold text-white">
-              {badge > 9 ? "9+" : badge}
-            </span>
-          </div>
-        )}
       </div>
       <span className="text-[10px] font-medium leading-none transition-all duration-200">
         {label}
@@ -65,37 +54,31 @@ const NativeBottomNavigation = () => {
       icon: LayoutDashboard,
       label: "Dashboard",
       href: "/employee/dashboard",
-      active: currentPath === "/employee/dashboard" && (!currentTab || currentTab === "metrics"),
-      badge: 0
+      active: currentPath === "/employee/dashboard" && (!currentTab || currentTab === "metrics")
     },
     {
       icon: CreditCard,
       label: "Pagamentos",
       href: "/employee/links",
-      active: currentPath === "/employee/links",
-      badge: 0
+      active: currentPath === "/employee/links"
     },
     {
       icon: Play,
       label: "Recursos",
       href: "/employee/dashboard?tab=resources",
-      active: currentTab === "resources",
-      badge: 0,
-      featured: true
+      active: currentPath === "/employee/dashboard" && currentTab === "resources"
     },
     {
       icon: FileText,
       label: "Relatórios",
       href: "/employee/reports", 
-      active: currentPath === "/employee/reports",
-      badge: 0
+      active: currentPath === "/employee/reports"
     },
     {
       icon: Users,
       label: "Devs",
       href: "/employee/devs",
-      active: currentPath === "/employee/devs",
-      badge: 0
+      active: currentPath === "/employee/devs"
     }
   ];
 

@@ -1,0 +1,40 @@
+
+/* VR Automatize Text Colors - Dourado Theme */
+@layer utilities {
+  /* Primary text colors - Gold theme */
+  .text-vr-primary {
+    @apply text-gold;
+  }
+  
+  .text-vr-secondary {
+    @apply text-gold/80;
+  }
+  
+  .text-vr-muted {
+    @apply text-gold/70;
+  }
+  
+  .text-vr-subtle {
+    @apply text-gold/60;
+  }
+  
+  /* Override default muted text */
+  .text-default-muted {
+    @apply text-gold/70;
+  }
+  
+  /* Headings - Gradient gold */
+  .text-vr-heading {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light;
+  }
+  
+  /* High contrast text for important content */
+  .text-vr-contrast {
+    @apply text-foreground;
+  }
+  
+  /* Company/brand specific colors */
+  .text-vr-company {
+    @apply text-gold/90;
+  }
+}

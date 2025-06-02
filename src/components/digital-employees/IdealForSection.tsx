@@ -66,7 +66,7 @@ const IdealForSection = () => {
               className="bg-card/80 backdrop-blur-lg p-6 md:p-8 flex items-start gap-3 md:gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg text-left border border-gold/20"
             >
               <CheckCircle className="h-6 w-6 md:h-7 md:w-7 text-gold shrink-0 mt-1" />
-              <p className="text-sm md:text-base lg:text-lg text-foreground/90">{point}</p>
+              <p className="text-sm md:text-base lg:text-lg text-gold/90">{point}</p>
             </motion.div>
           ))}
         </div>

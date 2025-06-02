@@ -10,6 +10,7 @@
 @import './styles/base.css';
 @import './styles/design-system.css';
 @import './styles/utilities.css';
+@import './styles/text-colors.css';
 @import './styles/scrollbar.css';
 @import './styles/mobile.css';
 @import './styles/animations.css';

@@ -14,7 +14,7 @@ const ClientLogosSection = () => {
               Empresas que já transformaram seus resultados
             </h3>
           </div>
-          <p className="text-foreground/90 text-sm md:text-base">
+          <p className="text-gold/80 text-sm md:text-base">
             Mais de 200 empresas já economizam 6 dígitos com nossos funcionários digitais
           </p>
         </div>

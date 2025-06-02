@@ -51,10 +51,10 @@ const MicroCTA = ({
 
   return (
     <div className={`${config.bgColor} ${config.borderColor} border rounded-lg p-6 text-center backdrop-blur-sm ${className}`}>
-      <h3 className="text-base md:text-lg font-semibold mb-2 text-foreground">
+      <h3 className="text-base md:text-lg font-semibold mb-2 text-gold">
         {config.title}
       </h3>
-      <p className="text-foreground/90 mb-4 text-sm md:text-base">
+      <p className="text-gold/80 mb-4 text-sm md:text-base">
         {config.description}
       </p>
       

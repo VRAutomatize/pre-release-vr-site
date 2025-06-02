@@ -20,6 +20,9 @@
     --accent: 255 215 0;
     --accent-foreground: 16 20 24;
     
+    --muted: 51 65 85;
+    --muted-foreground: 255 215 0;
+    
     --border: 45 50 58;
     --input: 30 35 42;
     --ring: 255 215 0;

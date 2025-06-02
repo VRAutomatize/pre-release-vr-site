@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Desktop components
 import EmployeeSidebar from "@/components/EmployeeSidebar";
@@ -38,7 +39,7 @@ const Dashboard = () => {
 
   const refreshData = async () => {
     setIsRefreshing(true);
-    toast.info("Atualizando dados...");
+    toast.info("Verificando novos dados...");
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -47,26 +48,43 @@ const Dashboard = () => {
     toast.success("Dados atualizados!");
   };
 
-  // Handle tab change
+  // Handle tab change with smooth transition
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Mobile render based on active tab
+  // Page transition variants
+  const pageVariants = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -20 }
+  };
+
+  // Mobile render based on active tab with transitions
   const renderMobileContent = () => {
-    if (activeTab === "resources") {
-      return <MobileResourcesView />;
-    } else if (activeTab === "commissions") {
-      return <MobileCommissionsView />;
-    }
     return (
-      <NativeMobileDashboard
-        isRefreshing={isRefreshing}
-        onRefresh={refreshData}
-        onNavigateToCommissions={() => handleTabChange("commissions")}
-        onNavigateToReports={() => navigate("/employee/reports")}
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          {activeTab === "resources" && <MobileResourcesView />}
+          {activeTab === "commissions" && <MobileCommissionsView />}
+          {(!activeTab || activeTab === "metrics") && (
+            <NativeMobileDashboard
+              isRefreshing={isRefreshing}
+              onRefresh={refreshData}
+              onNavigateToCommissions={() => handleTabChange("commissions")}
+              onNavigateToReports={() => navigate("/employee/reports")}
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
     );
   };
 
@@ -96,11 +114,16 @@ const Dashboard = () => {
     );
   }
 
-  // Desktop Layout
+  // Desktop Layout with transitions
   return (
     <div className="flex h-[100vh] w-full overflow-hidden">
       <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+      <motion.main 
+        className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Gold blurred background image */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
           <div className="w-[100%] h-[100%] backdrop-blur-3xl">
@@ -118,7 +141,7 @@ const Dashboard = () => {
           onTabChange={handleTabChange}
           onRefresh={refreshData}
         />
-      </main>
+      </motion.main>
     </div>
   );
 };

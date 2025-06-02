@@ -9,59 +9,63 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// Empty sales data - prepared for future webhook integration
-const sampleSales: any[] = [];
+import { TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SalesHistory = () => {
   return (
-    <Card className="glass-card card-hover">
-      <CardHeader className="border-b border-gold/10">
-        <CardTitle className="text-lg font-semibold text-gold">
-          Histórico de Vendas
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-gold/5">
-                <TableHead>Cliente</TableHead>
-                <TableHead>Valor (R$)</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sampleSales.length > 0 ? (
-                sampleSales.map((sale) => (
-                  <TableRow key={sale.id} className="hover:bg-gold/5">
-                    <TableCell>{sale.client}</TableCell>
-                    <TableCell>{sale.value.toLocaleString('pt-BR')}</TableCell>
-                    <TableCell>{new Date(sale.date).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        sale.status === "Confirmado" ? "bg-amber-100 text-amber-800" :
-                        sale.status === "Pago" ? "bg-green-100 text-green-800" :
-                        "bg-blue-100 text-blue-800"
-                      }`}>
-                        {sale.status}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="glass-card card-hover">
+        <CardHeader className="border-b border-gold/10">
+          <CardTitle className="text-lg font-semibold text-gold flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            Histórico de Vendas
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-gold/5">
+                  <TableHead>Cliente</TableHead>
+                  <TableHead>Valor (R$)</TableHead>
+                  <TableHead>Data</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center py-6 text-muted-foreground">
-                    Nenhuma venda registrada
+                  <TableCell colSpan={4} className="text-center py-12">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      className="flex flex-col items-center gap-3"
+                    >
+                      <div className="h-16 w-16 bg-gold/10 rounded-full flex items-center justify-center">
+                        <TrendingUp className="h-8 w-8 text-gold/50" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-lg font-medium text-muted-foreground mb-1">
+                          Nenhuma venda registrada
+                        </p>
+                        <p className="text-sm text-muted-foreground/70">
+                          Suas vendas aparecerão aqui quando confirmadas
+                        </p>
+                      </div>
+                    </motion.div>
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 

@@ -9,59 +9,63 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// Empty leads data - prepared for future webhook integration
-const sampleLeads: any[] = [];
+import { Users } from "lucide-react";
+import { motion } from "framer-motion";
 
 const LeadsHistory = () => {
   return (
-    <Card className="glass-card card-hover">
-      <CardHeader className="border-b border-gold/10">
-        <CardTitle className="text-lg font-semibold text-gold">
-          Histórico de Leads
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-gold/5">
-                <TableHead>Nome</TableHead>
-                <TableHead>Empresa</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sampleLeads.length > 0 ? (
-                sampleLeads.map((lead) => (
-                  <TableRow key={lead.id} className="hover:bg-gold/5">
-                    <TableCell>{lead.name}</TableCell>
-                    <TableCell>{lead.company}</TableCell>
-                    <TableCell>{new Date(lead.date).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        lead.status === "Qualificado" ? "bg-green-100 text-green-800" :
-                        lead.status === "Na Base" ? "bg-purple-100 text-purple-800" :
-                        "bg-blue-100 text-blue-800"
-                      }`}>
-                        {lead.status}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.1 }}
+    >
+      <Card className="glass-card card-hover">
+        <CardHeader className="border-b border-gold/10">
+          <CardTitle className="text-lg font-semibold text-gold flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Histórico de Leads
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-gold/5">
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Empresa</TableHead>
+                  <TableHead>Data</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center py-6 text-muted-foreground">
-                    Nenhum lead registrado
+                  <TableCell colSpan={4} className="text-center py-12">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                      className="flex flex-col items-center gap-3"
+                    >
+                      <div className="h-16 w-16 bg-gold/10 rounded-full flex items-center justify-center">
+                        <Users className="h-8 w-8 text-gold/50" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-lg font-medium text-muted-foreground mb-1">
+                          Nenhum lead registrado
+                        </p>
+                        <p className="text-sm text-muted-foreground/70">
+                          Leads captados através do sistema aparecerão aqui
+                        </p>
+                      </div>
+                    </motion.div>
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 

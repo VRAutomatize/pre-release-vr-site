@@ -24,31 +24,31 @@ const NavItem = ({ icon: Icon, label, href, active, badge, featured }: NavItemPr
     <Link
       to={href}
       className={cn(
-        "flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 native-touch native-press min-h-[56px] relative",
+        "flex flex-col items-center justify-center py-2 px-2 rounded-xl transition-all duration-300 native-touch native-press min-h-[48px] relative group",
         featured 
-          ? "bg-yellow-400/20 text-yellow-400 scale-110" 
+          ? "bg-yellow-400/20 text-yellow-400 scale-105 animate-pulse" 
           : active 
-            ? "bg-yellow-400/20 text-yellow-400" 
-            : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10"
+            ? "bg-yellow-400/20 text-yellow-400 transform scale-105" 
+            : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10 hover:scale-105"
       )}
     >
-      <div className="relative">
-        <Icon className={cn("mb-1", featured ? "h-7 w-7" : "h-6 w-6")} />
+      <div className="relative transition-transform duration-200 group-active:scale-95">
+        <Icon className={cn("mb-1 transition-all duration-200", featured ? "h-6 w-6" : "h-5 w-5")} />
         {badge && badge > 0 && (
-          <div className="absolute -top-2 -right-2 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
-            <span className="text-xs font-semibold text-white">
+          <div className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center animate-bounce">
+            <span className="text-[10px] font-bold text-white">
               {badge > 9 ? "9+" : badge}
             </span>
           </div>
         )}
       </div>
-      <span className={cn("font-medium leading-none", featured ? "text-xs font-semibold" : "text-xs")}>
+      <span className={cn("font-medium leading-none transition-all duration-200", featured ? "text-[11px] font-bold" : "text-[10px]")}>
         {label}
       </span>
       
-      {/* Active indicator */}
+      {/* Active indicator with animation */}
       {active && (
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-yellow-400 rounded-full" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-yellow-400 rounded-full animate-scale-in" />
       )}
     </Link>
   );
@@ -80,7 +80,7 @@ const NativeBottomNavigation = () => {
       label: "Recursos",
       href: "/employee/dashboard?tab=resources",
       active: currentTab === "resources",
-      badge: 2,
+      badge: 0,
       featured: true
     },
     {
@@ -101,10 +101,10 @@ const NativeBottomNavigation = () => {
 
   return (
     <div 
-      className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-t border-yellow-400/10"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-t border-yellow-400/10 transition-all duration-300"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex items-center justify-around px-2 py-2">
+      <div className="flex items-center justify-around px-1 py-2">
         {navItems.map((item) => (
           <NavItem key={item.label} {...item} />
         ))}

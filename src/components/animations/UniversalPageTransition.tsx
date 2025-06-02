@@ -32,13 +32,15 @@ const UniversalPageTransition = ({ children, className = "" }: UniversalPageTran
       opacity: 0,
       x: 30,
       scale: 0.98,
-      filter: "blur(2px)"
+      filter: "blur(2px)",
+      backgroundColor: "rgb(17, 24, 39)" // Dark background during animation
     },
     animate: {
       opacity: 1,
       x: 0,
       scale: 1,
       filter: "blur(0px)",
+      backgroundColor: "rgb(17, 24, 39)",
       transition: {
         duration: DURATIONS.normal,
         ease: EASING.smooth,
@@ -50,6 +52,7 @@ const UniversalPageTransition = ({ children, className = "" }: UniversalPageTran
       x: -30,
       scale: 0.98,
       filter: "blur(2px)",
+      backgroundColor: "rgb(17, 24, 39)",
       transition: {
         duration: DURATIONS.fast,
         ease: EASING.gentle
@@ -61,12 +64,14 @@ const UniversalPageTransition = ({ children, className = "" }: UniversalPageTran
     initial: {
       opacity: 0,
       y: 20,
-      scale: 0.99
+      scale: 0.99,
+      backgroundColor: "rgb(17, 24, 39)" // Dark background during animation
     },
     animate: {
       opacity: 1,
       y: 0,
       scale: 1,
+      backgroundColor: "rgb(17, 24, 39)",
       transition: {
         duration: DURATIONS.normal,
         ease: EASING.smooth,
@@ -77,6 +82,7 @@ const UniversalPageTransition = ({ children, className = "" }: UniversalPageTran
       opacity: 0,
       y: -10,
       scale: 0.99,
+      backgroundColor: "rgb(17, 24, 39)",
       transition: {
         duration: DURATIONS.fast,
         ease: EASING.gentle
@@ -87,19 +93,21 @@ const UniversalPageTransition = ({ children, className = "" }: UniversalPageTran
   const variants = isMobile ? mobileVariants : desktopVariants;
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={location.pathname}
-        variants={variants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className={`h-full w-full ${className}`}
-        style={{ willChange: 'transform, opacity' }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className="bg-gray-900 min-h-screen w-full">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className={`h-full w-full bg-gray-900 ${className}`}
+          style={{ willChange: 'transform, opacity', backgroundColor: 'rgb(17, 24, 39)' }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 

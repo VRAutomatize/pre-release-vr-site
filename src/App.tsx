@@ -52,7 +52,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   // Employee routes get enhanced mobile transitions
   if (isEmployeeRoute) {
     return (
-      <UniversalPageTransition className="min-h-screen">
+      <UniversalPageTransition className="min-h-screen bg-gray-900">
         {children}
       </UniversalPageTransition>
     );
@@ -61,7 +61,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   // Service pages get smooth desktop + mobile transitions
   if (isServiceRoute || location.pathname === '/') {
     return (
-      <UniversalPageTransition className="min-h-screen">
+      <UniversalPageTransition className="min-h-screen bg-gray-900">
         {children}
       </UniversalPageTransition>
     );
@@ -69,7 +69,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   
   // Default pages (404, etc.) get simple transitions
   return (
-    <UniversalPageTransition>
+    <UniversalPageTransition className="bg-gray-900">
       {children}
     </UniversalPageTransition>
   );
@@ -82,7 +82,7 @@ function App() {
         <AuthProvider>
           <TypeformProvider>
             <Router>
-              <div className="min-h-screen bg-background text-foreground">
+              <div className="min-h-screen bg-gray-900 text-foreground">
                 <PageWrapper>
                   <Routes>
                     <Route path="/" element={<Index />} />

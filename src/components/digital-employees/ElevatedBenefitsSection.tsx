@@ -1,178 +1,141 @@
 
 import React from "react";
-import { TrendingUp, Zap, Shield, ArrowRight, Play } from "lucide-react";
+import { TrendingUp, DollarSign, Clock, Shield, Zap, Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 
-const ElevatedBenefitsSection = () => {
+const ElevatedBenefitsSection = React.memo(() => {
   const isMobile = useIsMobile();
+  const { shouldReduceMotion } = useOptimizedMotion();
 
   const benefits = [
     {
-      icon: TrendingUp,
-      title: "Economia Comprovada",
-      problem: "Custos fixos altos com equipe operacional",
-      solution: "Redução de 60-80% nos custos com funcionários",
-      result: "R$ 200k - R$ 800k economizados por ano",
-      color: "text-green-400",
-      bgColor: "bg-green-400/10",
-      borderColor: "border-green-400/30"
+      icon: DollarSign,
+      title: "Redução de Custos Imediata",
+      description: "Corte 60-80% dos custos operacionais em 90 dias",
+      metric: "R$ 200k+",
+      color: "text-green-400"
     },
     {
-      icon: Zap,
+      icon: Clock,
+      title: "Disponibilidade 24/7",
+      description: "Sistemas que nunca param, nunca faltam, nunca oscilam",
+      metric: "100%",
+      color: "text-blue-400"
+    },
+    {
+      icon: TrendingUp,
       title: "Escalabilidade Infinita",
-      problem: "Dificuldade para escalar sem contratar mais pessoas",
-      solution: "Sistemas que processam volume ilimitado",
-      result: "Cresça 300% sem aumentar equipe",
-      color: "text-blue-400",
-      bgColor: "bg-blue-400/10",
-      borderColor: "border-blue-400/30"
+      description: "Processe 10x mais volume sem contratar mais pessoas",
+      metric: "10x",
+      color: "text-gold"
     },
     {
       icon: Shield,
-      title: "Confiabilidade Total",
-      problem: "Erros humanos e inconsistências",
-      solution: "Automação 24/7 com 99.9% de precisão",
-      result: "Zero erros operacionais",
-      color: "text-gold",
-      bgColor: "bg-gold/10",
-      borderColor: "border-gold/30"
+      title: "Zero Erro Humano",
+      description: "Precisão absoluta em cada processo automatizado",
+      metric: "99.9%",
+      color: "text-purple-400"
+    },
+    {
+      icon: Zap,
+      title: "Implementação Rápida",
+      description: "Sistema funcionando em 30-60 dias máximo",
+      metric: "30 dias",
+      color: "text-orange-400"
+    },
+    {
+      icon: Users,
+      title: "Equipe Focada em Estratégia",
+      description: "Libere seu time para tarefas de alto valor agregado",
+      metric: "ROI 380%",
+      color: "text-red-400"
     }
   ];
 
-  const videoTestimonial = {
-    company: "E-commerce R$ 2M/mês",
-    name: "Carlos Silva, CEO",
-    result: "R$ 450k economizados em 8 meses",
-    quote: "Cortamos 80% da equipe operacional. ROI de 400% no primeiro ano.",
-    thumbnail: "/lovable-uploads/feb0a32a-fd43-4f11-a6eb-b9c493b7e77e.png"
-  };
-
   return (
-    <section id="benefits" className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background Effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-transparent"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 md:py-24 relative">
+      <div className="container mx-auto px-4">
         
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 rounded-full text-sm bg-gold/15 text-gold mb-6 font-semibold">
-            Resultados Comprovados
-          </span>
-          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold mb-6`}>
-            <span className="text-white block mb-2">Por que Empresários Escolhem</span>
+        {/* Header otimizado */}
+        <div className="text-center mb-12 md:mb-16">
+          <div className="inline-flex items-center gap-2 bg-gold/15 px-4 py-2 rounded-full mb-6">
+            <TrendingUp className="h-5 w-5 text-gold" />
+            <span className="text-gold font-semibold">Transformação Comprovada</span>
+          </div>
+          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold mb-4`}>
+            <span className="text-white">Por que</span>{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-green-400">
-              Funcionários Digitais?
-            </span>
+              Funcionários Digitais
+            </span>{" "}
+            <span className="text-white">são a solução?</span>
           </h2>
-          <p className={`${isMobile ? 'text-lg' : 'text-xl'} text-foreground/80 max-w-3xl mx-auto leading-relaxed`}>
-            Veja os 3 pilares que garantem resultados excepcionais para empresas como a sua
+          <p className={`${isMobile ? 'text-lg' : 'text-xl'} text-foreground/80 max-w-3xl mx-auto`}>
+            Enquanto seus concorrentes lutam com custos crescentes e processos ineficientes, 
+            você terá uma máquina de performance constante
           </p>
         </div>
 
-        {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {/* Benefits Grid - Otimizado */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {benefits.map((benefit, index) => (
             <Card 
-              key={benefit.title}
-              className={`p-8 ${benefit.bgColor} ${benefit.borderColor} border-2 hover:border-opacity-60 transition-all duration-300 rounded-2xl group relative overflow-hidden`}
-              style={{ animationDelay: `${index * 0.2}s` }}
+              key={index} 
+              className={`p-6 md:p-8 bg-card/80 backdrop-blur-sm border-gold/20 rounded-xl hover:border-gold/40 transition-all duration-300 ${shouldReduceMotion ? '' : 'hover:-translate-y-2'} group`}
+              style={{ willChange: shouldReduceMotion ? 'auto' : 'transform' }}
             >
-              {/* Background Gradient Effect */}
-              <div className={`absolute inset-0 ${benefit.bgColor} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
-              
-              <div className="relative z-10">
-                <benefit.icon className={`w-12 h-12 ${benefit.color} mb-6`} />
-                
-                <h3 className="text-2xl font-bold mb-4 text-white">{benefit.title}</h3>
-                
-                {/* Problem Statement */}
-                <div className="mb-4">
-                  <p className="text-sm text-red-300 font-medium mb-1">❌ Antes:</p>
-                  <p className="text-foreground/70 text-sm">{benefit.problem}</p>
+              {/* Icon e Métrica */}
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-r from-${benefit.color.split('-')[1]}-400/20 to-${benefit.color.split('-')[1]}-500/20 flex items-center justify-center`}>
+                  <benefit.icon className={`h-6 w-6 ${benefit.color}`} />
                 </div>
-                
-                {/* Solution */}
-                <div className="mb-4">
-                  <p className="text-sm text-green-300 font-medium mb-1">✅ Depois:</p>
-                  <p className="text-foreground/80">{benefit.solution}</p>
+                <div className={`text-right`}>
+                  <div className={`text-2xl font-bold ${benefit.color}`}>
+                    {benefit.metric}
+                  </div>
                 </div>
-                
-                {/* Result Highlight */}
-                <div className={`${benefit.bgColor} border ${benefit.borderColor} rounded-lg p-4 mt-4`}>
-                  <p className={`${benefit.color} font-bold text-lg`}>{benefit.result}</p>
-                </div>
+              </div>
+
+              {/* Content */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-3 group-hover:text-gold transition-colors duration-300">
+                  {benefit.title}
+                </h3>
+                <p className="text-foreground/80 leading-relaxed">
+                  {benefit.description}
+                </p>
               </div>
             </Card>
           ))}
         </div>
 
-        {/* Video Testimonial Destacado */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="p-8 bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-lg border-gold/30 rounded-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              
-              {/* Video Thumbnail */}
-              <div className="relative group cursor-pointer">
-                <div className="relative rounded-xl overflow-hidden">
-                  <img 
-                    src={videoTestimonial.thumbnail}
-                    alt="Video Testimonial"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <div className="bg-gold/90 rounded-full p-4 group-hover:scale-110 transition-transform duration-300">
-                      <Play className="h-8 w-8 text-black ml-1" />
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs text-center text-foreground/60 mt-2">
-                  Clique para assistir o depoimento completo
-                </p>
+        {/* Bottom CTA - Simplificado */}
+        <div className="text-center mt-12 md:mt-16">
+          <div className="bg-gradient-to-r from-gold/10 to-green-400/10 border border-gold/20 rounded-2xl p-6 md:p-8 max-w-4xl mx-auto">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
+              Pronto para Transformar Sua Operação?
+            </h3>
+            <p className="text-foreground/80 mb-6">
+              Mais de 200 empresas já reduziram custos em 6 dígitos. Sua empresa será a próxima?
+            </p>
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+              <div className="flex items-center gap-2 text-green-400 font-semibold">
+                <Shield className="h-5 w-5" />
+                <span>Garantia de resultado ou dinheiro de volta</span>
               </div>
-
-              {/* Testimonial Content */}
-              <div>
-                <div className="mb-4">
-                  <h4 className="text-xl font-bold text-white mb-1">{videoTestimonial.name}</h4>
-                  <p className="text-gold font-medium">{videoTestimonial.company}</p>
-                </div>
-                
-                <blockquote className="text-lg italic text-foreground/90 mb-4">
-                  "{videoTestimonial.quote}"
-                </blockquote>
-                
-                <div className="bg-green-400/15 border border-green-400/30 rounded-lg p-4 mb-6">
-                  <p className="text-green-400 font-bold text-xl">{videoTestimonial.result}</p>
-                  <p className="text-sm text-foreground/70">em economia comprovada</p>
-                </div>
-
-                <Button 
-                  className="bg-gold hover:bg-gold-light text-black font-semibold px-6 py-3 rounded-xl w-full md:w-auto"
-                  onClick={() => document.getElementById('roi-calculator')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Ver Minha Economia Potencial
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+              <div className="flex items-center gap-2 text-gold font-semibold">
+                <Clock className="h-5 w-5" />
+                <span>Implementação em até 60 dias</span>
               </div>
             </div>
-          </Card>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 px-6 py-3 rounded-full mb-6">
-            <TrendingUp className="h-5 w-5" />
-            <span className="font-semibold">
-              {isMobile ? "Economia média: R$ 283k/ano" : "Economia média dos nossos clientes: R$ 283k por ano"}
-            </span>
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
+
+ElevatedBenefitsSection.displayName = "ElevatedBenefitsSection";
 
 export default ElevatedBenefitsSection;

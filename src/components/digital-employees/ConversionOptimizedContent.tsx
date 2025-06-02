@@ -11,105 +11,84 @@ import ProcessSection from "./ProcessSection";
 import FAQSection from "./FAQSection";
 import CTASection from "./CTASection";
 import MobileStickyCTA from "./MobileStickyCTA";
-import { sectionVariants } from "./DigitalEmployeesAnimations";
+import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 
-const ConversionOptimizedContent = () => {
+const ConversionOptimizedContent = React.memo(() => {
+  const { shouldReduceMotion, animationConfig } = useOptimizedMotion();
+
+  // Variantes otimizadas
+  const sectionVariants = shouldReduceMotion ? {} : {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: animationConfig
+    }
+  };
+
+  const MotionWrapper = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+    if (shouldReduceMotion) {
+      return <div className={className}>{children}</div>;
+    }
+    
+    return (
+      <motion.div 
+        className={className}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        {children}
+      </motion.div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       
-      {/* Hero Section Otimizada */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
-        <ConversionOptimizedHero />
-      </motion.div>
+      {/* Hero Section - Sem animação para carregamento mais rápido */}
+      <ConversionOptimizedHero />
 
-      {/* Benefits Section Elevada - Posição #2 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      {/* Seções otimizadas com animações condicionais */}
+      <MotionWrapper>
         <ElevatedBenefitsSection />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* ROI Calculator Interativo - Posição #3 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <InteractiveROICalculator />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* Eliminação de Objeções - Posição #4 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <ObjectionEliminationSection />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* Prova Social Premium - Posição #5 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <PremiumSocialProof />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* Comparativo Visual - Posição #6 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <ComparisonSection />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* Processo - Posição #7 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <ProcessSection />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* FAQ - Posição #8 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <FAQSection />
-      </motion.div>
+      </MotionWrapper>
 
-      {/* CTA Final - Posição #9 */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
+      <MotionWrapper>
         <CTASection />
-      </motion.div>
+      </MotionWrapper>
 
       {/* Mobile Sticky CTA */}
       <MobileStickyCTA />
     </div>
   );
-};
+});
+
+ConversionOptimizedContent.displayName = "ConversionOptimizedContent";
 
 export default ConversionOptimizedContent;

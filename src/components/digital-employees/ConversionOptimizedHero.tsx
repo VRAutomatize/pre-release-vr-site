@@ -1,45 +1,36 @@
 
-import React, { useState, useEffect } from "react";
-import { Calculator, TrendingUp, Users, Clock, ArrowRight, Play } from "lucide-react";
+import React, { useState, useCallback } from "react";
+import { Calculator, TrendingUp, Users, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 
-const ConversionOptimizedHero = () => {
+const ConversionOptimizedHero = React.memo(() => {
   const isMobile = useIsMobile();
-  const [urgencyCount, setUrgencyCount] = useState(5);
+  const { shouldReduceMotion } = useOptimizedMotion();
+  const [urgencyCount] = useState(5); // Removido o setInterval que causava re-renders
   
-  useEffect(() => {
-    // Simula vagas sendo preenchidas para criar urgência
-    const interval = setInterval(() => {
-      setUrgencyCount(prev => prev > 2 ? prev - 1 : 2);
-    }, 45000); // A cada 45 segundos
-    
-    return () => clearInterval(interval);
+  const handleCalculateROI = useCallback(() => {
+    document.getElementById('roi-calculator')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const handleCalculateROI = () => {
-    // Scroll para calculadora ROI
-    document.getElementById('roi-calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleExecutiveConsultation = () => {
+  const handleExecutiveConsultation = useCallback(() => {
     window.open('https://wa.me/554788558257?text=Ol%C3%A1!%20Quero%20descobrir%20minha%20economia%20com%20Funcion%C3%A1rios%20Digitais!', '_blank');
-  };
+  }, []);
 
   return (
     <section className="min-h-screen pt-16 flex items-center relative overflow-hidden">
-      {/* Background Effects Otimizados */}
+      {/* Background Effects Otimizados - Reduzidos */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-gold/10 rounded-full filter blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-green-400/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-r from-gold/5 to-green-400/5 rounded-full filter blur-3xl opacity-30" />
+        <div className="absolute top-10 left-10 w-80 h-80 bg-gold/8 rounded-full filter blur-xl opacity-60" style={{ willChange: 'transform' }} />
+        <div className="absolute bottom-10 right-10 w-72 h-72 bg-green-400/8 rounded-full filter blur-xl opacity-60" style={{ willChange: 'transform' }} />
       </div>
 
       <div className="w-full px-4 md:max-w-7xl md:mx-auto md:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center">
           
-          {/* Urgência Visual Imediata */}
-          <div className="animate-fade-up mb-6">
+          {/* Urgência Visual - Estática para melhor performance */}
+          <div className={shouldReduceMotion ? "" : "animate-fade-up"}>
             <div className="inline-flex items-center gap-2 bg-red-500/15 border-2 border-red-400/40 text-red-300 px-6 py-3 rounded-full font-semibold shadow-lg">
               <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
               <span className="text-sm md:text-base">
@@ -48,8 +39,8 @@ const ConversionOptimizedHero = () => {
             </div>
           </div>
 
-          {/* Headline Principal - Foco em Resultado Específico */}
-          <div className="animate-fade-up mb-6" style={{ animationDelay: "0.2s" }}>
+          {/* Headline Principal - Otimizada */}
+          <div className={shouldReduceMotion ? "mb-6" : "animate-fade-up mb-6"} style={{ animationDelay: "0.2s" }}>
             <h1 className={`${isMobile ? 'text-4xl' : 'text-5xl md:text-6xl lg:text-7xl'} font-bold leading-tight mb-4`}>
               <span className="text-white block mb-2">Economize</span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-gold block mb-2">
@@ -61,8 +52,8 @@ const ConversionOptimizedHero = () => {
             </h1>
           </div>
 
-          {/* Subheadline com Benefício + Prova Social */}
-          <div className="animate-fade-up mb-8" style={{ animationDelay: "0.4s" }}>
+          {/* Subheadline - Otimizada */}
+          <div className={shouldReduceMotion ? "mb-8" : "animate-fade-up mb-8"} style={{ animationDelay: "0.4s" }}>
             <p className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} text-foreground/90 leading-relaxed mb-4`}>
               {isMobile 
                 ? "200+ empresas já cortaram custos fixos em 6 dígitos trabalhando 24/7 sem pausas ou oscilações"
@@ -82,8 +73,8 @@ const ConversionOptimizedHero = () => {
             </div>
           </div>
 
-          {/* Prova Social com Logos */}
-          <div className="animate-fade-up mb-8" style={{ animationDelay: "0.6s" }}>
+          {/* Prova Social - Simplificada */}
+          <div className={shouldReduceMotion ? "mb-8" : "animate-fade-up mb-8"} style={{ animationDelay: "0.6s" }}>
             <p className="text-sm text-foreground/70 mb-4">Empresários que já cortaram custos:</p>
             <div className="flex items-center justify-center gap-8 opacity-60">
               <div className="text-xs bg-card/50 px-3 py-2 rounded">E-commerce R$ 2M/mês</div>
@@ -93,18 +84,16 @@ const ConversionOptimizedHero = () => {
           </div>
 
           {/* CTAs Otimizados */}
-          <div className="animate-fade-up space-y-4" style={{ animationDelay: "0.8s" }}>
-            {/* CTA Principal - Foco na Descoberta */}
+          <div className={shouldReduceMotion ? "space-y-4" : "animate-fade-up space-y-4"} style={{ animationDelay: "0.8s" }}>
             <Button
               onClick={handleCalculateROI}
               className={`bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-bold ${isMobile ? 'text-lg px-8 py-6 w-full' : 'text-xl px-12 py-8'} rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-300`}
             >
               <Calculator className="mr-3 h-6 w-6" />
               {isMobile ? "Calcular Minha Economia" : "Descobrir Minha Economia Agora"}
-              <ArrowRight className="ml-3 h-6 w-6 animate-pulse" />
+              <ArrowRight className="ml-3 h-6 w-6" />
             </Button>
 
-            {/* CTA Secundário para Empresas Premium */}
             <div className="text-center">
               <p className="text-sm text-foreground/70 mb-3">
                 Para empresas com faturamento +R$ 500k/mês:
@@ -120,8 +109,8 @@ const ConversionOptimizedHero = () => {
             </div>
           </div>
 
-          {/* Elementos de Confiança */}
-          <div className="animate-fade-up mt-8 space-y-3" style={{ animationDelay: "1.0s" }}>
+          {/* Elementos de Confiança - Simplificados */}
+          <div className={shouldReduceMotion ? "mt-8 space-y-3" : "animate-fade-up mt-8 space-y-3"} style={{ animationDelay: "1.0s" }}>
             <div className="flex items-center justify-center gap-6 text-sm text-foreground/80">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -147,6 +136,8 @@ const ConversionOptimizedHero = () => {
       </div>
     </section>
   );
-};
+});
+
+ConversionOptimizedHero.displayName = "ConversionOptimizedHero";
 
 export default ConversionOptimizedHero;

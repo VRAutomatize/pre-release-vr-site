@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Desktop components
 import EmployeeSidebar from "@/components/EmployeeSidebar";
@@ -54,37 +54,35 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Page transition variants
+  // Page transition variants for tab content only
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
     animate: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: -20 }
   };
 
-  // Mobile render based on active tab with transitions
+  // Mobile render based on active tab with transitions only for tab content
   const renderMobileContent = () => {
     return (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        >
-          {activeTab === "resources" && <MobileResourcesView />}
-          {activeTab === "commissions" && <MobileCommissionsView />}
-          {(!activeTab || activeTab === "metrics") && (
-            <NativeMobileDashboard
-              isRefreshing={isRefreshing}
-              onRefresh={refreshData}
-              onNavigateToCommissions={() => handleTabChange("commissions")}
-              onNavigateToReports={() => navigate("/employee/reports")}
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        key={activeTab}
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        {activeTab === "resources" && <MobileResourcesView />}
+        {activeTab === "commissions" && <MobileCommissionsView />}
+        {(!activeTab || activeTab === "metrics") && (
+          <NativeMobileDashboard
+            isRefreshing={isRefreshing}
+            onRefresh={refreshData}
+            onNavigateToCommissions={() => handleTabChange("commissions")}
+            onNavigateToReports={() => navigate("/employee/reports")}
+          />
+        )}
+      </motion.div>
     );
   };
 

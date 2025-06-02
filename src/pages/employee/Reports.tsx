@@ -6,6 +6,8 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import NativeMobileLayout from "@/components/mobile/NativeMobileLayout";
 import { NativeCard } from "@/components/ui/native-card";
 import { NativeButton } from "@/components/ui/native-button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Reports = () => {
   const [activeForm, setActiveForm] = useState<{

@@ -24,16 +24,16 @@ const NavItem = ({ icon: Icon, label, href, active, badge, featured }: NavItemPr
     <Link
       to={href}
       className={cn(
-        "flex flex-col items-center justify-center py-2 px-2 rounded-xl transition-all duration-300 native-touch native-press min-h-[48px] relative group",
+        "flex flex-1 flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-300 native-touch native-press min-h-[48px] relative group",
         featured 
-          ? "bg-yellow-400/20 text-yellow-400 scale-105 animate-pulse" 
+          ? "bg-yellow-400/20 text-yellow-400 shadow-lg ring-1 ring-yellow-400/30" 
           : active 
             ? "bg-yellow-400/20 text-yellow-400 transform scale-105" 
             : "text-gray-400 hover:text-yellow-400 hover:bg-yellow-400/10 hover:scale-105"
       )}
     >
       <div className="relative transition-transform duration-200 group-active:scale-95">
-        <Icon className={cn("mb-1 transition-all duration-200", featured ? "h-6 w-6" : "h-5 w-5")} />
+        <Icon className="h-5 w-5 mb-1 transition-all duration-200" />
         {badge && badge > 0 && (
           <div className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center animate-bounce">
             <span className="text-[10px] font-bold text-white">
@@ -42,7 +42,7 @@ const NavItem = ({ icon: Icon, label, href, active, badge, featured }: NavItemPr
           </div>
         )}
       </div>
-      <span className={cn("font-medium leading-none transition-all duration-200", featured ? "text-[11px] font-bold" : "text-[10px]")}>
+      <span className="text-[10px] font-medium leading-none transition-all duration-200">
         {label}
       </span>
       
@@ -104,7 +104,7 @@ const NativeBottomNavigation = () => {
       className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-t border-yellow-400/10 transition-all duration-300"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex items-center justify-around px-1 py-2">
+      <div className="flex items-center justify-between px-2 py-2">
         {navItems.map((item) => (
           <NavItem key={item.label} {...item} />
         ))}

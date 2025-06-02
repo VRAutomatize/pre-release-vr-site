@@ -67,32 +67,32 @@ const EmployeeSidebar = () => {
           <SidebarItem
             icon={LayoutDashboard}
             label="Dashboard"
-            href="/dashboard"
-            active={currentPath === "/dashboard" && !currentTab || currentTab === "metrics"}
+            href="/employee/dashboard"
+            active={currentPath === "/employee/dashboard" && !currentTab || currentTab === "metrics"}
           />
           <SidebarItem
             icon={FileText}
             label="Gerar Relatório"
-            href="/dashboard/reports"
-            active={currentPath === "/dashboard/reports"}
+            href="/employee/reports"
+            active={currentPath === "/employee/reports"}
           />
           <SidebarItem
             icon={BookOpen}
             label="Recursos"
-            href="/dashboard?tab=resources"
+            href="/employee/dashboard?tab=resources"
             active={currentTab === "resources"}
           />
           <SidebarItem
             icon={CreditCard}
             label="Links Pagamento"
-            href="/dashboard/payments"
-            active={currentPath === "/dashboard/payments"}
+            href="/employee/links"
+            active={currentPath === "/employee/links"}
           />
           <SidebarItem
             icon={Users}
             label="Devs"
-            href="/dashboard/devs"
-            active={currentPath === "/dashboard/devs"}
+            href="/employee/devs"
+            active={currentPath === "/employee/devs"}
           />
         </nav>
       </div>

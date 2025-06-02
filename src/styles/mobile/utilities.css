@@ -5,6 +5,14 @@
     @apply px-4 w-full;
   }
 
+  .mobile-container-tight {
+    @apply px-4 md:px-6 max-w-6xl mx-auto;
+  }
+
+  .mobile-container-full {
+    @apply w-full;
+  }
+
   .mobile-spacing {
     @apply space-y-4;
   }
@@ -13,21 +21,57 @@
     @apply mb-6;
   }
 
+  .section-spacing {
+    @apply py-8 md:py-12;
+  }
+
+  .section-spacing-large {
+    @apply py-12 md:py-16;
+  }
+
+  .mobile-card-padding {
+    @apply p-4 md:p-6;
+  }
+
+  .mobile-card-compact {
+    @apply p-4 md:p-6;
+  }
+
+  .mobile-card-grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6;
+  }
+
+  .floating-card {
+    @apply bg-card/80 backdrop-blur-lg border border-gold/20 hover:border-gold/40 transition-all duration-300;
+  }
+
+  .micro-cta-spacing {
+    @apply py-6 md:py-8;
+  }
+
+  .reveal-section {
+    @apply opacity-100;
+  }
+
+  .mobile-full-width {
+    @apply w-full;
+  }
+
   /* Mobile typography - Optimized for readability */
   .mobile-heading {
-    @apply text-lg font-semibold leading-tight;
+    @apply text-lg md:text-xl font-semibold leading-tight text-foreground;
   }
 
   .mobile-subheading {
-    @apply text-base font-medium leading-snug;
+    @apply text-base md:text-lg font-medium leading-snug text-foreground/90;
   }
 
   .mobile-body {
-    @apply text-sm leading-relaxed;
+    @apply text-sm md:text-base leading-relaxed text-foreground/90;
   }
 
   .mobile-caption {
-    @apply text-xs leading-normal;
+    @apply text-xs md:text-sm leading-normal text-foreground/80;
   }
 
   /* Mobile interaction feedback */

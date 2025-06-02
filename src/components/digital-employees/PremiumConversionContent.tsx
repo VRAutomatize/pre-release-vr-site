@@ -5,6 +5,9 @@ import PremiumExecutiveHeroRedesign from "./PremiumExecutiveHeroRedesign";
 import ElevatedBenefitsSection from "./ElevatedBenefitsSection";
 import ExecutiveROICalculatorAdvanced from "./ExecutiveROICalculatorAdvanced";
 import UltraPremiumSocialProofAdvanced from "./UltraPremiumSocialProofAdvanced";
+import ExecutiveStrategySection from "./ExecutiveStrategySection";
+import BusinessTransformationSection from "./BusinessTransformationSection";
+import ExecutiveAuthoritySection from "./ExecutiveAuthoritySection";
 import ObjectionEliminationSection from "./ObjectionEliminationSection";
 import ComparisonSection from "./ComparisonSection";
 import ProcessSection from "./ProcessSection";
@@ -63,6 +66,21 @@ const PremiumConversionContent = React.memo(() => {
       {/* Ultra Premium Social Proof - Advanced version */}
       <MotionWrapper>
         <UltraPremiumSocialProofAdvanced />
+      </MotionWrapper>
+
+      {/* Executive Strategy Section - Phase 6 */}
+      <MotionWrapper>
+        <ExecutiveStrategySection />
+      </MotionWrapper>
+
+      {/* Business Transformation Section - Phase 6 */}
+      <MotionWrapper>
+        <BusinessTransformationSection />
+      </MotionWrapper>
+
+      {/* Executive Authority Section - Phase 6 */}
+      <MotionWrapper>
+        <ExecutiveAuthoritySection />
       </MotionWrapper>
 
       {/* Objection Elimination */}

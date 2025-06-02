@@ -3,8 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import PremiumExecutiveHeroRedesign from "./PremiumExecutiveHeroRedesign";
 import ElevatedBenefitsSection from "./ElevatedBenefitsSection";
-import ExecutiveROICalculator from "./ExecutiveROICalculator";
-import UltraPremiumSocialProof from "./UltraPremiumSocialProof";
+import ExecutiveROICalculatorAdvanced from "./ExecutiveROICalculatorAdvanced";
+import UltraPremiumSocialProofAdvanced from "./UltraPremiumSocialProofAdvanced";
 import ObjectionEliminationSection from "./ObjectionEliminationSection";
 import ComparisonSection from "./ComparisonSection";
 import ProcessSection from "./ProcessSection";
@@ -16,7 +16,7 @@ import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 const PremiumConversionContent = React.memo(() => {
   const { shouldReduceMotion, animationConfig } = useOptimizedMotion();
 
-  // Variantes premium otimizadas
+  // Premium animation variants
   const premiumSectionVariants = shouldReduceMotion ? {} : {
     hidden: { opacity: 0, y: 30 },
     visible: { 
@@ -47,7 +47,7 @@ const PremiumConversionContent = React.memo(() => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       
-      {/* Premium Executive Hero - Nova versão reformulada */}
+      {/* Premium Executive Hero - Redesigned version */}
       <PremiumExecutiveHeroRedesign />
 
       {/* Executive Benefits */}
@@ -55,14 +55,14 @@ const PremiumConversionContent = React.memo(() => {
         <ElevatedBenefitsSection />
       </MotionWrapper>
 
-      {/* Executive ROI Calculator */}
+      {/* Advanced Executive ROI Calculator */}
       <MotionWrapper>
-        <ExecutiveROICalculator />
+        <ExecutiveROICalculatorAdvanced />
       </MotionWrapper>
 
-      {/* Ultra Premium Social Proof */}
+      {/* Ultra Premium Social Proof - Advanced version */}
       <MotionWrapper>
-        <UltraPremiumSocialProof />
+        <UltraPremiumSocialProofAdvanced />
       </MotionWrapper>
 
       {/* Objection Elimination */}

@@ -60,24 +60,26 @@ const Dashboard = () => {
     navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
-  // Mobile Resources Content
+  // Mobile Resources Content - optimized for single scroll
   const renderMobileResources = () => (
-    <div className="p-4 space-y-4">
-      <div className="text-center mb-6">
+    <div className="mobile-no-scroll">
+      <div className="px-4 pt-4 pb-2">
         <h2 className="text-xl font-bold text-gold mb-2">Recursos</h2>
         <p className="text-sm text-muted-foreground">
           Materiais e ferramentas para suas vendas
         </p>
       </div>
-      <ResourcesPanel />
+      <div className="px-4">
+        <ResourcesPanel />
+      </div>
     </div>
   );
 
-  // Mobile Dashboard Content
+  // Mobile Dashboard Content - optimized for single scroll
   const renderMobileDashboard = () => (
-    <div className="p-4 space-y-6">
+    <div className="mobile-no-scroll">
       {/* Welcome Section */}
-      <div className="text-center mb-6">
+      <div className="px-4 pt-4 pb-2">
         <h1 className="text-xl font-bold text-gold mb-1">
           Olá, {user?.name?.split(' ')[0] || "Colaborador"}! 👋
         </h1>
@@ -87,7 +89,7 @@ const Dashboard = () => {
       </div>
 
       {/* Pull to Refresh Indicator */}
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center px-4 pb-4">
         <Button 
           onClick={refreshData} 
           variant="outline" 
@@ -101,62 +103,66 @@ const Dashboard = () => {
       </div>
 
       {/* Metrics Cards Grid */}
-      <div className="grid gap-4">
-        <MobileMetricsCard
-          title="Total de Vendas"
-          value="R$ 0,00"
-          description="Mês atual"
-          icon={<BarChart className="h-5 w-5" />}
-          trend="neutral"
-        />
-        <MobileMetricsCard
-          title="Leads Captados" 
-          value="0"
-          description="Últimos 30 dias"
-          icon={<Users className="h-5 w-5" />}
-          trend="neutral"
-        />
-        <MobileMetricsCard
-          title="Taxa de Conversão"
-          value="0,0%"
-          description="Leads → Vendas"
-          icon={<Calendar className="h-5 w-5" />}
-          trend="neutral"
-        />
-        <MobileMetricsCard
-          title="Comissões"
-          value="R$ 0,00"
-          description="Disponível para solicitação"
-          icon={<DollarSign className="h-5 w-5" />}
-          trend="neutral"
-        />
+      <div className="px-4 pb-4">
+        <div className="grid gap-4">
+          <MobileMetricsCard
+            title="Total de Vendas"
+            value="R$ 0,00"
+            description="Mês atual"
+            icon={<BarChart className="h-5 w-5" />}
+            trend="neutral"
+          />
+          <MobileMetricsCard
+            title="Leads Captados" 
+            value="0"
+            description="Últimos 30 dias"
+            icon={<Users className="h-5 w-5" />}
+            trend="neutral"
+          />
+          <MobileMetricsCard
+            title="Taxa de Conversão"
+            value="0,0%"
+            description="Leads → Vendas"
+            icon={<Calendar className="h-5 w-5" />}
+            trend="neutral"
+          />
+          <MobileMetricsCard
+            title="Comissões"
+            value="R$ 0,00"
+            description="Disponível para solicitação"
+            icon={<DollarSign className="h-5 w-5" />}
+            trend="neutral"
+          />
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-background/30 backdrop-blur-sm rounded-lg p-4 border border-gold/10">
-        <h3 className="text-sm font-medium text-gold mb-3">Ações Rápidas</h3>
-        <div className="grid grid-cols-2 gap-3">
-          <Button 
-            variant="outline" 
-            className="border-gold/20 text-gold hover:bg-gold/10 h-12"
-            onClick={() => handleTabChange("commissions")}
-          >
-            <Wallet className="h-4 w-4 mr-2" />
-            Comissões
-          </Button>
-          <Button 
-            variant="outline" 
-            className="border-gold/20 text-gold hover:bg-gold/10 h-12"
-            onClick={() => navigate("/employee/reports")}
-          >
-            <BarChart className="h-4 w-4 mr-2" />
-            Relatórios
-          </Button>
+      <div className="px-4 pb-4">
+        <div className="bg-background/30 backdrop-blur-sm rounded-lg p-4 border border-gold/10">
+          <h3 className="text-sm font-medium text-gold mb-3">Ações Rápidas</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Button 
+              variant="outline" 
+              className="border-gold/20 text-gold hover:bg-gold/10 h-12"
+              onClick={() => handleTabChange("commissions")}
+            >
+              <Wallet className="h-4 w-4 mr-2" />
+              Comissões
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-gold/20 text-gold hover:bg-gold/10 h-12"
+              onClick={() => navigate("/employee/reports")}
+            >
+              <BarChart className="h-4 w-4 mr-2" />
+              Relatórios
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Recent Activity */}
-      <div>
+      <div className="px-4 pb-4">
         <h3 className="text-sm font-medium text-gold mb-3">Atividade Recente</h3>
         <div className="space-y-2">
           <MobileHistoryCard
@@ -176,16 +182,18 @@ const Dashboard = () => {
     </div>
   );
 
-  // Mobile Commissions Content
+  // Mobile Commissions Content - optimized for single scroll
   const renderMobileCommissions = () => (
-    <div className="p-4">
-      <div className="text-center mb-6">
+    <div className="mobile-no-scroll">
+      <div className="px-4 pt-4 pb-2">
         <h2 className="text-xl font-bold text-gold mb-2">Comissões</h2>
         <p className="text-sm text-muted-foreground">
           Acompanhe suas comissões e solicite saques
         </p>
       </div>
-      <CommissionsPanel />
+      <div className="px-4">
+        <CommissionsPanel />
+      </div>
     </div>
   );
 

@@ -1,32 +1,71 @@
 
 @layer base {
-  /* Custom minimal scrollbar */
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+  /* Custom minimal scrollbar for desktop */
+  @media (min-width: 769px) {
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 2px;
+      transition: background 0.2s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    /* Firefox scrollbar */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 215, 0, 0.1) transparent;
+    }
   }
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  /* Mobile optimized scrollbar - nearly invisible */
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 1px;
+      height: 1px;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 2px;
-    transition: background 0.2s ease;
-  }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 215, 0, 0.2);
-  }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.05);
+      border-radius: 1px;
+    }
 
-  ::-webkit-scrollbar-corner {
-    background: transparent;
-  }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 215, 0, 0.1);
+    }
 
-  /* Firefox scrollbar */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 215, 0, 0.1) transparent;
+    /* Firefox mobile scrollbar */
+    * {
+      scrollbar-width: none; /* Hide scrollbar for Firefox on mobile */
+      scrollbar-color: transparent transparent;
+    }
+
+    /* Hide scrollbar for mobile WebKit browsers */
+    .mobile-single-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .mobile-single-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   }
 }

@@ -5,11 +5,14 @@
       height: 100%;
       width: 100%;
       overflow-x: hidden;
+      overflow-y: hidden; /* Prevent body scroll on mobile */
       position: relative;
-      /* Scroll padding para bottom navigation */
-      scroll-padding-bottom: 88px;
-      /* Ajuste de scroll padding para header fixo no mobile */
-      scroll-padding-top: 64px;
+    }
+    
+    /* Remove scroll from main app container */
+    #root {
+      height: 100vh;
+      overflow: hidden;
     }
     
     /* Estilos específicos para o modo mobile quando o formulário está aberto */
@@ -41,7 +44,7 @@
 @layer utilities {
   /* Safe area utilities for mobile devices with notch/dynamic island */
   .safe-area-pb {
-    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+    padding-bottom: max(env(safe-area-inset-bottom), 5rem);
   }
 
   .safe-area-pl {
@@ -201,9 +204,9 @@
     @apply translate-y-0;
   }
 
-  /* Mobile bottom navigation spacing */
+  /* Mobile content spacing - remove conflicting bottom padding */
   .mobile-content-with-nav {
-    @apply pb-20;
+    @apply overflow-visible;
   }
 
   /* Mobile header heights */
@@ -232,6 +235,13 @@
 
   .mobile-pull-refresh-active {
     @apply transform translate-y-16;
+  }
+
+  /* Single scroll container optimization */
+  .mobile-single-scroll {
+    @apply overflow-y-auto overflow-x-hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 }
 
@@ -270,6 +280,11 @@
   input[type="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Prevent content containers from creating additional scroll */
+  .mobile-no-scroll {
+    overflow: visible;
   }
 }
 

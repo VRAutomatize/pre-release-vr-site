@@ -91,6 +91,22 @@
     -webkit-tap-highlight-color: rgba(255, 215, 0, 0.1);
   }
 
+  /* Swipe animations */
+  .animate-slide-up {
+    animation: slide-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
   /* Native shimmer animation for loading states */
   @keyframes shimmer {
     0% {
@@ -128,37 +144,6 @@
     animation: fade-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Page transition animations */
-  @keyframes slide-in-right {
-    0% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-out-left {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
-
-  .animate-slide-in-right {
-    animation: slide-in-right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .animate-slide-out-left {
-    animation: slide-out-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
   /* Glass morphism effects */
   .glass-blur {
     backdrop-filter: blur(20px);
@@ -190,6 +175,11 @@
     padding-right: env(safe-area-inset-right);
   }
 
+  .safe-area-px {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
   /* Card hover animations - Enhanced */
   .card-hover {
     @apply transition-all duration-300;
@@ -207,54 +197,10 @@
     overscroll-behavior: contain;
   }
 
-  /* Pull to refresh indicator */
-  .pull-to-refresh {
-    @apply flex items-center justify-center py-4 opacity-0 transform -translate-y-4 transition-all duration-300;
-  }
-
-  .pull-to-refresh.active {
-    @apply opacity-100 translate-y-0;
-  }
-
   /* Native button press effect */
   .native-press:active {
     transform: scale(0.96);
     transition: transform 0.1s ease-out;
-  }
-
-  /* Ripple effect */
-  @keyframes ripple {
-    0% {
-      transform: scale(0);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-
-  .ripple-effect {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ripple-effect::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  .ripple-effect:active::before {
-    width: 300px;
-    height: 300px;
   }
 
   /* Micro-interactions */
@@ -295,27 +241,6 @@
   }
 }
 
-/* Custom scrollbar for webkit browsers - Enhanced */
-@media (min-width: 769px) {
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.5));
-    border-radius: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, rgba(255, 215, 0, 0.5), rgba(255, 215, 0, 0.7));
-  }
-}
-
 /* Mobile-first media queries */
 @media (max-width: 768px) {
   .mobile-optimized {
@@ -332,5 +257,15 @@
   textarea,
   select {
     font-size: 16px !important;
+  }
+
+  /* Hide scrollbars on mobile for cleaner look */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

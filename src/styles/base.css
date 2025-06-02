@@ -5,29 +5,29 @@
 
 @layer base {
   :root {
-    --background: 228 15% 13%;
-    --foreground: 210 40% 98%;
+    --background: 16 20 24;
+    --foreground: 248 250 252;
     
-    --card: 228 15% 15%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 35 42;
+    --card-foreground: 248 250 252;
     
-    --primary: 51 100% 50%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 255 215 0;
+    --primary-foreground: 16 20 24;
     
-    --secondary: 228 15% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 51 65 85;
+    --secondary-foreground: 203 213 225;
     
-    --accent: 51 100% 50%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 255 215 0;
+    --accent-foreground: 16 20 24;
     
-    --border: 228 15% 20%;
-    --input: 228 15% 20%;
-    --ring: 51 100% 50%;
+    --border: 45 50 58;
+    --input: 30 35 42;
+    --ring: 255 215 0;
     
     --radius: 0.75rem;
   }
 
-  /* Global reset for white borders */
+  /* Global reset for consistent styling */
   *, *::before, *::after {
     @apply border-border;
     margin: 0;

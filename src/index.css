@@ -1,10 +1,12 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Tailwind base imports - ordem importante */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import all style modules */
+/* Import style modules na ordem correta */
 @import './styles/base.css';
 @import './styles/design-system.css';
 @import './styles/utilities.css';
@@ -12,22 +14,7 @@
 @import './styles/mobile.css';
 @import './styles/animations.css';
 
-/* Global reset to eliminate white borders */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-/* Base styles with professional defaults */
+/* Base styles with VR Automatize theme */
 @layer base {
   * {
     @apply border-border;
@@ -36,16 +23,12 @@ html, body {
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    /* Enable smooth scrolling globally */
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     scroll-behavior: smooth;
-    /* Improve text rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Optimize for animations */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    /* Ensure full coverage */
     width: 100%;
     height: 100%;
     margin: 0;
@@ -81,7 +64,7 @@ html, body {
   }
 }
 
-/* Professional component defaults */
+/* VR Automatize component defaults */
 @layer components {
   .btn-primary {
     @apply bg-gold text-gray-900 font-semibold px-4 py-2 rounded-lg;
@@ -91,9 +74,9 @@ html, body {
   }
 
   .card-elevated {
-    @apply bg-background/80 backdrop-blur-lg border border-gold/10;
+    @apply bg-card/80 backdrop-blur-lg border border-gold/10;
     @apply shadow-lg hover:shadow-xl transition-all duration-300;
-    @apply hover:border-gold/20;
+    @apply hover:border-gold/20 rounded-lg;
   }
 
   .page-container {

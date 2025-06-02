@@ -14,6 +14,9 @@ import ProcessSection from "./ProcessSection";
 import FAQSection from "./FAQSection";
 import CTASection from "./CTASection";
 import PremiumMobileStickyCTA from "./PremiumMobileStickyCTA";
+import { AdvancedAnalyticsProvider } from "./AdvancedAnalyticsProvider";
+import DynamicPersonalization from "./DynamicPersonalization";
+import ConversionOptimizationEngine from "./ConversionOptimizationEngine";
 import { useOptimizedMotion } from "@/hooks/useOptimizedMotion";
 
 const PremiumConversionContent = React.memo(() => {
@@ -48,69 +51,85 @@ const PremiumConversionContent = React.memo(() => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
-      
-      {/* Premium Executive Hero - Redesigned version */}
-      <PremiumExecutiveHeroRedesign />
+    <AdvancedAnalyticsProvider>
+      <div className="min-h-screen bg-background overflow-x-hidden">
+        
+        {/* Premium Executive Hero - Redesigned version */}
+        <PremiumExecutiveHeroRedesign />
 
-      {/* Executive Benefits */}
-      <MotionWrapper>
-        <ElevatedBenefitsSection />
-      </MotionWrapper>
+        {/* Dynamic Personalization - Phase 7 */}
+        <MotionWrapper>
+          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+            <DynamicPersonalization />
+          </div>
+        </MotionWrapper>
 
-      {/* Advanced Executive ROI Calculator */}
-      <MotionWrapper>
-        <ExecutiveROICalculatorAdvanced />
-      </MotionWrapper>
+        {/* Executive Benefits */}
+        <MotionWrapper>
+          <ElevatedBenefitsSection />
+        </MotionWrapper>
 
-      {/* Ultra Premium Social Proof - Advanced version */}
-      <MotionWrapper>
-        <UltraPremiumSocialProofAdvanced />
-      </MotionWrapper>
+        {/* Advanced Executive ROI Calculator */}
+        <MotionWrapper>
+          <ExecutiveROICalculatorAdvanced />
+        </MotionWrapper>
 
-      {/* Executive Strategy Section - Phase 6 */}
-      <MotionWrapper>
-        <ExecutiveStrategySection />
-      </MotionWrapper>
+        {/* Ultra Premium Social Proof - Advanced version */}
+        <MotionWrapper>
+          <UltraPremiumSocialProofAdvanced />
+        </MotionWrapper>
 
-      {/* Business Transformation Section - Phase 6 */}
-      <MotionWrapper>
-        <BusinessTransformationSection />
-      </MotionWrapper>
+        {/* Executive Strategy Section - Phase 6 */}
+        <MotionWrapper>
+          <ExecutiveStrategySection />
+        </MotionWrapper>
 
-      {/* Executive Authority Section - Phase 6 */}
-      <MotionWrapper>
-        <ExecutiveAuthoritySection />
-      </MotionWrapper>
+        {/* Business Transformation Section - Phase 6 */}
+        <MotionWrapper>
+          <BusinessTransformationSection />
+        </MotionWrapper>
 
-      {/* Objection Elimination */}
-      <MotionWrapper>
-        <ObjectionEliminationSection />
-      </MotionWrapper>
+        {/* Executive Authority Section - Phase 6 */}
+        <MotionWrapper>
+          <ExecutiveAuthoritySection />
+        </MotionWrapper>
 
-      {/* Comparison Section */}
-      <MotionWrapper>
-        <ComparisonSection />
-      </MotionWrapper>
+        {/* Conversion Optimization Engine - Phase 7 */}
+        <MotionWrapper>
+          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16">
+            <ConversionOptimizationEngine />
+          </div>
+        </MotionWrapper>
 
-      {/* Process Section */}
-      <MotionWrapper>
-        <ProcessSection />
-      </MotionWrapper>
+        {/* Objection Elimination */}
+        <MotionWrapper>
+          <ObjectionEliminationSection />
+        </MotionWrapper>
 
-      {/* FAQ Section */}
-      <MotionWrapper>
-        <FAQSection />
-      </MotionWrapper>
+        {/* Comparison Section */}
+        <MotionWrapper>
+          <ComparisonSection />
+        </MotionWrapper>
 
-      {/* Final CTA */}
-      <MotionWrapper>
-        <CTASection />
-      </MotionWrapper>
+        {/* Process Section */}
+        <MotionWrapper>
+          <ProcessSection />
+        </MotionWrapper>
 
-      {/* Premium Mobile Sticky CTA */}
-      <PremiumMobileStickyCTA />
-    </div>
+        {/* FAQ Section */}
+        <MotionWrapper>
+          <FAQSection />
+        </MotionWrapper>
+
+        {/* Final CTA */}
+        <MotionWrapper>
+          <CTASection />
+        </MotionWrapper>
+
+        {/* Premium Mobile Sticky CTA */}
+        <PremiumMobileStickyCTA />
+      </div>
+    </AdvancedAnalyticsProvider>
   );
 });
 

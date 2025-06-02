@@ -95,9 +95,11 @@ const ExecutiveStrategySection = () => {
                     
                     <div className="flex-1">
                       {pillar.highlight && (
-                        <PremiumBadge variant="gold" size="sm" className="mb-3">
-                          Core Strategy
-                        </PremiumBadge>
+                        <div className="mb-3">
+                          <PremiumBadge variant="gold" size="sm">
+                            Core Strategy
+                          </PremiumBadge>
+                        </div>
                       )}
                       
                       <h4 className="executive-body-medium font-bold text-white mb-3">

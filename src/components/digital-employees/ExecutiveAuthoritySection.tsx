@@ -201,9 +201,11 @@ const ExecutiveAuthoritySection = () => {
               >
                 <PremiumCard className="p-8 h-full">
                   <div className="text-center">
-                    <PremiumBadge variant="blue" className="mb-4">
-                      {resource.type}
-                    </PremiumBadge>
+                    <div className="mb-4">
+                      <PremiumBadge variant="blue">
+                        {resource.type}
+                      </PremiumBadge>
+                    </div>
                     
                     <h4 className="executive-body-medium font-bold text-white mb-4">
                       {resource.title}

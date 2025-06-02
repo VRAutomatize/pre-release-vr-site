@@ -15,7 +15,12 @@ export const Skeleton = ({
 }: SkeletonProps) => (
   <motion.div
     className={`bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded ${className}`}
-    style={{ width, height }}
+    style={{ 
+      width, 
+      height,
+      backgroundSize: "200% 100%",
+      willChange: 'background-position'
+    }}
     animate={{
       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
     }}
@@ -23,10 +28,6 @@ export const Skeleton = ({
       duration: 2,
       ease: "linear",
       repeat: Infinity
-    }}
-    style={{
-      backgroundSize: "200% 100%",
-      willChange: 'background-position'
     }}
   />
 );

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RefreshCw, BarChart, Users, Calendar, DollarSign, Wallet } from "lucide-react";
@@ -49,7 +48,7 @@ const Dashboard = () => {
   // Handle tab change
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    navigate(`/dashboard?tab=${value}`, { replace: true });
+    navigate(`/employee/dashboard?tab=${value}`, { replace: true });
   };
 
   // Render different content based on active tab

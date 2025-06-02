@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from "react";
 import { FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import EmployeeSidebar from "@/components/EmployeeSidebar";
 import { EmbeddedForm } from "@/components/dashboard/EmbeddedForm";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import MobileLayout from "@/components/mobile/MobileLayout";
 
 const Reports = () => {
   const [activeForm, setActiveForm] = useState<{
@@ -67,12 +69,11 @@ const Reports = () => {
     }
     return url;
   };
-  
-  return (
-    <div className="flex h-[100vh] w-full overflow-hidden">
-      <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Gold blurred background image - smaller size */}
+
+  const ReportsContent = () => (
+    <div className={`${isMobile ? 'mobile-container mobile-spacing' : 'relative'}`}>
+      {/* Gold blurred background image - only for desktop */}
+      {!isMobile && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
           <div className="w-[100%] h-[100%] backdrop-blur-3xl">
             <img 
@@ -82,52 +83,87 @@ const Reports = () => {
             />
           </div>
         </div>
+      )}
 
-        <div className="mb-6 relative z-10">
-          <h1 className="text-xl md:text-2xl font-bold text-gold">Gerar Relatório</h1>
-          <p className="text-sm md:text-base text-muted-foreground">
-            Selecione uma das opções abaixo para iniciar o processo
-          </p>
-        </div>
+      <div className={`${isMobile ? 'mb-4' : 'mb-6'} relative z-10`}>
+        <h1 className={`font-bold text-gold ${isMobile ? 'text-xl' : 'text-xl md:text-2xl'}`}>
+          Gerar Relatório
+        </h1>
+        <p className={`text-muted-foreground ${isMobile ? 'text-sm' : 'text-sm md:text-base'}`}>
+          Selecione uma das opções abaixo para iniciar o processo
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 relative z-10">
-          <Card className="glass-blur border-gold/20 card-hover shadow-md">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
-                  <FileText className="h-5 w-5 text-gold" />
-                </div>
-                <CardTitle className="text-gold">Gerar Venda</CardTitle>
+      <div className={`${isMobile ? 'mobile-spacing' : 'grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'} relative z-10`}>
+        <Card className="glass-blur border-gold/20 card-hover shadow-md">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-gold/10 p-3 shadow-inner">
+                <FileText className="h-5 w-5 text-gold" />
               </div>
-              <CardDescription className="text-gold/70">Preencha o formulário para registrar uma nova venda no sistema. Uma venda direta contabiliza 30% de comissão!</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} className="w-full bg-gold hover:bg-gold/90 text-background">
-                Abrir Formulário
-              </Button>
-            </CardContent>
-          </Card>
+              <CardTitle className="text-gold">Gerar Venda</CardTitle>
+            </div>
+            <CardDescription className="text-gold/70">
+              Preencha o formulário para registrar uma nova venda no sistema. Uma venda direta contabiliza 30% de comissão!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/gerar_venda_fdcore", "Gerar Venda", "Formulário para registrar uma nova venda no sistema")} 
+              className={`w-full bg-gold hover:bg-gold/90 text-background ${isMobile ? 'h-12' : ''}`}
+            >
+              Abrir Formulário
+            </Button>
+          </CardContent>
+        </Card>
 
-          <Card className="glass-blur border-gold/20 card-hover shadow-md">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="rounded-full bg-gold/10 p-3 shadow-inner">
-                  <Send className="h-5 w-5 text-gold" />
-                </div>
-                <CardTitle className="text-gold">Notificar Time Comercial</CardTitle>
+        <Card className="glass-blur border-gold/20 card-hover shadow-md">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-gold/10 p-3 shadow-inner">
+                <Send className="h-5 w-5 text-gold" />
               </div>
-              <CardDescription className="text-gold/70">Envie um Lead para o time comercial. Se eles fecharem,  você recebe 10% de comissão!</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial", "Notificar Time Comercial", "Envie uma notificação importante para o time comercial")} className="w-full bg-gold hover:bg-gold/90 text-background">
-                Abrir Formulário
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+              <CardTitle className="text-gold">Notificar Time Comercial</CardTitle>
+            </div>
+            <CardDescription className="text-gold/70">
+              Envie um Lead para o time comercial. Se eles fecharem, você recebe 10% de comissão!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={() => handleOpenForm("https://vrautomatize-n8n.snrhk1.easypanel.host/form/notifica_time_comercial", "Notificar Time Comercial", "Envie uma notificação importante para o time comercial")} 
+              className={`w-full bg-gold hover:bg-gold/90 text-background ${isMobile ? 'h-12' : ''}`}
+            >
+              Abrir Formulário
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
 
-        {/* Use our enhanced form component that now supports both direct rendering and iframes */}
-        <EmbeddedForm isOpen={activeForm.isOpen} onClose={handleCloseForm} title={activeForm.title} description={activeForm.description} formUrl={activeForm.url} />
+      {/* Use our enhanced form component that now supports both direct rendering and iframes */}
+      <EmbeddedForm 
+        isOpen={activeForm.isOpen} 
+        onClose={handleCloseForm} 
+        title={activeForm.title} 
+        description={activeForm.description} 
+        formUrl={activeForm.url} 
+      />
+    </div>
+  );
+  
+  if (isMobile) {
+    return (
+      <MobileLayout title="Relatórios" showBackButton={false}>
+        <ReportsContent />
+      </MobileLayout>
+    );
+  }
+
+  return (
+    <div className="flex h-[100vh] w-full overflow-hidden">
+      <EmployeeSidebar />
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        <ReportsContent />
       </main>
     </div>
   );

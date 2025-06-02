@@ -8,6 +8,8 @@ import RegisterClientStep from "@/components/payment/steps/RegisterClientStep";
 import CreatePaymentStep from "@/components/payment/steps/CreatePaymentStep";
 import PaymentResultStep from "@/components/payment/steps/PaymentResultStep";
 import { usePaymentWorkflow } from "@/hooks/usePaymentWorkflow";
+import MobileLayout from "@/components/mobile/MobileLayout";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const PaymentLinks = () => {
   const {
@@ -23,6 +25,7 @@ const PaymentLinks = () => {
     handleBackToStart,
     resetForms
   } = usePaymentWorkflow();
+  const isMobile = useIsMobile();
 
   // Debug logging
   React.useEffect(() => {
@@ -30,11 +33,10 @@ const PaymentLinks = () => {
     console.log("Payment result:", paymentResult);
   }, [step, paymentResult]);
 
-  return (
-    <div className="flex h-[100dvh] w-full overflow-hidden">
-      <EmployeeSidebar />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
-        {/* Gold blurred background image */}
+  const PaymentContent = () => (
+    <div className={`${isMobile ? 'mobile-container mobile-spacing' : 'relative'}`}>
+      {/* Gold blurred background image - only for desktop */}
+      {!isMobile && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] overflow-hidden">
           <div className="w-[100%] h-[100%] backdrop-blur-3xl">
             <img 
@@ -44,53 +46,72 @@ const PaymentLinks = () => {
             />
           </div>
         </div>
+      )}
 
-        <div className="relative z-10">
-          <div className="flex flex-col mb-6">
-            <h1 className="text-xl md:text-2xl font-bold text-gold">Gerenciador de Links de Pagamento</h1>
-            <p className="text-sm md:text-base text-muted-foreground">
-              Crie e gerencie links de pagamento para seus clientes.
-            </p>
-          </div>
-          
-          {/* Progress steps indicator */}
-          <ProgressSteps currentStep={step} />
-          
-          <div className="max-w-2xl mx-auto">
-            {step === Step.CheckCNPJ && (
-              <CheckCNPJStep 
-                onCheckCNPJ={handleCheckCNPJ}
-                loading={loading}
-              />
-            )}
-            
-            {step === Step.RegisterClient && (
-              <RegisterClientStep 
-                currentCNPJ={currentCNPJ}
-                onRegister={handleRegisterClient}
-                onBack={handleBackToStart}
-                loading={loading}
-              />
-            )}
-            
-            {step === Step.CreatePayment && client && (
-              <CreatePaymentStep 
-                client={client}
-                products={products}
-                onCreatePayment={handleCreatePayment}
-                onBack={handleBackToStart}
-                loading={loading}
-              />
-            )}
-
-            {step === Step.PaymentResult && paymentResult && (
-              <PaymentResultStep 
-                result={paymentResult}
-                onBack={() => resetForms()} // Use resetForms to explicitly start a new payment
-              />
-            )}
-          </div>
+      <div className="relative z-10">
+        <div className={`flex flex-col ${isMobile ? 'mb-4' : 'mb-6'}`}>
+          <h1 className={`font-bold text-gold ${isMobile ? 'text-xl mb-2' : 'text-xl md:text-2xl'}`}>
+            Gerenciador de Links de Pagamento
+          </h1>
+          <p className={`text-muted-foreground ${isMobile ? 'text-sm' : 'text-sm md:text-base'}`}>
+            Crie e gerencie links de pagamento para seus clientes.
+          </p>
         </div>
+        
+        {/* Progress steps indicator */}
+        <ProgressSteps currentStep={step} />
+        
+        <div className={isMobile ? 'w-full' : 'max-w-2xl mx-auto'}>
+          {step === Step.CheckCNPJ && (
+            <CheckCNPJStep 
+              onCheckCNPJ={handleCheckCNPJ}
+              loading={loading}
+            />
+          )}
+          
+          {step === Step.RegisterClient && (
+            <RegisterClientStep 
+              currentCNPJ={currentCNPJ}
+              onRegister={handleRegisterClient}
+              onBack={handleBackToStart}
+              loading={loading}
+            />
+          )}
+          
+          {step === Step.CreatePayment && client && (
+            <CreatePaymentStep 
+              client={client}
+              products={products}
+              onCreatePayment={handleCreatePayment}
+              onBack={handleBackToStart}
+              loading={loading}
+            />
+          )}
+
+          {step === Step.PaymentResult && paymentResult && (
+            <PaymentResultStep 
+              result={paymentResult}
+              onBack={() => resetForms()}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <MobileLayout title="Pagamentos" showBackButton={false}>
+        <PaymentContent />
+      </MobileLayout>
+    );
+  }
+
+  return (
+    <div className="flex h-[100dvh] w-full overflow-hidden">
+      <EmployeeSidebar />
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background/80 relative">
+        <PaymentContent />
       </main>
     </div>
   );

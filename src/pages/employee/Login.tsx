@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
+import MobileLayout from "@/components/mobile/MobileLayout";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Form schema
 const loginSchema = z.object({
@@ -33,6 +35,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -56,92 +59,125 @@ const LoginPage = () => {
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-  return (
-    <>
-      <Header />
-      <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden mt-4">
-        {/* Background Effects */}
+  const LoginContent = () => (
+    <div className={`${isMobile ? 'mobile-container min-h-screen flex items-center justify-center' : 'min-h-[80vh] flex items-center justify-center relative overflow-hidden mt-4'}`}>
+      {/* Background Effects - only for desktop */}
+      {!isMobile && (
         <div className="absolute inset-0 z-0">
           <div className="absolute top-20 right-20 w-48 h-48 bg-gold/10 rounded-full filter blur-3xl animate-float" />
           <div className="absolute bottom-20 left-20 w-48 h-48 bg-gold/5 rounded-full filter blur-3xl animate-float" style={{ animationDelay: "1s" }} />
         </div>
+      )}
 
-        <div className="container max-w-md z-10">
-          <div className="animate-fade-up" style={{ animationDuration: "0.7s" }}>
-            <Card className="glass border-gold/20 shadow-xl">
-              <CardHeader className="space-y-2">
-                <CardTitle className="text-2xl text-center text-gold">Portal do Colaborador</CardTitle>
-                <CardDescription className="text-center">
-                  Entre com suas credenciais para acessar
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="username"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Usuário</FormLabel>
-                          <FormControl>
-                            <Input {...field} autoComplete="username" disabled={isLoading} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+      <div className={`${isMobile ? 'w-full' : 'container max-w-md'} z-10`}>
+        <div className="animate-fade-up" style={{ animationDuration: "0.7s" }}>
+          <Card className={`${isMobile ? 'border-0 shadow-none bg-transparent' : 'glass border-gold/20 shadow-xl'}`}>
+            <CardHeader className="space-y-2">
+              {isMobile && (
+                <div className="flex justify-center mb-6">
+                  <img 
+                    src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
+                    alt="VR Link" 
+                    className="h-16 w-16 object-contain"
+                  />
+                </div>
+              )}
+              <CardTitle className={`text-2xl text-center text-gold ${isMobile ? 'text-3xl' : ''}`}>
+                Portal do Colaborador
+              </CardTitle>
+              <CardDescription className="text-center">
+                Entre com suas credenciais para acessar
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Usuário</FormLabel>
+                        <FormControl>
+                          <Input 
+                            {...field} 
+                            autoComplete="username" 
+                            disabled={isLoading}
+                            className={isMobile ? 'h-12 text-base' : ''}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Senha</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Input
-                                {...field}
-                                type={showPassword ? "text" : "password"}
-                                autoComplete="current-password" 
-                                disabled={isLoading}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3"
-                                onClick={togglePasswordVisibility}
-                              >
-                                {showPassword ? 
-                                  <EyeOffIcon className="h-4 w-4" /> : 
-                                  <EyeIcon className="h-4 w-4" />
-                                }
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-gold hover:bg-gold-light text-background" 
-                      disabled={isLoading}
-                    >
-                      {isLoading ? "Entrando..." : "Entrar"}
-                      {!isLoading && <LogInIcon className="ml-2 h-4 w-4" />}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-              <CardFooter className="flex justify-center text-sm text-muted-foreground">
-                <p>VR Automatize © {new Date().getFullYear()}</p>
-              </CardFooter>
-            </Card>
-          </div>
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Senha</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              {...field}
+                              type={showPassword ? "text" : "password"}
+                              autoComplete="current-password" 
+                              disabled={isLoading}
+                              className={isMobile ? 'h-12 text-base pr-12' : 'pr-12'}
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? 
+                                <EyeOffIcon className="h-4 w-4" /> : 
+                                <EyeIcon className="h-4 w-4" />
+                              }
+                            </Button>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="submit" 
+                    className={`w-full bg-gold hover:bg-gold-light text-background ${isMobile ? 'h-12 text-base' : ''}`}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Entrando..." : "Entrar"}
+                    {!isLoading && <LogInIcon className="ml-2 h-4 w-4" />}
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+            <CardFooter className="flex justify-center text-sm text-muted-foreground">
+              <p>VR Automatize © {new Date().getFullYear()}</p>
+            </CardFooter>
+          </Card>
         </div>
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <MobileLayout title="Login">
+        <LoginContent />
+      </MobileLayout>
+    );
+  }
+
+  return (
+    <>
+      <Header />
+      <section>
+        <LoginContent />
       </section>
     </>
   );

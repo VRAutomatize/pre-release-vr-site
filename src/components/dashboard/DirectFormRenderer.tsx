@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
@@ -22,14 +21,12 @@ interface DirectFormRendererProps {
 export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps) {
   const isMobile = useIsMobile();
   
-  // Determine form type based on URL
+  // ... keep existing code (form URL determination and user auth) the same ...
   const isGerarVendaForm = formUrl.includes("gerar_venda");
   const isNotificaComercialForm = formUrl.includes("notifica_time_comercial");
-  
-  // Get authenticated user
   const { user } = useAuth();
   
-  // React Hook Form setup
+  // ... keep existing code (React Hook Form setup) the same ...
   const form = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
@@ -47,7 +44,7 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     },
   });
   
-  // Extract seller tag from authenticated user's email
+  // ... keep existing code (seller tag and form navigation) the same ...
   const getSellerTag = () => {
     if (!user || !user.username) return "";
     
@@ -56,13 +53,9 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     return emailParts[0] || "";
   };
   
-  // Form navigation (steps)
   const { currentStep, handleNextStep, handlePrevStep } = useFormNavigation(form);
-  
-  // Determine if this is a direct sale or lead notification
   const isDirectSale = isGerarVendaForm;
   
-  // Form submission
   const { 
     isSubmitting, 
     formError, 
@@ -79,13 +72,12 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
 
   if (!isGerarVendaForm && !isNotificaComercialForm) {
     return (
-      <div className="h-full w-full overflow-auto bg-[#1A1F2C] p-4 md:p-6">
-        <div className="max-w-xl mx-auto">
-          <div className="glass-blur rounded-lg p-6 border border-gold/20">
-            <h2 className="text-xl md:text-2xl font-semibold text-gold mb-2">Formulário não suportado</h2>
-            <p className="text-gold/70 mb-6">Este tipo de formulário ainda não está disponível para visualização direta.</p>
-            
-            <button onClick={onClose} className="border-gold/20 text-gold hover:bg-gold/10">
+      <div className="h-full w-full flex items-center justify-center bg-[#1A1F2C] p-4">
+        <div className="max-w-sm mx-auto">
+          <div className="glass-blur rounded-lg p-4 border border-gold/20 text-center">
+            <h2 className="text-lg font-semibold text-gold mb-2">Formulário não suportado</h2>
+            <p className="text-gold/70 text-sm mb-4">Este tipo de formulário ainda não está disponível.</p>
+            <button onClick={onClose} className="px-4 py-2 border border-gold/20 text-gold hover:bg-gold/10 rounded">
               Fechar
             </button>
           </div>
@@ -94,74 +86,71 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     );
   }
   
-  // Set form title and description based on form type
-  const formTitle = isGerarVendaForm 
-    ? "Gerar Venda" 
-    : "Notificar Time Comercial";
-    
-  const formDescription = isGerarVendaForm
-    ? "Preencha o formulário para registrar uma nova venda no sistema"
-    : "Envie um lead qualificado para o time comercial";
+  const formTitle = isGerarVendaForm ? "Gerar Venda" : "Notificar Time Comercial";
   
   return (
-    <div className="h-full w-full overflow-auto bg-[#1A1F2C]">
-      <div className={`${isMobile ? 'p-4' : 'p-6'} max-w-2xl mx-auto`}>
-        <div className="glass-blur rounded-lg border border-gold/20 overflow-hidden">
-          {/* Header */}
-          <div className={`${isMobile ? 'p-4' : 'p-6'} border-b border-gold/10`}>
-            <h2 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold text-gold mb-2`}>
-              {formTitle}
-            </h2>
-            <p className={`text-gray-300 ${isMobile ? 'text-sm' : 'text-base'} mb-6`}>
-              {formDescription}
-            </p>
-            
-            {/* Progress bar */}
-            <FormProgress currentStep={currentStep} totalSteps={3} />
-          </div>
-          
-          {/* Form Content - Wrapped with Form Provider */}
-          <div className={isMobile ? 'p-4' : 'p-6'}>
-            {/* Seller tag indicator */}
-            <SellerInfo user={user} getSellerTag={getSellerTag} />
-            
-            <Form {...form}>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Step 1: Company Information */}
-                {currentStep === 1 && <CompanyInfoStep form={form} />}
-                
-                {/* Step 2: Client Information */}
-                {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
-                
-                {/* Step 3: Service Options or Lead Info */}
-                {currentStep === 3 && (
-                  <>
-                    {isGerarVendaForm ? (
-                      <ServiceOptionsStep form={form} />
-                    ) : (
-                      <LeadInfoStep form={form} />
-                    )}
-                    
-                    {formError && (
-                      <div className="p-4 bg-red-900/20 border border-red-900/30 rounded-lg text-sm text-red-400">
-                        {formError}
-                      </div>
-                    )}
-                  </>
-                )}
-                
-                {/* Navigation buttons */}
-                <FormNavigation 
-                  currentStep={currentStep}
-                  totalSteps={3}
-                  onNext={handleNextStep}
-                  onPrev={handlePrevStep}
-                  onCancel={onClose}
-                  isSubmitting={isSubmitting}
-                />
-              </form>
-            </Form>
-          </div>
+    <div className="h-full w-full flex flex-col bg-[#1A1F2C]">
+      {/* Compact Header - Mobile Optimized */}
+      <div className={`flex-shrink-0 border-b border-gold/10 ${isMobile ? 'p-3' : 'p-4'}`}>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className={`font-semibold text-gold ${isMobile ? 'text-lg' : 'text-xl'}`}>
+            {formTitle}
+          </h2>
+          <button 
+            onClick={onClose}
+            className="text-gray-400 hover:text-gold text-sm"
+          >
+            ✕
+          </button>
+        </div>
+        
+        {/* Compact Progress */}
+        <FormProgress currentStep={currentStep} totalSteps={3} />
+      </div>
+      
+      {/* Form Content - Flexible Area */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {/* Seller Info - Compact */}
+        <div className={`flex-shrink-0 ${isMobile ? 'px-3 py-2' : 'px-4 py-3'}`}>
+          <SellerInfo user={user} getSellerTag={getSellerTag} />
+        </div>
+        
+        {/* Form Content - Scrollable if needed */}
+        <div className={`flex-1 overflow-y-auto ${isMobile ? 'px-3' : 'px-4'}`}>
+          <Form {...form}>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              {/* Step Content */}
+              {currentStep === 1 && <CompanyInfoStep form={form} />}
+              {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
+              {currentStep === 3 && (
+                <>
+                  {isGerarVendaForm ? (
+                    <ServiceOptionsStep form={form} />
+                  ) : (
+                    <LeadInfoStep form={form} />
+                  )}
+                  
+                  {formError && (
+                    <div className="p-3 bg-red-900/20 border border-red-900/30 rounded-lg text-sm text-red-400">
+                      {formError}
+                    </div>
+                  )}
+                </>
+              )}
+            </form>
+          </Form>
+        </div>
+        
+        {/* Fixed Navigation - Bottom */}
+        <div className={`flex-shrink-0 border-t border-gold/10 ${isMobile ? 'p-3' : 'p-4'}`}>
+          <FormNavigation 
+            currentStep={currentStep}
+            totalSteps={3}
+            onNext={handleNextStep}
+            onPrev={handlePrevStep}
+            onCancel={onClose}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </div>
       

@@ -27,7 +27,7 @@ export function FormNavigation({
 
   if (!isMobile) {
     return (
-      <div className="flex justify-between items-center pt-6 space-x-4">
+      <div className="flex justify-between items-center space-x-4">
         <div className="flex gap-3">
           {!isFirstStep && (
             <button
@@ -82,10 +82,10 @@ export function FormNavigation({
     );
   }
 
-  // Mobile Layout - Full Width Buttons with Better Spacing
+  // Mobile Layout - Compact and Efficient
   return (
-    <div className="space-y-4 pt-8">
-      {/* Primary Action */}
+    <div className="space-y-3">
+      {/* Primary Action - More Compact */}
       {!isLastStep ? (
         <NativeButton
           onClick={onNext}
@@ -93,10 +93,10 @@ export function FormNavigation({
           variant="primary"
           size="lg"
           fullWidth
-          className="h-14 text-lg font-semibold"
+          className="h-12 text-base font-semibold"
         >
           <span>Próximo</span>
-          <ArrowRight className="h-5 w-5 ml-2" />
+          <ArrowRight className="h-4 w-4 ml-2" />
         </NativeButton>
       ) : (
         <NativeButton
@@ -106,23 +106,23 @@ export function FormNavigation({
           size="lg"
           fullWidth
           loading={isSubmitting}
-          className="h-14 text-lg font-semibold"
+          className="h-12 text-base font-semibold"
         >
-          {isSubmitting ? "Enviando..." : "Enviar Formulário"}
+          {isSubmitting ? "Enviando..." : "Enviar"}
         </NativeButton>
       )}
 
-      {/* Secondary Actions */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Secondary Actions - More Compact */}
+      <div className="grid grid-cols-2 gap-2">
         {!isFirstStep && (
           <NativeButton
             onClick={onPrev}
             disabled={isSubmitting}
             variant="secondary"
-            size="lg"
-            className="h-12 text-base"
+            size="md"
+            className="h-10 text-sm"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="h-3 w-3 mr-1" />
             Voltar
           </NativeButton>
         )}
@@ -131,10 +131,10 @@ export function FormNavigation({
           onClick={onCancel}
           disabled={isSubmitting}
           variant="ghost"
-          size="lg"
-          className={`h-12 text-base text-red-400 hover:bg-red-400/10 ${isFirstStep ? 'col-span-2' : ''}`}
+          size="md"
+          className={`h-10 text-sm text-red-400 hover:bg-red-400/10 ${isFirstStep ? 'col-span-2' : ''}`}
         >
-          <X className="h-4 w-4 mr-2" />
+          <X className="h-3 w-3 mr-1" />
           Cancelar
         </NativeButton>
       </div>

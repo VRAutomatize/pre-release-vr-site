@@ -158,10 +158,6 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
   const cta = getContextualVariant();
   const IconComponent = cta.icon;
 
-  const handleClick = () => {
-    trackCTAClick();
-  };
-
   // Urgency-based animations
   const getUrgencyAnimation = () => {
     switch (cta.urgency) {
@@ -212,7 +208,6 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
               
               <div className="flex items-center gap-4">
                 <TypeformButton
-                  onClick={handleClick}
                   className={`${
                     cta.urgency === "high" 
                       ? "bg-red-500 hover:bg-red-600 text-white animate-pulse" 
@@ -223,7 +218,8 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
                   trackingMetadata={{
                     segment: currentSegment.type,
                     urgency: cta.urgency,
-                    ctaVariant: cta.id
+                    ctaVariant: cta.id,
+                    ctaClick: () => trackCTAClick()
                   }}
                 >
                   <IconComponent className="h-4 w-4 mr-2" />

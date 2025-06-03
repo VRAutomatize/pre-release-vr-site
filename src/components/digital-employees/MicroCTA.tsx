@@ -24,25 +24,25 @@ const MicroCTA = ({
     default: {
       title: title || (isMobile ? "Quer economizar assim também?" : "Interessado em economizar centenas de milhares?"),
       description: description || (isMobile ? "Começar agora" : "Agende uma análise gratuita e descubra seu potencial de economia"),
-      bgColor: "bg-card/80",
+      bgColor: "bg-gold/5",
       borderColor: "border-gold/20"
     },
     urgency: {
       title: title || (isMobile ? "Apenas 5 vagas restantes" : "Últimas vagas para consultoria executiva"),
       description: description || (isMobile ? "Garantir minha vaga agora" : "Reserve sua vaga antes que esgote"),
-      bgColor: "bg-card/80",
+      bgColor: "bg-red-500/5",
       borderColor: "border-red-500/20"
     },
     executive: {
       title: title || (isMobile ? "Empresa fatura +R$ 500k/mês?" : "Sua empresa fatura mais de R$ 500k/mês?"),
       description: description || (isMobile ? "Reunião executiva exclusiva" : "Agende reunião executiva personalizada"),
-      bgColor: "bg-card/80",
+      bgColor: "bg-purple-500/5",
       borderColor: "border-purple-500/20"
     },
     calculator: {
       title: title || (isMobile ? "Calcule sua economia" : "Quanto sua empresa pode economizar?"),
       description: description || (isMobile ? "Simulação rápida e gratuita" : "Faça uma simulação rápida e descubra"),
-      bgColor: "bg-card/80",
+      bgColor: "bg-blue-500/5",
       borderColor: "border-blue-500/20"
     }
   };
@@ -50,11 +50,11 @@ const MicroCTA = ({
   const config = variants[variant];
 
   return (
-    <div className={`${config.bgColor} ${config.borderColor} border rounded-lg p-6 text-center backdrop-blur-sm ${className}`}>
-      <h3 className="text-base md:text-lg font-semibold mb-2 text-gold">
+    <div className={`${config.bgColor} ${config.borderColor} border rounded-xl mobile-card-compact text-center backdrop-blur-sm ${className}`}>
+      <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2 text-foreground">
         {config.title}
       </h3>
-      <p className="text-gold/80 mb-4 text-sm md:text-base">
+      <p className="text-foreground/70 mb-4 text-sm md:text-base">
         {config.description}
       </p>
       
@@ -71,7 +71,7 @@ const MicroCTA = ({
           </ExecutiveButton>
         ) : (
           <TypeformButton
-            className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2 w-full sm:w-auto"
+            className="bg-gold hover:bg-gold-light text-background px-6 py-3 text-sm md:text-base rounded-lg transition-all duration-300 flex items-center gap-2 w-full sm:w-auto max-w-none"
             trackingId={`micro_cta_${variant}`}
             trackingSection="micro_cta"
           >

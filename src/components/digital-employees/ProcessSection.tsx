@@ -86,7 +86,7 @@ const ProcessSection = () => {
                 <step.icon className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-gold" />
               </div>
               <span className="text-gold font-bold text-4xl md:text-5xl lg:text-6xl absolute -top-8 md:-top-12 -left-2 md:-left-3 opacity-10">0{index + 1}</span>
-              <p className="text-sm md:text-base lg:text-lg leading-tight text-gold/90">{step.title}</p>
+              <p className="text-sm md:text-base lg:text-lg leading-tight">{step.title}</p>
             </motion.div>
           ))}
         </div>

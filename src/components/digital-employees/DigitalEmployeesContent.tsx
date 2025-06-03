@@ -1,3 +1,4 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -12,31 +13,17 @@ import ROIChart from "@/components/digital-employees/ROIChart";
 import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
 import MicroCTA from "@/components/digital-employees/MicroCTA";
-import MobileOptimizedHero from "@/components/digital-employees/MobileOptimizedHero";
-import MobileOptimizedROI from "@/components/digital-employees/MobileOptimizedROI";
-import MobileProcessSteps from "@/components/digital-employees/MobileProcessSteps";
-import MobileStickyCTA from "@/components/digital-employees/MobileStickyCTA";
 import { sectionVariants } from "./DigitalEmployeesAnimations";
 
 const DigitalEmployeesContent = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden mobile-full-width pt-20 md:pt-12 pb-24 md:pb-12">
-      {/* Mobile Optimized Hero Section */}
+      {/* Hero Section */}
       <motion.div 
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
-        className="section-spacing-large md:hidden"
-      >
-        <MobileOptimizedHero />
-      </motion.div>
-
-      {/* Desktop Hero Section */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-        className="section-spacing-large hidden md:block"
+        className="section-spacing-large"
       >
         <HeroSection />
       </motion.div>
@@ -70,25 +57,13 @@ const DigitalEmployeesContent = () => {
         </div>
       </div>
 
-      {/* Mobile Optimized ROI Chart Section */}
+      {/* ROI Chart Section */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-full md:hidden"
-        id="roi-chart-section-mobile"
-      >
-        <MobileOptimizedROI />
-      </motion.div>
-
-      {/* Desktop ROI Chart Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight hidden md:block"
+        className="reveal-section section-spacing-large mobile-container-tight"
         id="roi-chart-section"
       >
         <ROIChart />
@@ -132,25 +107,13 @@ const DigitalEmployeesContent = () => {
         <PremiumSocialProof />
       </motion.div>
       
-      {/* Mobile Process Steps */}
+      {/* Process Section */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-full md:hidden"
-        id="process-section-mobile"
-      >
-        <MobileProcessSteps />
-      </motion.div>
-
-      {/* Desktop Process Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight hidden md:block"
+        className="reveal-section section-spacing-large mobile-container-tight"
         id="process-section"
       >
         <ProcessSection />
@@ -209,9 +172,6 @@ const DigitalEmployeesContent = () => {
       >
         <CTASection />
       </motion.div>
-
-      {/* Mobile Sticky CTA */}
-      <MobileStickyCTA />
     </div>
   );
 };

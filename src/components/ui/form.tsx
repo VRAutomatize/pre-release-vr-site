@@ -42,41 +42,23 @@ const FormField = <
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
-  
-  try {
-    const { getFieldState, formState } = useFormContext()
-    const fieldState = getFieldState(fieldContext.name, formState)
+  const { getFieldState, formState } = useFormContext()
 
-    if (!fieldContext) {
-      throw new Error("useFormField should be used within <FormField>")
-    }
+  const fieldState = getFieldState(fieldContext.name, formState)
 
-    // Generate a unique ID if itemContext is not available
-    const id = itemContext?.id || React.useId()
+  if (!fieldContext) {
+    throw new Error("useFormField should be used within <FormField>")
+  }
 
-    return {
-      id,
-      name: fieldContext.name,
-      formItemId: `${id}-form-item`,
-      formDescriptionId: `${id}-form-item-description`,
-      formMessageId: `${id}-form-item-message`,
-      ...fieldState,
-    }
-  } catch (error) {
-    console.error("Error in useFormField:", error)
-    // Fallback values in case of error
-    const fallbackId = React.useId()
-    return {
-      id: fallbackId,
-      name: fieldContext?.name || "unknown",
-      formItemId: `${fallbackId}-form-item`,
-      formDescriptionId: `${fallbackId}-form-item-description`,
-      formMessageId: `${fallbackId}-form-item-message`,
-      error: undefined,
-      invalid: false,
-      isDirty: false,
-      isTouched: false,
-    }
+  const { id } = itemContext
+
+  return {
+    id,
+    name: fieldContext.name,
+    formItemId: `${id}-form-item`,
+    formDescriptionId: `${id}-form-item-description`,
+    formMessageId: `${id}-form-item-message`,
+    ...fieldState,
   }
 }
 
@@ -84,8 +66,8 @@ type FormItemContextValue = {
   id: string
 }
 
-const FormItemContext = React.createContext<FormItemContextValue | undefined>(
-  undefined
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
 )
 
 const FormItem = React.forwardRef<

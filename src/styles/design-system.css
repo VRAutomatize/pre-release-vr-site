@@ -2,6 +2,24 @@
 /* VR Link Design System - Mobile-First Native */
 @layer base {
   :root {
+    /* Native Color Palette - iOS/Android Inspired */
+    --background: 16 20 24;
+    --foreground: 248 250 252;
+    
+    /* Card System with Elevation */
+    --card-background: 30 35 42;
+    --card-foreground: 248 250 252;
+    --card-border: 45 50 58;
+    
+    /* Interactive Elements */
+    --primary: 255 215 0; /* Gold VR */
+    --primary-foreground: 16 20 24;
+    --primary-hover: 255 223 51;
+    
+    --secondary: 51 65 85;
+    --secondary-foreground: 203 213 225;
+    --secondary-hover: 71 85 105;
+    
     /* Semantic Colors */
     --success: 34 197 94;
     --warning: 251 191 36;
@@ -39,12 +57,12 @@
     --text-2xl: 1.5rem;    /* 24px */
     --text-3xl: 1.875rem;  /* 30px */
     
-    /* Border Radius - VR Automatize Consistent */
-    --radius-sm: 0.5rem;   /* 8px */
-    --radius-md: 0.75rem;  /* 12px */
-    --radius-lg: 1rem;     /* 16px */
-    --radius-xl: 1.25rem;  /* 20px */
-    --radius-2xl: 1.5rem;  /* 24px */
+    /* Border Radius - Consistent with iOS/Android */
+    --radius-sm: 0.375rem;  /* 6px */
+    --radius-md: 0.5rem;    /* 8px */
+    --radius-lg: 0.75rem;   /* 12px */
+    --radius-xl: 1rem;      /* 16px */
+    --radius-2xl: 1.5rem;   /* 24px */
     
     /* Animation Timing - Native Feel */
     --timing-fast: 150ms;
@@ -53,12 +71,20 @@
     --easing-natural: cubic-bezier(0.4, 0, 0.2, 1);
     --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
+
+  /* Dark mode optimizations */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 16 20 24;
+      --foreground: 248 250 252;
+    }
+  }
 }
 
 /* Native Typography System */
 @layer base {
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

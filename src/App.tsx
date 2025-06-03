@@ -11,7 +11,6 @@ import UniversalPageTransition from "@/components/animations/UniversalPageTransi
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import DigitalEmployees from "./pages/services/DigitalEmployees";
-import DigitalEmployeesPremium from "./pages/services/DigitalEmployeesPremium";
 import AIAttendants from "./pages/services/AIAttendants";
 import Automation from "./pages/services/Automation";
 import CRM from "./pages/services/CRM";
@@ -48,8 +47,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
                          location.pathname.includes('/crm') ||
                          location.pathname.includes('/consultoria') ||
                          location.pathname.includes('/chatbots') ||
-                         location.pathname.includes('/captura-') ||
-                         location.pathname.includes('/digital-employees');
+                         location.pathname.includes('/captura-');
   
   // Employee routes get enhanced mobile transitions
   if (isEmployeeRoute) {
@@ -89,7 +87,6 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/lp-funcionarios-digitais-pro" element={<DigitalEmployees />} />
-                    <Route path="/digital-employees-premium" element={<DigitalEmployeesPremium />} />
                     <Route path="/atendentes-ia" element={<AIAttendants />} />
                     <Route path="/automacao" element={<Automation />} />
                     <Route path="/crm" element={<CRM />} />

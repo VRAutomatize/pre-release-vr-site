@@ -59,13 +59,13 @@ const QuickSocialProof = () => {
           {stats.map((stat, index) => (
             <div 
               key={index}
-              className="bg-card/80 backdrop-blur-lg border border-gold/20 rounded-lg mobile-card-compact text-center hover:border-gold/30 transition-colors"
+              className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg mobile-card-compact text-center hover:border-gold/30 transition-colors"
             >
               <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.color} mx-auto mb-2`} />
               <div className={`text-lg md:text-xl lg:text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm text-gold/80 leading-tight">
+              <div className="text-xs md:text-sm text-foreground/70 leading-tight">
                 {stat.label}
               </div>
             </div>
@@ -82,17 +82,17 @@ const QuickSocialProof = () => {
             {testimonials.map((testimonial, index) => (
               <div 
                 key={index}
-                className="bg-card/80 backdrop-blur-lg border border-gold/20 rounded-lg mobile-card-compact hover:border-gold/30 transition-colors"
+                className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-lg mobile-card-compact hover:border-gold/30 transition-colors"
               >
                 <div className="flex items-center gap-1 mb-2">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-sm text-gold/90 mb-2 italic">
+                <p className="text-sm text-foreground/90 mb-2 italic">
                   "{testimonial.text}"
                 </p>
-                <p className="text-xs text-gold/70">
+                <p className="text-xs text-foreground/60">
                   {testimonial.company}
                 </p>
               </div>

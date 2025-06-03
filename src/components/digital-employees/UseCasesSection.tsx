@@ -71,7 +71,7 @@ const UseCasesSection = () => {
           variants={itemVariants} 
           className="text-2xl md:text-3xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-center"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> <span className="text-gold">Funcionários Digitais:</span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
         </motion.h2>
 
         <div className="mobile-card-grid-2">
@@ -88,10 +88,10 @@ const UseCasesSection = () => {
               
               {/* Content below icon */}
               <div className="space-y-2">
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold leading-tight text-center text-gold">
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold leading-tight text-center">
                   {useCase.title}
                 </h3>
-                <p className="text-xs md:text-sm lg:text-base text-gold/80 leading-relaxed text-center">
+                <p className="text-xs md:text-sm lg:text-base text-foreground/70 leading-relaxed text-center">
                   {useCase.description}
                 </p>
               </div>

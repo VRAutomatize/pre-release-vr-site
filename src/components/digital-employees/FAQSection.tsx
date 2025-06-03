@@ -51,8 +51,8 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-12 md:py-16">
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
+    <section className="section-spacing">
+      <div className="mobile-container-tight max-w-4xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <HelpCircle className="h-6 w-6 text-gold" />
@@ -60,7 +60,7 @@ const FAQSection = () => {
               Perguntas Frequentes
             </h2>
           </div>
-          <p className="text-base md:text-lg text-foreground/90">
+          <p className="text-lg md:text-xl text-foreground/80">
             Esclarecemos as principais dúvidas de empresários como você
           </p>
         </div>
@@ -70,15 +70,15 @@ const FAQSection = () => {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="border border-gold/20 rounded-lg p-4 md:p-6 bg-card/80 backdrop-blur-lg"
+              className="border border-gold/20 rounded-lg mobile-card-compact bg-black/20 backdrop-blur-lg"
             >
               <AccordionTrigger 
-                className="text-left hover:text-gold transition-colors py-2"
+                className="text-left hover:text-gold transition-colors py-4 md:py-6"
                 onClick={() => handleFAQClick(faq.question)}
               >
-                <span className="text-sm md:text-base font-medium pr-4 text-foreground">{faq.question}</span>
+                <span className="text-base md:text-lg font-medium pr-4">{faq.question}</span>
               </AccordionTrigger>
-              <AccordionContent className="text-foreground/90 pt-2 text-sm md:text-base leading-relaxed">
+              <AccordionContent className="text-foreground/80 pb-4 md:pb-6 text-sm md:text-base leading-relaxed">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
@@ -86,14 +86,14 @@ const FAQSection = () => {
         </Accordion>
 
         <div className="text-center mt-8 md:mt-12">
-          <p className="text-foreground/80 mb-4 text-sm md:text-base">
+          <p className="text-foreground/60 mb-4">
             Ainda tem dúvidas? Fale direto com nossos especialistas
           </p>
           <a
             href="https://wa.me/554792666367?text=Olá!%20Tenho%20algumas%20dúvidas%20sobre%20Funcionários%20Digitais"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gold hover:text-gold-light transition-colors font-medium text-sm md:text-base"
+            className="inline-flex items-center gap-2 text-gold hover:text-gold-light transition-colors font-medium"
             onClick={() => trackEvent('faq_whatsapp_click', 'click', 'whatsapp_link', 'faq_section')}
           >
             Conversar no WhatsApp →

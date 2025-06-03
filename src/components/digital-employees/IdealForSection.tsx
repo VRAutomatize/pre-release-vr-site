@@ -40,9 +40,9 @@ const IdealForSection = () => {
   ];
 
   return (
-    <section className="relative py-12 md:py-16">
+    <section className="relative">
       <motion.div 
-        className="max-w-4xl mx-auto text-center px-4 md:px-6" 
+        className="max-w-4xl mx-auto text-center" 
         initial="hidden" 
         whileInView="show" 
         viewport={{
@@ -53,20 +53,20 @@ const IdealForSection = () => {
       >
         <motion.h2 
           variants={itemVariants} 
-          className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-12 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light"
+          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light"
         >
           Essa solução é ideal para negócios que:
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="mobile-card-grid-2">
           {idealPoints.map((point, index) => (
             <motion.div 
               key={index}
               variants={itemVariants} 
-              className="bg-card/80 backdrop-blur-lg p-6 md:p-8 flex items-start gap-3 md:gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg text-left border border-gold/20"
+              className="floating-card mobile-card-compact flex items-start gap-3 md:gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg text-left min-h-[100px] md:min-h-[120px]"
             >
-              <CheckCircle className="h-6 w-6 md:h-7 md:w-7 text-gold shrink-0 mt-1" />
-              <p className="text-sm md:text-base lg:text-lg text-gold/90">{point}</p>
+              <CheckCircle className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-gold shrink-0 mt-1" />
+              <p className="text-base md:text-lg lg:text-xl">{point}</p>
             </motion.div>
           ))}
         </div>

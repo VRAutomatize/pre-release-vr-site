@@ -1,0 +1,193 @@
+
+@layer base {
+  /* Premium Mobile Design System */
+  .premium-gradient-bg {
+    background: linear-gradient(135deg, 
+      rgba(16, 18, 27, 0.98) 0%, 
+      rgba(16, 18, 27, 0.95) 25%,
+      rgba(41, 37, 36, 0.98) 50%,
+      rgba(16, 18, 27, 0.95) 75%,
+      rgba(16, 18, 27, 0.98) 100%
+    );
+  }
+
+  .premium-glass {
+    background: rgba(255, 215, 0, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.37),
+      inset 0 1px 0 rgba(255, 215, 0, 0.1);
+  }
+
+  .premium-glass-dark {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 215, 0, 0.08);
+  }
+
+  .premium-text-glow {
+    text-shadow: 
+      0 0 10px rgba(255, 215, 0, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.2),
+      0 0 30px rgba(255, 215, 0, 0.1);
+  }
+
+  .premium-gold-gradient {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+  }
+
+  .premium-card-hover {
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+
+  .premium-card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 20px 40px rgba(255, 215, 0, 0.2),
+      0 10px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 215, 0, 0.2);
+  }
+}
+
+@layer utilities {
+  /* Premium Animations */
+  @keyframes float-premium {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-5px) rotate(0deg); }
+    75% { transform: translateY(-15px) rotate(-1deg); }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { 
+      box-shadow: 
+        0 0 5px rgba(255, 215, 0, 0.2),
+        0 0 10px rgba(255, 215, 0, 0.2),
+        0 0 15px rgba(255, 215, 0, 0.2);
+    }
+    50% { 
+      box-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.3);
+    }
+  }
+
+  @keyframes slide-up-premium {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes parallax-float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-20px) translateX(5px); }
+    50% { transform: translateY(-10px) translateX(-5px); }
+    75% { transform: translateY(-30px) translateX(3px); }
+  }
+
+  .animate-float-premium {
+    animation: float-premium 6s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  .animate-slide-up-premium {
+    animation: slide-up-premium 0.8s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+  }
+
+  .animate-parallax-float {
+    animation: parallax-float 8s ease-in-out infinite;
+  }
+
+  /* Mobile-first spacing system */
+  .section-premium {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .container-premium {
+    @apply px-4 md:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+
+  .card-premium {
+    @apply premium-glass rounded-2xl p-6 md:p-8 premium-card-hover;
+  }
+
+  .button-premium {
+    @apply bg-gold hover:bg-gold-light text-background font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 premium-text-glow;
+  }
+
+  /* Interactive elements */
+  .interactive-hover {
+    @apply cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-gold/20;
+  }
+
+  /* Storytelling scroll effects */
+  .story-section {
+    @apply min-h-screen flex items-center justify-center relative;
+  }
+
+  .story-content {
+    @apply transform transition-all duration-700 ease-out;
+  }
+
+  .story-content.story-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .story-content.story-hidden {
+    @apply opacity-30 translate-y-8;
+  }
+
+  /* Premium mobile navigation */
+  .nav-premium {
+    @apply fixed top-0 left-0 right-0 z-50 premium-glass-dark backdrop-blur-2xl;
+  }
+
+  .nav-premium-collapsed {
+    @apply transform -translate-y-full opacity-0;
+  }
+
+  .nav-premium-visible {
+    @apply transform translate-y-0 opacity-100;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .premium-glass {
+    backdrop-filter: blur(16px);
+  }
+
+  .premium-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .section-premium {
+    @apply py-12;
+  }
+
+  .card-premium {
+    @apply p-4;
+  }
+
+  /* Reduce motion for mobile performance */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-premium,
+    .animate-glow-pulse,
+    .animate-parallax-float {
+      animation: none !important;
+    }
+  }
+}

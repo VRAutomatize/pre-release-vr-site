@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -22,9 +21,12 @@ import ProgressTracker from "@/components/digital-employees/interactive/Progress
 
 import { sectionVariants } from "./DigitalEmployeesAnimations";
 
+import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
+import { PremiumReveal, PremiumCard } from "@/components/digital-employees/PremiumAnimations";
+
 const DigitalEmployeesContent = () => {
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden mobile-full-width pt-20 md:pt-12 pb-24 md:pb-12">
+    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-24 md:pb-12">
       {/* Progress Tracker - Both Mobile and Desktop */}
       <ProgressTracker variant="mobile" />
       <ProgressTracker variant="desktop" />
@@ -34,10 +36,16 @@ const DigitalEmployeesContent = () => {
         initial="hidden"
         animate="visible"
         variants={sectionVariants}
-        className="section-spacing-large"
+        className="section-premium"
+        id="hero"
       >
-        <HeroSection />
+        <PremiumReveal>
+          <HeroSection />
+        </PremiumReveal>
       </motion.div>
+
+      {/* Storytelling Scroll - Mobile Only */}
+      <StorytellingScroll />
 
       {/* Quick Social Proof - Right after hero */}
       <motion.div 
@@ -45,9 +53,11 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing mobile-container-full"
+        className="reveal-section section-premium container-premium"
       >
-        <QuickSocialProof />
+        <PremiumReveal delay={0.1}>
+          <QuickSocialProof />
+        </PremiumReveal>
       </motion.div>
 
       {/* Client Logos Section */}
@@ -56,9 +66,11 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing mobile-container-full"
+        className="reveal-section section-premium container-premium"
       >
-        <ClientLogosSection />
+        <PremiumReveal delay={0.2}>
+          <ClientLogosSection />
+        </PremiumReveal>
       </motion.div>
 
       {/* NEW: Advanced ROI Calculator - Interactive */}
@@ -67,16 +79,20 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="advanced-roi-calculator"
       >
-        <AdvancedROICalculator />
+        <PremiumCard delay={0.1}>
+          <AdvancedROICalculator />
+        </PremiumCard>
       </motion.div>
 
       {/* Micro CTA - Urgency */}
-      <div className="mobile-container-tight">
+      <div className="container-premium">
         <div className="micro-cta-spacing">
-          <MicroCTA variant="urgency" />
+          <PremiumReveal delay={0.1}>
+            <MicroCTA variant="urgency" />
+          </PremiumReveal>
         </div>
       </div>
 
@@ -86,10 +102,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="executive-assessment"
       >
-        <ExecutiveAssessment />
+        <PremiumCard delay={0.2}>
+          <ExecutiveAssessment />
+        </PremiumCard>
       </motion.div>
 
       {/* NEW: Before After Comparison - Interactive */}
@@ -98,10 +116,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="before-after-comparison"
       >
-        <BeforeAfterComparison />
+        <PremiumCard delay={0.3}>
+          <BeforeAfterComparison />
+        </PremiumCard>
       </motion.div>
 
       {/* Original ROI Chart Section - Kept for additional context */}
@@ -110,16 +130,20 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="roi-chart-section"
       >
-        <ROIChart />
+        <PremiumReveal delay={0.1}>
+          <ROIChart />
+        </PremiumReveal>
       </motion.div>
       
       {/* Micro CTA - Calculator */}
-      <div className="mobile-container-tight">
+      <div className="container-premium">
         <div className="micro-cta-spacing">
-          <MicroCTA variant="calculator" />
+          <PremiumReveal delay={0.1}>
+            <MicroCTA variant="calculator" />
+          </PremiumReveal>
         </div>
       </div>
 
@@ -129,16 +153,20 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="use-cases-section"
       >
-        <UseCasesSection />
+        <PremiumReveal delay={0.2}>
+          <UseCasesSection />
+        </PremiumReveal>
       </motion.div>
 
       {/* Micro CTA - Executive */}
-      <div className="mobile-container-tight">
+      <div className="container-premium">
         <div className="micro-cta-spacing">
-          <MicroCTA variant="executive" />
+          <PremiumReveal delay={0.1}>
+            <MicroCTA variant="executive" />
+          </PremiumReveal>
         </div>
       </div>
       
@@ -148,10 +176,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="premium-social-proof"
       >
-        <PremiumSocialProof />
+        <PremiumCard delay={0.1}>
+          <PremiumSocialProof />
+        </PremiumCard>
       </motion.div>
       
       {/* Process Section */}
@@ -160,10 +190,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="process-section"
       >
-        <ProcessSection />
+        <PremiumReveal delay={0.2}>
+          <ProcessSection />
+        </PremiumReveal>
       </motion.div>
       
       {/* Comparison Section */}
@@ -172,16 +204,20 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="comparison-section"
       >
-        <ComparisonSection />
+        <PremiumCard delay={0.1}>
+          <ComparisonSection />
+        </PremiumCard>
       </motion.div>
 
       {/* Micro CTA - Default */}
-      <div className="mobile-container-tight">
+      <div className="container-premium">
         <div className="micro-cta-spacing">
-          <MicroCTA variant="default" />
+          <PremiumReveal delay={0.1}>
+            <MicroCTA variant="default" />
+          </PremiumReveal>
         </div>
       </div>
       
@@ -191,10 +227,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="faq-section"
       >
-        <FAQSection />
+        <PremiumReveal delay={0.2}>
+          <FAQSection />
+        </PremiumReveal>
       </motion.div>
       
       {/* Ideal For Section */}
@@ -203,10 +241,12 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing-large mobile-container-tight"
+        className="reveal-section section-premium container-premium"
         id="ideal-for-section"
       >
-        <IdealForSection />
+        <PremiumCard delay={0.1}>
+          <IdealForSection />
+        </PremiumCard>
       </motion.div>
       
       {/* Final CTA Section */}
@@ -215,9 +255,11 @@ const DigitalEmployeesContent = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
-        className="reveal-section section-spacing mobile-container-tight"
+        className="reveal-section section-premium container-premium"
       >
-        <CTASection />
+        <PremiumReveal delay={0.1}>
+          <CTASection />
+        </PremiumReveal>
       </motion.div>
     </div>
   );

@@ -17,6 +17,11 @@ interface FormStepProps {
   errors: any;
   paidTraffic: boolean;
   setValue: (name: any, value: any) => void;
+  formData: any;
+  updateFormData: (field: string, value: string) => void;
+  onNext: () => void;
+  onPrev: () => void;
+  isLastStep: boolean;
 }
 
 const FormStep: React.FC<FormStepProps> = ({ 
@@ -24,21 +29,54 @@ const FormStep: React.FC<FormStepProps> = ({
   control, 
   errors,
   paidTraffic,
-  setValue
+  setValue,
+  formData,
+  updateFormData,
+  onNext,
+  onPrev,
+  isLastStep
 }) => {
   // Render the appropriate step content based on the current step
   switch (currentStep) {
     case 0: // Name
-      return <NameStep control={control} errors={errors} />;
+      return (
+        <NameStep
+          value={formData.fullName || ''}
+          onChange={(value) => updateFormData('fullName', value)}
+          onNext={onNext}
+        />
+      );
     
     case 1: // Phone
-      return <PhoneStep control={control} errors={errors} />;
+      return (
+        <PhoneStep
+          value={formData.phone || ''}
+          onChange={(value) => updateFormData('phone', value)}
+          onNext={onNext}
+          onPrev={onPrev}
+        />
+      );
     
     case 2: // Email
-      return <EmailStep control={control} errors={errors} />;
+      return (
+        <EmailStep
+          value={formData.email || ''}
+          onChange={(value) => updateFormData('email', value)}
+          onNext={onNext}
+          onPrev={onPrev}
+        />
+      );
     
     case 3: // Instagram
-      return <InstagramStep control={control} />;
+      return (
+        <InstagramStep
+          value={formData.instagram || ''}
+          onChange={(value) => updateFormData('instagram', value)}
+          onNext={onNext}
+          onPrev={onPrev}
+          isLastStep={false}
+        />
+      );
     
     case 4: // Monthly Revenue
       return <MonthlyRevenueStep control={control} />;

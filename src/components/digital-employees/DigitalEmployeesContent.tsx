@@ -28,9 +28,8 @@ const EdgeSection = React.memo(({
   className?: string;
 }) => (
   <section 
-    className={`w-screen unified-bg ${className}`}
+    className={`w-full-edge unified-bg ${className}`}
     id={id}
-    style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}
   >
     {children}
   </section>
@@ -38,12 +37,12 @@ const EdgeSection = React.memo(({
 
 const DigitalEmployeesContent = React.memo(() => {
   return (
-    <div className="min-h-screen w-screen overflow-x-hidden unified-bg">
+    <div className="min-h-screen w-full-edge overflow-x-hidden unified-bg">
       {/* Hero Section - Edge-to-edge */}
       <HeroSection />
 
       {/* Storytelling Scroll - Edge-to-edge */}
-      <div className="w-screen unified-bg" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+      <div className="w-full-edge unified-bg">
         <StorytellingScroll />
       </div>
 
@@ -53,7 +52,7 @@ const DigitalEmployeesContent = React.memo(() => {
       </EdgeSection>
 
       {/* Real-Time Metrics - Edge-to-edge */}
-      <div className="w-screen unified-bg" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+      <div className="w-full-edge unified-bg">
         <LazySection id="real-time-metrics">
           <OptimizedRealTimeMetrics />
         </LazySection>

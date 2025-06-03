@@ -19,14 +19,14 @@ const HeroSection = () => {
   }, [trackSectionView]);
 
   return (
-    <div className="w-screen unified-bg">
+    <div className="w-full-edge unified-bg">
       <div id="hero-section" className="w-full">
         <section className={`${isMobile ? 'min-h-screen pt-16 flex items-start justify-center' : 'min-h-[80vh] pt-24 flex items-center'} relative overflow-hidden w-full unified-bg`}>
           <div className="w-full relative z-10">
             <div className="flex flex-col items-center justify-center">
               {/* Content Column */}
               <div className="w-full text-center">
-                <div className="max-w-7xl mx-auto px-4">
+                <div className="content-container">
                   <div className="animate-fade-up" style={{ animationDuration: "0.5s" }}>
                     <span className={`inline-block ${isMobile ? 'px-3 py-1.5 text-sm' : 'px-4 py-2 text-base'} rounded-full bg-gold/10 text-gold mb-4 md:mb-6 lg:mb-8`}>
                       A Automação Definitiva

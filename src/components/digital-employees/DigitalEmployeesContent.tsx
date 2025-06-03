@@ -13,11 +13,22 @@ import ROIChart from "@/components/digital-employees/ROIChart";
 import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
 import MicroCTA from "@/components/digital-employees/MicroCTA";
+
+// New Interactive Components - Phase 1
+import AdvancedROICalculator from "@/components/digital-employees/interactive/AdvancedROICalculator";
+import ExecutiveAssessment from "@/components/digital-employees/interactive/ExecutiveAssessment";
+import BeforeAfterComparison from "@/components/digital-employees/interactive/BeforeAfterComparison";
+import ProgressTracker from "@/components/digital-employees/interactive/ProgressTracker";
+
 import { sectionVariants } from "./DigitalEmployeesAnimations";
 
 const DigitalEmployeesContent = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden mobile-full-width pt-20 md:pt-12 pb-24 md:pb-12">
+      {/* Progress Tracker - Both Mobile and Desktop */}
+      <ProgressTracker variant="mobile" />
+      <ProgressTracker variant="desktop" />
+
       {/* Hero Section */}
       <motion.div 
         initial="hidden"
@@ -50,6 +61,18 @@ const DigitalEmployeesContent = () => {
         <ClientLogosSection />
       </motion.div>
 
+      {/* NEW: Advanced ROI Calculator - Interactive */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+        className="reveal-section section-spacing-large mobile-container-tight"
+        id="advanced-roi-calculator"
+      >
+        <AdvancedROICalculator />
+      </motion.div>
+
       {/* Micro CTA - Urgency */}
       <div className="mobile-container-tight">
         <div className="micro-cta-spacing">
@@ -57,7 +80,31 @@ const DigitalEmployeesContent = () => {
         </div>
       </div>
 
-      {/* ROI Chart Section */}
+      {/* NEW: Executive Assessment - Interactive */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+        className="reveal-section section-spacing-large mobile-container-tight"
+        id="executive-assessment"
+      >
+        <ExecutiveAssessment />
+      </motion.div>
+
+      {/* NEW: Before After Comparison - Interactive */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+        className="reveal-section section-spacing-large mobile-container-tight"
+        id="before-after-comparison"
+      >
+        <BeforeAfterComparison />
+      </motion.div>
+
+      {/* Original ROI Chart Section - Kept for additional context */}
       <motion.div 
         initial="hidden"
         whileInView="visible"

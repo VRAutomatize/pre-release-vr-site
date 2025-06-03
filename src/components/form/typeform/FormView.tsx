@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,33 @@ const FormView: React.FC<FormViewProps> = ({
   errors,
   setValue
 }) => {
+  // Form data state for the FormStep component
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    instagram: ''
+  });
+
+  // Update form data handler
+  const updateFormData = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setValue(field, value);
+  };
+
+  // Navigation handlers for FormStep
+  const handleNext = () => {
+    handleNextStep();
+  };
+
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const isLastStep = currentStep === totalSteps - 1;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
@@ -84,6 +111,11 @@ const FormView: React.FC<FormViewProps> = ({
                   errors={errors} 
                   paidTraffic={paidTraffic}
                   setValue={setValue}
+                  formData={formData}
+                  updateFormData={updateFormData}
+                  onNext={handleNext}
+                  onPrev={handlePrev}
+                  isLastStep={isLastStep}
                 />
               </motion.div>
             </AnimatePresence>

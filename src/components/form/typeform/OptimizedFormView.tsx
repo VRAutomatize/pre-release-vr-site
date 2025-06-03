@@ -1,5 +1,5 @@
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,20 @@ const OptimizedFormView: React.FC<OptimizedFormViewProps> = ({
   setValue,
   isProcessing
 }) => {
+  // Form data state for the FormStep component
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    instagram: ''
+  });
+
+  // Update form data handler
+  const updateFormData = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setValue(field, value);
+  };
+
   // Memoize button states to prevent unnecessary re-renders
   const buttonState = useMemo(() => {
     const isLoading = isSubmitting || isProcessing;
@@ -60,8 +74,13 @@ const OptimizedFormView: React.FC<OptimizedFormViewProps> = ({
       errors={errors} 
       paidTraffic={paidTraffic}
       setValue={setValue}
+      formData={formData}
+      updateFormData={updateFormData}
+      onNext={onNextStep}
+      onPrev={onPrevStep}
+      isLastStep={buttonState.isLastStep}
     />
-  ), [currentStep, control, errors, paidTraffic, setValue]);
+  ), [currentStep, control, errors, paidTraffic, setValue, formData, updateFormData, onNextStep, onPrevStep, buttonState.isLastStep]);
 
   if (!isOpen) return null;
 

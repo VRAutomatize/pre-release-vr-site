@@ -1,8 +1,7 @@
-
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Share, Download, ArrowLeft } from "lucide-react";
+import { Share, Download } from "lucide-react";
 import { PaymentResult } from '@/types/payment';
 import { formatCurrency } from '@/utils/paymentUtils';
 import { useIsMobile } from '@/hooks/useIsMobile';
@@ -57,21 +56,21 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
 
   return (
     <Card className="glass-blur border-gold/20">
-      <CardHeader className={isMobile ? "p-4 pb-2" : ""}>
-        <CardTitle className="text-gold text-lg md:text-xl">Pagamento Gerado</CardTitle>
-        <CardDescription className="text-gray-200 text-sm md:text-base">
+      <CardHeader>
+        <CardTitle className="text-gold">Pagamento Gerado</CardTitle>
+        <CardDescription>
           {result.paymentMethod === 'pix' 
             ? 'Escaneie o QR Code abaixo para realizar o pagamento via PIX'
             : 'Escaneie o QR Code ou use o link abaixo para realizar o pagamento com cartão de crédito'}
         </CardDescription>
       </CardHeader>
-      <CardContent className={`flex flex-col items-center ${isMobile ? 'p-4 py-2' : ''}`}>
+      <CardContent className="flex flex-col items-center">
         {/* QR Code display for both payment methods */}
         {result.qrCodeImage && (
-          <div className={`flex flex-col items-center ${isMobile ? 'gap-3' : 'gap-4'}`}>
-            <div className={`p-3 bg-white rounded-lg w-auto ${isMobile ? 'p-2' : ''}`}>
-              {/* Responsive QR code container */}
-              <div className={isMobile ? "w-[220px] h-[220px]" : "w-64 h-64"}>
+          <div className="flex flex-col items-center gap-4">
+            <div className="p-4 bg-white rounded-md w-auto">
+              {/* Fixed size container for QR code, especially on mobile */}
+              <div className={isMobile ? "w-[240px] h-[240px]" : "w-64 h-64"}>
                 <img 
                   src={result.qrCodeImage} 
                   alt={`QR Code ${result.paymentMethod === 'pix' ? 'PIX' : 'Pagamento'}`} 
@@ -80,10 +79,8 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
               </div>
             </div>
             <div className="text-center">
-              <p className={`font-semibold text-gray-100 ${isMobile ? 'text-sm' : 'text-base'}`}>
-                {result.productName}
-              </p>
-              <p className={`font-bold text-gold ${isMobile ? 'text-lg' : 'text-xl'}`}>
+              <p className="font-semibold">{result.productName}</p>
+              <p className="text-xl font-bold text-gold">
                 {formatCurrency(result.value)}
               </p>
             </div>
@@ -92,36 +89,30 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
 
         {/* Direct link button for credit card payments */}
         {result.paymentMethod === 'credit_card' && result.paymentLink && (
-          <Button 
-            asChild
-            className={`bg-gold hover:bg-gold/80 text-black font-semibold ${isMobile ? 'w-full py-3 text-base mt-3' : 'mt-4'}`}
+          <a 
+            href={result.paymentLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="bg-gold hover:bg-gold/80 text-black px-4 py-2 rounded-md font-medium mt-4"
           >
-            <a 
-              href={result.paymentLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              Pagar com Cartão de Crédito
-            </a>
-          </Button>
+            Pagar com Cartão de Crédito
+          </a>
         )}
 
         {/* Error message if neither QR code nor link is available */}
         {!result.qrCodeImage && !result.paymentLink && (
-          <div className="text-red-400 text-center p-4">
-            <p className={isMobile ? 'text-sm' : 'text-base'}>
-              Erro ao gerar o pagamento. Por favor, tente novamente.
-            </p>
+          <div className="text-red-500 text-center p-4">
+            <p>Erro ao gerar o pagamento. Por favor, tente novamente.</p>
           </div>
         )}
       </CardContent>
-      <CardFooter className={`flex flex-col ${isMobile ? 'gap-2 p-4 pt-2' : 'gap-3'}`}>
+      <CardFooter className="flex flex-col gap-3">
         {/* Show share and download buttons for both payment methods */}
         {result.qrCodeImage && (
-          <div className={`flex ${isMobile ? 'flex-col gap-2' : 'flex-col sm:flex-row gap-2'} w-full`}>
+          <div className="flex flex-col sm:flex-row gap-2 w-full">
             <Button 
               onClick={handleShare}
-              className={`bg-emerald-600 hover:bg-emerald-700 text-white font-medium ${isMobile ? 'w-full py-3 text-base' : 'w-full'}`}
+              className="w-full bg-emerald-600 hover:bg-emerald-700"
             >
               <Share className="mr-2 h-4 w-4" /> 
               Compartilhar via WhatsApp
@@ -129,7 +120,7 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
             <Button 
               onClick={handleDownload}
               variant="outline"
-              className={`border-gold/20 text-gold hover:bg-gold/10 font-medium ${isMobile ? 'w-full py-3 text-base' : 'w-full'}`}
+              className="w-full border-gold/20 text-gold hover:bg-gold/10"
             >
               <Download className="mr-2 h-4 w-4" /> 
               Baixar QR Code
@@ -139,9 +130,8 @@ const PaymentResultDisplay: React.FC<PaymentResultDisplayProps> = ({
         <Button 
           onClick={onBack} 
           variant="outline" 
-          className={`border-gray-600 text-gray-200 hover:bg-gray-800 hover:text-gray-100 hover:border-gray-500 font-medium ${isMobile ? 'w-full py-3 text-base mt-2' : 'w-full mt-2'}`}
+          className="w-full border-gold/20 text-gold hover:bg-gold/10 mt-2"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
           Nova Cobrança
         </Button>
       </CardFooter>

@@ -11,7 +11,6 @@ import { FormNavigation } from "./vendas-form/FormNavigation";
 import { useFormSubmission } from "./vendas-form/useFormSubmission";
 import { useFormNavigation } from "./vendas-form/useFormNavigation";
 import { ConfirmationDialog } from "./vendas-form/ConfirmationDialog";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface DirectFormRendererProps {
   formUrl: string;
@@ -19,8 +18,6 @@ interface DirectFormRendererProps {
 }
 
 export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps) {
-  const isMobile = useIsMobile();
-  
   // Determine form type based on URL
   const isGerarVendaForm = formUrl.includes("gerar_venda");
   const isNotificaComercialForm = formUrl.includes("notifica_time_comercial");
@@ -103,62 +100,54 @@ export function DirectFormRenderer({ formUrl, onClose }: DirectFormRendererProps
     : "Envie um lead qualificado para o time comercial";
   
   return (
-    <div className="h-full w-full overflow-auto bg-[#1A1F2C]">
-      <div className={`${isMobile ? 'p-4' : 'p-6'} max-w-2xl mx-auto`}>
-        <div className="glass-blur rounded-lg border border-gold/20 overflow-hidden">
-          {/* Header */}
-          <div className={`${isMobile ? 'p-4' : 'p-6'} border-b border-gold/10`}>
-            <h2 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold text-gold mb-2`}>
-              {formTitle}
-            </h2>
-            <p className={`text-gray-300 ${isMobile ? 'text-sm' : 'text-base'} mb-6`}>
-              {formDescription}
-            </p>
+    <div className="h-full w-full overflow-auto bg-[#1A1F2C] p-4 md:p-6">
+      <div className="max-w-xl mx-auto">
+        <div className="glass-blur rounded-lg p-6 border border-gold/20">
+          <div className="mb-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-gold mb-2">{formTitle}</h2>
+            <p className="text-gold/70 mb-4">{formDescription}</p>
             
             {/* Progress bar */}
             <FormProgress currentStep={currentStep} totalSteps={3} />
           </div>
           
-          {/* Form Content */}
-          <div className={isMobile ? 'p-4' : 'p-6'}>
-            {/* Seller tag indicator */}
-            <SellerInfo user={user} getSellerTag={getSellerTag} />
+          {/* Seller tag indicator */}
+          <SellerInfo user={user} getSellerTag={getSellerTag} />
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Step 1: Company Information */}
+            {currentStep === 1 && <CompanyInfoStep form={form} />}
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Step 1: Company Information */}
-              {currentStep === 1 && <CompanyInfoStep form={form} />}
-              
-              {/* Step 2: Client Information */}
-              {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
-              
-              {/* Step 3: Service Options or Lead Info */}
-              {currentStep === 3 && (
-                <>
-                  {isGerarVendaForm ? (
-                    <ServiceOptionsStep form={form} />
-                  ) : (
-                    <LeadInfoStep form={form} />
-                  )}
-                  
-                  {formError && (
-                    <div className="p-4 bg-red-900/20 border border-red-900/30 rounded-lg text-sm text-red-400">
-                      {formError}
-                    </div>
-                  )}
-                </>
-              )}
-              
-              {/* Navigation buttons */}
-              <FormNavigation 
-                currentStep={currentStep}
-                totalSteps={3}
-                onNext={handleNextStep}
-                onPrev={handlePrevStep}
-                onCancel={onClose}
-                isSubmitting={isSubmitting}
-              />
-            </form>
-          </div>
+            {/* Step 2: Client Information */}
+            {currentStep === 2 && <ClientInfoStep form={form} isDirectSale={isDirectSale} />}
+            
+            {/* Step 3: Service Options or Lead Info */}
+            {currentStep === 3 && (
+              <>
+                {isGerarVendaForm ? (
+                  <ServiceOptionsStep form={form} />
+                ) : (
+                  <LeadInfoStep form={form} />
+                )}
+                
+                {formError && (
+                  <div className="p-3 bg-red-900/20 border border-red-900/30 rounded-md text-sm text-red-400">
+                    {formError}
+                  </div>
+                )}
+              </>
+            )}
+            
+            {/* Navigation buttons */}
+            <FormNavigation 
+              currentStep={currentStep}
+              totalSteps={3}
+              onNext={handleNextStep}
+              onPrev={handlePrevStep}
+              onCancel={onClose}
+              isSubmitting={isSubmitting}
+            />
+          </form>
         </div>
       </div>
       

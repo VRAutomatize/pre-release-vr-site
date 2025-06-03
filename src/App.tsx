@@ -1,13 +1,11 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TypeformProvider } from "@/contexts/TypeformContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { GlobalCondensedTypeformModal } from "@/components/form/GlobalCondensedTypeformModal";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import UniversalPageTransition from "@/components/animations/UniversalPageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import DigitalEmployees from "./pages/services/DigitalEmployees";
@@ -34,47 +32,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Enhanced wrapper component with professional animations
-const PageWrapper = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  const isMobile = useIsMobile();
-  
-  // Apply different animation strategies based on route type
-  const isEmployeeRoute = location.pathname.startsWith('/employee/');
-  const isServiceRoute = location.pathname.includes('/lp-') || 
-                         location.pathname.includes('/atendentes-') ||
-                         location.pathname.includes('/automacao') ||
-                         location.pathname.includes('/crm') ||
-                         location.pathname.includes('/consultoria') ||
-                         location.pathname.includes('/chatbots') ||
-                         location.pathname.includes('/captura-');
-  
-  // Employee routes get enhanced mobile transitions
-  if (isEmployeeRoute) {
-    return (
-      <UniversalPageTransition className="min-h-screen bg-gray-900">
-        {children}
-      </UniversalPageTransition>
-    );
-  }
-  
-  // Service pages get smooth desktop + mobile transitions
-  if (isServiceRoute || location.pathname === '/') {
-    return (
-      <UniversalPageTransition className="min-h-screen bg-gray-900">
-        {children}
-      </UniversalPageTransition>
-    );
-  }
-  
-  // Default pages (404, etc.) get simple transitions
-  return (
-    <UniversalPageTransition className="bg-gray-900">
-      {children}
-    </UniversalPageTransition>
-  );
-};
-
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -82,42 +39,40 @@ function App() {
         <AuthProvider>
           <TypeformProvider>
             <Router>
-              <div className="min-h-screen bg-gray-900 text-foreground">
-                <PageWrapper>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/lp-funcionarios-digitais-pro" element={<DigitalEmployees />} />
-                    <Route path="/atendentes-ia" element={<AIAttendants />} />
-                    <Route path="/automacao" element={<Automation />} />
-                    <Route path="/crm" element={<CRM />} />
-                    <Route path="/consultoria" element={<Consulting />} />
-                    <Route path="/chatbots" element={<Chatbots />} />
-                    <Route path="/captura-leads" element={<LeadCapture />} />
-                    <Route path="/employee/login" element={<Login />} />
-                    <Route path="/employee/dashboard" element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/employee/reports" element={
-                      <ProtectedRoute>
-                        <Reports />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/employee/links" element={
-                      <ProtectedRoute>
-                        <PaymentLinks />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/employee/devs" element={
-                      <ProtectedRoute>
-                        <Devs />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/404" element={<NotFound />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} />
-                  </Routes>
-                </PageWrapper>
+              <div className="min-h-screen bg-background text-foreground">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/lp-funcionarios-digitais-pro" element={<DigitalEmployees />} />
+                  <Route path="/atendentes-ia" element={<AIAttendants />} />
+                  <Route path="/automacao" element={<Automation />} />
+                  <Route path="/crm" element={<CRM />} />
+                  <Route path="/consultoria" element={<Consulting />} />
+                  <Route path="/chatbots" element={<Chatbots />} />
+                  <Route path="/captura-leads" element={<LeadCapture />} />
+                  <Route path="/employee/login" element={<Login />} />
+                  <Route path="/employee/dashboard" element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/employee/reports" element={
+                    <ProtectedRoute>
+                      <Reports />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/employee/links" element={
+                    <ProtectedRoute>
+                      <PaymentLinks />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/employee/devs" element={
+                    <ProtectedRoute>
+                      <Devs />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/404" element={<NotFound />} />
+                  <Route path="*" element={<Navigate to="/404" replace />} />
+                </Routes>
                 
                 {/* Global Condensed Form Modal */}
                 <GlobalCondensedTypeformModal />

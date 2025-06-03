@@ -27,30 +27,18 @@
     --radius: 0.75rem;
   }
 
-  /* Global reset for white borders */
-  *, *::before, *::after {
+  * {
     @apply border-border;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    scroll-padding-top: 100px;
   }
   
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
     scroll-behavior: smooth;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+  }
+
+  /* Improved scroll experience */
+  html {
+    scroll-padding-top: 100px;
   }
 }

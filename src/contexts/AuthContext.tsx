@@ -8,7 +8,6 @@ const EMPLOYEES = [
   { username: "funcionario", password: "func123", name: "Funcionário" },
   { username: "kaio.fdcore@vrautomatize.com", password: "kaio2025", name: "Kaio" },
   { username: "rafhael.fdcore@vrautomatize.com", password: "rafhael2025", name: "Rafhael" },
-  { username: "manu.fdcore@vrautomatize.com", password: "manu2025", name: "Manuella" },
   { username: "admin", password: "2200", name: "Alexsander" }
 ];
 

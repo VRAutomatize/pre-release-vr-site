@@ -5,42 +5,36 @@ import {
   LayoutDashboard, 
   FileText, 
   Users, 
-  Play,
+  LogOut,
+  BookOpen,
   CreditCard
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
-import UserProfileMenu from "@/components/mobile/UserProfileMenu";
 
 const SidebarItem = ({ 
   icon: Icon, 
   label, 
   href, 
   active,
-  onClick,
-  featured = false
+  onClick
 }: { 
   icon: React.ElementType; 
   label: string; 
   href: string; 
   active: boolean;
   onClick?: () => void;
-  featured?: boolean;
 }) => {
   return (
     <Link
       to={href}
       className={cn(
         "flex items-center justify-center gap-3 rounded-md px-3 py-2 text-sm transition-all hover:bg-gold/10 relative group",
-        featured 
-          ? "bg-gold/20 text-gold scale-105" 
-          : active 
-            ? "bg-gold/10 text-gold" 
-            : "text-foreground"
+        active ? "bg-gold/10 text-gold" : "text-foreground"
       )}
       onClick={onClick}
     >
-      <Icon className={cn("flex-shrink-0", featured ? "h-6 w-6" : "h-5 w-5")} />
+      <Icon className="h-5 w-5 flex-shrink-0" />
       <div className="absolute left-full z-50 ml-1 opacity-0 transform scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 origin-left">
         <div className="bg-background/80 backdrop-blur-lg border border-gold/20 rounded-md py-1 px-2 shadow-lg">
           <span className="whitespace-nowrap">{label}</span>
@@ -52,7 +46,7 @@ const SidebarItem = ({
 
 const EmployeeSidebar = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { logout } = useAuth();
   const currentPath = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const currentTab = searchParams.get("tab");
@@ -65,7 +59,7 @@ const EmployeeSidebar = () => {
         <img 
           src="/lovable-uploads/2a347c53-83d5-4886-b387-c38347ea3fbc.png" 
           alt="VR Link Logo" 
-          className="h-24 w-24 object-contain scale-150"
+          className="h-20 w-20 object-contain scale-150"
         />
       </div>
       <div className="flex-1 py-4 px-2 overflow-y-auto overflow-x-hidden">
@@ -77,23 +71,22 @@ const EmployeeSidebar = () => {
             active={currentPath === "/employee/dashboard" && !currentTab || currentTab === "metrics"}
           />
           <SidebarItem
-            icon={CreditCard}
-            label="Links Pagamento"
-            href="/employee/links"
-            active={currentPath === "/employee/links"}
-          />
-          <SidebarItem
-            icon={Play}
-            label="Recursos"
-            href="/employee/dashboard?tab=resources"
-            active={currentTab === "resources"}
-            featured={true}
-          />
-          <SidebarItem
             icon={FileText}
             label="Gerar Relatório"
             href="/employee/reports"
             active={currentPath === "/employee/reports"}
+          />
+          <SidebarItem
+            icon={BookOpen}
+            label="Recursos"
+            href="/employee/dashboard?tab=resources"
+            active={currentTab === "resources"}
+          />
+          <SidebarItem
+            icon={CreditCard}
+            label="Links Pagamento"
+            href="/employee/links"
+            active={currentPath === "/employee/links"}
           />
           <SidebarItem
             icon={Users}
@@ -103,14 +96,13 @@ const EmployeeSidebar = () => {
           />
         </nav>
       </div>
-      <div className="border-t border-gold/20 p-2 flex justify-center">
-        <UserProfileMenu>
-          <div className="h-8 w-8 bg-gold/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-gold/30 transition-colors">
-            <span className="text-xs font-medium text-gold">
-              {user?.name?.charAt(0) || "U"}
-            </span>
-          </div>
-        </UserProfileMenu>
+      <div className="border-t border-gold/20 p-2">
+        <button
+          onClick={() => logout()}
+          className="flex w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 transition-colors"
+        >
+          <LogOut size={16} className="flex-shrink-0" />
+        </button>
       </div>
     </div>
   );

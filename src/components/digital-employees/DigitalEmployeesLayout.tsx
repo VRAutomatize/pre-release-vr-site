@@ -17,7 +17,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
   const { handleWhatsAppClick, handleHomeClick } = useDigitalEmployeesTracking();
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden" style={{ width: 'calc(100vw - 16px)', margin: '0 8px' }}>
+    <div className="min-h-screen bg-background overflow-x-hidden prevent-overflow" style={{ width: 'calc(100vw - 20px)', margin: '0 10px', maxWidth: '100vw' }}>
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       
@@ -50,7 +50,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
       )}
 
       {/* Main Content */}
-      <main className="relative z-10">
+      <main className="relative z-10 prevent-overflow">
         {children}
       </main>
 

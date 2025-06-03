@@ -11,6 +11,7 @@ import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProo
 import ROIChart from "@/components/digital-employees/ROIChart";
 import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
+import AdvancedROICalculator from "@/components/digital-employees/interactive/AdvancedROICalculator";
 
 // Lazy loaded components - apenas os essenciais
 import LazySection from "@/components/shared/LazySection";
@@ -57,6 +58,11 @@ const DigitalEmployeesContent = React.memo(() => {
           <OptimizedRealTimeMetrics />
         </LazySection>
       </div>
+
+      {/* ROI Calculator Section - Edge-to-edge */}
+      <EdgeSection id="roi-calculator-section">
+        <AdvancedROICalculator />
+      </EdgeSection>
 
       {/* Client Logos Section - Edge-to-edge */}
       <EdgeSection id="client-logos">

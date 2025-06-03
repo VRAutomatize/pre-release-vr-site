@@ -1,3 +1,4 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import HeroSection from "@/components/digital-employees/HeroSection";
@@ -13,18 +14,44 @@ import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
 import MicroCTA from "@/components/digital-employees/MicroCTA";
 
-// New Interactive Components - Phase 1
+// Phase 1 - Interactive Components
 import AdvancedROICalculator from "@/components/digital-employees/interactive/AdvancedROICalculator";
 import ExecutiveAssessment from "@/components/digital-employees/interactive/ExecutiveAssessment";
 import BeforeAfterComparison from "@/components/digital-employees/interactive/BeforeAfterComparison";
 import ProgressTracker from "@/components/digital-employees/interactive/ProgressTracker";
 
-import { sectionVariants } from "./DigitalEmployeesAnimations";
+// Phase 3 & 4 - Dynamic Social Proof & Behavioral Personalization
+import InteractiveCasesCarousel from "@/components/digital-employees/InteractiveCasesCarousel";
+import RealTimeMetrics from "@/components/digital-employees/RealTimeMetrics";
+import ContextualCTA from "@/components/digital-employees/ContextualCTA";
 
+import { sectionVariants } from "./DigitalEmployeesAnimations";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
 import { PremiumReveal, PremiumCard } from "@/components/digital-employees/PremiumAnimations";
+import { useBehavioralSegmentation } from "@/hooks/useBehavioralSegmentation";
 
 const DigitalEmployeesContent = () => {
+  const { trackSectionView } = useBehavioralSegmentation();
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) {
+            trackSectionView(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    // Observe all sections with IDs
+    const sections = document.querySelectorAll('[id]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [trackSectionView]);
+
   return (
     <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-24 md:pb-12">
       {/* Progress Tracker - Both Mobile and Desktop */}
@@ -54,10 +81,23 @@ const DigitalEmployeesContent = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
         className="reveal-section section-premium container-premium"
+        id="quick-social-proof"
       >
         <PremiumReveal delay={0.1}>
           <QuickSocialProof />
         </PremiumReveal>
+      </motion.div>
+
+      {/* Real-Time Metrics - NEW */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+        className="reveal-section"
+        id="real-time-metrics"
+      >
+        <RealTimeMetrics />
       </motion.div>
 
       {/* Client Logos Section */}
@@ -67,13 +107,19 @@ const DigitalEmployeesContent = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
         className="reveal-section section-premium container-premium"
+        id="client-logos"
       >
         <PremiumReveal delay={0.2}>
           <ClientLogosSection />
         </PremiumReveal>
       </motion.div>
 
-      {/* NEW: Advanced ROI Calculator - Interactive */}
+      {/* Contextual CTA */}
+      <div className="container-premium" id="cta-after-logos">
+        <ContextualCTA sectionId="client-logos" />
+      </div>
+
+      {/* Advanced ROI Calculator */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -87,16 +133,12 @@ const DigitalEmployeesContent = () => {
         </PremiumCard>
       </motion.div>
 
-      {/* Micro CTA - Urgency */}
-      <div className="container-premium">
-        <div className="micro-cta-spacing">
-          <PremiumReveal delay={0.1}>
-            <MicroCTA variant="urgency" />
-          </PremiumReveal>
-        </div>
+      {/* Contextual CTA after Calculator */}
+      <div className="container-premium" id="cta-after-calculator">
+        <ContextualCTA sectionId="roi-calculator" />
       </div>
 
-      {/* NEW: Executive Assessment - Interactive */}
+      {/* Executive Assessment */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -110,7 +152,29 @@ const DigitalEmployeesContent = () => {
         </PremiumCard>
       </motion.div>
 
-      {/* NEW: Before After Comparison - Interactive */}
+      {/* Contextual CTA after Assessment */}
+      <div className="container-premium" id="cta-after-assessment">
+        <ContextualCTA sectionId="executive-assessment" />
+      </div>
+
+      {/* Interactive Cases Carousel - NEW */}
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+        className="reveal-section"
+        id="interactive-cases"
+      >
+        <InteractiveCasesCarousel />
+      </motion.div>
+
+      {/* Contextual CTA after Cases */}
+      <div className="container-premium" id="cta-after-cases">
+        <ContextualCTA sectionId="cases" />
+      </div>
+
+      {/* Before After Comparison */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -124,7 +188,7 @@ const DigitalEmployeesContent = () => {
         </PremiumCard>
       </motion.div>
 
-      {/* Original ROI Chart Section - Kept for additional context */}
+      {/* Original ROI Chart Section */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -138,15 +202,6 @@ const DigitalEmployeesContent = () => {
         </PremiumReveal>
       </motion.div>
       
-      {/* Micro CTA - Calculator */}
-      <div className="container-premium">
-        <div className="micro-cta-spacing">
-          <PremiumReveal delay={0.1}>
-            <MicroCTA variant="calculator" />
-          </PremiumReveal>
-        </div>
-      </div>
-
       {/* Use Cases Section */}
       <motion.div 
         initial="hidden"
@@ -160,15 +215,6 @@ const DigitalEmployeesContent = () => {
           <UseCasesSection />
         </PremiumReveal>
       </motion.div>
-
-      {/* Micro CTA - Executive */}
-      <div className="container-premium">
-        <div className="micro-cta-spacing">
-          <PremiumReveal delay={0.1}>
-            <MicroCTA variant="executive" />
-          </PremiumReveal>
-        </div>
-      </div>
       
       {/* Premium Social Proof Section */}
       <motion.div 
@@ -211,17 +257,8 @@ const DigitalEmployeesContent = () => {
           <ComparisonSection />
         </PremiumCard>
       </motion.div>
-
-      {/* Micro CTA - Default */}
-      <div className="container-premium">
-        <div className="micro-cta-spacing">
-          <PremiumReveal delay={0.1}>
-            <MicroCTA variant="default" />
-          </PremiumReveal>
-        </div>
-      </div>
       
-      {/* FAQ Section - Moved higher up */}
+      {/* FAQ Section */}
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -234,6 +271,11 @@ const DigitalEmployeesContent = () => {
           <FAQSection />
         </PremiumReveal>
       </motion.div>
+
+      {/* Contextual CTA after FAQ */}
+      <div className="container-premium" id="cta-after-faq">
+        <ContextualCTA sectionId="faq" />
+      </div>
       
       {/* Ideal For Section */}
       <motion.div 
@@ -256,6 +298,7 @@ const DigitalEmployeesContent = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
         className="reveal-section section-premium container-premium"
+        id="final-cta"
       >
         <PremiumReveal delay={0.1}>
           <CTASection />

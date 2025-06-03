@@ -17,7 +17,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
   const { handleWhatsAppClick, handleHomeClick } = useDigitalEmployeesTracking();
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden prevent-overflow" style={{ width: 'calc(100vw - 20px)', margin: '0 10px', maxWidth: '100vw' }}>
+    <div className="min-h-screen bg-background overflow-x-hidden prevent-overflow">
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       
@@ -26,7 +26,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
         <PremiumMobileNav />
       ) : (
         /* Desktop Header */
-        <header className="w-full-edge bg-background/20 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <header className="section-edge bg-background/20 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
           <div className="content-container">
             <div className="flex items-center justify-between h-16">
               <Link 

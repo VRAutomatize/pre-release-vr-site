@@ -65,27 +65,17 @@
     border-color: #FFD700;
   }
 
-  /* Sistema Edge-to-Edge com 5px de margem para simetria perfeita */
-  .w-full-edge {
-    width: calc(100vw - 10px) !important;
-    max-width: none !important;
-    margin-left: 5px !important;
-    margin-right: 5px !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    box-sizing: border-box !important;
-  }
-
+  /* Sistema de layout centralizado no viewport */
   .section-edge {
-    width: calc(100vw - 10px);
-    margin-left: 5px;
-    margin-right: 5px;
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
   }
 
-  /* Containers internos para conteúdo - SEM mx-auto conflitante */
+  /* Containers internos para conteúdo centralizado */
   .content-container {
     max-width: 1280px;
     margin-left: auto;
@@ -184,18 +174,7 @@
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-  }
-
-  /* Sistema unificado sem conflitos */
-  .unified-section {
-    width: calc(100vw - 10px);
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-left: 0;
-    padding-right: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
   }
 }

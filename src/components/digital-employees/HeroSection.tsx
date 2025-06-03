@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Calculator, TrendingUp, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -21,7 +20,7 @@ const HeroSection = () => {
   return (
     <div className="section-edge unified-bg">
       <div id="hero-section" className="w-full">
-        <section className={`${isMobile ? 'min-h-screen pt-16 flex items-start justify-center' : 'min-h-[80vh] pt-24 flex items-center'} relative overflow-hidden w-full unified-bg`}>
+        <section className={`${isMobile ? 'min-h-screen pt-24 flex items-start justify-center' : 'min-h-[80vh] pt-32 flex items-center'} relative overflow-hidden w-full unified-bg`}>
           <div className="w-full relative z-10">
             <div className="flex flex-col items-center justify-center">
               {/* Content Column */}

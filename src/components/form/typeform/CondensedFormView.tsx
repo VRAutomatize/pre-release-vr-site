@@ -10,7 +10,7 @@ import {
   CondensedPhoneStep, 
   CondensedRevenueStep, 
   CondensedIndustryStep 
-} from "./steps/CondensedFormSteps";
+} from "./steps/CondensedSteps";
 
 interface CondensedFormViewProps {
   isOpen: boolean;

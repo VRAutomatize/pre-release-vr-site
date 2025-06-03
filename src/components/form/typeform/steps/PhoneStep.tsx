@@ -11,7 +11,7 @@ interface PhoneStepProps {
   onPrev: () => void;
 }
 
-export const PhoneStep: React.FC<PhoneStepProps> = ({ value, onChange, onNext, onPrev }) => {
+const PhoneStep: React.FC<PhoneStepProps> = ({ value, onChange, onNext, onPrev }) => {
   const [error, setError] = useState('');
 
   const formatPhone = (value: string) => {
@@ -74,3 +74,5 @@ export const PhoneStep: React.FC<PhoneStepProps> = ({ value, onChange, onNext, o
     </div>
   );
 };
+
+export default PhoneStep;

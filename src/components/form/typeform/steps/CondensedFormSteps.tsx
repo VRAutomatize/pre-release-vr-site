@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { FormData } from '../types';
-import { NameStep } from './NameStep';
-import { EmailStep } from './EmailStep';
-import { PhoneStep } from './PhoneStep';
-import { InstagramStep } from './InstagramStep';
+import NameStep from './NameStep';
+import EmailStep from './EmailStep';
+import PhoneStep from './PhoneStep';
+import InstagramStep from './InstagramStep';
 
 interface CondensedFormStepsProps {
   currentStep: number;
@@ -28,8 +28,8 @@ export const CondensedFormSteps: React.FC<CondensedFormStepsProps> = ({
       case 0:
         return (
           <NameStep
-            value={formData.name}
-            onChange={(value) => updateFormData('name', value)}
+            value={formData.fullName}
+            onChange={(value) => updateFormData('fullName', value)}
             onNext={onNext}
           />
         );

@@ -8,3 +8,11 @@ export { default as MonthlyRevenueStep } from './MonthlyRevenueStep';
 export { default as PaidTrafficStep } from './PaidTrafficStep';
 export { default as TrafficInvestmentStep } from './TrafficInvestmentStep';
 export { default as IndustryStep } from './IndustryStep';
+
+// Export condensed steps
+export { 
+  CondensedNameStep, 
+  CondensedPhoneStep, 
+  CondensedRevenueStep, 
+  CondensedIndustryStep 
+} from './CondensedSteps';

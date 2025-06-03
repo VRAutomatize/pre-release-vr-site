@@ -26,14 +26,14 @@
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-1 active:translate-y-0;
+    @apply transition-all duration-200 hover:shadow-lg hover:shadow-gold/20 hover:-translate-y-0.5 active:translate-y-0;
   }
 
-  /* Scroll reveal animation */
+  /* Optimized scroll reveal animation */
   .reveal-section {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
   
   .reveal-section.is-visible {
@@ -41,59 +41,60 @@
     transform: translateY(0);
   }
 
-  /* Animations */
+  /* Performance optimized animations */
   @keyframes float-fade {
     0% {
       opacity: 0;
-      transform: translateY(0);
+      transform: translateY(0) translateZ(0);
     }
     20% {
       opacity: 1;
     }
     80% {
       opacity: 1;
-      transform: translateY(-10px);
+      transform: translateY(-8px) translateZ(0);
     }
     100% {
       opacity: 0;
-      transform: translateY(-20px);
+      transform: translateY(-15px) translateZ(0);
     }
   }
   
   .animate-float-fade {
-    animation: float-fade 1.5s ease-out forwards;
+    animation: float-fade 1.2s ease-out forwards;
   }
   
   @keyframes float {
     0% {
-      transform: translateY(0px);
+      transform: translateY(0px) translateZ(0);
     }
     50% {
-      transform: translateY(-20px);
+      transform: translateY(-15px) translateZ(0);
     }
     100% {
-      transform: translateY(0px);
+      transform: translateY(0px) translateZ(0);
     }
   }
   
   .animate-float {
-    animation: float 8s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
+    will-change: transform;
   }
 
-  /* Form animations */
+  /* Optimized form animations */
   @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(8px) translateZ(0);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) translateZ(0);
     }
   }
   
   .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
+    animation: fade-in 0.25s ease-out;
   }
 
   /* Gold theme utilities */
@@ -123,5 +124,75 @@
   
   .hover\:bg-gold-light:hover {
     background-color: #FFED4A;
+  }
+
+  /* Performance optimizations */
+  .premium-glass {
+    @apply backdrop-blur-md bg-background/20 border border-gold/10;
+    will-change: auto;
+  }
+
+  /* Reduced spacing for mobile */
+  .container-premium {
+    @apply container mx-auto px-4;
+  }
+
+  .section-premium {
+    @apply py-6 md:py-8;
+  }
+
+  /* Mobile card grid optimizations */
+  .mobile-card-grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6;
+  }
+
+  .mobile-card-grid-4 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6;
+  }
+
+  .mobile-card-compact {
+    @apply p-4 md:p-6;
+  }
+
+  /* Performance optimized transforms */
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Optimized gradients */
+  .premium-gradient-bg {
+    background: linear-gradient(135deg, 
+      rgba(255, 215, 0, 0.02) 0%, 
+      transparent 25%, 
+      transparent 75%, 
+      rgba(255, 215, 0, 0.02) 100%);
+  }
+
+  .premium-gold-gradient {
+    @apply bg-gradient-to-r from-gold to-gold-light;
+  }
+
+  .premium-text-glow {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .animate-float,
+    .animate-float-fade {
+      animation: none;
+    }
   }
 }

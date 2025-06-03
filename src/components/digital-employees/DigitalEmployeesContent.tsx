@@ -14,21 +14,46 @@ import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
 import MicroCTA from "@/components/digital-employees/MicroCTA";
 
-// Phase 1 - Interactive Components
-import AdvancedROICalculator from "@/components/digital-employees/interactive/AdvancedROICalculator";
-import ExecutiveAssessment from "@/components/digital-employees/interactive/ExecutiveAssessment";
-import BeforeAfterComparison from "@/components/digital-employees/interactive/BeforeAfterComparison";
-import ProgressTracker from "@/components/digital-employees/interactive/ProgressTracker";
+// Lazy loaded components
+import LazySection from "@/components/shared/LazySection";
+import OptimizedRealTimeMetrics from "@/components/digital-employees/OptimizedRealTimeMetrics";
 
-// Phase 3 & 4 - Dynamic Social Proof & Behavioral Personalization
-import InteractiveCasesCarousel from "@/components/digital-employees/InteractiveCasesCarousel";
-import RealTimeMetrics from "@/components/digital-employees/RealTimeMetrics";
-import ContextualCTA from "@/components/digital-employees/ContextualCTA";
+// Interactive Components with lazy loading
+const AdvancedROICalculator = React.lazy(() => import("@/components/digital-employees/interactive/AdvancedROICalculator"));
+const ExecutiveAssessment = React.lazy(() => import("@/components/digital-employees/interactive/ExecutiveAssessment"));
+const BeforeAfterComparison = React.lazy(() => import("@/components/digital-employees/interactive/BeforeAfterComparison"));
+const ProgressTracker = React.lazy(() => import("@/components/digital-employees/interactive/ProgressTracker"));
+const InteractiveCasesCarousel = React.lazy(() => import("@/components/digital-employees/InteractiveCasesCarousel"));
+const ContextualCTA = React.lazy(() => import("@/components/digital-employees/ContextualCTA"));
 
 import { sectionVariants } from "./DigitalEmployeesAnimations";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
 import { PremiumReveal, PremiumCard } from "@/components/digital-employees/PremiumAnimations";
 import { useBehavioralSegmentation } from "@/hooks/useBehavioralSegmentation";
+
+// Optimized section wrapper with reduced spacing
+const OptimizedSection = React.memo(({ 
+  children, 
+  id, 
+  className = "",
+  spacing = "py-6" // Reduced from py-12
+}: { 
+  children: React.ReactNode;
+  id: string;
+  className?: string;
+  spacing?: string;
+}) => (
+  <motion.div 
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+    variants={sectionVariants}
+    className={`reveal-section section-premium container-premium ${spacing} ${className}`}
+    id={id}
+  >
+    {children}
+  </motion.div>
+));
 
 const DigitalEmployeesContent = () => {
   const { trackSectionView } = useBehavioralSegmentation();
@@ -53,257 +78,146 @@ const DigitalEmployeesContent = () => {
   }, [trackSectionView]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-24 md:pb-12">
-      {/* Progress Tracker - Both Mobile and Desktop */}
-      <ProgressTracker variant="mobile" />
-      <ProgressTracker variant="desktop" />
+    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-12 md:pb-8">
+      {/* Progress Tracker - Lazy loaded */}
+      <LazySection>
+        <React.Suspense fallback={<div className="h-1" />}>
+          <ProgressTracker variant="mobile" />
+          <ProgressTracker variant="desktop" />
+        </React.Suspense>
+      </LazySection>
 
-      {/* Hero Section */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-        className="section-premium"
-        id="hero"
-      >
+      {/* Hero Section - Immediate load */}
+      <OptimizedSection id="hero" spacing="pb-8">
         <PremiumReveal>
           <HeroSection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
 
       {/* Storytelling Scroll - Mobile Only */}
       <StorytellingScroll />
 
-      {/* Quick Social Proof - Right after hero */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="quick-social-proof"
-      >
+      {/* Quick Social Proof */}
+      <OptimizedSection id="quick-social-proof" spacing="py-6">
         <PremiumReveal delay={0.1}>
           <QuickSocialProof />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
 
-      {/* Real-Time Metrics - NEW */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section"
-        id="real-time-metrics"
-      >
-        <RealTimeMetrics />
-      </motion.div>
+      {/* Real-Time Metrics - Optimized */}
+      <LazySection id="real-time-metrics">
+        <OptimizedRealTimeMetrics />
+      </LazySection>
 
       {/* Client Logos Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="client-logos"
-      >
+      <OptimizedSection id="client-logos" spacing="py-8">
         <PremiumReveal delay={0.2}>
           <ClientLogosSection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
 
-      {/* Contextual CTA */}
-      <div className="container-premium" id="cta-after-logos">
-        <ContextualCTA sectionId="client-logos" />
-      </div>
+      {/* Contextual CTA - Lazy loaded */}
+      <LazySection className="container-premium py-4" id="cta-after-logos">
+        <React.Suspense fallback={<div className="h-12" />}>
+          <ContextualCTA sectionId="client-logos" />
+        </React.Suspense>
+      </LazySection>
 
-      {/* Advanced ROI Calculator */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="advanced-roi-calculator"
-      >
-        <PremiumCard delay={0.1}>
-          <AdvancedROICalculator />
-        </PremiumCard>
-      </motion.div>
+      {/* Advanced ROI Calculator - Lazy loaded */}
+      <LazySection id="advanced-roi-calculator">
+        <OptimizedSection id="roi-calculator-section" spacing="py-8">
+          <PremiumCard delay={0.1}>
+            <React.Suspense fallback={<div className="h-96 premium-glass rounded-lg animate-pulse" />}>
+              <AdvancedROICalculator />
+            </React.Suspense>
+          </PremiumCard>
+        </OptimizedSection>
+      </LazySection>
 
-      {/* Contextual CTA after Calculator */}
-      <div className="container-premium" id="cta-after-calculator">
-        <ContextualCTA sectionId="roi-calculator" />
-      </div>
+      {/* Executive Assessment - Lazy loaded */}
+      <LazySection id="executive-assessment">
+        <OptimizedSection id="assessment-section" spacing="py-8">
+          <PremiumCard delay={0.2}>
+            <React.Suspense fallback={<div className="h-80 premium-glass rounded-lg animate-pulse" />}>
+              <ExecutiveAssessment />
+            </React.Suspense>
+          </PremiumCard>
+        </OptimizedSection>
+      </LazySection>
 
-      {/* Executive Assessment */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="executive-assessment"
-      >
-        <PremiumCard delay={0.2}>
-          <ExecutiveAssessment />
-        </PremiumCard>
-      </motion.div>
+      {/* Interactive Cases Carousel - Lazy loaded */}
+      <LazySection id="interactive-cases">
+        <React.Suspense fallback={<div className="h-96 bg-black/5 animate-pulse" />}>
+          <InteractiveCasesCarousel />
+        </React.Suspense>
+      </LazySection>
 
-      {/* Contextual CTA after Assessment */}
-      <div className="container-premium" id="cta-after-assessment">
-        <ContextualCTA sectionId="executive-assessment" />
-      </div>
-
-      {/* Interactive Cases Carousel - NEW */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section"
-        id="interactive-cases"
-      >
-        <InteractiveCasesCarousel />
-      </motion.div>
-
-      {/* Contextual CTA after Cases */}
-      <div className="container-premium" id="cta-after-cases">
-        <ContextualCTA sectionId="cases" />
-      </div>
-
-      {/* Before After Comparison */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="before-after-comparison"
-      >
-        <PremiumCard delay={0.3}>
-          <BeforeAfterComparison />
-        </PremiumCard>
-      </motion.div>
+      {/* Before After Comparison - Lazy loaded */}
+      <LazySection id="before-after-comparison">
+        <OptimizedSection id="comparison-section" spacing="py-8">
+          <PremiumCard delay={0.3}>
+            <React.Suspense fallback={<div className="h-96 premium-glass rounded-lg animate-pulse" />}>
+              <BeforeAfterComparison />
+            </React.Suspense>
+          </PremiumCard>
+        </OptimizedSection>
+      </LazySection>
 
       {/* Original ROI Chart Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="roi-chart-section"
-      >
+      <OptimizedSection id="roi-chart-section" spacing="py-8">
         <PremiumReveal delay={0.1}>
           <ROIChart />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
       
       {/* Use Cases Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="use-cases-section"
-      >
+      <OptimizedSection id="use-cases-section" spacing="py-8">
         <PremiumReveal delay={0.2}>
           <UseCasesSection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
       
       {/* Premium Social Proof Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="premium-social-proof"
-      >
+      <OptimizedSection id="premium-social-proof" spacing="py-8">
         <PremiumCard delay={0.1}>
           <PremiumSocialProof />
         </PremiumCard>
-      </motion.div>
+      </OptimizedSection>
       
       {/* Process Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="process-section"
-      >
+      <OptimizedSection id="process-section" spacing="py-8">
         <PremiumReveal delay={0.2}>
           <ProcessSection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
       
       {/* Comparison Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="comparison-section"
-      >
+      <OptimizedSection id="comparison-section-main" spacing="py-8">
         <PremiumCard delay={0.1}>
           <ComparisonSection />
         </PremiumCard>
-      </motion.div>
+      </OptimizedSection>
       
       {/* FAQ Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="faq-section"
-      >
+      <OptimizedSection id="faq-section" spacing="py-8">
         <PremiumReveal delay={0.2}>
           <FAQSection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
 
-      {/* Contextual CTA after FAQ */}
-      <div className="container-premium" id="cta-after-faq">
-        <ContextualCTA sectionId="faq" />
-      </div>
-      
       {/* Ideal For Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="ideal-for-section"
-      >
+      <OptimizedSection id="ideal-for-section" spacing="py-8">
         <PremiumCard delay={0.1}>
           <IdealForSection />
         </PremiumCard>
-      </motion.div>
+      </OptimizedSection>
       
       {/* Final CTA Section */}
-      <motion.div 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-        className="reveal-section section-premium container-premium"
-        id="final-cta"
-      >
+      <OptimizedSection id="final-cta" spacing="py-8 pb-12">
         <PremiumReveal delay={0.1}>
           <CTASection />
         </PremiumReveal>
-      </motion.div>
+      </OptimizedSection>
     </div>
   );
 };

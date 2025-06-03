@@ -28,7 +28,7 @@ const EdgeSection = React.memo(({
   className?: string;
 }) => (
   <section 
-    className={`w-full-edge unified-bg ${className}`}
+    className={`section-edge unified-bg ${className}`}
     id={id}
   >
     {children}
@@ -37,12 +37,12 @@ const EdgeSection = React.memo(({
 
 const DigitalEmployeesContent = React.memo(() => {
   return (
-    <div className="min-h-screen w-full-edge overflow-x-hidden unified-bg">
+    <div className="app-container unified-bg">
       {/* Hero Section - Edge-to-edge */}
       <HeroSection />
 
       {/* Storytelling Scroll - Edge-to-edge */}
-      <div className="w-full-edge unified-bg">
+      <div className="section-edge unified-bg">
         <StorytellingScroll />
       </div>
 
@@ -52,7 +52,7 @@ const DigitalEmployeesContent = React.memo(() => {
       </EdgeSection>
 
       {/* Real-Time Metrics - Edge-to-edge */}
-      <div className="w-full-edge unified-bg">
+      <div className="section-edge unified-bg">
         <LazySection id="real-time-metrics">
           <OptimizedRealTimeMetrics />
         </LazySection>

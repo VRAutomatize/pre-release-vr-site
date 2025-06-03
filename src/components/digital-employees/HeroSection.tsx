@@ -19,7 +19,7 @@ const HeroSection = () => {
   }, [trackSectionView]);
 
   return (
-    <div className="w-full-edge unified-bg">
+    <div className="section-edge unified-bg">
       <div id="hero-section" className="w-full">
         <section className={`${isMobile ? 'min-h-screen pt-16 flex items-start justify-center' : 'min-h-[80vh] pt-24 flex items-center'} relative overflow-hidden w-full unified-bg`}>
           <div className="w-full relative z-10">

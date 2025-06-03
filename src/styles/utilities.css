@@ -65,28 +65,19 @@
     border-color: #FFD700;
   }
 
-  /* Sistema Edge-to-Edge VERDADEIRO - SEM OVERFLOW */
-  .container-edge {
-    width: 100vw;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
-    box-sizing: border-box;
+  /* Sistema Edge-to-Edge CORRIGIDO */
+  .w-full-edge {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .section-edge {
-    width: 100vw;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
-    box-sizing: border-box;
-  }
-
-  .hero-edge {
-    width: 100vw;
-    min-height: 100vh;
+    width: 100%;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;
@@ -101,6 +92,7 @@
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
   }
 
   .content-container-tight {
@@ -109,6 +101,7 @@
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
   }
 
   .content-container-minimal {
@@ -117,6 +110,7 @@
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
   }
 
   /* Background unificado para todas as seções */
@@ -158,13 +152,9 @@
     scroll-behavior: smooth;
   }
 
-  /* Override de classes que podem adicionar padding */
-  .w-full-edge {
-    width: 100vw !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  /* Reset global que pode estar interferindo */
+  * {
+    box-sizing: border-box;
   }
 
   /* Reduzir movimento para performance */
@@ -174,5 +164,13 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  /* Container principal da aplicação */
+  .app-container {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
 }

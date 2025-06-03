@@ -22,10 +22,10 @@ const Header = React.memo(({
     const visibilityClass = isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0";
     
     if (isMobile) {
-      return `fixed top-0 left-0 right-0 z-50 w-full-edge ${baseTransition} ${visibilityClass} ${isScrolled ? "glass-blur shadow-lg" : "bg-background/20 backdrop-blur-sm"}`;
+      return `fixed top-0 left-0 right-0 z-50 section-edge ${baseTransition} ${visibilityClass} ${isScrolled ? "glass-blur shadow-lg" : "bg-background/20 backdrop-blur-sm"}`;
     }
     
-    return `fixed top-0 left-0 right-0 z-50 w-full-edge ${baseTransition} ${visibilityClass} ${isScrolled ? "glass shadow-lg" : "bg-background/20 backdrop-blur-sm"}`;
+    return `fixed top-0 left-0 right-0 z-50 section-edge ${baseTransition} ${visibilityClass} ${isScrolled ? "glass shadow-lg" : "bg-background/20 backdrop-blur-sm"}`;
   }, [isScrolled, isMobile, isVisible]);
 
   return (

@@ -10,6 +10,9 @@ import { useTrafficSourceDetection } from './useTrafficSourceDetection';
 import { useUserSessionTracking } from './useUserSessionTracking';
 import { useBounceAnalysis } from './useBounceAnalysis';
 import { usePerformanceTracking } from './usePerformanceTracking';
+import { useABTesting } from './useABTesting';
+import { useHeatmapTracking } from './useHeatmapTracking';
+import { useDetailedConversionFunnel } from './useDetailedConversionFunnel';
 
 const ANALYTICS_ENDPOINT = 'https://vrautomatize-n8n.snrhk1.easypanel.host/webhook/metricas';
 
@@ -29,6 +32,11 @@ export const useEnhancedConversionAnalytics = () => {
   const { isReturningUser } = useUserSessionTracking();
   const { getBounceAnalytics } = useBounceAnalysis();
   const { getPerformanceMetrics } = usePerformanceTracking();
+  
+  // New Phase 5 hooks
+  const { getVariant, getVariantConfig, trackConversion } = useABTesting();
+  const { sendHeatmapData } = useHeatmapTracking();
+  const { trackFunnelStep: trackDetailedFunnelStep, getFunnelMetrics, completeFunnel } = useDetailedConversionFunnel();
 
   // Get URL parameters for UTM tracking
   const getUtmParams = useCallback(() => {
@@ -40,12 +48,13 @@ export const useEnhancedConversionAnalytics = () => {
     };
   }, []);
 
-  // Create enhanced session data
+  // Create enhanced session data with Phase 5 analytics
   const createEnhancedSessionData = useCallback(() => {
     const timeOnPage = Date.now() - sessionStartTime.current;
     const formAnalytics = getFormAnalytics();
     const bounceAnalytics = getBounceAnalytics();
     const performanceMetrics = getPerformanceMetrics();
+    const funnelMetrics = getFunnelMetrics();
     
     return {
       timeOnPage,
@@ -65,6 +74,12 @@ export const useEnhancedConversionAnalytics = () => {
       ctr_elements: getCTRData(),
       form_fields_filled: formAnalytics.form_fields_filled,
       form_fields_left_blank: formAnalytics.form_fields_left_blank,
+      // Phase 5 - Advanced analytics
+      detailed_funnel_metrics: funnelMetrics,
+      ab_test_variants: {
+        hero_headline: getVariant('hero_headline'),
+        cta_primary: getVariant('cta_primary')
+      },
       ...getUtmParams(),
     };
   }, [
@@ -77,7 +92,9 @@ export const useEnhancedConversionAnalytics = () => {
     getEngagementHotspot, 
     getLastFunnelStep, 
     getBounceAnalytics, 
-    getPerformanceMetrics, 
+    getPerformanceMetrics,
+    getFunnelMetrics,
+    getVariant,
     getUtmParams
   ]);
 
@@ -97,7 +114,7 @@ export const useEnhancedConversionAnalytics = () => {
     }
   }, []);
 
-  // Track enhanced conversion event
+  // Track enhanced conversion event with Phase 5 features
   const trackEvent = useCallback((
     tag: string,
     action: string,
@@ -124,7 +141,8 @@ export const useEnhancedConversionAnalytics = () => {
       metadata: {
         ...metadata,
         enhanced_tracking: true,
-        tracking_version: '2.0'
+        tracking_version: '3.0',
+        phase_5_enabled: true
       },
     };
 
@@ -134,17 +152,34 @@ export const useEnhancedConversionAnalytics = () => {
       sendEvent(event);
     }
 
+    // Track in detailed funnel
+    trackDetailedFunnelStep(eventKey, metadata);
+
+    // Track A/B test conversions for relevant events
+    if (tag.includes('cta') || tag.includes('form') || tag.includes('conversion')) {
+      trackConversion('hero_headline', action);
+      trackConversion('cta_primary', action);
+    }
+
     // Also track funnel progression for specific events
     if (tag.includes('form') || tag.includes('cta') || tag.includes('step')) {
       trackFunnelStep(eventKey, `${tag}_${action}`, action === 'complete');
     }
-  }, [createEnhancedSessionData, sendEvent, trackFunnelStep]);
+  }, [createEnhancedSessionData, sendEvent, trackFunnelStep, trackDetailedFunnelStep, trackConversion]);
 
-  // Track page exit with enhanced data
+  // Track page exit with Phase 5 enhanced data
   const trackPageExit = useCallback(() => {
     isUnloading.current = true;
+    
+    // Send final heatmap data
+    sendHeatmapData();
+    
+    // Complete funnel analysis
+    const funnelMetrics = getFunnelMetrics();
+    completeFunnel(funnelMetrics.category);
+    
     const finalEvent: ConversionEvent = {
-      tag: 'enhanced_page_exit',
+      tag: 'phase5_enhanced_page_exit',
       action: 'unload',
       element: 'page',
       section: 'general',
@@ -158,10 +193,16 @@ export const useEnhancedConversionAnalytics = () => {
             sections_viewed: Object.keys(getSectionTimes()).length,
             total_engagement_time: Object.values(getSectionTimes()).reduce((a, b) => a + b, 0),
             ctr_performance: getCTRData()
+          },
+          funnel_completion: funnelMetrics,
+          ab_test_exposure: {
+            hero_headline: getVariant('hero_headline'),
+            cta_primary: getVariant('cta_primary')
           }
         },
         enhanced_tracking: true,
-        tracking_version: '2.0'
+        tracking_version: '3.0',
+        phase_5_complete: true
       },
     };
 
@@ -171,18 +212,33 @@ export const useEnhancedConversionAnalytics = () => {
     if (navigator.sendBeacon) {
       navigator.sendBeacon(ANALYTICS_ENDPOINT, JSON.stringify({ 
         batch: allEvents,
-        final_session_data: true 
+        final_session_data: true,
+        phase_5_analytics: true
       }));
     }
-  }, [createEnhancedSessionData, getBounceAnalytics, getFormAnalytics, getSectionTimes, getCTRData]);
+  }, [
+    createEnhancedSessionData, 
+    getBounceAnalytics, 
+    getFormAnalytics, 
+    getSectionTimes, 
+    getCTRData,
+    getFunnelMetrics,
+    completeFunnel,
+    sendHeatmapData,
+    getVariant
+  ]);
 
-  // Setup enhanced event listeners
+  // Setup enhanced event listeners with Phase 5 features
   useEffect(() => {
-    // Track enhanced page load
-    trackEvent('enhanced_page_load', 'load', 'page', 'general', {
+    // Track enhanced page load with A/B test variants
+    trackEvent('phase5_enhanced_page_load', 'load', 'page', 'general', {
       page_url: window.location.href,
       page_title: document.title,
-      load_timestamp: Date.now()
+      load_timestamp: Date.now(),
+      ab_variants: {
+        hero_headline: getVariant('hero_headline'),
+        cta_primary: getVariant('cta_primary')
+      }
     });
 
     // Page unload tracking
@@ -194,7 +250,7 @@ export const useEnhancedConversionAnalytics = () => {
       window.removeEventListener('beforeunload', unloadHandler);
       window.removeEventListener('pagehide', unloadHandler);
     };
-  }, [trackEvent, trackPageExit]);
+  }, [trackEvent, trackPageExit, getVariant]);
 
   return {
     trackEvent,
@@ -204,6 +260,13 @@ export const useEnhancedConversionAnalytics = () => {
     getSectionTimes,
     getCTRData,
     getBounceAnalytics,
-    getPerformanceMetrics
+    getPerformanceMetrics,
+    // Phase 5 methods
+    getVariant,
+    getVariantConfig,
+    trackConversion,
+    getFunnelMetrics,
+    completeFunnel,
+    sendHeatmapData
   };
 };

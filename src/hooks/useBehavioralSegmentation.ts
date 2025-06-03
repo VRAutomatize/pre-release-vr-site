@@ -101,7 +101,8 @@ export const useBehavioralSegmentation = () => {
       trackEvent('user_segment_change', 'segment', segment.type, 'behavioral', {
         confidence: segment.confidence,
         triggers: segment.triggers,
-        behaviorData: data
+        behaviorData: data,
+        phase5_optimization: true
       });
     }
   };

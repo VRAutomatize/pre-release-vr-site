@@ -17,7 +17,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
   const { handleWhatsAppClick, handleHomeClick } = useDigitalEmployeesTracking();
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden" style={{ width: 'calc(100vw - 10px)', margin: '0 5px' }}>
+    <div className="min-h-screen bg-background overflow-x-hidden" style={{ width: 'calc(100vw - 16px)', margin: '0 8px' }}>
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       

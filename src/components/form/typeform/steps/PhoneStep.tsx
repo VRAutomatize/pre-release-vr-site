@@ -1,46 +1,76 @@
 
-import React from "react";
-import { AlertCircle } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Controller } from "react-hook-form";
-import { formatPhone } from "@/utils/paymentUtils";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, ArrowRight, Phone } from 'lucide-react';
 
 interface PhoneStepProps {
-  control: any;
-  errors: any;
+  value: string;
+  onChange: (value: string) => void;
+  onNext: () => void;
+  onPrev: () => void;
 }
 
-const PhoneStep: React.FC<PhoneStepProps> = ({ control, errors }) => {
+export const PhoneStep: React.FC<PhoneStepProps> = ({ value, onChange, onNext, onPrev }) => {
+  const [error, setError] = useState('');
+
+  const formatPhone = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 11) {
+      return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    }
+    return value;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhone(e.target.value);
+    onChange(formatted);
+    setError('');
+  };
+
+  const handleNext = () => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length !== 11) {
+      setError('Digite um telefone válido com DDD');
+      return;
+    }
+    onNext();
+  };
+
   return (
-    <div className="space-y-4 w-full px-4 sm:px-0">
-      <h2 className="text-xl sm:text-2xl font-bold text-gold text-center">Qual seu WhatsApp?</h2>
-      <Controller
-        name="phone"
-        control={control}
-        render={({ field }) => (
-          <Input
-            {...field}
-            autoFocus
-            placeholder="(00) 00000-0000"
-            className="text-lg py-6 text-center bg-gray-800/50 border-gold/20 hover:border-gold focus:border-gold focus:ring-gold hover:text-white"
-            onChange={(e) => {
-              // Only allow digits
-              const cleaned = e.target.value.replace(/\D/g, "");
-              field.onChange(cleaned);
-            }}
-            value={formatPhone(field.value || '')}
-          />
-        )}
-      />
-      {errors.phone && (
-        <p className="text-red-500 text-sm flex items-center justify-center">
-          <AlertCircle className="h-4 w-4 mr-1" />
-          {errors.phone.message}
+    <div className="space-y-6">
+      <div className="text-center space-y-4">
+        <div className="flex justify-center">
+          <Phone className="h-12 w-12 text-gold" />
+        </div>
+        <h2 className="text-2xl font-bold">Qual seu telefone?</h2>
+        <p className="text-foreground/60">
+          Vamos usar apenas para entrar em contato sobre sua consulta
         </p>
-      )}
-      <p className="text-sm text-muted-foreground text-center">Apenas números, incluindo DDD</p>
+      </div>
+
+      <div className="space-y-4">
+        <Input
+          type="tel"
+          placeholder="(11) 99999-9999"
+          value={value}
+          onChange={handleChange}
+          className="text-center text-lg"
+          maxLength={15}
+        />
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      </div>
+
+      <div className="flex gap-3">
+        <Button variant="outline" onClick={onPrev} className="flex-1">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Voltar
+        </Button>
+        <Button onClick={handleNext} className="flex-1 bg-gold hover:bg-gold/90 text-background">
+          Continuar
+          <ArrowRight className="h-4 w-4 ml-2" />
+        </Button>
+      </div>
     </div>
   );
 };
-
-export default PhoneStep;

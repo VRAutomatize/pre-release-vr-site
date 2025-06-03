@@ -1,4 +1,3 @@
-
 import { useEffect, useCallback, useRef } from 'react';
 import { useIsMobile } from './useIsMobile';
 import { ConversionEvent } from '@/types/analytics';
@@ -7,7 +6,6 @@ import { useAdvancedFormTracking } from './useAdvancedFormTracking';
 import { useSectionTimeTracking } from './useSectionTimeTracking';
 import { useCTRTracking } from './useCTRTracking';
 import { useTrafficSourceDetection } from './useTrafficSourceDetection';
-import { useUserSessionTracking } from './useUserSessionTracking';
 import { useBounceAnalysis } from './useBounceAnalysis';
 import { usePerformanceTracking } from './usePerformanceTracking';
 import { useABTesting } from './useABTesting';
@@ -29,7 +27,6 @@ export const useEnhancedConversionAnalytics = () => {
   const { getSectionTimes, getEngagementHotspot } = useSectionTimeTracking();
   const { getCTRData } = useCTRTracking();
   const { trafficSource } = useTrafficSourceDetection();
-  const { isReturningUser } = useUserSessionTracking();
   const { getBounceAnalytics } = useBounceAnalysis();
   const { getPerformanceMetrics } = usePerformanceTracking();
   
@@ -65,7 +62,7 @@ export const useEnhancedConversionAnalytics = () => {
       viewport: `${window.innerWidth}x${window.innerHeight}`,
       // Enhanced analytics data
       traffic_source: trafficSource,
-      is_returning_user: isReturningUser,
+      is_returning_user: false, // Simplified since we removed user session tracking
       bounce_probability_score: bounceAnalytics.bounce_probability_score,
       engagement_hotspot_percent: getEngagementHotspot(),
       perceived_page_speed_score: performanceMetrics.perceived_page_speed_score,
@@ -85,7 +82,6 @@ export const useEnhancedConversionAnalytics = () => {
   }, [
     isMobile, 
     trafficSource, 
-    isReturningUser, 
     getFormAnalytics, 
     getSectionTimes, 
     getCTRData, 

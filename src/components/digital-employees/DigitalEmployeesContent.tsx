@@ -18,21 +18,25 @@ import LazySection from "@/components/shared/LazySection";
 import OptimizedRealTimeMetrics from "@/components/digital-employees/OptimizedRealTimeMetrics";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
 
-// Componente de seção edge-to-edge com background unificado
+// Componente de seção edge-to-edge com background unificado e espaçamento simétrico
 const EdgeSection = React.memo(({ 
   children, 
   id, 
-  className = ""
+  className = "",
+  padding = "py-16 md:py-20 lg:py-24"
 }: { 
   children: React.ReactNode;
   id: string;
   className?: string;
+  padding?: string;
 }) => (
   <section 
-    className={`section-edge unified-bg ${className}`}
+    className={`section-edge unified-bg ${padding} ${className}`}
     id={id}
   >
-    {children}
+    <div className="content-container">
+      {children}
+    </div>
   </section>
 ));
 
@@ -43,69 +47,69 @@ const DigitalEmployeesContent = React.memo(() => {
       <HeroSection />
 
       {/* Storytelling Scroll - Edge-to-edge */}
-      <div className="section-edge unified-bg">
+      <EdgeSection id="storytelling-scroll" padding="py-12 md:py-16 lg:py-20">
         <StorytellingScroll />
-      </div>
+      </EdgeSection>
 
       {/* Quick Social Proof - Edge-to-edge */}
-      <EdgeSection id="quick-social-proof">
+      <EdgeSection id="quick-social-proof" padding="py-12 md:py-16 lg:py-20">
         <QuickSocialProof />
       </EdgeSection>
 
       {/* Real-Time Metrics - Edge-to-edge */}
-      <div className="section-edge unified-bg">
+      <EdgeSection id="real-time-metrics" padding="py-16 md:py-20 lg:py-24">
         <LazySection id="real-time-metrics">
           <OptimizedRealTimeMetrics />
         </LazySection>
-      </div>
+      </EdgeSection>
 
       {/* ROI Calculator Section - Edge-to-edge */}
-      <EdgeSection id="roi-calculator-section">
+      <EdgeSection id="roi-calculator-section" padding="py-16 md:py-20 lg:py-24">
         <AdvancedROICalculator />
       </EdgeSection>
 
       {/* Client Logos Section - Edge-to-edge */}
-      <EdgeSection id="client-logos">
+      <EdgeSection id="client-logos" padding="py-12 md:py-16 lg:py-20">
         <ClientLogosSection />
       </EdgeSection>
 
       {/* ROI Chart Section - Edge-to-edge */}
-      <EdgeSection id="roi-chart-section">
+      <EdgeSection id="roi-chart-section" padding="py-16 md:py-20 lg:py-24">
         <ROIChart />
       </EdgeSection>
       
       {/* Use Cases Section - Edge-to-edge */}
-      <EdgeSection id="use-cases-section">
+      <EdgeSection id="use-cases-section" padding="py-16 md:py-20 lg:py-24">
         <UseCasesSection />
       </EdgeSection>
       
       {/* Premium Social Proof Section - Edge-to-edge */}
-      <EdgeSection id="premium-social-proof">
+      <EdgeSection id="premium-social-proof" padding="py-16 md:py-20 lg:py-24">
         <PremiumSocialProof />
       </EdgeSection>
       
       {/* Process Section - Edge-to-edge */}
-      <EdgeSection id="process-section">
+      <EdgeSection id="process-section" padding="py-16 md:py-20 lg:py-24">
         <ProcessSection />
       </EdgeSection>
       
       {/* Comparison Section - Edge-to-edge */}
-      <EdgeSection id="comparison-section-main">
+      <EdgeSection id="comparison-section-main" padding="py-16 md:py-20 lg:py-24">
         <ComparisonSection />
       </EdgeSection>
       
       {/* FAQ Section - Edge-to-edge */}
-      <EdgeSection id="faq-section">
+      <EdgeSection id="faq-section" padding="py-16 md:py-20 lg:py-24">
         <FAQSection />
       </EdgeSection>
 
       {/* Ideal For Section - Edge-to-edge */}
-      <EdgeSection id="ideal-for-section">
+      <EdgeSection id="ideal-for-section" padding="py-16 md:py-20 lg:py-24">
         <IdealForSection />
       </EdgeSection>
       
       {/* Final CTA Section - Edge-to-edge */}
-      <EdgeSection id="final-cta">
+      <EdgeSection id="final-cta" padding="py-16 md:py-20 lg:py-24">
         <CTASection />
       </EdgeSection>
     </div>

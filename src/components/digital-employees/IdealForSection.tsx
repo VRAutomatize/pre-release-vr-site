@@ -40,38 +40,36 @@ const IdealForSection = () => {
   ];
 
   return (
-    <section className="relative">
-      <motion.div 
-        className="max-w-4xl mx-auto text-center" 
-        initial="hidden" 
-        whileInView="show" 
-        viewport={{
-          once: true,
-          amount: 0.3
-        }} 
-        variants={containerVariants}
+    <motion.div 
+      className="max-w-6xl mx-auto text-center" 
+      initial="hidden" 
+      whileInView="show" 
+      viewport={{
+        once: true,
+        amount: 0.3
+      }} 
+      variants={containerVariants}
+    >
+      <motion.h2 
+        variants={itemVariants} 
+        className="text-2xl md:text-3xl lg:text-5xl font-bold mb-12 md:mb-16 lg:mb-20 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light"
       >
-        <motion.h2 
-          variants={itemVariants} 
-          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light"
-        >
-          Essa solução é ideal para negócios que:
-        </motion.h2>
+        Essa solução é ideal para negócios que:
+      </motion.h2>
 
-        <div className="mobile-card-grid-2">
-          {idealPoints.map((point, index) => (
-            <motion.div 
-              key={index}
-              variants={itemVariants} 
-              className="floating-card mobile-card-compact flex items-start gap-3 md:gap-4 hover:border-gold/40 transition-all duration-300 rounded-lg text-left min-h-[100px] md:min-h-[120px]"
-            >
-              <CheckCircle className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-gold shrink-0 mt-1" />
-              <p className="text-base md:text-lg lg:text-xl">{point}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-    </section>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+        {idealPoints.map((point, index) => (
+          <motion.div 
+            key={index}
+            variants={itemVariants} 
+            className="floating-card p-6 md:p-8 flex items-start gap-4 md:gap-6 hover:border-gold/40 transition-all duration-300 rounded-lg text-left min-h-[120px] md:min-h-[140px]"
+          >
+            <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-gold shrink-0 mt-1" />
+            <p className="text-base md:text-lg lg:text-xl leading-relaxed">{point}</p>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
   );
 };
 

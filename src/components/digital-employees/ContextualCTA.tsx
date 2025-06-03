@@ -1,10 +1,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { 
-  MessageSquare, 
   Calculator, 
   Clock, 
   TrendingUp, 
@@ -14,7 +12,7 @@ import {
   Target
 } from "lucide-react";
 import { useBehavioralSegmentation } from "@/hooks/useBehavioralSegmentation";
-import { useDigitalEmployeesTracking } from "./DigitalEmployeesTracking";
+import { TypeformButton } from "@/components/form/TypeformButton";
 
 interface CTAVariant {
   id: string;
@@ -29,7 +27,6 @@ interface CTAVariant {
 
 const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
   const { currentSegment, trackCTAClick } = useBehavioralSegmentation();
-  const { handleWhatsAppClick } = useDigitalEmployeesTracking();
 
   // Define CTAs for different segments and contexts
   const ctaVariants: Record<string, CTAVariant[]> = {
@@ -99,7 +96,7 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
         title: "Consultoria Gratuita de 30 Minutos",
         description: "Análise personalizada do seu potencial de automação",
         buttonText: "Falar com Especialista",
-        icon: MessageSquare,
+        icon: Calculator,
         urgency: "medium",
         color: "text-gold",
         bgColor: "bg-gold/10 border-gold/30"
@@ -163,7 +160,6 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
 
   const handleClick = () => {
     trackCTAClick();
-    handleWhatsAppClick();
   };
 
   // Urgency-based animations
@@ -215,18 +211,24 @@ const ContextualCTA = ({ sectionId }: { sectionId: string }) => {
               </p>
               
               <div className="flex items-center gap-4">
-                <Button
+                <TypeformButton
                   onClick={handleClick}
                   className={`${
                     cta.urgency === "high" 
                       ? "bg-red-500 hover:bg-red-600 text-white animate-pulse" 
-                      : "button-premium"
-                  }`}
-                  size="lg"
+                      : "bg-gold hover:bg-gold-light text-background"
+                  } px-6 py-3 text-base font-medium`}
+                  trackingId={`contextual_cta_${cta.id}`}
+                  trackingSection={sectionId}
+                  trackingMetadata={{
+                    segment: currentSegment.type,
+                    urgency: cta.urgency,
+                    ctaVariant: cta.id
+                  }}
                 >
-                  <MessageSquare className="h-4 w-4 mr-2" />
+                  <IconComponent className="h-4 w-4 mr-2" />
                   {cta.buttonText}
-                </Button>
+                </TypeformButton>
                 
                 {cta.urgency === "high" && (
                   <div className="flex items-center gap-2 text-red-400 text-sm">

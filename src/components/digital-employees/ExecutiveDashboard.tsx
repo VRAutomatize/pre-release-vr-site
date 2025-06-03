@@ -14,7 +14,7 @@ import {
   BarChart,
   PieChart,
   Activity,
-  Funnel
+  Filter // Changed from Funnel to Filter
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart as RechartsBarChart, Bar } from "recharts";
 
@@ -272,7 +272,7 @@ const ExecutiveDashboard = () => {
           {/* Funnel Analysis */}
           <Card className="premium-glass border-gold/20 p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Funnel className="h-5 w-5" />
+              <Filter className="h-5 w-5" />
               Funil de Conversão
             </h3>
             <ResponsiveContainer width="100%" height={300}>

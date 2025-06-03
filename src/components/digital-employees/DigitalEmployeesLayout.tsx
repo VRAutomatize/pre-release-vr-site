@@ -18,11 +18,6 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
 
   return (
     <div className="min-h-screen premium-gradient-bg overflow-x-hidden">
-      {/* Import premium mobile styles */}
-      <style jsx global>{`
-        @import url('/src/styles/premium-mobile.css');
-      `}</style>
-      
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       

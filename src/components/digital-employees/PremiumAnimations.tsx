@@ -162,7 +162,7 @@ export const TypewriterText = ({
   );
 };
 
-// Componente para contador animado
+// Componente para contador animado - Fixed version
 export const AnimatedCounter = ({ 
   end, 
   duration = 2,
@@ -176,6 +176,32 @@ export const AnimatedCounter = ({
   suffix?: string;
   className?: string;
 }) => {
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+      
+      setCount(Math.floor(progress * end));
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [end, duration]);
+
   return (
     <motion.span
       className={className}
@@ -184,29 +210,7 @@ export const AnimatedCounter = ({
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <motion.span
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: duration,
-          ease: "easeOut"
-        }}
-      >
-        {prefix}
-        <motion.span
-          initial={0}
-          whileInView={end}
-          viewport={{ once: true }}
-          transition={{
-            duration: duration,
-            ease: "easeOut"
-          }}
-        >
-          {0}
-        </motion.span>
-        {suffix}
-      </motion.span>
+      {prefix}{count}{suffix}
     </motion.span>
   );
 };

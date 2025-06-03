@@ -12,214 +12,99 @@ import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProo
 import ROIChart from "@/components/digital-employees/ROIChart";
 import FAQSection from "@/components/digital-employees/FAQSection";
 import QuickSocialProof from "@/components/digital-employees/QuickSocialProof";
-import MicroCTA from "@/components/digital-employees/MicroCTA";
 
-// Lazy loaded components
+// Lazy loaded components - apenas os essenciais
 import LazySection from "@/components/shared/LazySection";
 import OptimizedRealTimeMetrics from "@/components/digital-employees/OptimizedRealTimeMetrics";
-
-// Interactive Components with lazy loading
-const AdvancedROICalculator = React.lazy(() => import("@/components/digital-employees/interactive/AdvancedROICalculator"));
-const ExecutiveAssessment = React.lazy(() => import("@/components/digital-employees/interactive/ExecutiveAssessment"));
-const BeforeAfterComparison = React.lazy(() => import("@/components/digital-employees/interactive/BeforeAfterComparison"));
-const ProgressTracker = React.lazy(() => import("@/components/digital-employees/interactive/ProgressTracker"));
-const InteractiveCasesCarousel = React.lazy(() => import("@/components/digital-employees/InteractiveCasesCarousel"));
-const ContextualCTA = React.lazy(() => import("@/components/digital-employees/ContextualCTA"));
-
-import { sectionVariants } from "./DigitalEmployeesAnimations";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
-import { PremiumReveal, PremiumCard } from "@/components/digital-employees/PremiumAnimations";
-import { useBehavioralSegmentation } from "@/hooks/useBehavioralSegmentation";
 
-// Optimized section wrapper with reduced spacing
+// Componente de seção ultra-otimizado
 const OptimizedSection = React.memo(({ 
   children, 
   id, 
   className = "",
-  spacing = "py-6" // Reduced from py-12
+  spacing = "py-4"
 }: { 
   children: React.ReactNode;
   id: string;
   className?: string;
   spacing?: string;
 }) => (
-  <motion.div 
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.2 }}
-    variants={sectionVariants}
-    className={`reveal-section section-premium container-premium ${spacing} ${className}`}
+  <section 
+    className={`container-premium ${spacing} ${className}`}
     id={id}
   >
     {children}
-  </motion.div>
+  </section>
 ));
 
-const DigitalEmployeesContent = () => {
-  const { trackSectionView } = useBehavioralSegmentation();
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.target.id) {
-            trackSectionView(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    // Observe all sections with IDs
-    const sections = document.querySelectorAll('[id]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, [trackSectionView]);
-
+const DigitalEmployeesContent = React.memo(() => {
   return (
-    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-12 md:pb-8">
-      {/* Progress Tracker - Lazy loaded */}
-      <LazySection>
-        <React.Suspense fallback={<div className="h-1" />}>
-          <ProgressTracker variant="mobile" />
-          <ProgressTracker variant="desktop" />
-        </React.Suspense>
-      </LazySection>
-
-      {/* Hero Section - Immediate load */}
-      <OptimizedSection id="hero" spacing="pb-8">
-        <PremiumReveal>
-          <HeroSection />
-        </PremiumReveal>
+    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-8">
+      {/* Hero Section - Carregamento imediato */}
+      <OptimizedSection id="hero" spacing="pb-6">
+        <HeroSection />
       </OptimizedSection>
 
-      {/* Storytelling Scroll - Mobile Only */}
+      {/* Storytelling Scroll - Mobile Only, Simplificado */}
       <StorytellingScroll />
 
       {/* Quick Social Proof */}
-      <OptimizedSection id="quick-social-proof" spacing="py-6">
-        <PremiumReveal delay={0.1}>
-          <QuickSocialProof />
-        </PremiumReveal>
+      <OptimizedSection id="quick-social-proof" spacing="py-4">
+        <QuickSocialProof />
       </OptimizedSection>
 
-      {/* Real-Time Metrics - Optimized */}
+      {/* Real-Time Metrics - Otimizado */}
       <LazySection id="real-time-metrics">
         <OptimizedRealTimeMetrics />
       </LazySection>
 
       {/* Client Logos Section */}
-      <OptimizedSection id="client-logos" spacing="py-8">
-        <PremiumReveal delay={0.2}>
-          <ClientLogosSection />
-        </PremiumReveal>
+      <OptimizedSection id="client-logos" spacing="py-6">
+        <ClientLogosSection />
       </OptimizedSection>
 
-      {/* Contextual CTA - Lazy loaded */}
-      <LazySection className="container-premium py-4" id="cta-after-logos">
-        <React.Suspense fallback={<div className="h-12" />}>
-          <ContextualCTA sectionId="client-logos" />
-        </React.Suspense>
-      </LazySection>
-
-      {/* Advanced ROI Calculator - Lazy loaded */}
-      <LazySection id="advanced-roi-calculator">
-        <OptimizedSection id="roi-calculator-section" spacing="py-8">
-          <PremiumCard delay={0.1}>
-            <React.Suspense fallback={<div className="h-96 premium-glass rounded-lg animate-pulse" />}>
-              <AdvancedROICalculator />
-            </React.Suspense>
-          </PremiumCard>
-        </OptimizedSection>
-      </LazySection>
-
-      {/* Executive Assessment - Lazy loaded */}
-      <LazySection id="executive-assessment">
-        <OptimizedSection id="assessment-section" spacing="py-8">
-          <PremiumCard delay={0.2}>
-            <React.Suspense fallback={<div className="h-80 premium-glass rounded-lg animate-pulse" />}>
-              <ExecutiveAssessment />
-            </React.Suspense>
-          </PremiumCard>
-        </OptimizedSection>
-      </LazySection>
-
-      {/* Interactive Cases Carousel - Lazy loaded */}
-      <LazySection id="interactive-cases">
-        <React.Suspense fallback={<div className="h-96 bg-black/5 animate-pulse" />}>
-          <InteractiveCasesCarousel />
-        </React.Suspense>
-      </LazySection>
-
-      {/* Before After Comparison - Lazy loaded */}
-      <LazySection id="before-after-comparison">
-        <OptimizedSection id="comparison-section" spacing="py-8">
-          <PremiumCard delay={0.3}>
-            <React.Suspense fallback={<div className="h-96 premium-glass rounded-lg animate-pulse" />}>
-              <BeforeAfterComparison />
-            </React.Suspense>
-          </PremiumCard>
-        </OptimizedSection>
-      </LazySection>
-
-      {/* Original ROI Chart Section */}
-      <OptimizedSection id="roi-chart-section" spacing="py-8">
-        <PremiumReveal delay={0.1}>
-          <ROIChart />
-        </PremiumReveal>
+      {/* ROI Chart Section */}
+      <OptimizedSection id="roi-chart-section" spacing="py-6">
+        <ROIChart />
       </OptimizedSection>
       
       {/* Use Cases Section */}
-      <OptimizedSection id="use-cases-section" spacing="py-8">
-        <PremiumReveal delay={0.2}>
-          <UseCasesSection />
-        </PremiumReveal>
+      <OptimizedSection id="use-cases-section" spacing="py-6">
+        <UseCasesSection />
       </OptimizedSection>
       
       {/* Premium Social Proof Section */}
-      <OptimizedSection id="premium-social-proof" spacing="py-8">
-        <PremiumCard delay={0.1}>
-          <PremiumSocialProof />
-        </PremiumCard>
+      <OptimizedSection id="premium-social-proof" spacing="py-6">
+        <PremiumSocialProof />
       </OptimizedSection>
       
       {/* Process Section */}
-      <OptimizedSection id="process-section" spacing="py-8">
-        <PremiumReveal delay={0.2}>
-          <ProcessSection />
-        </PremiumReveal>
+      <OptimizedSection id="process-section" spacing="py-6">
+        <ProcessSection />
       </OptimizedSection>
       
       {/* Comparison Section */}
-      <OptimizedSection id="comparison-section-main" spacing="py-8">
-        <PremiumCard delay={0.1}>
-          <ComparisonSection />
-        </PremiumCard>
+      <OptimizedSection id="comparison-section-main" spacing="py-6">
+        <ComparisonSection />
       </OptimizedSection>
       
       {/* FAQ Section */}
-      <OptimizedSection id="faq-section" spacing="py-8">
-        <PremiumReveal delay={0.2}>
-          <FAQSection />
-        </PremiumReveal>
+      <OptimizedSection id="faq-section" spacing="py-6">
+        <FAQSection />
       </OptimizedSection>
 
       {/* Ideal For Section */}
-      <OptimizedSection id="ideal-for-section" spacing="py-8">
-        <PremiumCard delay={0.1}>
-          <IdealForSection />
-        </PremiumCard>
+      <OptimizedSection id="ideal-for-section" spacing="py-6">
+        <IdealForSection />
       </OptimizedSection>
       
       {/* Final CTA Section */}
-      <OptimizedSection id="final-cta" spacing="py-8 pb-12">
-        <PremiumReveal delay={0.1}>
-          <CTASection />
-        </PremiumReveal>
+      <OptimizedSection id="final-cta" spacing="py-6">
+        <CTASection />
       </OptimizedSection>
     </div>
   );
-};
+});
 
 export default DigitalEmployeesContent;

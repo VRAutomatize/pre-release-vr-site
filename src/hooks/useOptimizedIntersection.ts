@@ -7,73 +7,55 @@ interface IntersectionOptions {
   once?: boolean;
 }
 
-interface ObserverEntry {
-  element: Element;
-  callback: (entry: IntersectionObserverEntry) => void;
-  options: IntersectionOptions;
-}
-
-// Singleton observer manager
+// Singleton observer manager com otimizações agressivas
 class OptimizedObserverManager {
-  private observers: Map<string, IntersectionObserver> = new Map();
-  private entries: Map<Element, ObserverEntry> = new Map();
+  private observer: IntersectionObserver | null = null;
+  private entries: Map<Element, (entry: IntersectionObserverEntry) => void> = new Map();
+  private observedElements: Set<Element> = new Set();
 
-  private getObserverKey(options: IntersectionOptions): string {
-    return `${options.threshold || 0.3}-${options.rootMargin || '0px'}`;
+  constructor() {
+    // Usar um único observer global para tudo
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        // Processar em lote para melhor performance
+        requestIdleCallback(() => {
+          entries.forEach((entry) => {
+            const callback = this.entries.get(entry.target);
+            if (callback && entry.isIntersecting) {
+              callback(entry);
+            }
+          });
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
   }
 
   observe(element: Element, callback: (entry: IntersectionObserverEntry) => void, options: IntersectionOptions = {}) {
-    const key = this.getObserverKey(options);
+    if (!this.observer || this.observedElements.has(element)) return;
     
-    if (!this.observers.has(key)) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const observerEntry = this.entries.get(entry.target);
-            if (observerEntry) {
-              observerEntry.callback(entry);
-              
-              // Remove if once option is true and element is intersecting
-              if (observerEntry.options.once && entry.isIntersecting) {
-                this.unobserve(entry.target);
-              }
-            }
-          });
-        },
-        {
-          threshold: options.threshold || 0.3,
-          rootMargin: options.rootMargin || '0px'
-        }
-      );
-      
-      this.observers.set(key, observer);
-    }
-
-    const observer = this.observers.get(key)!;
-    const observerEntry: ObserverEntry = { element, callback, options };
-    
-    this.entries.set(element, observerEntry);
-    observer.observe(element);
+    this.entries.set(element, callback);
+    this.observedElements.add(element);
+    this.observer.observe(element);
   }
 
   unobserve(element: Element) {
-    const entry = this.entries.get(element);
-    if (entry) {
-      const key = this.getObserverKey(entry.options);
-      const observer = this.observers.get(key);
-      
-      if (observer) {
-        observer.unobserve(element);
-      }
-      
-      this.entries.delete(element);
-    }
+    if (!this.observer || !this.observedElements.has(element)) return;
+    
+    this.observer.unobserve(element);
+    this.entries.delete(element);
+    this.observedElements.delete(element);
   }
 
   disconnect() {
-    this.observers.forEach(observer => observer.disconnect());
-    this.observers.clear();
-    this.entries.clear();
+    if (this.observer) {
+      this.observer.disconnect();
+      this.entries.clear();
+      this.observedElements.clear();
+    }
   }
 }
 
@@ -102,7 +84,6 @@ export const useOptimizedIntersection = () => {
 
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
       elementsRef.current.forEach(element => {
         observerManager.unobserve(element);
       });

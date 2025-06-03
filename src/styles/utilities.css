@@ -65,32 +65,33 @@
     border-color: #FFD700;
   }
 
-  /* Espaçamento ultra-otimizado */
-  .premium-glass {
-    @apply backdrop-blur-md bg-background/20 border border-gold/10;
+  /* Sistema Edge-to-Edge */
+  .container-edge {
+    @apply w-full;
   }
 
-  .container-premium {
-    @apply container mx-auto px-4;
+  .section-edge {
+    @apply w-full;
   }
 
-  .section-premium {
-    @apply py-4 md:py-6;
+  .hero-edge {
+    @apply w-full min-h-screen;
   }
 
-  .mobile-card-grid-2 {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4;
+  /* Containers internos para conteúdo quando necessário */
+  .content-container {
+    @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
   }
 
-  .mobile-card-grid-4 {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4;
+  .content-container-tight {
+    @apply max-w-5xl mx-auto px-4 md:px-6;
   }
 
-  .mobile-card-compact {
-    @apply p-3 md:p-4;
+  .content-container-minimal {
+    @apply max-w-3xl mx-auto px-3 md:px-4;
   }
 
-  /* Gradientes otimizados */
+  /* Gradientes otimizados edge-to-edge */
   .premium-gradient-bg {
     background: linear-gradient(135deg, 
       rgba(255, 215, 0, 0.02) 0%, 
@@ -104,6 +105,19 @@
 
   .premium-text-glow {
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+
+  /* Mobile grid system edge-to-edge */
+  .mobile-card-grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4;
+  }
+
+  .mobile-card-grid-4 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4;
+  }
+
+  .mobile-card-compact {
+    @apply p-3 md:p-4;
   }
 
   /* Smooth scrolling */

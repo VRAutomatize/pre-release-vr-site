@@ -1,6 +1,5 @@
 
 import React from "react";
-import { motion } from "framer-motion";
 import HeroSection from "@/components/digital-employees/HeroSection";
 import ClientLogosSection from "@/components/digital-employees/ClientLogosSection";
 import CTASection from "@/components/digital-employees/CTASection";
@@ -18,20 +17,18 @@ import LazySection from "@/components/shared/LazySection";
 import OptimizedRealTimeMetrics from "@/components/digital-employees/OptimizedRealTimeMetrics";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
 
-// Componente de seção ultra-otimizado
-const OptimizedSection = React.memo(({ 
+// Componente de seção edge-to-edge
+const EdgeSection = React.memo(({ 
   children, 
   id, 
-  className = "",
-  spacing = "py-4"
+  className = ""
 }: { 
   children: React.ReactNode;
   id: string;
   className?: string;
-  spacing?: string;
 }) => (
   <section 
-    className={`container-premium ${spacing} ${className}`}
+    className={`section-edge ${className}`}
     id={id}
   >
     {children}
@@ -40,69 +37,69 @@ const OptimizedSection = React.memo(({
 
 const DigitalEmployeesContent = React.memo(() => {
   return (
-    <div className="min-h-screen overflow-x-hidden pt-20 md:pt-12 pb-8">
-      {/* Hero Section - Carregamento imediato */}
-      <OptimizedSection id="hero" spacing="pb-6">
+    <div className="min-h-screen overflow-x-hidden">
+      {/* Hero Section - Edge-to-edge */}
+      <EdgeSection id="hero">
         <HeroSection />
-      </OptimizedSection>
+      </EdgeSection>
 
-      {/* Storytelling Scroll - Mobile Only, Simplificado */}
+      {/* Storytelling Scroll - Edge-to-edge */}
       <StorytellingScroll />
 
-      {/* Quick Social Proof */}
-      <OptimizedSection id="quick-social-proof" spacing="py-4">
+      {/* Quick Social Proof - Edge-to-edge */}
+      <EdgeSection id="quick-social-proof">
         <QuickSocialProof />
-      </OptimizedSection>
+      </EdgeSection>
 
-      {/* Real-Time Metrics - Otimizado */}
+      {/* Real-Time Metrics - Edge-to-edge */}
       <LazySection id="real-time-metrics">
         <OptimizedRealTimeMetrics />
       </LazySection>
 
-      {/* Client Logos Section */}
-      <OptimizedSection id="client-logos" spacing="py-6">
+      {/* Client Logos Section - Edge-to-edge */}
+      <EdgeSection id="client-logos">
         <ClientLogosSection />
-      </OptimizedSection>
+      </EdgeSection>
 
-      {/* ROI Chart Section */}
-      <OptimizedSection id="roi-chart-section" spacing="py-6">
+      {/* ROI Chart Section - Edge-to-edge */}
+      <EdgeSection id="roi-chart-section">
         <ROIChart />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* Use Cases Section */}
-      <OptimizedSection id="use-cases-section" spacing="py-6">
+      {/* Use Cases Section - Edge-to-edge */}
+      <EdgeSection id="use-cases-section">
         <UseCasesSection />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* Premium Social Proof Section */}
-      <OptimizedSection id="premium-social-proof" spacing="py-6">
+      {/* Premium Social Proof Section - Edge-to-edge */}
+      <EdgeSection id="premium-social-proof">
         <PremiumSocialProof />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* Process Section */}
-      <OptimizedSection id="process-section" spacing="py-6">
+      {/* Process Section - Edge-to-edge */}
+      <EdgeSection id="process-section">
         <ProcessSection />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* Comparison Section */}
-      <OptimizedSection id="comparison-section-main" spacing="py-6">
+      {/* Comparison Section - Edge-to-edge */}
+      <EdgeSection id="comparison-section-main">
         <ComparisonSection />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* FAQ Section */}
-      <OptimizedSection id="faq-section" spacing="py-6">
+      {/* FAQ Section - Edge-to-edge */}
+      <EdgeSection id="faq-section">
         <FAQSection />
-      </OptimizedSection>
+      </EdgeSection>
 
-      {/* Ideal For Section */}
-      <OptimizedSection id="ideal-for-section" spacing="py-6">
+      {/* Ideal For Section - Edge-to-edge */}
+      <EdgeSection id="ideal-for-section">
         <IdealForSection />
-      </OptimizedSection>
+      </EdgeSection>
       
-      {/* Final CTA Section */}
-      <OptimizedSection id="final-cta" spacing="py-6">
+      {/* Final CTA Section - Edge-to-edge */}
+      <EdgeSection id="final-cta">
         <CTASection />
-      </OptimizedSection>
+      </EdgeSection>
     </div>
   );
 });

@@ -5,8 +5,8 @@ import { Building2 } from "lucide-react";
 
 const ClientLogosSection = () => {
   return (
-    <section className="section-spacing border-b border-gold/10">
-      <div className="mobile-container-tight">
+    <section className="section-edge border-b border-gold/10 py-8 md:py-12">
+      <div className="content-container-tight">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Building2 className="h-5 w-5 text-gold" />

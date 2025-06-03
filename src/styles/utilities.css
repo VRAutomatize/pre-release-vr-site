@@ -65,30 +65,41 @@
     border-color: #FFD700;
   }
 
-  /* Sistema Edge-to-Edge */
+  /* Sistema Edge-to-Edge REAL - SEM PADDING */
   .container-edge {
-    @apply w-full;
+    @apply w-screen;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
   }
 
   .section-edge {
-    @apply w-full;
+    @apply w-screen;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
   }
 
   .hero-edge {
-    @apply w-full min-h-screen;
+    @apply w-screen min-h-screen;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
   }
 
-  /* Containers internos para conteúdo quando necessário */
+  /* Containers internos para conteúdo quando necessário - SEM PADDING LATERAL */
   .content-container {
-    @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-0;
   }
 
   .content-container-tight {
-    @apply max-w-5xl mx-auto px-4 md:px-6;
+    @apply max-w-5xl mx-auto px-0;
   }
 
   .content-container-minimal {
-    @apply max-w-3xl mx-auto px-3 md:px-4;
+    @apply max-w-3xl mx-auto px-0;
+  }
+
+  /* Background unificado para todas as seções */
+  .unified-bg {
+    @apply bg-background;
   }
 
   /* Gradientes otimizados edge-to-edge */

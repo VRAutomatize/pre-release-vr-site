@@ -17,7 +17,7 @@ import LazySection from "@/components/shared/LazySection";
 import OptimizedRealTimeMetrics from "@/components/digital-employees/OptimizedRealTimeMetrics";
 import StorytellingScroll from "@/components/digital-employees/StorytellingScroll";
 
-// Componente de seção edge-to-edge
+// Componente de seção edge-to-edge com background unificado
 const EdgeSection = React.memo(({ 
   children, 
   id, 
@@ -28,8 +28,9 @@ const EdgeSection = React.memo(({
   className?: string;
 }) => (
   <section 
-    className={`section-edge ${className}`}
+    className={`w-screen unified-bg ${className}`}
     id={id}
+    style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}
   >
     {children}
   </section>
@@ -37,14 +38,14 @@ const EdgeSection = React.memo(({
 
 const DigitalEmployeesContent = React.memo(() => {
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen w-screen overflow-x-hidden unified-bg">
       {/* Hero Section - Edge-to-edge */}
-      <EdgeSection id="hero">
-        <HeroSection />
-      </EdgeSection>
+      <HeroSection />
 
       {/* Storytelling Scroll - Edge-to-edge */}
-      <StorytellingScroll />
+      <div className="w-screen unified-bg" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+        <StorytellingScroll />
+      </div>
 
       {/* Quick Social Proof - Edge-to-edge */}
       <EdgeSection id="quick-social-proof">
@@ -52,9 +53,11 @@ const DigitalEmployeesContent = React.memo(() => {
       </EdgeSection>
 
       {/* Real-Time Metrics - Edge-to-edge */}
-      <LazySection id="real-time-metrics">
-        <OptimizedRealTimeMetrics />
-      </LazySection>
+      <div className="w-screen unified-bg" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+        <LazySection id="real-time-metrics">
+          <OptimizedRealTimeMetrics />
+        </LazySection>
+      </div>
 
       {/* Client Logos Section - Edge-to-edge */}
       <EdgeSection id="client-logos">

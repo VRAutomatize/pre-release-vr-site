@@ -80,8 +80,8 @@ const ClientLogos = () => {
 
   return (
     <section className="relative mt-16 md:mt-24 z-10">
-      <div className={`${isMobile ? "mobile-container-full" : "container mx-auto px-4"}`}>
-        <p className={`text-center text-sm text-foreground/60 mb-6 md:mb-8 ${isMobile ? "px-4" : ""}`}>
+      <div className="content-container">
+        <p className="text-center text-sm text-foreground/60 mb-6 md:mb-8">
           Empresas que confiam em nossas soluções
         </p>
         

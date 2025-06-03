@@ -57,48 +57,49 @@ const UseCasesSection = () => {
 
   return (
     <section className="relative">
-      <motion.div 
-        className="max-w-6xl mx-auto" 
-        initial="hidden" 
-        whileInView="show" 
-        viewport={{
-          once: true,
-          amount: 0.3
-        }} 
-        variants={containerVariants}
-      >
-        <motion.h2 
-          variants={itemVariants} 
-          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-center"
+      <div className="content-container">
+        <motion.div 
+          initial="hidden" 
+          whileInView="show" 
+          viewport={{
+            once: true,
+            amount: 0.3
+          }} 
+          variants={containerVariants}
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
-        </motion.h2>
+          <motion.h2 
+            variants={itemVariants} 
+            className="text-2xl md:text-3xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-center"
+          >
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">Quem está usando</span> Funcionários Digitais:
+          </motion.h2>
 
-        <div className="mobile-card-grid-2">
-          {useCases.map((useCase, index) => (
-            <motion.div 
-              key={index} 
-              variants={itemVariants} 
-              className="floating-card mobile-card-compact text-center hover:border-gold/40 transition-all duration-300 rounded-lg hover:-translate-y-2 min-h-[160px] md:min-h-[180px] flex flex-col justify-center"
-            >
-              {/* Icon at the top */}
-              <div className="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-3 md:mb-4 shrink-0">
-                <useCase.icon className="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 text-gold" />
-              </div>
-              
-              {/* Content below icon */}
-              <div className="space-y-2">
-                <h3 className="text-base md:text-lg lg:text-xl font-semibold leading-tight text-center">
-                  {useCase.title}
-                </h3>
-                <p className="text-xs md:text-sm lg:text-base text-foreground/70 leading-relaxed text-center">
-                  {useCase.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+          <div className="mobile-card-grid-2">
+            {useCases.map((useCase, index) => (
+              <motion.div 
+                key={index} 
+                variants={itemVariants} 
+                className="floating-card mobile-card-compact text-center hover:border-gold/40 transition-all duration-300 rounded-lg hover:-translate-y-2 min-h-[160px] md:min-h-[180px] flex flex-col justify-center"
+              >
+                {/* Icon at the top */}
+                <div className="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-3 md:mb-4 shrink-0">
+                  <useCase.icon className="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 text-gold" />
+                </div>
+                
+                {/* Content below icon */}
+                <div className="space-y-2">
+                  <h3 className="text-base md:text-lg lg:text-xl font-semibold leading-tight text-center">
+                    {useCase.title}
+                  </h3>
+                  <p className="text-xs md:text-sm lg:text-base text-foreground/70 leading-relaxed text-center">
+                    {useCase.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };

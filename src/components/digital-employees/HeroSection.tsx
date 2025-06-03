@@ -56,7 +56,7 @@ const HeroSection = () => {
                   </div>
                   
                   <div className="animate-fade-up" style={{ animationDuration: "0.9s" }}>
-                    <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-base md:text-lg lg:text-xl xl:text-2xl'} text-foreground/80 mb-6 md:mb-8 lg:mb-10 leading-relaxed ${isMobile ? '' : 'max-w-4xl mx-auto'}`}>
+                    <p className={`${isMobile ? 'text-base leading-relaxed' : 'text-base md:text-lg lg:text-xl xl:text-2xl'} text-foreground/80 mb-6 md:mb-8 lg:mb-10 leading-relaxed`}>
                       {isMobile 
                         ? "Sistemas que trabalham 24/7 substituindo processos operacionais. Sem pausas, sem oscilações."
                         : "Reduza em até 6 dígitos seus custos fixos. Sistemas que trabalham 24/7 — sem pausas ou oscilações, substituindo processos operacionais."
@@ -66,7 +66,7 @@ const HeroSection = () => {
 
                   {/* Social Proof Stats - Mobile Optimized */}
                   <div className="animate-fade-up mb-6 md:mb-8 lg:mb-10" style={{ animationDelay: "1.0s" }}>
-                    <div className={`${isMobile ? 'w-full space-y-2' : 'grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10 max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto'}`}>
+                    <div className={`${isMobile ? 'w-full space-y-2' : 'grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10'}`}>
                       <div className={`text-center bg-background/30 backdrop-blur-sm rounded-lg ${isMobile ? 'flex items-center justify-between p-3 w-full' : 'p-6 md:p-8 lg:p-10'} border border-gold/10 hover:border-gold/30 transition-all duration-300 hover:scale-105`}>
                         {isMobile ? (
                           <>

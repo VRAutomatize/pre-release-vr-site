@@ -1,5 +1,4 @@
 
-
 @layer utilities {
   .glass {
     @apply bg-background/30 backdrop-blur-md border border-gold/10;
@@ -66,27 +65,27 @@
     border-color: #FFD700;
   }
 
-  /* Sistema Edge-to-Edge com 10px de margem para resolver cortes */
+  /* Sistema Edge-to-Edge com 5px de margem para simetria perfeita */
   .w-full-edge {
-    width: calc(100vw - 20px) !important;
+    width: calc(100vw - 10px) !important;
     max-width: none !important;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     box-sizing: border-box !important;
   }
 
   .section-edge {
-    width: calc(100vw - 20px);
-    margin-left: 10px;
-    margin-right: 10px;
+    width: calc(100vw - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
   }
 
-  /* Containers internos para conteúdo */
+  /* Containers internos para conteúdo - SEM mx-auto conflitante */
   .content-container {
     max-width: 1280px;
     margin-left: auto;
@@ -188,5 +187,15 @@
     margin: 0;
     padding: 0;
   }
-}
 
+  /* Sistema unificado sem conflitos */
+  .unified-section {
+    width: calc(100vw - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+}

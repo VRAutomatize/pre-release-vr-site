@@ -17,7 +17,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
   const { handleWhatsAppClick, handleHomeClick } = useDigitalEmployeesTracking();
 
   return (
-    <div className="min-h-screen premium-gradient-bg overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden" style={{ width: 'calc(100vw - 4px)', margin: '0 2px' }}>
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       
@@ -26,12 +26,12 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
         <PremiumMobileNav />
       ) : (
         /* Desktop Header */
-        <header className="nav-premium">
-          <div className="container-premium">
+        <header className="w-full-edge bg-background/20 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+          <div className="content-container">
             <div className="flex items-center justify-between h-16">
               <Link 
                 to="/" 
-                className="flex items-center gap-2 hover:text-gold transition-colors interactive-hover"
+                className="flex items-center gap-2 hover:text-gold transition-colors"
                 onClick={handleHomeClick}
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -39,7 +39,7 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
               </Link>
               <button
                 onClick={handleWhatsAppClick}
-                className="button-premium flex items-center gap-2 text-sm"
+                className="bg-gold hover:bg-gold-light text-background px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-colors"
               >
                 <MessageSquare className="h-4 w-4" />
                 Entre em contato

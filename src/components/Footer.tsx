@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Mail, Copyright, Globe } from "lucide-react";
 import { Separator } from "./ui/separator";
@@ -7,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full-edge bg-card" style={{ margin: '0 2px' }}>
+    <footer className="w-full-edge bg-card">
       <div className="content-container py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}

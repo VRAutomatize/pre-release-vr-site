@@ -65,7 +65,7 @@
     border-color: #FFD700;
   }
 
-  /* Sistema Edge-to-Edge FINAL */
+  /* Sistema Edge-to-Edge DEFINITIVO */
   .w-full-edge {
     width: calc(100vw - 4px) !important;
     max-width: none !important;
@@ -85,7 +85,7 @@
     box-sizing: border-box;
   }
 
-  /* Containers internos para conteúdo - COM PADDING CONTROLADO */
+  /* Containers internos para conteúdo */
   .content-container {
     max-width: 1280px;
     margin-left: auto;
@@ -113,12 +113,12 @@
     box-sizing: border-box;
   }
 
-  /* Background unificado para todas as seções */
+  /* Background unificado */
   .unified-bg {
     @apply bg-background;
   }
 
-  /* Gradientes otimizados edge-to-edge */
+  /* Gradientes edge-to-edge */
   .premium-gradient-bg {
     background: linear-gradient(135deg, 
       rgba(255, 215, 0, 0.02) 0%, 
@@ -134,7 +134,7 @@
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
   }
 
-  /* Mobile grid system edge-to-edge */
+  /* Mobile grid system */
   .mobile-card-grid-2 {
     @apply grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4;
   }
@@ -152,9 +152,15 @@
     scroll-behavior: smooth;
   }
 
-  /* Reset global que pode estar interferindo */
+  /* Reset global */
   * {
     box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   /* Reduzir movimento para performance */
@@ -166,11 +172,11 @@
     }
   }
 
-  /* Container principal da aplicação - edge-to-edge com 2px */
+  /* Container principal da aplicação - CORRIGIDO */
   .app-container {
-    width: calc(100vw - 4px);
+    width: 100%;
     overflow-x: hidden;
-    margin: 0 2px;
+    margin: 0;
     padding: 0;
   }
 }

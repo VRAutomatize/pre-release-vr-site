@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Quote, Star, TrendingUp, CheckCircle, Users } from "lucide-react";
+import { Quote, Star, TrendingUp, CheckCircle, Users, Play } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -24,60 +24,58 @@ const PremiumSocialProof = () => {
 
   const testimonials = [
     {
-      company: "E-commerce de Moda",
-      revenue: "R$ 2M/mês",
-      savings: "R$ 380k/ano",
-      quote: "Automatizamos 80% do atendimento. Reduzimos equipe de 12 para 3 pessoas.",
+      company: "Clínica Odontológica",
+      industry: "Saúde", 
+      quote: "Antes eu perdia leads porque não conseguia atender todo mundo na hora. Agora a IA atende, qualifica e só me chama quando é lead qualificado. Aumento de 280% nos agendamentos.",
+      author: "Dr. Carlos Mendes",
+      rating: 5,
+      highlight: "280% mais agendamentos",
+      results: "De 12 para 45 agendamentos/mês"
+    },
+    {
+      company: "Agência de Marketing", 
+      industry: "Serviços",
+      quote: "A IA entende exatamente o perfil de cliente que queremos. Ela fala como nossa equipe e filtra só os leads que valem a pena. Triplicamos o faturamento sem contratar ninguém.",
       author: "Marina Silva, CEO",
       rating: 5,
-      highlight: "Redução de 75% nos custos"
+      highlight: "3x o faturamento",
+      results: "Sem aumentar equipe"
     },
     {
-      company: "Indústria Alimentícia",
-      revenue: "R$ 5M/mês", 
-      savings: "R$ 650k/ano",
-      quote: "Sistema integrado eliminou 90% dos erros. ROI de 400% em 8 meses.",
-      author: "Carlos Medeiros, Diretor",
+      company: "E-commerce Fitness",
+      industry: "Varejo Online",
+      quote: "Melhor investimento que fizemos. A IA trabalha 24h, nunca perde um lead e ainda consegue vender produtos complementares. ROI foi absurdo.",
+      author: "Roberto Faria, Fundador",
       rating: 5,
-      highlight: "ROI de 400% em 8 meses"
-    },
-    {
-      company: "Marketplace B2B",
-      revenue: "R$ 1.5M/mês",
-      savings: "R$ 220k/ano",
-      quote: "Melhor investimento que fizemos. Processos automáticos.",
-      author: "Roberto Faria, Sócio",
-      rating: 5,
-      highlight: "100% automatizado"
+      highlight: "ROI de 450%",
+      results: "Vendas 24/7 automatizadas"
     }
   ];
 
   return (
-    <section className="py-12">
-      <div className="text-center mb-8">
+    <section className="py-12 md:py-16">
+      <div className="text-center mb-8 md:mb-12">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-foreground">
-          Empresários que já{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light">
-            escalaram sem custos
-          </span>
+          Veja quem <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-light font-black">aplicou o método</span> tem a dizer
         </h2>
-        <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto">
-          Cases reais de empresas com faturamento similar ao seu
+        <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-6">
+          Resultados reais de empresários que implementaram nossa IA
         </p>
-        
-        {/* Trust indicators - Mais compacto */}
-        <div className="flex justify-center items-center gap-4 mt-6 flex-wrap">
-          <div className="flex items-center gap-2 bg-green-500/10 px-3 py-2 rounded-lg">
-            <CheckCircle className="h-4 w-4 text-green-400" />
-            <span className="text-green-400 font-medium text-sm">Resultados Garantidos</span>
-          </div>
-          <div className="flex items-center gap-2 bg-gold/10 px-3 py-2 rounded-lg">
-            <Users className="h-4 w-4 text-gold" />
-            <span className="text-gold font-medium text-sm">200+ Empresas</span>
-          </div>
-          <div className="flex items-center gap-2 bg-blue-400/10 px-3 py-2 rounded-lg">
-            <TrendingUp className="h-4 w-4 text-blue-400" />
-            <span className="text-blue-400 font-medium text-sm">ROI Médio: 380%</span>
+
+        {/* Video depoimento placeholder */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <div className="relative bg-background/40 backdrop-blur-sm border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all duration-300">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center">
+                <Play className="h-6 w-6 text-gold ml-1" />
+              </div>
+            </div>
+            <p className="text-foreground/80 italic mb-2">
+              "Depoimento em vídeo - Resultados reais"
+            </p>
+            <p className="text-sm text-foreground/60">
+              Clique para assistir casos de sucesso
+            </p>
           </div>
         </div>
       </div>
@@ -105,19 +103,16 @@ const PremiumSocialProof = () => {
                   <Quote className="h-6 w-6 text-gold/60 mb-3" />
                   <p className="text-foreground/90 mb-4 italic leading-relaxed">"{testimonial.quote}"</p>
                   
-                  {/* Highlight box */}
+                  {/* Highlight box - mais conversacional */}
                   <div className="bg-gold/10 border border-gold/20 rounded-lg p-3 mb-4">
                     <p className="text-gold font-bold text-center text-sm">{testimonial.highlight}</p>
+                    <p className="text-foreground/70 text-xs text-center mt-1">{testimonial.results}</p>
                   </div>
                   
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-green-400" />
-                      <span className="text-green-400 font-bold">{testimonial.savings}</span>
-                    </div>
                     <div className="text-foreground/70">
-                      <p className="font-bold">{testimonial.company}</p>
-                      <p className="text-gold text-sm">{testimonial.revenue}</p>
+                      <p className="font-bold text-foreground">{testimonial.company}</p>
+                      <p className="text-gold text-sm">{testimonial.industry}</p>
                       <p className="font-medium text-sm">{testimonial.author}</p>
                     </div>
                   </div>
@@ -130,24 +125,33 @@ const PremiumSocialProof = () => {
         </Carousel>
       </div>
 
-      {/* Bottom stats - Mais compacto */}
-      <div className="text-center mt-12">
-        <div className="bg-gradient-to-r from-gold/10 to-gold-light/10 border border-gold/30 px-6 py-4 rounded-2xl inline-block shadow-lg">
-          <div className="flex items-center gap-4 flex-wrap justify-center">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-gold" />
-              <span className="text-gold font-bold text-lg">
-                Economia média: R$ 283k/ano
-              </span>
-            </div>
-            <div className="text-foreground/60">•</div>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-green-400" />
-              <span className="text-green-400 font-bold text-lg">
-                ROI médio: 380%
-              </span>
-            </div>
+      {/* Sistema próprio - Nova seção */}
+      <div className="mt-16 md:mt-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
+            Sistema próprio. Estrutura escalável. <span className="text-gold">Zero dor de cabeça.</span>
+          </h3>
+          <p className="text-lg md:text-xl text-foreground/80 mb-8 leading-relaxed">
+            A VR Automatize não é mais um chatbot improvisado. Nós temos um sistema estável, seguro e desenvolvido para crescer com você.
+          </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { icon: CheckCircle, text: "Integrações robustas" },
+              { icon: TrendingUp, text: "Monitoramento em tempo real" },
+              { icon: Users, text: "Atualizações constantes" },
+              { icon: Star, text: "Performance testada" }
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <item.icon className="h-8 w-8 text-gold mx-auto mb-2" />
+                <p className="text-sm md:text-base text-foreground/80">{item.text}</p>
+              </div>
+            ))}
           </div>
+          
+          <p className="text-base md:text-lg text-foreground/70 mt-8 max-w-2xl mx-auto">
+            Você não está contratando só uma IA. Está adquirindo uma estrutura pronta para escalar com seu negócio.
+          </p>
         </div>
       </div>
     </section>

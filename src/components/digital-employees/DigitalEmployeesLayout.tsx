@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import ExitIntentAlert from "@/components/digital-employees/ExitIntentAlert";
 import MobileStickyCTA from "@/components/digital-employees/MobileStickyCTA";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useDigitalEmployeesTracking } from "./DigitalEmployeesTracking";
 
 interface DigitalEmployeesLayoutProps {
   children: React.ReactNode;
@@ -18,10 +17,10 @@ const DigitalEmployeesLayout = ({ children }: DigitalEmployeesLayoutProps) => {
       {/* Exit Intent Alert */}
       <ExitIntentAlert />
       
-      {/* Mobile Sticky CTA - Restored and optimized */}
+      {/* Mobile Sticky CTA - Restaurado e funcional */}
       <MobileStickyCTA />
 
-      {/* Main Content - No header, clean layout */}
+      {/* Main Content - Sem header, layout completamente limpo */}
       <main className="relative z-10 prevent-overflow">
         {children}
       </main>

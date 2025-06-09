@@ -1,11 +1,12 @@
 
 import React from "react";
 import HeroSection from "@/components/digital-employees/HeroSection";
-import CTASection from "@/components/digital-employees/CTASection";
+import IdealForSection from "@/components/digital-employees/IdealForSection";
 import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProof";
 import ProcessSection from "@/components/digital-employees/ProcessSection";
+import CTASection from "@/components/digital-employees/CTASection";
 
-// Componente de seção edge-to-edge com background unificado e espaçamento simétrico
+// Componente de seção edge-to-edge com background unificado
 const EdgeSection = React.memo(({ 
   children, 
   id, 
@@ -33,7 +34,12 @@ const DigitalEmployeesContent = React.memo(() => {
       {/* Hero Section - Edge-to-edge */}
       <HeroSection />
 
-      {/* Social Proof - Mais compacto */}
+      {/* Ideal For Section - Nova seção crítica para qualificação */}
+      <EdgeSection id="ideal-for" padding="py-16 md:py-20">
+        <IdealForSection />
+      </EdgeSection>
+
+      {/* Social Proof & Testimonials */}
       <EdgeSection id="social-proof-testimonials" padding="py-12 md:py-16">
         <PremiumSocialProof />
       </EdgeSection>
@@ -43,8 +49,8 @@ const DigitalEmployeesContent = React.memo(() => {
         <ProcessSection />
       </EdgeSection>
       
-      {/* Final CTA Section */}
-      <EdgeSection id="final-cta" padding="py-12 md:py-16">
+      {/* Final CTA Section - Único CTA da página */}
+      <EdgeSection id="final-cta" padding="py-16 md:py-20">
         <CTASection />
       </EdgeSection>
     </div>

@@ -2,17 +2,15 @@
 import React from "react";
 import HeroSection from "@/components/digital-employees/HeroSection";
 import CTASection from "@/components/digital-employees/CTASection";
-import ProcessSection from "@/components/digital-employees/ProcessSection";
-import IdealForSection from "@/components/digital-employees/IdealForSection";
 import PremiumSocialProof from "@/components/digital-employees/PremiumSocialProof";
-import FAQSection from "@/components/digital-employees/FAQSection";
+import ProcessSection from "@/components/digital-employees/ProcessSection";
 
 // Componente de seção edge-to-edge com background unificado e espaçamento simétrico
 const EdgeSection = React.memo(({ 
   children, 
   id, 
   className = "",
-  padding = "py-16 md:py-20 lg:py-24"
+  padding = "py-12 md:py-16 lg:py-20"
 }: { 
   children: React.ReactNode;
   id: string;
@@ -35,28 +33,18 @@ const DigitalEmployeesContent = React.memo(() => {
       {/* Hero Section - Edge-to-edge */}
       <HeroSection />
 
-      {/* Social Proof MOVED TO 2ND POSITION - Critical for conversion */}
-      <EdgeSection id="social-proof-testimonials" padding="py-16 md:py-20 lg:py-24">
+      {/* Social Proof - Mais compacto */}
+      <EdgeSection id="social-proof-testimonials" padding="py-12 md:py-16">
         <PremiumSocialProof />
       </EdgeSection>
 
-      {/* How It Works - Simplified Process */}
-      <EdgeSection id="how-it-works" padding="py-16 md:py-20 lg:py-24">
+      {/* How It Works - Simplificado */}
+      <EdgeSection id="how-it-works" padding="py-12 md:py-16">
         <ProcessSection />
       </EdgeSection>
       
-      {/* Ideal For Section - Already optimized */}
-      <EdgeSection id="ideal-for-section" padding="py-16 md:py-20 lg:py-24">
-        <IdealForSection />
-      </EdgeSection>
-      
-      {/* Essential FAQ Section */}
-      <EdgeSection id="faq-section" padding="py-16 md:py-20 lg:py-24">
-        <FAQSection />
-      </EdgeSection>
-      
       {/* Final CTA Section */}
-      <EdgeSection id="final-cta" padding="py-16 md:py-20 lg:py-24">
+      <EdgeSection id="final-cta" padding="py-12 md:py-16">
         <CTASection />
       </EdgeSection>
     </div>
